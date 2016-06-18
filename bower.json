@@ -1,0 +1,21 @@
+{
+  "name": "administration",
+  "authors": [
+    "Venelin Iliev <venelin@provision.bg>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#^2.3.3"
+  }
+}

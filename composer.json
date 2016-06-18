@@ -1,0 +1,11 @@
+{
+    "name": "provision/administration",
+    "authors": [
+        {
+            "name": "Venelin Iliev",
+            "email": "venelin@provision.bg"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
