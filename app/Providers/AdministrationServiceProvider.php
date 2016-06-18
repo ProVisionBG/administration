@@ -1,6 +1,6 @@
 <?php
 
-namespace ProVision\Administration;
+namespace ProVision\Administration\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -16,48 +16,50 @@ class AdministrationServiceProvider extends ServiceProvider {
         * config
         */
         $this->publishes([
-            __DIR__ . '/../config/provision_administration.php' => config_path('provision_administration.php'),
-        ]);
+            __DIR__ . '/../../config/provision_administration.php' => config_path('provision_administration.php'),
+            __DIR__ . '/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
+            __DIR__ . '/../../config/entrust.php' => config_path('entrust.php'),
+        ], 'config');
 
         /*
          * Routes
          */
         if (!$this->app->routesAreCached()) {
-            include __DIR__ . '/Http/routes.php';
+            include __DIR__ . '/../Http/routes.php';
         }
 
         /*
          * views
          */
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'administration');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'administration');
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/provision/administration'),
-        ]);
+            __DIR__ . '/../../resources/views' => resource_path('views/vendor/provision/administration'),
+        ], 'views');
 
 
         /*
          * assets
          */
         $this->publishes([
-            __DIR__ . '/../resources/assets' => public_path('vendor/provision/administration'),
+            __DIR__ . '/../../resources/assets' => public_path('vendor/provision/administration'),
         ], 'public');
 
         /*
          * translations
          */
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'administration');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'administration');
         $this->publishes([
-            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/provision/administration'),
-        ]);
+            __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/provision/administration'),
+        ], 'lang');
 
         /*
          * database
          */
         $this->publishes([
-            __DIR__ . '/../database/migrations/' => database_path('migrations')
+            __DIR__ . '/../../database/migrations/' => database_path('migrations')
         ], 'migrations');
         $this->publishes([
-            __DIR__ . '/../database/seeds/' => database_path('seeds')
+            __DIR__ . '/../../database/seeds/' => database_path('seeds')
         ], 'seeds');
 
         /*
@@ -86,7 +88,19 @@ class AdministrationServiceProvider extends ServiceProvider {
     public function register() {
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/provision_administration.php', 'provision_administration'
+            __DIR__ . '/../../config/provision_administration.php', 'provision_administration'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/session.php', 'session'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/entrust.php', 'entrust'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/laravellocalization.php', 'laravellocalization'
         );
 
         $this->app['administration'] = $this->app->share(function ($app) {

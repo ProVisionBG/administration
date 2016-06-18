@@ -16,6 +16,12 @@
     "tests"
   ],
   "dependencies": {
-    "AdminLTE": "admin-lte#^2.3.3"
+    "AdminLTE": "admin-lte#^2.3.3",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.3",
+    "Ionicons": "ionicons#^2.0.1",
+    "iCheck": "^1.0.2",
+    "html5shiv": "^3.7.3",
+    "respond": "^1.4.2"
   }
 }

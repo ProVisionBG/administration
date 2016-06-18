@@ -7,6 +7,6 @@ use App\Http\Request;
 
 class AdministrationController extends Controller {
     public function index() {
-        return view('administration::index');
+        return view('administration::login');
     }
 }
