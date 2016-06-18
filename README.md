@@ -1,0 +1,1 @@
+ProVision CMS v5 as laravel package
