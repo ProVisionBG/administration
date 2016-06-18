@@ -16,6 +16,7 @@
   },
   "autoload": {
     "classmap": [
+      "database"
     ],
     "psr-4": {
       "ProVision\\Administration\\": "app/"

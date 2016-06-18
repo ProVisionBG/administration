@@ -8,6 +8,8 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 class AdminUser extends Authenticatable {
     use EntrustUserTrait;
 
+    protected $table = 'users';
+    
     /**
      * The attributes that are mass assignable.
      *

@@ -129,9 +129,17 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->app['router']->middleware('localizationRedirect', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class);
         $this->app['router']->middleware('localeSessionRedirect', \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class);
 
-        $this->app['router']->middleware('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
+        //$this->app['router']->middleware('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
+        $this->app['router']->middleware('role', \ProVision\Administration\Http\Middleware\EntrustRole::class);
         $this->app['router']->middleware('permission', \Zizaco\Entrust\Middleware\EntrustPermission::class);
         $this->app['router']->middleware('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
+
+        /*
+         * Commands
+         */
+        $this->commands([
+            \ProVision\Administration\Console\Commands\CreateAdministrator::class
+        ]);
 
     }
 

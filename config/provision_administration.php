@@ -14,7 +14,12 @@ return [
      */
     'modules' => [
         'Blog'
-    ]
+    ],
+
+    /*
+     * префикс за командите с artisan
+     */
+    'command_prefix' => 'admin',
 
 
 ];

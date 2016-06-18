@@ -19,7 +19,7 @@ return [
     | the role if it is in a different namespace.
     |
     */
-    'role' => 'ProVision\Administration\Entrust\Role',
+    'role' => 'ProVision\Administration\AdminRole',
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     | Update the permission if it is in a different namespace.
     |
     */
-    'permission' => 'ProVision\Administration\Entrust\Permission',
+    'permission' => 'ProVision\Administration\AdminPermission',
 
     /*
     |--------------------------------------------------------------------------

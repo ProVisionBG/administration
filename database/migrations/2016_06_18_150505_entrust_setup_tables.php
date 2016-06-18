@@ -2,15 +2,13 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class EntrustSetupTables extends Migration
-{
+class EntrustSetupTables extends Migration {
     /**
      * Run the migrations.
      *
      * @return  void
      */
-    public function up()
-    {
+    public function up() {
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
@@ -25,12 +23,15 @@ class EntrustSetupTables extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
 
-            $table->foreign('user_id')->references('id')->on('')
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['user_id', 'role_id']);
+            $table->primary([
+                'user_id',
+                'role_id'
+            ]);
         });
 
         // Create table for storing permissions
@@ -52,7 +53,10 @@ class EntrustSetupTables extends Migration
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['permission_id', 'role_id']);
+            $table->primary([
+                'permission_id',
+                'role_id'
+            ]);
         });
     }
 
@@ -61,8 +65,7 @@ class EntrustSetupTables extends Migration
      *
      * @return  void
      */
-    public function down()
-    {
+    public function down() {
         Schema::drop('permission_role');
         Schema::drop('permissions');
         Schema::drop('role_user');
