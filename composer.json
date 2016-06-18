@@ -1,11 +1,28 @@
 {
-    "name": "provision/administration",
-    "authors": [
-        {
-            "name": "Venelin Iliev",
-            "email": "venelin@provision.bg"
-        }
+  "name": "provision/administration",
+  "authors": [
+    {
+      "name": "Venelin Iliev",
+      "email": "venelin@provision.bg"
+    }
+  ],
+  "homepage": "http://provision.bg",
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^5.5 || ^7.0",
+    "laravel/framework": "5.2.*",
+    "mcamara/laravel-localization": "^1.1",
+    "zizaco/entrust": "5.2.x-dev"
+  },
+  "autoload": {
+    "classmap": [
     ],
-    "minimum-stability": "stable",
-    "require": {}
+    "psr-4": {
+      "ProVision\\Administration\\": "src/"
+    }
+  },
+  "scripts": {
+    "post-update-cmd": [
+    ]
+  }
 }
