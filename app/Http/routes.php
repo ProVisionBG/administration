@@ -22,13 +22,13 @@ Route::group([
 
         Route::get('login', [
             'as' => 'login',
-            'middleware' => ['guest'],
+            'middleware' => ['role:guest'],
             'uses' => 'AdministrationController@getLogin'
         ]);
 
         Route::post('login', [
             'as' => 'login_post',
-            'middleware' => ['guest'],
+            'middleware' => ['role:guest'],
             'uses' => 'Auth\AuthController@postLogin'
         ]);
 
@@ -41,8 +41,8 @@ Route::group([
             Route::get('logout', [
                 'as' => 'logout',
                 function () {
-                    Auth::logout();
-                    return Redirect::route_pro('admin.login');
+                    Auth::guard('provision_administration')->logout();
+                    return Redirect::route('provision.administration.login');
                 }
             ]);
             /*

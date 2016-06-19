@@ -1,0 +1,12 @@
+label.control-label.required:after {
+    content: "*";
+    color: red;
+}
+
+.tab-content > .tab-pane {
+    margin-top: 10px;
+}
+
+img.flag {
+    width: 20px;
+}

@@ -2,6 +2,9 @@
 
 namespace ProVision\Administration;
 
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
@@ -9,7 +12,7 @@ class AdminUser extends Authenticatable {
     use EntrustUserTrait;
 
     protected $table = 'users';
-    
+
     /**
      * The attributes that are mass assignable.
      *

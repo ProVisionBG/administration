@@ -2,6 +2,7 @@
 
 namespace ProVision\Administration\Providers;
 
+use Config;
 use Illuminate\Support\ServiceProvider;
 
 class AdministrationServiceProvider extends ServiceProvider {
@@ -20,6 +21,31 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
             __DIR__ . '/../../config/entrust.php' => config_path('entrust.php'),
         ], 'config');
+
+        //reset session cookie
+        Config::set(['session.cookie' => 'provision_session']);
+
+        //set custom auth provider & guard
+        Config::set([
+            'auth.guards.provision_administration' => [
+                'driver' => 'session',
+                'provider' => 'provision_administration',
+            ]
+        ]);
+        Config::set([
+            'auth.providers.provision_administration' => [
+                'driver' => 'eloquent',
+                'model' => \ProVision\Administration\AdminUser::class
+            ]
+        ]);
+        Config::set([
+            'auth.passwords.provision_administration' => [
+                'provider' => 'provision_administration',
+                'email' => 'auth.emails.password',
+                'table' => 'password_resets',
+                'expire' => 60,
+            ]
+        ]);
 
         /*
          * Routes
@@ -89,10 +115,6 @@ class AdministrationServiceProvider extends ServiceProvider {
 
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/provision_administration.php', 'provision_administration'
-        );
-
-        $this->mergeConfigFrom(
-            __DIR__ . '/../../config/session.php', 'session'
         );
 
         $this->mergeConfigFrom(

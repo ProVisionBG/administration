@@ -8,6 +8,7 @@
  * @package Zizaco\Entrust
  */
 
+use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -20,7 +21,8 @@ class EntrustRole {
      * @param Guard $auth
      */
     public function __construct(Guard $auth) {
-        $this->auth = $auth;
+        $this->auth = Auth::guard('provision_administration');
+        // dd(Auth::guard('provision_administration')->user()->hasRole('admin'));
     }
 
     /**
@@ -32,7 +34,19 @@ class EntrustRole {
      * @return mixed
      */
     public function handle($request, Closure $next, $roles) {
-        if ($this->auth->guest() || !$request->user()->hasRole(explode('|', $roles))) {
+
+        /*
+         * Guest admin user
+         */
+        if ($roles == 'guest') {
+            if (!$this->auth->guest()) {
+                return redirect()->route('provision.administration.index');
+            } else {
+                return $next($request);
+            }
+        }
+
+        if ($this->auth->guest() || !$this->auth->user()->hasRole(explode('|', $roles))) {
             if ($request->is('*/' . config('provision_administration.url_prefix')) || $request->is(config('provision_administration.url_prefix') . '*')) {
                 return redirect()->route('provision.administration.login');
             } else {
