@@ -30,9 +30,9 @@
         <!-- Logo -->
         <a href="/admin/" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>P</b>V</span>
+            <span class="logo-mini"><b>A</b>P</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>ProVision</b>.bg</span>
+            <span class="logo-lg"><b>Administration</b> Panel</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -211,6 +211,11 @@
 
             {{--{!!Menu::render('administration-menu')!!}--}}
 
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                {{\Debugbar::info(\Menu::get('ProVisionAdministrationMenu')->sortBy('order')->roots())}}
+                @include('administration::partials.navigation', ['items' => \Menu::get('ProVisionAdministrationMenu')->roots()])
+            </ul>
             {{--<ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>
                 <li class="treeview">
@@ -373,9 +378,9 @@
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> {{Config::get('admin.version')}}
+            <b>Version</b> {{Config::get('provision_administration.version')}}
         </div>
-        <strong><a href="http://www.provision.bg/" target="_blank"><b>ProVision</b></a> CMS</strong>. All rights reserved.
+        <strong><a href="http://www.provision.bg/?ref=cms5" target="_blank"><b>ProVision</b></a> CMS</strong>. All rights reserved.
     </footer>
 
     {{--

@@ -4,6 +4,7 @@ namespace ProVision\Administration\Providers;
 
 use Config;
 use Illuminate\Support\ServiceProvider;
+use ProVision\Administration\Administration;
 
 class AdministrationServiceProvider extends ServiceProvider {
     /**
@@ -12,14 +13,15 @@ class AdministrationServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-
         /*
-        * config
-        */
+       * config
+       */
         $this->publishes([
             __DIR__ . '/../../config/provision_administration.php' => config_path('provision_administration.php'),
             __DIR__ . '/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
             __DIR__ . '/../../config/entrust.php' => config_path('entrust.php'),
+            __DIR__ . '/../../config/laravel-menu/settings.php' => config_path('laravel-menu/settings.php'),
+            __DIR__ . '/../../config/laravel-menu/views.php' => config_path('laravel-menu/views.php'),
         ], 'config');
 
         //reset session cookie
@@ -90,7 +92,6 @@ class AdministrationServiceProvider extends ServiceProvider {
 
         /*
          * Modules
-         */
         $modules = config("provision_administration.modules");
         if (is_array($modules) && count($modules) > 0) {
             while (list(, $module) = each($modules)) {
@@ -103,7 +104,32 @@ class AdministrationServiceProvider extends ServiceProvider {
                     $this->loadViewsFrom(base_path() . '/modules/' . $module . '/Views', $module);
                 }
             }
-        }
+        }*/
+
+        /*
+         * init modules
+         */
+        //Administration::initModules();
+
+        /*
+       * Administration menu init
+       */
+        \Menu::make('ProVisionAdministrationMenu', function ($menu) {
+            //home
+            $menu->add(trans('administration::index.home'), [
+                'route' => 'provision.administration.index',
+                'nickname' => 'home'
+            ])->data('icon', 'home');
+
+            //modules
+            $menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true);
+
+            //system settings
+            $menu->add(trans('administration::index.system-settings'), ['nickname' => 'system-settings'])->data('header', true)->data('order', 10000);
+            $menu->add(trans('administration::index.administrators'), ['nickname' => 'administrators'])->data('order', 10001)->data('icon', 'users');
+            $menu->add(trans('administration::index.settings'), ['nickname' => 'settings'])->data('order', 10002)->data('icon', 'cogs');
+
+        });
     }
 
     /**
@@ -125,24 +151,23 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../config/laravellocalization.php', 'laravellocalization'
         );
 
-        $this->app['administration'] = $this->app->share(function ($app) {
-            return new Administration;
-        });
 
         /*
         * Register the service provider for the dependency.
         */
         $this->app->register(\Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class);
-
         $this->app->register(\Zizaco\Entrust\EntrustServiceProvider::class);
+        $this->app->register(\Caffeinated\Modules\ModulesServiceProvider::class);
+        $this->app->register(\Lavary\Menu\ServiceProvider::class);
 
         /*
          * Create aliases for the dependency.
          */
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('LaravelLocalization', \Mcamara\LaravelLocalization\Facades\LaravelLocalization::class);
-
         $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
+        $loader->alias('Module', \Caffeinated\Modules\Facades\Module::class);
+        $loader->alias('Menu', \Lavary\Menu\Facade::class);
 
         /*
          * middleware
@@ -162,6 +187,11 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->commands([
             \ProVision\Administration\Console\Commands\CreateAdministrator::class
         ]);
+
+        $this->app['administration'] = $this->app->share(function ($app) {
+            return new Administration;
+        });
+
 
     }
 
