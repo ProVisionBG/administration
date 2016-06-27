@@ -165,6 +165,15 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->app->register(\Zizaco\Entrust\EntrustServiceProvider::class);
         $this->app->register(\Caffeinated\Modules\ModulesServiceProvider::class);
         $this->app->register(\Lavary\Menu\ServiceProvider::class);
+        $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
+        $this->app->register(\Distilleries\FormBuilder\FormBuilderServiceProvider::class);
+        $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
+        $this->app->register(\Torann\LaravelMetaTags\MetaTagsServiceProvider::class);
+        $this->app->register(\Krucas\Notification\NotificationServiceProvider::class);
+        $this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
+        $this->app->register(\Intervention\Image\ImageServiceProvider::class);
+        $this->app->register(\DaveJamesMiller\Breadcrumbs\ServiceProvider::class);
+        $this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
 
         /*
          * Create aliases for the dependency.
@@ -174,6 +183,13 @@ class AdministrationServiceProvider extends ServiceProvider {
         $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
         $loader->alias('Module', \Caffeinated\Modules\Facades\Module::class);
         $loader->alias('Menu', \Lavary\Menu\Facade::class);
+        $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables::class);
+        $loader->alias('FormBuilder', \Distilleries\FormBuilder\Facades\FormBuilder::class);
+        $loader->alias('MetaTag', \Torann\LaravelMetaTags\Facades\MetaTag::class);
+        $loader->alias('Notification', \Krucas\Notification\Facades\Notification::class);
+        $loader->alias('Socialite', \Laravel\Socialite\Facades\Socialite::class);
+        $loader->alias('Image', \Intervention\Image\Facades\Image::class);
+        $loader->alias('Breadcrumbs', \DaveJamesMiller\Breadcrumbs\Facade::class);
 
         /*
          * middleware

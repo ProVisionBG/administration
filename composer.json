@@ -18,7 +18,18 @@
     "mcamara/laravel-localization": "^1.1",
     "zizaco/entrust": "5.2.x-dev",
     "caffeinated/modules": "^3.1",
-    "lavary/laravel-menu": "^1.6"
+    "lavary/laravel-menu": "^1.6",
+    "yajra/laravel-datatables-oracle": "^6.10",
+    "distilleries/form-builder": "2.*",
+    "cviebrock/eloquent-sluggable": "^4.0.2",
+    "torann/laravel-meta-tags": "^3.0",
+    "edvinaskrucas/notification": "5.*",
+    "laravel/socialite": "^2.0",
+    "intervention/image": "^2.3",
+    "kalnoy/nestedset": "^4.1",
+    "davejamesmiller/laravel-breadcrumbs": "^3.0",
+    "barryvdh/laravel-translation-manager": "^0.2.2",
+    "venturecraft/revisionable": "1.*"
   },
   "autoload": {
     "classmap": [
