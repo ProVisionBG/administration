@@ -10,5 +10,6 @@ return [
     'modules' => 'Модули',
     'system-settings' => 'Системни настройки',
     'administrators' => 'Администратори',
-    'settings' => 'Настройка'
+    'settings' => 'Настройка',
+    'main_navigation' => 'Навигация'
 ];

@@ -212,9 +212,7 @@
             {{--{!!Menu::render('administration-menu')!!}--}}
 
             <ul class="sidebar-menu">
-                <li class="header">MAIN NAVIGATION</li>
-                {{\Debugbar::info(\Menu::get('ProVisionAdministrationMenu')->sortBy('order')->roots())}}
-                @include('administration::partials.navigation', ['items' => \Menu::get('ProVisionAdministrationMenu')->roots()])
+                @include('administration::partials.navigation', ['items' => \Menu::get('ProVisionAdministrationMenu')->sortBy('order', 'asc')->roots()])
             </ul>
             {{--<ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>

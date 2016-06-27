@@ -115,14 +115,20 @@ class AdministrationServiceProvider extends ServiceProvider {
        * Administration menu init
        */
         \Menu::make('ProVisionAdministrationMenu', function ($menu) {
+            //main header
+            $menu->add(trans('administration::index.main_navigation'), ['nickname' => 'navigation'])->data('header', true)->data('order', 1);
+
             //home
             $menu->add(trans('administration::index.home'), [
                 'route' => 'provision.administration.index',
                 'nickname' => 'home'
-            ])->data('icon', 'home');
+            ])
+                ->data('icon', 'home')
+                ->data('order', 2);
+            //->active('xxx/');
 
             //modules
-            $menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true);
+            $menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true)->data('order', 1000);
 
             //system settings
             $menu->add(trans('administration::index.system-settings'), ['nickname' => 'system-settings'])->data('header', true)->data('order', 10000);
