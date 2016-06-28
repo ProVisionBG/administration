@@ -8,8 +8,7 @@ use Auth;
 
 class AdministrationController extends BaseAdministrationController {
     public function index() {
-
-
+        
         if (!Auth::guard('provision_administration')->check() || !Auth::guard('provision_administration')->user()->hasRole('admin')) {
             return redirect()->route('provision.administration.login');
         }

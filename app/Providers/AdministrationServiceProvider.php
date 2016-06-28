@@ -3,6 +3,7 @@
 namespace ProVision\Administration\Providers;
 
 use Config;
+use Form;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 
@@ -47,6 +48,24 @@ class AdministrationServiceProvider extends ServiceProvider {
                 'table' => 'password_resets',
                 'expire' => 60,
             ]
+        ]);
+
+
+        /*
+         * add custom Form fields
+         */
+        Config::set('laravel-form-builder.template_prefix', 'administration::components.fields.');
+//        Config::set('form-builder.custom_fields.admin_text', \ProVision\Administration\Forms\Fields\AdminText::class);
+//        Config::set('form-builder.custom_fields.admin_password', \ProVision\Administration\Forms\Fields\AdminPassword::class);
+//        Config::set('form-builder.custom_fields.admin_choice', \ProVision\Administration\Forms\Fields\AdminChoice::class);
+
+        Form::component('adminDeleteButton', 'administration::components.form.admin_delete_button', [
+            'name',
+            'href'
+        ]);
+        Form::component('adminEditButton', 'administration::components.form.admin_edit_button', [
+            'name',
+            'href'
         ]);
 
         /*
@@ -130,10 +149,31 @@ class AdministrationServiceProvider extends ServiceProvider {
             //modules
             $menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true)->data('order', 1000);
 
+//            var_dump( 'provision.administration.' . \LaravelLocalization::setLocale() . '.admin.administartors.index');
+//            dd(\Route::getRoutes());
+
             //system settings
             $menu->add(trans('administration::index.system-settings'), ['nickname' => 'system-settings'])->data('header', true)->data('order', 10000);
-            $menu->add(trans('administration::index.administrators'), ['nickname' => 'administrators'])->data('order', 10001)->data('icon', 'users');
+
+            $administratorsMenu = $menu->add(trans('administration::administrators.administrators'), [
+                'nickname' => 'administrators.menu.item',
+            ])->data('order', 10001)->data('icon', 'users');
+            $administratorsMenu->add(trans('administration::index.view_all'), [
+                'nickname' => 'administrators',
+                'route' => 'provision.administration.administrators.index'
+            ])->data('icon', 'list');
+            $administratorsMenu->add(trans('administration::administrators.groups'), [
+                'nickname' => 'administrators.groups',
+                //'route' => 'provision.administration.administrators.index'
+            ])->data('icon', 'users');
+            $administratorsMenu->add(trans('administration::administrators.create_administrator'), [
+                'nickname' => 'administrators.create',
+                'route' => 'provision.administration.administrators.create'
+            ])->data('icon', 'plus');
+
             $menu->add(trans('administration::index.settings'), ['nickname' => 'settings'])->data('order', 10002)->data('icon', 'cogs');
+
+            $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])->data('order', 10003)->data('icon', 'globe');
 
         });
     }
@@ -149,10 +189,12 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../config/provision_administration.php', 'provision_administration'
         );
 
+        /*
+         * lib configs
+         */
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/entrust.php', 'entrust'
         );
-
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/laravellocalization.php', 'laravellocalization'
         );
@@ -166,30 +208,34 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->app->register(\Caffeinated\Modules\ModulesServiceProvider::class);
         $this->app->register(\Lavary\Menu\ServiceProvider::class);
         $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
-        $this->app->register(\Distilleries\FormBuilder\FormBuilderServiceProvider::class);
+        $this->app->register(\Kris\LaravelFormBuilder\FormBuilderServiceProvider::class);
         $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
         $this->app->register(\Torann\LaravelMetaTags\MetaTagsServiceProvider::class);
         $this->app->register(\Krucas\Notification\NotificationServiceProvider::class);
         $this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
         $this->app->register(\DaveJamesMiller\Breadcrumbs\ServiceProvider::class);
-        $this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
+        //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
+        $this->app->register(\Collective\Html\HtmlServiceProvider::class);
 
         /*
          * Create aliases for the dependency.
          */
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Administration', \ProVision\Administration\Facades\Administration::class);
         $loader->alias('LaravelLocalization', \Mcamara\LaravelLocalization\Facades\LaravelLocalization::class);
         $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
         $loader->alias('Module', \Caffeinated\Modules\Facades\Module::class);
         $loader->alias('Menu', \Lavary\Menu\Facade::class);
         $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables::class);
-        $loader->alias('FormBuilder', \Distilleries\FormBuilder\Facades\FormBuilder::class);
+        $loader->alias('FormBuilder', \Kris\LaravelFormBuilder\Facades\FormBuilder::class);
         $loader->alias('MetaTag', \Torann\LaravelMetaTags\Facades\MetaTag::class);
         $loader->alias('Notification', \Krucas\Notification\Facades\Notification::class);
         $loader->alias('Socialite', \Laravel\Socialite\Facades\Socialite::class);
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
         $loader->alias('Breadcrumbs', \DaveJamesMiller\Breadcrumbs\Facade::class);
+        $loader->alias('Form', \Collective\Html\FormFacade::class);
+        $loader->alias('Html', \Collective\Html\HtmlFacade::class);
 
         /*
          * middleware

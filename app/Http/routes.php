@@ -67,6 +67,17 @@ Route::group([
             ]);
             */
             //Route::get('/', 'AdministrationController@index');
+
+            Route::resource('administartors', 'AdministratorsController', [
+                'names' => [
+                    'index' => 'administrators.index',
+                    'edit' => 'administrators.edit',
+                    'create' => 'administrators.create',
+                    'store' => 'administrators.store',
+                    'update' => 'administrators.update',
+                    'destroy' => 'administrators.destroy'
+                ]
+            ]);
         });
 
     });

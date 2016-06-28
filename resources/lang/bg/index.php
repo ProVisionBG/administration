@@ -9,7 +9,21 @@ return [
     'home' => 'Начало',
     'modules' => 'Модули',
     'system-settings' => 'Системни настройки',
-    'administrators' => 'Администратори',
     'settings' => 'Настройка',
-    'main_navigation' => 'Навигация'
+    'main_navigation' => 'Навигация',
+    'translates' => 'Преводи',
+    'or' => 'или',
+    'filter' => 'Търсене',
+    'name' => 'Име',
+    'email' => 'имейл',
+    'only-deleted' => 'Само изтрити',
+    'go_search' => 'Търси',
+    'delete_confirm_title' => 'Сигурни ли сте?',
+    'cancel' => 'Откажи',
+    'delete' => 'Изтрий',
+    'home' => 'Начало',
+    'view_all' => 'Виж всички',
+    'edit' => 'Редакция',
+    'save' => 'Запази'
+
 ];

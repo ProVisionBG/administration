@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ Lang::get('administration::index.admin_title') }}</title>
+    <title> @if(!empty(\Administration::getModuleName())){{\Administration::getModuleName()}} | @endif{{ Lang::get('administration::index.admin_title') }}</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/jquery-ui/themes/base/jquery-ui.min.css")}}" type="text/css"/>
     <link rel="stylesheet" href="{{asset('/vendor/provision/administration/bower_components/dropzone/dist/dropzone.css')}}">
     <link rel="stylesheet" href="{{asset('/vendor/provision/administration/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css')}}">
+    {{--<link rel="stylesheet" href="{{asset('/vendor/provision/administration/bower_components/datatables-responsive/css/')}}">--}}
 
     {{-- Admin LTE Core --}}
     <link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css")}}">
@@ -360,6 +361,17 @@
     <div class="content-wrapper">
         <div class="content body">
 
+            <section id="module-header" class="content-header">
+                <h1>
+                    {{\Administration::getModuleName()}}
+                    <small>{{\Administration::getModuleSubName()}}</small>
+                </h1>
+                @if(Breadcrumbs::exists('admin_final'))
+                    {{Breadcrumbs::setView('administration::partials.breadcrumbs')}}
+                    {!! Breadcrumbs::render('admin_final') !!}
+                @endif
+            </section>
+
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <ul>
@@ -579,6 +591,8 @@
 <script src="{{asset("/vendor/provision/administration/bower_components/ckeditor/ckeditor.js")}}" charset="utf-8"></script>
 <script src="{{asset("/vendor/provision/administration/bower_components/datatables/media/js/jquery.dataTables.min.js")}}"></script>
 <script src="{{asset("/vendor/provision/administration/bower_components/datatables/media/js/dataTables.bootstrap.min.js")}}"></script>
+<script src="{{asset("/vendor/provision/administration/bower_components/datatables-responsive/js/dataTables.responsive.js")}}"></script>
+<script src="{{asset("/vendor/provision/administration/bower_components/datatables-rowreorder/js/dataTables.rowReorder.js")}}"></script>
 <script src="{{ asset('/vendor/provision/administration/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.min.js') }}"></script>
 <script src="{{ asset('/vendor/provision/administration/bower_components/jqueryui-timepicker-addon/dist/i18n/jquery-ui-timepicker-addon-i18n.min.js') }}"></script>
 
@@ -586,6 +600,13 @@
 
 {{-- Admin LTE core --}}
 <script src="{{asset("/vendor/provision/administration/bower_components/AdminLTE/dist/js/app.min.js")}}"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    });
+</script>
 
 @yield('bottom_js')
 
