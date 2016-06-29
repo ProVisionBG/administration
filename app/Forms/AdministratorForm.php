@@ -33,6 +33,10 @@ class AdministratorForm extends AdminForm {
 
         $this->add('password', 'password', [
             'label' => trans('administration::administrators.password'),
+            'value' => '',
+            'attr' => [
+                "autocomplete" => "off"
+            ],
             'validation_rules' => $passwordValidatorRules
         ]);
 
@@ -47,7 +51,10 @@ class AdministratorForm extends AdminForm {
 
         $this->add('password_confirmation', 'password', [
             'label' => trans('administration::administrators.password_confirm'),
-            'validation_rules' => $confirmPasswordValidatorRules
+            'validation_rules' => $confirmPasswordValidatorRules,
+            'attr' => [
+                "autocomplete" => "off"
+            ],
         ]);
         $this->add('roles', 'choice', [
             'choices' => AdminRole::lists('display_name', 'id')->toArray(),

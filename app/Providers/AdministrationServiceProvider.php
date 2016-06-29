@@ -171,9 +171,10 @@ class AdministrationServiceProvider extends ServiceProvider {
                 'route' => 'provision.administration.administrators.create'
             ])->data('icon', 'plus');
 
-            $menu->add(trans('administration::index.settings'), ['nickname' => 'settings'])->data('order', 10002)->data('icon', 'cogs');
+            $menu->add(trans('administration::index.settings'), ['nickname' => 'settings'])->data('order', 10002)->data('icon', 'sliders');
+            $menu->add(trans('administration::index.system'), ['nickname' => 'system'])->data('order', 10003)->data('icon', 'cogs');
 
-            $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])->data('order', 10003)->data('icon', 'globe');
+            $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])->data('order', 10004)->data('icon', 'globe');
 
         });
     }
