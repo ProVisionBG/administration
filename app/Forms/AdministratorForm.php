@@ -10,50 +10,68 @@ class AdministratorForm extends AdminForm {
 
         $this->add('name', 'text', [
             'label' => trans('administration::administrators.name'),
-            'rules' => 'required|min:5'
-        ])
-            ->add('email', 'text', [
-                'label' => trans('administration::administrators.email'),
-                'rules' => 'required|email'
-            ])
-            ->add('password', 'password', [
-                'value' => '',
-                'label' => trans('administration::administrators.password'),
-                'attr' => [
-                    "autocomplete" => "off"
-                ]
-            ])
-            ->add('password_confirmation', 'password', [
-                'value' => '',
-                'label' => trans('administration::administrators.password_confirm'),
-                'attr' => [
-                    "autocomplete" => "off"
-                ]
-            ])
-            ->add('roles', 'choice', [
-                'choices' => AdminRole::lists('display_name', 'name')->toArray(),
-                'selected' => [
-                    'en',
-                ],
-                'expanded' => true,
-                'multiple' => true,
-                'label' => trans('administration::administrators.groups')
-            ])
-            ->add('permissions', 'choice', [
-                'choices' => AdminPermission::lists('display_name', 'name')->toArray(),
-                'selected' => [
-                    'en',
-                ],
-                'expanded' => true,
-                'multiple' => true,
-                'label' => trans('administration::administrators.permissions')
-            ])
-            ->add('send', 'submit', [
-                'label' => trans('administration::index.save'),
-                'attr' => [
-                    'name' => 'save'
-                ],
-            ], false, true);
+            'validation_rules' => [
+                "required" => true,
+                "minlength" => 2
+            ]
+        ]);
+        $this->add('email', 'text', [
+            'label' => trans('administration::administrators.email'),
+            'validation_rules' => [
+                "required" => true,
+                "email" => true
+            ]
+        ]);
+
+        $passwordValidatorRules = [
+            "required" => true,
+            "minlength" => 5
+        ];
+        if (!empty($this->model)) {
+            $passwordValidatorRules['required'] = false;
+        }
+
+        $this->add('password', 'password', [
+            'label' => trans('administration::administrators.password'),
+            'validation_rules' => $passwordValidatorRules
+        ]);
+
+        $confirmPasswordValidatorRules = [
+            "required" => true,
+            "minlength" => 5,
+            "equalTo" => "#password"
+        ];
+        if (!empty($this->model)) {
+            $confirmPasswordValidatorRules['required'] = false;
+        }
+
+        $this->add('password_confirmation', 'password', [
+            'label' => trans('administration::administrators.password_confirm'),
+            'validation_rules' => $confirmPasswordValidatorRules
+        ]);
+        $this->add('roles', 'choice', [
+            'choices' => AdminRole::lists('display_name', 'id')->toArray(),
+            'selected' => (!empty($this->model) ? @$this->model->roles->lists('id')->toArray() : null),
+            'expanded' => true,
+            'multiple' => true,
+            'label' => trans('administration::administrators.groups')
+        ]);
+        $this->add('permissions', 'choice', [
+            'choices' => AdminPermission::lists('display_name', 'name')->toArray(),
+            'selected' => [
+                'en',
+            ],
+            'expanded' => true,
+            'multiple' => true,
+            'label' => trans('administration::administrators.permissions')
+        ]);
+        $this->add('footer', 'admin_footer');
+        $this->add('send', 'submit', [
+            'label' => trans('administration::index.save'),
+            'attr' => [
+                'name' => 'save'
+            ]
+        ]);
 
     }
 

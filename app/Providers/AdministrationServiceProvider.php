@@ -55,7 +55,7 @@ class AdministrationServiceProvider extends ServiceProvider {
          * add custom Form fields
          */
         Config::set('laravel-form-builder.template_prefix', 'administration::components.fields.');
-//        Config::set('form-builder.custom_fields.admin_text', \ProVision\Administration\Forms\Fields\AdminText::class);
+        Config::set('laravel-form-builder.custom_fields.admin_footer', \ProVision\Administration\Forms\Fields\AdminFooter::class);
 //        Config::set('form-builder.custom_fields.admin_password', \ProVision\Administration\Forms\Fields\AdminPassword::class);
 //        Config::set('form-builder.custom_fields.admin_choice', \ProVision\Administration\Forms\Fields\AdminChoice::class);
 

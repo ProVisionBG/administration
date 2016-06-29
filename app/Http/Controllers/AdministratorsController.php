@@ -26,7 +26,7 @@ class AdministratorsController extends BaseAdministrationController {
      */
     public function index() {
         if (Request::ajax()) {
-            $users = AdminUser::has('roles');
+            $users = AdminUser::with('roles');
 
             $datatables = Datatables::of($users)
                 ->addColumn('action', function ($user) {
@@ -74,11 +74,15 @@ class AdministratorsController extends BaseAdministrationController {
      */
     public function create(FormBuilder $formBuilder) {
         $form = $formBuilder->create(AdministratorForm::class, [
-            'method' => 'PUT',
-            'url' => route('provision.administration.administrators.store'),
-            'role' => 'form',
-            'id' => 'formID'
-        ]);
+                'method' => 'POST',
+                'url' => route('provision.administration.administrators.store'),
+            ]
+//            [
+//                'title' => 'Тестова форма',
+//                'type' => 'danger'
+//            ]
+        );
+
 
         Administration::setModuleName(trans('administration::administrators.create_administrator'));
 
@@ -97,17 +101,22 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        $form = $this->form(AdministratorForm::class);
+    public function store(\Illuminate\Http\Request $request) {
 
-        $form->validate(['title' => 'required|alpha_num']);
+        $adminUser = new AdminUser();
 
-        if (!$form->isValid()) {
-            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        $requestData = Request::all();
+
+        if ($adminUser->validate($requestData)) {
+            $adminUser->fill($requestData);
+            $adminUser->save();
+
+            return \Redirect::route('provision.administration.administrators.index');
+        } else {
+            return \Redirect::route('provision.administration.administrators.create')
+                ->withInput()
+                ->withErrors($adminUser->errors());
         }
-
-        Post::create($request->all());
-        return redirect()->route('posts');
     }
 
     /**
@@ -156,7 +165,37 @@ class AdministratorsController extends BaseAdministrationController {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $adminUser = AdminUser::findOrFail($id);
+
+        $requestData = Request::all();
+
+        if (!Request::has('password')) {
+            unset($adminUser->rules['password']);
+            unset($requestData['password']);
+        }
+        $adminUser->rules['email'] .= ',' . $adminUser->id;
+
+        if ($adminUser->validate($requestData)) {
+
+            /*
+             * add roles
+             */
+            $adminUser->roles()->detach();
+            if (!empty(Request::has('roles'))) {
+                foreach (Request::input('roles') as $role) {
+                    $adminUser->roles()->attach($role);
+                }
+            }
+
+            $adminUser->fill($requestData);
+            $adminUser->save();
+
+            return \Redirect::route('provision.administration.administrators.index');
+        } else {
+            return \Redirect::route('provision.administration.administrators.edit', [$adminUser->id])
+                ->withInput()
+                ->withErrors($adminUser->errors());
+        }
     }
 
     /**

@@ -23,7 +23,6 @@
     "iCheck": "^1.0.2",
     "html5shiv": "^3.7.3",
     "respond": "^1.4.2",
-    "jQuery-Validation-Engine": "^2.6.4",
     "datatables": "^1.10.12",
     "jquery-ui": "^1.11.4",
     "dropzone": "^4.3.0",
@@ -32,6 +31,7 @@
     "fastclick": "^1.0.6",
     "ckeditor": "^4.5.9",
     "datatables-responsive": "^2.1.0",
-    "datatables-rowreorder": "^1.1.2"
+    "datatables-rowreorder": "^1.1.2",
+    "jquery-validation": "^1.15.0"
   }
 }

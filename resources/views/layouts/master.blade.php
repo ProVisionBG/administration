@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/bootstrap/dist/css/bootstrap.min.css")}}">
     <link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/font-awesome/css/font-awesome.min.css")}}">
     <link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/ionicons/css/ionicons.min.css")}}">
-    <link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/jQuery-Validation-Engine/css/validationEngine.jquery.css")}}" type="text/css"/>
     <link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/datatables/media/css/dataTables.bootstrap.css")}}">
     <link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/jquery-ui/themes/base/jquery-ui.min.css")}}" type="text/css"/>
     <link rel="stylesheet" href="{{asset('/vendor/provision/administration/bower_components/dropzone/dist/dropzone.css')}}">
@@ -586,8 +585,8 @@
 <script src="{{asset("/vendor/provision/administration/bower_components/iCheck/icheck.js")}}"></script>
 <script src="{{asset("/vendor/provision/administration/bower_components/jquery-slimscroll/jquery.slimscroll.min.js")}}"></script>
 <script src="{{asset("/vendor/provision/administration/bower_components/fastclick/lib/fastclick.js")}}"></script>
-<script src="{{asset("/vendor/provision/administration/bower_components/jQuery-Validation-Engine/js/languages/jquery.validationEngine-en.js")}}" charset="utf-8"></script>
-<script src="{{asset("/vendor/provision/administration/bower_components/jQuery-Validation-Engine/js/jquery.validationEngine.js")}}" charset="utf-8"></script>
+
+
 <script src="{{asset("/vendor/provision/administration/bower_components/ckeditor/ckeditor.js")}}" charset="utf-8"></script>
 <script src="{{asset("/vendor/provision/administration/bower_components/datatables/media/js/jquery.dataTables.min.js")}}"></script>
 <script src="{{asset("/vendor/provision/administration/bower_components/datatables/media/js/dataTables.bootstrap.min.js")}}"></script>
@@ -595,6 +594,9 @@
 <script src="{{asset("/vendor/provision/administration/bower_components/datatables-rowreorder/js/dataTables.rowReorder.js")}}"></script>
 <script src="{{ asset('/vendor/provision/administration/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.min.js') }}"></script>
 <script src="{{ asset('/vendor/provision/administration/bower_components/jqueryui-timepicker-addon/dist/i18n/jquery-ui-timepicker-addon-i18n.min.js') }}"></script>
+
+<script src="{{ asset('/vendor/provision/administration/bower_components/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('/vendor/provision/administration/bower_components/jquery-validation/src/localization/messages_bg.js') }}"></script>
 
 @stack('js_scripts')
 
@@ -608,7 +610,7 @@
     });
 </script>
 
-@yield('bottom_js')
+@stack('bottom_js')
 
 </body>
 </html>
