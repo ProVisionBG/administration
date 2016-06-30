@@ -39,9 +39,9 @@
     "venturecraft/revisionable": "1.*",
     "laravelcollective/html": "~5.0",
     "kris/laravel-form-builder": "^1.7",
-
+    "eloquent/composer-npm-bridge": "^3.0",
     "fxp/composer-asset-plugin": "~1.1",
-    "bower-asset/bootstrap": "^3.3.6",
+    "bower-asset/bootstrap": "@stable",
     "bower-asset/AdminLTE": "^2.3.3",
     "bower-asset/font-awesome": "^4.6.3",
     "bower-asset/Ionicons": "^2.0.1",
