@@ -1,6 +1,6 @@
 <?php
 return [
-    'title' => 'Системни настройки',
+    'title' => 'Системни функции',
     'roles-repair' => 'Поправка на права',
     'roles-repair-end' => 'Операцията завърши',
     'module-not-have-permissions' => 'Модул :module няма дефинирани администраторски права!',

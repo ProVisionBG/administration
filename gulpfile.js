@@ -31,6 +31,7 @@ elixir(function (mix) {
     mix.combine([
         'resources/assets/bower_components/jquery/dist/jquery.min.js',
         'resources/assets/bower_components/jquery-ui/jquery-ui.min.js',
+        'resources/assets/bower_components/jquery.cookie/jquery.cookie.js',
         'resources/assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
         'resources/assets/bower_components/bootstrap/dist/js/bootstrap.min.js',
         'resources/assets/bower_components/iCheck/icheck.js',

@@ -2,6 +2,7 @@
 
 namespace ProVision\Administration\Providers;
 
+use App\Http\Middleware\EncryptCookies;
 use Config;
 use Form;
 use Illuminate\Support\ServiceProvider;
@@ -155,12 +156,12 @@ class AdministrationServiceProvider extends ServiceProvider {
 
 
             /*
-             * Roles
+             * Administrators/Roles
              */
             $rolesMenu = $administratorsMenu->add(trans('administration::administrators.groups'), [
                 'nickname' => 'administrators.groups',
                 'route' => 'provision.administration.administrators-roles.index'
-            ])->data('icon', 'users')->data('order', 3);
+            ])->data('icon', 'users')->data('order', 2);
             $rolesMenu->add(trans('administration::index.view_all'), [
                 'nickname' => 'administrators.group_add',
                 'route' => 'provision.administration.administrators-roles.index'
@@ -173,7 +174,10 @@ class AdministrationServiceProvider extends ServiceProvider {
             /*
              * Settings
              */
-            $menu->add(trans('administration::index.settings'), ['nickname' => 'settings'])->data('order', 10002)->data('icon', 'sliders');
+            $menu->add(trans('administration::settings.title'), [
+                'nickname' => 'settings',
+                'route' => 'provision.administration.settings.index'
+            ])->data('order', 10002)->data('icon', 'sliders');
 
             /*
              * System
@@ -225,8 +229,8 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->app->register(\Kris\LaravelFormBuilder\FormBuilderServiceProvider::class);
         $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
         $this->app->register(\Torann\LaravelMetaTags\MetaTagsServiceProvider::class);
-        $this->app->register(\Krucas\Notification\NotificationServiceProvider::class);
-        $this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
+        //$this->app->register(\Krucas\Notification\NotificationServiceProvider::class);
+        //$this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
         $this->app->register(\DaveJamesMiller\Breadcrumbs\ServiceProvider::class);
         //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
@@ -244,8 +248,8 @@ class AdministrationServiceProvider extends ServiceProvider {
         $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables::class);
         $loader->alias('FormBuilder', \Kris\LaravelFormBuilder\Facades\FormBuilder::class);
         $loader->alias('MetaTag', \Torann\LaravelMetaTags\Facades\MetaTag::class);
-        $loader->alias('Notification', \Krucas\Notification\Facades\Notification::class);
-        $loader->alias('Socialite', \Laravel\Socialite\Facades\Socialite::class);
+        //$loader->alias('Notification', \Krucas\Notification\Facades\Notification::class);
+        //$loader->alias('Socialite', \Laravel\Socialite\Facades\Socialite::class);
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
         $loader->alias('Breadcrumbs', \DaveJamesMiller\Breadcrumbs\Facade::class);
         $loader->alias('Form', \Collective\Html\FormFacade::class);
@@ -272,6 +276,14 @@ class AdministrationServiceProvider extends ServiceProvider {
 
         $this->app['administration'] = $this->app->share(function ($app) {
             return new Administration;
+        });
+
+        /*
+         * disable cookies encryption for administration cookies
+         */
+        $this->app->resolving(EncryptCookies::class, function ($object) {
+            //collapse navigation
+            $object->disableFor('administration-navigation-collapsed');
         });
 
 

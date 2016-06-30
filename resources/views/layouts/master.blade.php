@@ -24,7 +24,7 @@
     <link rel="stylesheet" href='{{asset("/vendor/provision/administration/css/all.css")}}'>
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini @if(\Request::cookie('administration-navigation-collapsed')=='true') sidebar-collapse @endif">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -39,7 +39,7 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <a id="slidebar-toggle-button" href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -132,16 +132,15 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email),160}}" class="user-image" alt="User Image">--}}
-                            <span class="hidden-xs">{{Auth::guard('provision_administration')->user()->first_name}} {{Auth::guard('provision_administration')->user()->last_name}}</span> <i class="fa fa-caret-down"></i>
+                            <span class="hidden-xs">{{Auth::guard('provision_administration')->user()->name}}</span> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email,160)}}" class="img-circle" alt="User Image">--}}
-
                                 <p>
-                                    {{Auth::guard('provision_administration')->user()->first_name}} {{Auth::guard('provision_administration')->user()->last_name}}
-                                    {{--<small>Member since Nov. 2012</small>--}}
+                                    {{Auth::guard('provision_administration')->user()->name}}
+                                    <small>Member since {{Auth::guard('provision_administration')->user()->created_at}}</small>
                                 </p>
                             </li>
                         {{--
@@ -161,10 +160,10 @@
                         <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Settings</a>
+                                    <a href="{{route('provision.administration.administrators.edit',[Auth::guard('provision_administration')->user()->id])}}" class="btn btn-default btn-flat">{{trans('administration::index.settings')}}</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="{{route('provision.administration.logout')}}" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="{{route('provision.administration.logout')}}" class="btn btn-default btn-flat">{{trans('administration::index.logout')}}</a>
                                 </div>
                             </li>
 
@@ -393,7 +392,7 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> {{Config::get('provision_administration.version')}}
         </div>
-        <strong><a href="http://www.provision.bg/?ref=cms5" target="_blank"><b>ProVision</b></a> CMS</strong>. All rights reserved.
+        <strong><a href="http://www.provision.bg/?ref=cms5" target="_blank"><b>ProVision</b></a> Administration</strong>. All rights reserved.
     </footer>
 
     {{--

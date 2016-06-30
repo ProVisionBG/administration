@@ -91,6 +91,24 @@ Route::group([
                 ]
             ]);
 
+            /*
+             * Settings
+             */
+            Route::resource('settings', \Config::get('provision_administration.settings_controller'), [
+                'names' => [
+                    'index' => 'settings.index',
+                    // 'edit' => 'administrators-roles.edit',
+                    // 'create' => 'administrators-roles.create',
+                    // 'store' => 'administrators-roles.store',
+                    'update' => 'settings.update',
+                    // 'destroy' => 'administrators-roles.destroy'
+                ],
+                'only' => [
+                    'index',
+                    'update'
+                ]
+            ]);
+
             Route::group([
                 'as' => 'systems.',
                 'prefix' => 'systems'

@@ -14,5 +14,8 @@ return [
      */
     'command_prefix' => 'admin',
 
-
+    /*
+     * Settings controller
+     */
+    'settings_controller' => '\ProVision\Administration\Http\Controllers\SettingsController'
 ];

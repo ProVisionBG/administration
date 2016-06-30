@@ -8,8 +8,7 @@ return [
     'i-forgot-my-password' => 'Забравена парола?',
     'home' => 'Начало',
     'modules' => 'Модули',
-    'system-settings' => 'Системни настройки',
-    'settings' => 'Настройка',
+    'system-settings' => 'Системни',
     'main_navigation' => 'Навигация',
     'translates' => 'Преводи',
     'or' => 'или',
@@ -26,6 +25,9 @@ return [
     'edit' => 'Редакция',
     'save' => 'Запази',
     'actions' => 'Действия',
-    'add' => 'Добави'
+    'add' => 'Добави',
+    'dashboard' => 'Администраторско табло',
+    'logout' => 'Изход',
+    'settings' => 'Настройка'
 
 ];

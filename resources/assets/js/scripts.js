@@ -1,3 +1,10 @@
-/**
- * Created by Venko on 30.6.2016 г..
- */
+$(function () {
+    'use strict';
+
+    /*
+     navigation toggle set cookies
+     */
+    $('#slidebar-toggle-button').click(function (e) {
+        $.cookie('administration-navigation-collapsed', !$('body').hasClass('sidebar-collapse'));
+    });
+})
