@@ -155,22 +155,41 @@ class AdministrationServiceProvider extends ServiceProvider {
             //system settings
             $menu->add(trans('administration::index.system-settings'), ['nickname' => 'system-settings'])->data('header', true)->data('order', 10000);
 
+            /*
+             * Administrators
+             */
             $administratorsMenu = $menu->add(trans('administration::administrators.administrators'), [
                 'nickname' => 'administrators.menu.item',
             ])->data('order', 10001)->data('icon', 'users');
-            $administratorsMenu->add(trans('administration::index.view_all'), [
-                'nickname' => 'administrators',
-                'route' => 'provision.administration.administrators.index'
-            ])->data('icon', 'list');
-            $administratorsMenu->add(trans('administration::administrators.groups'), [
-                'nickname' => 'administrators.groups',
-                //'route' => 'provision.administration.administrators.index'
-            ])->data('icon', 'users');
             $administratorsMenu->add(trans('administration::administrators.create_administrator'), [
                 'nickname' => 'administrators.create',
                 'route' => 'provision.administration.administrators.create'
-            ])->data('icon', 'plus');
+            ])->data('icon', 'plus')->data('order', 1);
+            $administratorsMenu->add(trans('administration::index.view_all'), [
+                'nickname' => 'administrators',
+                'route' => 'provision.administration.administrators.index'
+            ])->data('icon', 'list')->data('order', 2);
 
+
+            /*
+             * Roles
+             */
+            $rolesMenu = $administratorsMenu->add(trans('administration::administrators.groups'), [
+                'nickname' => 'administrators.groups',
+                'route' => 'provision.administration.administrators-roles.index'
+            ])->data('icon', 'users')->data('order', 3);
+            $rolesMenu->add(trans('administration::index.view_all'), [
+                'nickname' => 'administrators.group_add',
+                'route' => 'provision.administration.administrators-roles.index'
+            ])->data('icon', 'list')->data('order', 1);
+            $rolesMenu->add(trans('administration::index.add'), [
+                'nickname' => 'administrators.group_add',
+                'route' => 'provision.administration.administrators-roles.create'
+            ])->data('icon', 'plus')->data('order', 2);
+
+            /*
+             * Settings
+             */
             $menu->add(trans('administration::index.settings'), ['nickname' => 'settings'])->data('order', 10002)->data('icon', 'sliders');
 
             /*

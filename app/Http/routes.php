@@ -80,6 +80,17 @@ Route::group([
                 ]
             ]);
 
+            Route::resource('administrators-roles', 'AdministratorsRolesController', [
+                'names' => [
+                    'index' => 'administrators-roles.index',
+                    'edit' => 'administrators-roles.edit',
+                    'create' => 'administrators-roles.create',
+                    'store' => 'administrators-roles.store',
+                    'update' => 'administrators-roles.update',
+                    'destroy' => 'administrators-roles.destroy'
+                ]
+            ]);
+
             Route::group([
                 'as' => 'systems.',
                 'prefix' => 'systems'
