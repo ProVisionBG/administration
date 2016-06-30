@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
+}
