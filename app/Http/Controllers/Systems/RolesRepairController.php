@@ -20,7 +20,7 @@ class RolesRepairController extends BaseAdministrationController {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        Administration::setModuleName(trans('administration::systems.roles-repair'));
+        Administration::setTitle(trans('administration::systems.roles-repair'));
 
         $modules = Module::all();
         $adminRole = Role::where('name', 'admin')->first();

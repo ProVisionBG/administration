@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title> @if(!empty(\Administration::getModuleName())){{\Administration::getModuleName()}} | @endif{{ Lang::get('administration::index.admin_title') }}</title>
+    <title> @if(!empty(\Administration::getTitle())){{\Administration::getTitle()}} | @endif{{ Lang::get('administration::index.admin_title') }}</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -364,8 +364,8 @@
 
             <section id="module-header" class="content-header">
                 <h1>
-                    {{\Administration::getModuleName()}}
-                    <small>{{\Administration::getModuleSubName()}}</small>
+                    {{\Administration::getTitle()}}
+                    <small>{{\Administration::getSubTitle()}}</small>
                 </h1>
                 @if(Breadcrumbs::exists('admin_final'))
                     {{Breadcrumbs::setView('administration::partials.breadcrumbs')}}

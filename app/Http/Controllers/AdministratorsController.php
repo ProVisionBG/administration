@@ -16,7 +16,7 @@ use Request;
 class AdministratorsController extends BaseAdministrationController {
     public function __construct() {
         parent::__construct();
-        Administration::setModuleName(trans('administration::administrators.administrators'));
+        Administration::setTitle(trans('administration::administrators.administrators'));
     }
 
     /**
@@ -84,7 +84,7 @@ class AdministratorsController extends BaseAdministrationController {
         );
 
 
-        Administration::setModuleName(trans('administration::administrators.create_administrator'));
+        Administration::setTitle(trans('administration::administrators.create_administrator'));
 
         \Breadcrumbs::register('admin_final', function ($breadcrumbs) {
             $breadcrumbs->parent('admin_home');
@@ -146,7 +146,7 @@ class AdministratorsController extends BaseAdministrationController {
             'model' => $user
         ]);
 
-        Administration::setModuleName(trans('administration::administrators.edit_administrator', ['name' => $user->name]));
+        Administration::setTitle(trans('administration::administrators.edit_administrator', ['name' => $user->name]));
 
         \Breadcrumbs::register('admin_final', function ($breadcrumbs) use ($user) {
             $breadcrumbs->parent('admin_home');

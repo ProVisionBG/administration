@@ -13,40 +13,40 @@ class Administration extends Facade {
     /*
      * Current module name
      */
-    private static $currentModuleName = 'Enter module name here!';
+    private static $currentModuleTitle = 'Enter module name here!';
 
     /*
      * Current module sub name
      */
-    private static $currentModuleSubName = '';
+    private static $currentModuleSubTitle = '';
 
     /**
      * Set current module name for administration titles
      * @param $name
      */
-    public static function setModuleName($name) {
-        Administration::$currentModuleName = $name;
+    public static function setTitle($name) {
+        Administration::$currentModuleTitle = $name;
     }
 
     /*
      * Get current module name
      */
-    public static function getModuleName() {
-        return Administration::$currentModuleName;
+    public static function getTitle() {
+        return Administration::$currentModuleTitle;
     }
 
     /**
      * Set current module sub name for administration titles
      * @param $name
      */
-    public static function setModuleSubName($name) {
-        Administration::$currentModuleSubName = $name;
+    public static function setSubTitle($name) {
+        Administration::$currentModuleSubTitle = $name;
     }
 
     /*
-        * Get current module sub name
-        */
-    public static function getModuleSubName() {
-        return Administration::$currentModuleSubName;
+    * Get current module sub name
+    */
+    public static function getSubTitle() {
+        return Administration::$currentModuleSubTitle;
     }
 }
