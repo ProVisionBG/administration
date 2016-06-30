@@ -45,6 +45,7 @@ Route::group([
                     return Redirect::route('provision.administration.login');
                 }
             ]);
+
             /*
             Route::get('media/{module}/{id}', [
                 'as' => '.media',
@@ -78,6 +79,18 @@ Route::group([
                     'destroy' => 'administrators.destroy'
                 ]
             ]);
+
+            Route::group([
+                'as' => 'systems.',
+                'prefix' => 'systems'
+            ], function () {
+                Route::get('roles-repair', [
+                    'as' => 'roles-repair',
+                    'uses' => 'Systems\RolesRepairController@index'
+                ]);
+            });
+
+
         });
 
     });

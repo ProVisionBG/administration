@@ -4,8 +4,8 @@ namespace ProVision\Administration\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-use ProVision\Administration\AdminRole;
 use ProVision\Administration\AdminUser;
+use ProVision\Administration\Role;
 
 class CreateAdministrator extends Command {
     /**
@@ -77,9 +77,9 @@ class CreateAdministrator extends Command {
         /*
          * create default role and assing to user
          */
-        $adminRole = adminRole::where('name', 'admin')->first();
+        $adminRole = Role::where('name', 'admin')->first();
         if (empty($adminRole)) {
-            $adminRole = new AdminRole();
+            $adminRole = new Role();
             $adminRole->name = 'admin';
             $adminRole->display_name = 'Administrator';
             $adminRole->description = 'The BIG BOSS';

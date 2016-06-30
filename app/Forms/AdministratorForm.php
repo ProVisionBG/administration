@@ -1,8 +1,8 @@
 <?php
 namespace ProVision\Administration\Forms;
 
-use ProVision\Administration\AdminPermission;
-use ProVision\Administration\AdminRole;
+use ProVision\Administration\Permission;
+use ProVision\Administration\Role;
 
 class AdministratorForm extends AdminForm {
 
@@ -57,21 +57,19 @@ class AdministratorForm extends AdminForm {
             ],
         ]);
         $this->add('roles', 'choice', [
-            'choices' => AdminRole::lists('display_name', 'id')->toArray(),
+            'choices' => Role::lists('display_name', 'id')->toArray(),
             'selected' => (!empty($this->model) ? @$this->model->roles->lists('id')->toArray() : null),
             'expanded' => true,
             'multiple' => true,
             'label' => trans('administration::administrators.groups')
         ]);
-        $this->add('permissions', 'choice', [
-            'choices' => AdminPermission::lists('display_name', 'name')->toArray(),
-            'selected' => [
-                'en',
-            ],
-            'expanded' => true,
-            'multiple' => true,
-            'label' => trans('administration::administrators.permissions')
-        ]);
+//        $this->add('permissions', 'choice', [
+//            'choices' => Permission::lists('display_name', 'name')->toArray(),
+//            'selected' => (!empty($this->model) ? @$this->model->perms->lists('id')->toArray() : null),
+//            'expanded' => true,
+//            'multiple' => true,
+//            'label' => trans('administration::administrators.permissions')
+//        ]);
         $this->add('footer', 'admin_footer');
         $this->add('send', 'submit', [
             'label' => trans('administration::index.save'),

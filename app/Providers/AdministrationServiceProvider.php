@@ -172,7 +172,15 @@ class AdministrationServiceProvider extends ServiceProvider {
             ])->data('icon', 'plus');
 
             $menu->add(trans('administration::index.settings'), ['nickname' => 'settings'])->data('order', 10002)->data('icon', 'sliders');
-            $menu->add(trans('administration::index.system'), ['nickname' => 'system'])->data('order', 10003)->data('icon', 'cogs');
+
+            /*
+             * System
+             */
+            $systemMenu = $menu->add(trans('administration::systems.title'), ['nickname' => 'system'])->data('order', 10003)->data('icon', 'cogs');
+            $systemMenu->add(trans('administration::systems.roles-repair'), [
+                'nickname' => 'system-roles-repair',
+                'route' => 'provision.administration.systems.roles-repair'
+            ])->data('icon', 'user-secret');
 
             $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])->data('order', 10004)->data('icon', 'globe');
 
