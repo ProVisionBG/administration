@@ -25,9 +25,6 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../config/laravel-menu/views.php' => config_path('laravel-menu/views.php'),
         ], 'config');
 
-        //reset session cookie
-        Config::set(['session.cookie' => 'provision_session']);
-
         //set custom auth provider & guard
         Config::set([
             'auth.guards.provision_administration' => [
@@ -50,23 +47,6 @@ class AdministrationServiceProvider extends ServiceProvider {
             ]
         ]);
 
-
-        /*
-         * add custom Form fields
-         */
-        Config::set('laravel-form-builder.template_prefix', 'administration::components.fields.');
-        Config::set('laravel-form-builder.custom_fields.admin_footer', \ProVision\Administration\Forms\Fields\AdminFooter::class);
-//        Config::set('form-builder.custom_fields.admin_password', \ProVision\Administration\Forms\Fields\AdminPassword::class);
-//        Config::set('form-builder.custom_fields.admin_choice', \ProVision\Administration\Forms\Fields\AdminChoice::class);
-
-        Form::component('adminDeleteButton', 'administration::components.form.admin_delete_button', [
-            'name',
-            'href'
-        ]);
-        Form::component('adminEditButton', 'administration::components.form.admin_edit_button', [
-            'name',
-            'href'
-        ]);
 
         /*
          * Routes
@@ -109,30 +89,33 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../database/seeds/' => database_path('seeds')
         ], 'seeds');
 
-        /*
-         * Modules
-        $modules = config("provision_administration.modules");
-        if (is_array($modules) && count($modules) > 0) {
-            while (list(, $module) = each($modules)) {
-                // Load the routes for each of the modules
-                if (file_exists(base_path() . '/modules/' . $module . '/routes.php')) {
-                    include base_path() . '/modules/' . $module . '/routes.php';
-                }
-                // Load the views
-                if (is_dir(base_path() . '/modules/' . $module . '/Views')) {
-                    $this->loadViewsFrom(base_path() . '/modules/' . $module . '/Views', $module);
-                }
-            }
-        }*/
+        $this->adminBoot();
+    }
+
+    private function adminBoot() {
+        if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
+            return false;
+        }
 
         /*
-         * init modules
-         */
-        //Administration::initModules();
-
-        /*
-       * Administration menu init
+       * add custom Form fields
        */
+        Config::set('laravel-form-builder.template_prefix', 'administration::components.fields.');
+        Config::set('laravel-form-builder.custom_fields.admin_footer', \ProVision\Administration\Forms\Fields\AdminFooter::class);
+
+        Form::component('adminDeleteButton', 'administration::components.form.admin_delete_button', [
+            'name',
+            'href'
+        ]);
+        Form::component('adminEditButton', 'administration::components.form.admin_edit_button', [
+            'name',
+            'href'
+        ]);
+
+
+        /*
+      * Administration menu init
+      */
         \Menu::make('ProVisionAdministrationMenu', function ($menu) {
             //main header
             $menu->add(trans('administration::index.main_navigation'), ['nickname' => 'navigation'])->data('header', true)->data('order', 1);
@@ -212,6 +195,9 @@ class AdministrationServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
+
+        //reset session cookie
+        Config::set(['session.cookie' => 'provision_session']);
 
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/provision_administration.php', 'provision_administration'
