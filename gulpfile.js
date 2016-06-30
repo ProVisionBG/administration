@@ -3,7 +3,7 @@ var autoprefixer = require('gulp-autoprefixer');
 
 
 elixir.config.css.autoprefix = {
-    enabled: true,
+    enabled: false,
     options: {
         browsers: ['last 5 versions', '> 1%'],
         cascade: true,
@@ -51,7 +51,9 @@ elixir(function (mix) {
 
     //mix.version(["public/assets/css/all.css", "public/assets/js/all.js"],'public/vendor/provision/administration');
 
-    mix.copy('resources/assets/bower_components/font-awesome/fonts', 'public/assets/fonts/');
+    mix.copy('resources/assets/bower_components/font-awesome/fonts', 'public/assets/fonts/')
+        .copy('resources/assets/bower_components/glyphicons/fonts', 'public/assets/fonts/')
+        .copy('resources/assets/bower_components/iCheck/skins/square/blu*.png', 'public/assets/css/');
 
 });
 
