@@ -1,7 +1,12 @@
 {
-  "version": "5.0.0",
+  "version": "0.0.1",
   "name": "provision/administration",
-  "description": "ProVision CMS v5 - laravel package",
+  "description": "ProVision Administration - laravel package",
+  "keywords": [
+    "administration",
+    "modular",
+    "laravel"
+  ],
   "authors": [
     {
       "name": "Venelin Iliev",
@@ -9,9 +14,13 @@
       "homepage": "http://veneliniliev.com"
     }
   ],
+  "support": {
+    "issues": "https://github.com/ProVisionBG/administration/issues",
+    "source": "https://github.com/ProVisionBG/administration"
+  },
   "homepage": "http://provision.bg",
   "type": "library",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "require": {
     "php": "^5.5 || ^7.0",
     "laravel/framework": "5.2.*",
