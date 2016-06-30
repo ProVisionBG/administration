@@ -40,7 +40,8 @@
     "venturecraft/revisionable": "1.*",
     "laravelcollective/html": "~5.0",
     "kris/laravel-form-builder": "^1.7",
-    "eloquent/composer-npm-bridge": "dev-develop"
+    "eloquent/composer-npm-bridge": "dev-develop",
+    "php-kit/composer-bower-plugin": "^1.0"
   },
   "autoload": {
     "classmap": [
