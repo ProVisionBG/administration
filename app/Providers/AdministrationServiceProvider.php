@@ -88,7 +88,7 @@ class AdministrationServiceProvider extends ServiceProvider {
          * assets
          */
         $this->publishes([
-            __DIR__ . '/../../resources/assets' => public_path('vendor/provision/administration'),
+            __DIR__ . '/../../public/assets' => public_path('vendor/provision/administration'),
         ], 'public');
 
         /*

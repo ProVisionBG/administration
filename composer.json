@@ -38,26 +38,7 @@
     "barryvdh/laravel-translation-manager": "^0.2.2",
     "venturecraft/revisionable": "1.*",
     "laravelcollective/html": "~5.0",
-    "kris/laravel-form-builder": "^1.7",
-    "eloquent/composer-npm-bridge": "^3.0",
-    "fxp/composer-asset-plugin": "~1.1",
-    "bower-asset/bootstrap": "@stable",
-    "bower-asset/AdminLTE": "^2.3.3",
-    "bower-asset/font-awesome": "^4.6.3",
-    "bower-asset/Ionicons": "^2.0.1",
-    "bower-asset/iCheck": "^1.0.2",
-    "bower-asset/html5shiv": "^3.7.3",
-    "bower-asset/respond": "^1.4.2",
-    "bower-asset/datatables": "^1.10.12",
-    "bower-asset/jquery-ui": "^1.11.4",
-    "bower-asset/dropzone": "^4.3.0",
-    "bower-asset/jqueryui-timepicker-addon": "^1.6.3",
-    "bower-asset/jquery-slimscroll": "^1.3.8",
-    "bower-asset/fastclick": "^1.0.6",
-    "bower-asset/ckeditor": "^4.5.9",
-    "bower-asset/datatables-responsive": "^2.1.0",
-    "bower-asset/datatables-rowreorder": "^1.1.2",
-    "bower-asset/jquery-validation": "^1.15.0"
+    "kris/laravel-form-builder": "^1.7"
   },
   "autoload": {
     "classmap": [
@@ -74,10 +55,5 @@
     "post-update-cmd": [
       "php artisan vendor:publish --tag=public --force"
     ]
-  },
-  "extra": {
-    "asset-installer-paths": {
-      "bower-asset-library": "public/vendor/provision/administration/bower_components/"
-    }
   }
 }

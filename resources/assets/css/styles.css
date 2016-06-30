@@ -1,0 +1,35 @@
+label.control-label.required:after {
+  content: "*";
+  color: red;
+}
+
+.tab-content > .tab-pane {
+  margin-top: 10px;
+}
+
+img.flag {
+  width: 20px;
+}
+
+.modal {
+  text-align: center;
+  padding: 0 !important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+#module-header {
+  margin-bottom: 15px;
+}
