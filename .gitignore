@@ -2,5 +2,4 @@
 /composer.lock
 /resources/assets/bower_components/
 /node_modules/
-/npm-shrinkwrap.json
-/bower.json
+/public/
