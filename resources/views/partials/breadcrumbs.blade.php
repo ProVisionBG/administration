@@ -1,5 +1,5 @@
 @if ($breadcrumbs)
-    <pl class="breadcrumb">
+    <ol class="breadcrumb hidden-xs hidden-sm">
         @foreach ($breadcrumbs as $breadcrumb)
             @if (!$breadcrumb->last)
                 <li>
@@ -19,6 +19,6 @@
                 </li>
             @endif
         @endforeach
-    </pl>
+    </ol>
 
 @endif
