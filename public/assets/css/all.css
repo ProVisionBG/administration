@@ -447,7 +447,7 @@ label[class*='lang-'] {
     background: #ecf0f5;
 }
 
-.nav-tabs-languages ul.nav-tabs > li.active > a {
+.nav-tabs-languages ul.nav-tabs > li.active > a,.nav-tabs-languages ul.nav-tabs > li:hover > a {
     background-color: #ecf0f5;
 }
 /*# sourceMappingURL=all.css.map */
