@@ -66,7 +66,7 @@ class CreateAdministrator extends Command {
             /*
              * Reset admin password
              */
-            $adminUser->password = Hash::make($this->argument('password'));
+            $adminUser->password = $this->argument('password');
             $adminUser->save();
 
             $this->info('Reset admin user...');
