@@ -118,7 +118,8 @@ class AdministrationServiceProvider extends ServiceProvider {
         ]);
         Form::component('adminMediaButton', 'administration::components.form.admin_media_button', [
             'id',
-            'module'
+            'module',
+            'sub_module'
         ]);
 
 
@@ -240,6 +241,7 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->app->register(\Kris\LaravelFormBuilder\FormBuilderServiceProvider::class);
         $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
         $this->app->register(\Torann\LaravelMetaTags\MetaTagsServiceProvider::class);
+        $this->app->register(\Dimsav\Translatable\TranslatableServiceProvider::class);
         //$this->app->register(\Krucas\Notification\NotificationServiceProvider::class);
         //$this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
