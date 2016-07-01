@@ -34,6 +34,7 @@
     "datatables-rowreorder": "^1.1.2",
     "jquery-validation": "^1.15.0",
     "glyphicons": "^0.0.2",
-    "jquery.cookie": "^1.4.1"
+    "jquery.cookie": "^1.4.1",
+    "PACE": "pace#^1.0.2"
   }
 }

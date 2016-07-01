@@ -21,6 +21,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/jquery-ui/themes/base/jquery-ui.min.css',
         'resources/assets/bower_components/dropzone/dist/dropzone.css',
         'resources/assets/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css',
+        //'resources/assets/bower_components/PACE/themes/blue/pace-theme-loading-bar.css',
 
         'resources/assets/bower_components/AdminLTE/dist/css/AdminLTE.min.css',
         'resources/assets/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css',
@@ -45,6 +46,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/jqueryui-timepicker-addon/dist/i18n/jquery-ui-timepicker-addon-i18n.min.js',
         'resources/assets/bower_components/jquery-validation/dist/jquery.validate.min.js',
         'resources/assets/bower_components/jquery-validation/src/localization/messages_bg.js',
+        //'resources/assets/bower_components/PACE/pace.js',
         'resources/assets/bower_components/AdminLTE/dist/js/app.min.js',
 
         'resources/assets/js/scripts.js'

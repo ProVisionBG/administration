@@ -40,6 +40,8 @@ class AdministratorsController extends BaseAdministrationController {
                         }
                     }
 
+                    $actions .= Form::adminMediaButton($user->id, 'users');
+
                     return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators.edit', $user->id)) . $actions;
                 })
                 ->filter(function ($query) {
