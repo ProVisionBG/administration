@@ -2,6 +2,7 @@
 namespace ProVision\Administration\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use LaravelLocalization;
 
 class Administration extends Facade {
 
@@ -48,5 +49,19 @@ class Administration extends Facade {
     */
     public static function getSubTitle() {
         return Administration::$currentModuleSubTitle;
+    }
+
+    /*
+     * get all language codes
+     */
+    public static function getLanguages() {
+        return LaravelLocalization::getSupportedLocales();
+    }
+
+    /*
+     * get current language code
+     */
+    public static function getLanguage() {
+        return LaravelLocalization::setLocale();
     }
 }
