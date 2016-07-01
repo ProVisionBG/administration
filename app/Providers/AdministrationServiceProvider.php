@@ -22,6 +22,7 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../config/provision_administration.php' => config_path('provision_administration.php'),
             __DIR__ . '/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
             __DIR__ . '/../../config/entrust.php' => config_path('entrust.php'),
+            __DIR__ . '/../../config/laravel-form-builder.php' => config_path('laravel-form-builder.php'),
             __DIR__ . '/../../config/laravel-menu/settings.php' => config_path('laravel-menu/settings.php'),
             __DIR__ . '/../../config/laravel-menu/views.php' => config_path('laravel-menu/views.php'),
         ], 'config');
@@ -104,6 +105,9 @@ class AdministrationServiceProvider extends ServiceProvider {
         Config::set('laravel-form-builder.template_prefix', 'administration::components.fields.');
         Config::set('laravel-form-builder.custom_fields.admin_footer', \ProVision\Administration\Forms\Fields\AdminFooter::class);
 
+        /*
+         * Administration listing short buttons
+         */
         Form::component('adminDeleteButton', 'administration::components.form.admin_delete_button', [
             'name',
             'href'
@@ -111,6 +115,10 @@ class AdministrationServiceProvider extends ServiceProvider {
         Form::component('adminEditButton', 'administration::components.form.admin_edit_button', [
             'name',
             'href'
+        ]);
+        Form::component('adminMediaButton', 'administration::components.form.admin_media_button', [
+            'id',
+            'module'
         ]);
 
 
@@ -215,6 +223,9 @@ class AdministrationServiceProvider extends ServiceProvider {
         );
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/laravellocalization.php', 'laravellocalization'
+        );
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/laravel-form-builder.php', 'laravel-form-builder'
         );
 
 
