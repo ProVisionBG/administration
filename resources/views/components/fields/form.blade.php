@@ -1,4 +1,4 @@
-<?php if ($showStart): ?>
+<?php if ($showStart) { ?>
 
 <?php
 $boxType = 'primary';
@@ -17,33 +17,68 @@ if (!empty($formOptions['id'])) {
 
 <div class="box box-<?= $boxType; ?>">
 
-    <?php
-    if (!empty($form->getData('title'))) {
-    ?>
-    <div class="box-header with-border">
-        <h3 class="box-title"><?= $form->getData('title'); ?></h3>
-    </div>
-    <?php
-    }
-    ?>
+    @if (!empty($form->getData('title')))
+        <div class="box-header with-border">
+            <h3 class="box-title"><?= $form->getData('title'); ?></h3>
+        </div>
+    @endif
 
-    <?= Form::open($formOptions) ?>
+    {{Form::open($formOptions)}}
     <div class="box-body">
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if ($showFields): ?>
-            <?php foreach ($fields as $field) { ?>
-                <?php if (!in_array($field->getName(), $exclude)) {
-            if (!empty($field->getOptions()['validation_rules']['required']) && $field->getOptions()['validation_rules']['required'] == true) {
-                $field->setOptions(['rules' => 'required']);
+        <?php if ($showFields) {
+            $translationContainer = [];
+            $translationOpened = false;
+
+            foreach ($fields as $field) {
+                if (!in_array($field->getName(), $exclude)) {
+
+                    /*
+                     * set required flag
+                     */
+                    if (!empty($field->getOptions()['validation_rules']['required']) && $field->getOptions()['validation_rules']['required'] == true) {
+                        $field->setOptions(['rules' => 'required']);
+                    }
+
+                    /*
+                     * check translation state is continues
+                     */
+                    if (empty($field->getOptions()['translate'])) {
+                        $field->setOptions(['translate' => false]);
+                    }
+                    if ($field->getOptions()['translate'] !== $translationOpened) {
+                        /*
+                         * show translation tabs
+                         */
+                        if ($translationOpened === false && !empty($translationContainer)) {
+                            //open translations
+                            ?>
+                            @include('administration::components.fields.translation_tabs')
+                            <?php
+                        } else {
+                            //close translations & render fields
+                            ?>
+                            @include('administration::components.fields.translation_tabs')
+                            <?php
+                            $translationContainer=[];
+                        }
+                        $translationOpened = !$translationOpened;
+                    }
+
+                    if($translationOpened){
+                        $translationContainer[]=$field;
+                    } else {
+                        $translationOpened = false;
+                        echo $field->render();
+                    }
+                }
             }
-            ?>
-                    <?= $field->render() ?>
-                <?php } ?>
-            <?php } ?>
-        <?php endif; ?>
+        }
 
-        <?php if ($showEnd): ?>
+        ?>
+
+        @if ($showEnd)
     </div>
     <?= Form::close() ?>
 </div>
@@ -78,4 +113,5 @@ if (!empty($formOptions['id'])) {
 </script>
 @endpush
 
-<?php endif; ?>
+@endif
+

@@ -5,7 +5,6 @@ namespace ProVision\Administration\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use ProVision\Administration\AdminUser;
 use Validator;
 
 class AuthController extends Controller {
@@ -27,7 +26,7 @@ class AuthController extends Controller {
      *
      * @var string
      */
-    protected $redirectTo = 'admin/';
+    protected $redirectTo = '';
 
     protected $guard = 'provision_administration';
 
@@ -42,33 +41,5 @@ class AuthController extends Controller {
         $this->redirectTo = config('provision_administration.url_prefix');
 
         //$this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data) {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array $data
-     * @return User
-     */
-    protected function create(array $data) {
-        return AdminUser::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
     }
 }

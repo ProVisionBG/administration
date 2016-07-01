@@ -1,35 +1,60 @@
 label.control-label.required:after {
-  content: "*";
-  color: red;
+    content: "*";
+    color: red;
 }
 
 .tab-content > .tab-pane {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 img.flag {
-  width: 20px;
+    width: 20px;
 }
 
 .modal {
-  text-align: center;
-  padding: 0 !important;
+    text-align: center;
+    padding: 0 !important;
 }
 
 .modal:before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-  margin-right: -4px;
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
 }
 
 .modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
 }
 
 #module-header {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.modal-media .modal-dialog {
+    width: 77%;
+    height: 77%;
+    margin: 0;
+    padding: 0;
+}
+
+.modal-media .modal-content {
+    height: auto;
+    min-height: 77%;
+    border-radius: 0;
+}
+
+label[class*='lang-'] {
+    padding-left: 23px;
+}
+
+.nav-tabs-languages .tab-content {
+    background: #ecf0f5;
+}
+
+.nav-tabs-languages ul.nav-tabs > li.active > a {
+    background-color: #ecf0f5;
 }

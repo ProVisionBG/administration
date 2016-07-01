@@ -1,7 +1,6 @@
 <?php
 namespace ProVision\Administration\Forms;
 
-use ProVision\Administration\Permission;
 use ProVision\Administration\Role;
 
 class AdministratorForm extends AdminForm {
@@ -13,8 +12,10 @@ class AdministratorForm extends AdminForm {
             'validation_rules' => [
                 "required" => true,
                 "minlength" => 2
-            ]
+            ],
+            'translate' => true
         ]);
+
         $this->add('email', 'text', [
             'label' => trans('administration::administrators.email'),
             'validation_rules' => [
@@ -54,7 +55,7 @@ class AdministratorForm extends AdminForm {
             'validation_rules' => $confirmPasswordValidatorRules,
             'attr' => [
                 "autocomplete" => "off"
-            ],
+            ]
         ]);
         $this->add('roles', 'choice', [
             'choices' => Role::lists('display_name', 'id')->toArray(),

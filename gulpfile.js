@@ -1,5 +1,6 @@
 var elixir = require('laravel-elixir');
 var autoprefixer = require('gulp-autoprefixer');
+var shell = require("gulp-shell");
 
 
 elixir.config.css.autoprefix = {
@@ -11,6 +12,14 @@ elixir.config.css.autoprefix = {
     }
 };
 
+elixir.extend("publish", function () {
+    gulp.task("publish_assets", function () {
+        gulp.src("").pipe(shell([
+            "C:\\xampp\\php\\php.exe C:\\Users\\Venko\\PhpstormProjects\\provision-cms-5\\artisan vendor:publish --tag=public --tag=views --force"
+        ]));
+    });
+});
+
 elixir(function (mix) {
     mix.combine([
         'resources/assets/bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -19,9 +28,9 @@ elixir(function (mix) {
         'resources/assets/bower_components/iCheck/skins/square/blue.css',
         'resources/assets/bower_components/datatables/media/css/dataTables.bootstrap.css',
         'resources/assets/bower_components/jquery-ui/themes/base/jquery-ui.min.css',
-        'resources/assets/bower_components/dropzone/dist/dropzone.css',
         'resources/assets/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css',
-        //'resources/assets/bower_components/PACE/themes/blue/pace-theme-loading-bar.css',
+        'resources/assets/bower_components/PACE/themes/green/pace-theme-flash.css',
+        'resources/assets/bower_components/bootstrap-languages/languages.min.css',
 
         'resources/assets/bower_components/AdminLTE/dist/css/AdminLTE.min.css',
         'resources/assets/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css',
@@ -46,9 +55,15 @@ elixir(function (mix) {
         'resources/assets/bower_components/jqueryui-timepicker-addon/dist/i18n/jquery-ui-timepicker-addon-i18n.min.js',
         'resources/assets/bower_components/jquery-validation/dist/jquery.validate.min.js',
         'resources/assets/bower_components/jquery-validation/src/localization/messages_bg.js',
-        //'resources/assets/bower_components/PACE/pace.js',
+        'resources/assets/bower_components/PACE/pace.js',
+
+        //file uploads
+        'resources/assets/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js',
+        'resources/assets/bower_components/blueimp-file-upload/js/jquery.fileupload.js',
+
         'resources/assets/bower_components/AdminLTE/dist/js/app.min.js',
 
+        'resources/assets/js/media.js',
         'resources/assets/js/scripts.js'
     ], 'public/assets/js/all.js');
 
@@ -56,8 +71,12 @@ elixir(function (mix) {
 
     mix.copy('resources/assets/bower_components/font-awesome/fonts', 'public/assets/fonts/')
         .copy('resources/assets/bower_components/glyphicons/fonts', 'public/assets/fonts/')
-        .copy('resources/assets/bower_components/iCheck/skins/square/blu*.png', 'public/assets/css/');
-
+        .copy('resources/assets/bower_components/iCheck/skins/square/blu*.png', 'public/assets/css/')
+        .copy('resources/assets/bower_components/bootstrap-languages/languages.png', 'public/assets/css/')
+        .publish();
 });
 
 
+gulp.task("full", ["all", "publish_assets"], function () {
+
+});

@@ -18,6 +18,9 @@ class AdminForm extends Form {
 
     public function addSeoFields($lang = false, $required = false) {
 
+        /*
+         * @todo: да се изнесат в конфигурацията
+         */
         $inputs = [
             'meta_title',
             'meta_description',
@@ -38,6 +41,8 @@ class AdminForm extends Form {
             ]);
         }
 
-
     }
+    
+
+
 }

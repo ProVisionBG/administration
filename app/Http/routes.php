@@ -47,28 +47,8 @@ Route::group([
             ]);
 
             /*
-            Route::get('media/{module}/{id}', [
-                'as' => '.media',
-                'uses' => 'AdminController@media'
-            ]);
-
-            Route::post('media/{module}/{id}', [
-                'as' => '.media.store',
-                'uses' => 'AdminController@mediaStore'
-            ]);
-
-            Route::DELETE('mediaDestroy/{id}', [
-                'as' => '.media.destroy',
-                'uses' => 'AdminController@mediaDestroy'
-            ]);
-
-            Route::put('mediaOrders/{imageId}', [
-                'as' => '.media.orders',
-                'uses' => 'AdminController@imagesOrder'
-            ]);
-            */
-            //Route::get('/', 'AdministrationController@index');
-
+             * Administrators
+             */
             Route::resource('administartors', 'Administrators\AdministratorsController', [
                 'names' => [
                     'index' => 'administrators.index',
@@ -80,6 +60,9 @@ Route::group([
                 ]
             ]);
 
+            /*
+             * Administrator roles
+             */
             Route::resource('administrators-roles', 'Administrators\AdministratorsRolesController', [
                 'names' => [
                     'index' => 'administrators-roles.index',
@@ -109,6 +92,9 @@ Route::group([
                 ]
             ]);
 
+            /*
+             * Systems
+             */
             Route::group([
                 'as' => 'systems.',
                 'prefix' => 'systems'
@@ -119,6 +105,10 @@ Route::group([
                 ]);
             });
 
+            /*
+             * Media Manager
+             */
+            
 
         });
 

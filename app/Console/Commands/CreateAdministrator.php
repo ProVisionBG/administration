@@ -56,7 +56,7 @@ class CreateAdministrator extends Command {
             $adminUser = AdminUser::create([
                 'name' => 'ProVision Administrator',
                 'email' => $this->argument('email'),
-                'password' => Hash::make($this->argument('password'))
+                'password' => $this->argument('password')
             ]);
 
             $this->info('Creating admin user...');

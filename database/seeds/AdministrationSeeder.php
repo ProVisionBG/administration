@@ -3,7 +3,7 @@ namespace ProVision\Administration\Database\Seeds;
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder {
+class AdministrationSeeder extends Seeder {
     /**
      * Run the database seeds.
      *

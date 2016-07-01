@@ -7,20 +7,6 @@
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    {{--<link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/bootstrap/dist/css/bootstrap.min.css")}}">--}}
-    {{--<link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/font-awesome/css/font-awesome.min.css")}}">--}}
-    {{--<link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/ionicons/css/ionicons.min.css")}}">--}}
-    {{--<link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/datatables/media/css/dataTables.bootstrap.css")}}">--}}
-    {{--<link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/jquery-ui/themes/base/jquery-ui.min.css")}}" type="text/css"/>--}}
-    {{--<link rel="stylesheet" href="{{asset('/vendor/provision/administration/bower_components/dropzone/dist/dropzone.css')}}">--}}
-    {{--<link rel="stylesheet" href="{{asset('/vendor/provision/administration/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css')}}">--}}
-    {{--<link rel="stylesheet" href="{{asset('/vendor/provision/administration/bower_components/datatables-responsive/css/')}}">--}}
-
-    {{-- Admin LTE Core --}}
-    {{--<link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css")}}">--}}
-    {{--<link rel="stylesheet" href="{{asset("/vendor/provision/administration/bower_components/AdminLTE/dist/css/AdminLTE.min.css")}}">--}}
-    {{--<link rel="stylesheet" href="{{asset("/vendor/provision/administration/css/style.css")}}">--}}
-
     <link rel="stylesheet" href='{{asset("/vendor/provision/administration/css/all.css")}}'>
 
 </head>
@@ -582,33 +568,11 @@
     --}}
 </div><!-- ./wrapper -->
 
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/jquery/dist/jquery.min.js")}}"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/jquery-ui/jquery-ui.min.js")}}"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/bootstrap/dist/js/bootstrap.min.js")}}"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/iCheck/icheck.js")}}"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/jquery-slimscroll/jquery.slimscroll.min.js")}}"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/fastclick/lib/fastclick.js")}}"></script>--}}
-
-
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/ckeditor/ckeditor.js")}}" charset="utf-8"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/datatables/media/js/jquery.dataTables.min.js")}}"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/datatables/media/js/dataTables.bootstrap.min.js")}}"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/datatables-responsive/js/dataTables.responsive.js")}}"></script>--}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/datatables-rowreorder/js/dataTables.rowReorder.js")}}"></script>--}}
-{{--<script src="{{ asset('/vendor/provision/administration/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.min.js') }}"></script>--}}
-{{--<script src="{{ asset('/vendor/provision/administration/bower_components/jqueryui-timepicker-addon/dist/i18n/jquery-ui-timepicker-addon-i18n.min.js') }}"></script>--}}
-
-{{--<script src="{{ asset('/vendor/provision/administration/bower_components/jquery-validation/dist/jquery.validate.min.js') }}"></script>--}}
-{{--<script src="{{ asset('/vendor/provision/administration/bower_components/jquery-validation/src/localization/messages_bg.js') }}"></script>--}}
-
-{{--<script src="{{ elixir('/administration/assets/js/all.js') }}"></script>--}}
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
 
 
 @stack('js_scripts')
 
-{{-- Admin LTE core --}}
-{{--<script src="{{asset("/vendor/provision/administration/bower_components/AdminLTE/dist/js/app.min.js")}}"></script>--}}
 <script>
     $.ajaxSetup({
         headers: {
