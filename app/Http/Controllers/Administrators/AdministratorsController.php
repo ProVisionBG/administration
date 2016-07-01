@@ -1,6 +1,6 @@
 <?php
 
-namespace ProVision\Administration\Http\Controllers;
+namespace ProVision\Administration\Http\Controllers\Administrators;
 
 use App\Http\Requests;
 use Datatables;
@@ -10,6 +10,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\AdminUser;
 use ProVision\Administration\Facades\Administration;
 use ProVision\Administration\Forms\AdministratorForm;
+use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use Request;
 
 

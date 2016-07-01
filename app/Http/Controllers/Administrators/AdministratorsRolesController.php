@@ -1,6 +1,6 @@
 <?php
 
-namespace ProVision\Administration\Http\Controllers;
+namespace ProVision\Administration\Http\Controllers\Administrators;
 
 use App\Http\Requests;
 use Datatables;
@@ -9,9 +9,9 @@ use Guzzle\Http\Message\Response;
 use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\Facades\Administration;
 use ProVision\Administration\Forms\RolesForm;
+use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use ProVision\Administration\Role;
 use Request;
-
 
 class AdministratorsRolesController extends BaseAdministrationController {
     public function __construct() {

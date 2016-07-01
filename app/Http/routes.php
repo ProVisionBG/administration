@@ -69,7 +69,7 @@ Route::group([
             */
             //Route::get('/', 'AdministrationController@index');
 
-            Route::resource('administartors', 'AdministratorsController', [
+            Route::resource('administartors', 'Administrators\AdministratorsController', [
                 'names' => [
                     'index' => 'administrators.index',
                     'edit' => 'administrators.edit',
@@ -80,7 +80,7 @@ Route::group([
                 ]
             ]);
 
-            Route::resource('administrators-roles', 'AdministratorsRolesController', [
+            Route::resource('administrators-roles', 'Administrators\AdministratorsRolesController', [
                 'names' => [
                     'index' => 'administrators-roles.index',
                     'edit' => 'administrators-roles.edit',
