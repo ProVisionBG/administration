@@ -7,6 +7,7 @@
     "modular",
     "laravel"
   ],
+  "license": "Apache License 2.0",
   "authors": [
     {
       "name": "Venelin Iliev",
