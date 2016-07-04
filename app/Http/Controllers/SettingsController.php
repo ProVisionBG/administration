@@ -26,7 +26,6 @@ class SettingsController extends BaseAdministrationController {
      */
     public function index() {
 
-
         \Breadcrumbs::register('admin_final', function ($breadcrumbs) {
             $breadcrumbs->parent('admin_home');
             $breadcrumbs->push(trans('administration::settings.title'), route('provision.administration.settings.index'));

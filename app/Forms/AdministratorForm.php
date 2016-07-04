@@ -12,8 +12,7 @@ class AdministratorForm extends AdminForm {
             'validation_rules' => [
                 "required" => true,
                 "minlength" => 2
-            ],
-            'translate' => true
+            ]
         ]);
 
         $this->add('email', 'text', [

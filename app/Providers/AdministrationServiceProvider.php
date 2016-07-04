@@ -104,6 +104,7 @@ class AdministrationServiceProvider extends ServiceProvider {
        */
         Config::set('laravel-form-builder.template_prefix', 'administration::components.fields.');
         Config::set('laravel-form-builder.custom_fields.admin_footer', \ProVision\Administration\Forms\Fields\AdminFooter::class);
+        Config::set('laravel-form-builder.custom_fields.ckeditor', \ProVision\Administration\Forms\Fields\CKEditor::class);
 
         /*
          * Administration listing short buttons
@@ -181,12 +182,29 @@ class AdministrationServiceProvider extends ServiceProvider {
             ])->data('icon', 'plus')->data('order', 2);
 
             /*
+             * Static blocks
+             */
+            $staticMenu = $menu->add(trans('administration::static_blocks.name'), [
+                'nickname' => 'administrators.static_blocks',
+                'route' => 'provision.administration.static-blocks.index'
+            ])->data('icon', 'th-large')->data('order', 10002);
+            $staticMenu->add(trans('administration::index.view_all'), [
+                'nickname' => 'administrators.group_add',
+                'route' => 'provision.administration.static-blocks.index'
+            ])->data('icon', 'list')->data('order', 1);
+            $staticMenu->add(trans('administration::index.add'), [
+                'nickname' => 'administrators.group_add',
+                'route' => 'provision.administration.static-blocks.create'
+            ])->data('icon', 'plus')->data('order', 2);
+
+            /*
              * Settings
              */
             $menu->add(trans('administration::settings.title'), [
                 'nickname' => 'settings',
                 'route' => 'provision.administration.settings.index'
             ])->data('order', 10002)->data('icon', 'sliders');
+
 
             /*
              * System

@@ -75,6 +75,20 @@ Route::group([
             ]);
 
             /*
+            * Static blocks
+            */
+            Route::resource('static-blocks', 'StaticBlocks\StaticBlocksController', [
+                'names' => [
+                    'index' => 'static-blocks.index',
+                    'edit' => 'static-blocks.edit',
+                    'create' => 'static-blocks.create',
+                    'store' => 'static-blocks.store',
+                    'update' => 'static-blocks.update',
+                    'destroy' => 'static-blocks.destroy'
+                ]
+            ]);
+
+            /*
              * Settings
              */
             Route::resource('settings', \Config::get('provision_administration.settings_controller'), [

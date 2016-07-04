@@ -2507,6 +2507,133 @@ e.remove()):CKEDITOR.warn("editor-destroy-iframe")}}})}(),CKEDITOR.config.disabl
 CKEDITOR.config.skin="moono",function(){var a=function(a,b){var c=CKEDITOR.getUrl("plugins/"+b);a=a.split(",");for(var d=0;d<a.length;d++)CKEDITOR.skin.icons[a[d]]={path:c,offset:-a[++d],bgsize:a[++d]}};CKEDITOR.env.hidpi?a("about,0,,bold,24,,italic,48,,strike,72,,subscript,96,,superscript,120,,underline,144,,bidiltr,168,,bidirtl,192,,blockquote,216,,copy-rtl,240,,copy,264,,cut-rtl,288,,cut,312,,paste-rtl,336,,paste,360,,codesnippet,384,,bgcolor,408,,textcolor,432,,creatediv,456,,docprops-rtl,480,,docprops,504,,embed,528,,embedsemantic,552,,find-rtl,576,,find,600,,replace,624,,flash,648,,button,672,,checkbox,696,,form,720,,hiddenfield,744,,imagebutton,768,,radio,792,,select-rtl,816,,select,840,,textarea-rtl,864,,textarea,888,,textfield-rtl,912,,textfield,936,,horizontalrule,960,,iframe,984,,image,1008,,indent-rtl,1032,,indent,1056,,outdent-rtl,1080,,outdent,1104,,justifyblock,1128,,justifycenter,1152,,justifyleft,1176,,justifyright,1200,,language,1224,,anchor-rtl,1248,,anchor,1272,,link,1296,,unlink,1320,,bulletedlist-rtl,1344,,bulletedlist,1368,,numberedlist-rtl,1392,,numberedlist,1416,,mathjax,1440,,maximize,1464,,newpage-rtl,1488,,newpage,1512,,pagebreak-rtl,1536,,pagebreak,1560,,pastefromword-rtl,1584,,pastefromword,1608,,pastetext-rtl,1632,,pastetext,1656,,placeholder,1680,,preview-rtl,1704,,preview,1728,,print,1752,,removeformat,1776,,save,1800,,scayt,1824,,selectall,1848,,showblocks-rtl,1872,,showblocks,1896,,smiley,1920,,source-rtl,1944,,source,1968,,sourcedialog-rtl,1992,,sourcedialog,2016,,specialchar,2040,,table,2064,,templates-rtl,2088,,templates,2112,,uicolor,2136,,redo-rtl,2160,,redo,2184,,undo-rtl,2208,,undo,2232,,simplebox,4512,auto,spellchecker,2280,",
 "icons_hidpi.png"):a("about,0,auto,bold,24,auto,italic,48,auto,strike,72,auto,subscript,96,auto,superscript,120,auto,underline,144,auto,bidiltr,168,auto,bidirtl,192,auto,blockquote,216,auto,copy-rtl,240,auto,copy,264,auto,cut-rtl,288,auto,cut,312,auto,paste-rtl,336,auto,paste,360,auto,codesnippet,384,auto,bgcolor,408,auto,textcolor,432,auto,creatediv,456,auto,docprops-rtl,480,auto,docprops,504,auto,embed,528,auto,embedsemantic,552,auto,find-rtl,576,auto,find,600,auto,replace,624,auto,flash,648,auto,button,672,auto,checkbox,696,auto,form,720,auto,hiddenfield,744,auto,imagebutton,768,auto,radio,792,auto,select-rtl,816,auto,select,840,auto,textarea-rtl,864,auto,textarea,888,auto,textfield-rtl,912,auto,textfield,936,auto,horizontalrule,960,auto,iframe,984,auto,image,1008,auto,indent-rtl,1032,auto,indent,1056,auto,outdent-rtl,1080,auto,outdent,1104,auto,justifyblock,1128,auto,justifycenter,1152,auto,justifyleft,1176,auto,justifyright,1200,auto,language,1224,auto,anchor-rtl,1248,auto,anchor,1272,auto,link,1296,auto,unlink,1320,auto,bulletedlist-rtl,1344,auto,bulletedlist,1368,auto,numberedlist-rtl,1392,auto,numberedlist,1416,auto,mathjax,1440,auto,maximize,1464,auto,newpage-rtl,1488,auto,newpage,1512,auto,pagebreak-rtl,1536,auto,pagebreak,1560,auto,pastefromword-rtl,1584,auto,pastefromword,1608,auto,pastetext-rtl,1632,auto,pastetext,1656,auto,placeholder,1680,auto,preview-rtl,1704,auto,preview,1728,auto,print,1752,auto,removeformat,1776,auto,save,1800,auto,scayt,1824,auto,selectall,1848,auto,showblocks-rtl,1872,auto,showblocks,1896,auto,smiley,1920,auto,source-rtl,1944,auto,source,1968,auto,sourcedialog-rtl,1992,auto,sourcedialog,2016,auto,specialchar,2040,auto,table,2064,auto,templates-rtl,2088,auto,templates,2112,auto,uicolor,2136,auto,redo-rtl,2160,auto,redo,2184,auto,undo-rtl,2208,auto,undo,2232,auto,simplebox,2256,auto,spellchecker,2280,auto",
 "icons.png")}())})();
+/*
+ Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+(function(a){if("undefined"==typeof a)throw Error("jQuery should be loaded before CKEditor jQuery adapter.");if("undefined"==typeof CKEDITOR)throw Error("CKEditor should be loaded before CKEditor jQuery adapter.");CKEDITOR.config.jqueryOverrideVal="undefined"==typeof CKEDITOR.config.jqueryOverrideVal?!0:CKEDITOR.config.jqueryOverrideVal;a.extend(a.fn,{ckeditorGet:function(){var a=this.eq(0).data("ckeditorInstance");if(!a)throw"CKEditor is not initialized yet, use ckeditor() with a callback.";return a},
+ckeditor:function(g,d){if(!CKEDITOR.env.isCompatible)throw Error("The environment is incompatible.");if(!a.isFunction(g)){var m=d;d=g;g=m}var k=[];d=d||{};this.each(function(){var b=a(this),c=b.data("ckeditorInstance"),f=b.data("_ckeditorInstanceLock"),h=this,l=new a.Deferred;k.push(l.promise());if(c&&!f)g&&g.apply(c,[this]),l.resolve();else if(f)c.once("instanceReady",function(){setTimeout(function(){c.element?(c.element.$==h&&g&&g.apply(c,[h]),l.resolve()):setTimeout(arguments.callee,100)},0)},
+null,null,9999);else{if(d.autoUpdateElement||"undefined"==typeof d.autoUpdateElement&&CKEDITOR.config.autoUpdateElement)d.autoUpdateElementJquery=!0;d.autoUpdateElement=!1;b.data("_ckeditorInstanceLock",!0);c=a(this).is("textarea")?CKEDITOR.replace(h,d):CKEDITOR.inline(h,d);b.data("ckeditorInstance",c);c.on("instanceReady",function(d){var e=d.editor;setTimeout(function(){if(e.element){d.removeListener();e.on("dataReady",function(){b.trigger("dataReady.ckeditor",[e])});e.on("setData",function(a){b.trigger("setData.ckeditor",
+[e,a.data])});e.on("getData",function(a){b.trigger("getData.ckeditor",[e,a.data])},999);e.on("destroy",function(){b.trigger("destroy.ckeditor",[e])});e.on("save",function(){a(h.form).submit();return!1},null,null,20);if(e.config.autoUpdateElementJquery&&b.is("textarea")&&a(h.form).length){var c=function(){b.ckeditor(function(){e.updateElement()})};a(h.form).submit(c);a(h.form).bind("form-pre-serialize",c);b.bind("destroy.ckeditor",function(){a(h.form).unbind("submit",c);a(h.form).unbind("form-pre-serialize",
+c)})}e.on("destroy",function(){b.removeData("ckeditorInstance")});b.removeData("_ckeditorInstanceLock");b.trigger("instanceReady.ckeditor",[e]);g&&g.apply(e,[h]);l.resolve()}else setTimeout(arguments.callee,100)},0)},null,null,9999)}});var f=new a.Deferred;this.promise=f.promise();a.when.apply(this,k).then(function(){f.resolve()});this.editor=this.eq(0).data("ckeditorInstance");return this}});CKEDITOR.config.jqueryOverrideVal&&(a.fn.val=CKEDITOR.tools.override(a.fn.val,function(g){return function(d){if(arguments.length){var m=
+this,k=[],f=this.each(function(){var b=a(this),c=b.data("ckeditorInstance");if(b.is("textarea")&&c){var f=new a.Deferred;c.setData(d,function(){f.resolve()});k.push(f.promise());return!0}return g.call(b,d)});if(k.length){var b=new a.Deferred;a.when.apply(this,k).done(function(){b.resolveWith(m)});return b.promise()}return f}var f=a(this).eq(0),c=f.data("ckeditorInstance");return f.is("textarea")&&c?c.getData():g.call(f)}}))})(window.jQuery);
+/*
+Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+CKEDITOR.lang['bg']={"wsc":{"btnIgnore":"Игнорирай","btnIgnoreAll":"Игнорирай всичко","btnReplace":"Препокриване","btnReplaceAll":"Препокрий всичко","btnUndo":"Възтанови","changeTo":"Промени на","errorLoading":"Error loading application service host: %s.","ieSpellDownload":"Spell checker not installed. Do you want to download it now?","manyChanges":"Spell check complete: %1 words changed","noChanges":"Spell check complete: No words changed","noMispell":"Spell check complete: No misspellings found","noSuggestions":"- Няма препоръчани -","notAvailable":"Съжаляваме, но услугата не е достъпна за момента","notInDic":"Не е в речника","oneChange":"Spell check complete: One word changed","progress":"Проверява се правописа...","title":"Проверка на правопис","toolbar":"Проверка на правопис"},"undo":{"redo":"Връщане на предишен статус","undo":"Възтанови"},"toolbar":{"toolbarCollapse":"Свиване на лентата с инструменти","toolbarExpand":"Разширяване на лентата с инструменти","toolbarGroups":{"document":"Документ","clipboard":"Клипборд/Отмяна","editing":"Промяна","forms":"Форми","basicstyles":"Базови стилове","paragraph":"Параграф","links":"Връзки","insert":"Вмъкване","styles":"Стилове","colors":"Цветове","tools":"Инструменти"},"toolbars":"Ленти с инструменти"},"table":{"border":"Размер на рамката","caption":"Заглавие","cell":{"menu":"Клетка","insertBefore":"Вмъкване на клетка преди","insertAfter":"Вмъкване на клетка след","deleteCell":"Изтриване на клетки","merge":"Сливане на клетки","mergeRight":"Сливане в дясно","mergeDown":"Merge Down","splitHorizontal":"Split Cell Horizontally","splitVertical":"Split Cell Vertically","title":"Настройки на клетката","cellType":"Тип на клетката","rowSpan":"Rows Span","colSpan":"Columns Span","wordWrap":"Авто. пренос","hAlign":"Хоризонтално подравняване","vAlign":"Вертикално подравняване","alignBaseline":"Базова линия","bgColor":"Фон","borderColor":"Цвят на рамката","data":"Данни","header":"Хедър","yes":"Да","no":"Не","invalidWidth":"Cell width must be a number.","invalidHeight":"Cell height must be a number.","invalidRowSpan":"Rows span must be a whole number.","invalidColSpan":"Columns span must be a whole number.","chooseColor":"Изберете"},"cellPad":"Отделяне на клетките","cellSpace":"Разтояние между клетките","column":{"menu":"Колона","insertBefore":"Вмъкване на колона преди","insertAfter":"Вмъкване на колона след","deleteColumn":"Изтриване на колони"},"columns":"Колони","deleteTable":"Изтриване на таблица","headers":"Хедъри","headersBoth":"Заедно","headersColumn":"Първа колона","headersNone":"Няма","headersRow":"Първи ред","invalidBorder":"Размерът на рамката трябва да е число.","invalidCellPadding":"Отстоянието на клетките трябва да е позитивно число.","invalidCellSpacing":"Интервала в клетките трябва да е позитивно число.","invalidCols":"Броят колони трябва да е по-голям от 0.","invalidHeight":"Височината на таблицата трябва да е число.","invalidRows":"Броят редове трябва да е по-голям от 0.","invalidWidth":"Ширината на таблицата трябва да е число.","menu":"Настройки на таблицата","row":{"menu":"Ред","insertBefore":"Вмъкване на ред преди","insertAfter":"Вмъкване на ред след","deleteRow":"Изтриване на редове"},"rows":"Редове","summary":"Обща информация","title":"Настройки на таблицата","toolbar":"Таблица","widthPc":"процент","widthPx":"пиксела","widthUnit":"единица за ширина"},"stylescombo":{"label":"Стилове","panelTitle":"Стилове за форматиране","panelTitle1":"Блокови стилове","panelTitle2":"Вътрешни стилове","panelTitle3":"Обектни стилове"},"specialchar":{"options":"Опции за специален знак","title":"Избор на специален знак","toolbar":"Вмъкване на специален знак"},"sourcearea":{"toolbar":"Изходен код"},"scayt":{"btn_about":"About SCAYT","btn_dictionaries":"Речници","btn_disable":"Disable SCAYT","btn_enable":"Enable SCAYT","btn_langs":"Languages","btn_options":"Options","text_title":"Spell Check As You Type"},"removeformat":{"toolbar":"Премахване на форматирането"},"pastetext":{"button":"Вмъкни като чист текст","title":"Вмъкни като чист текст"},"pastefromword":{"confirmCleanup":"The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?","error":"It was not possible to clean up the pasted data due to an internal error","title":"Вмъкни от MS Word","toolbar":"Вмъкни от MS Word"},"maximize":{"maximize":"Максимизиране","minimize":"Минимизиране"},"magicline":{"title":"Вмъкнете параграф тук"},"list":{"bulletedlist":"Вмъкване/Премахване на точков списък","numberedlist":"Вмъкване/Премахване на номериран списък"},"link":{"acccessKey":"Ключ за достъп","advanced":"Разширено","advisoryContentType":"Препоръчителен тип на съдържанието","advisoryTitle":"Препоръчително заглавие","anchor":{"toolbar":"Котва","menu":"Промяна на котва","title":"Настройки на котва","name":"Име на котва","errorName":"Моля въведете име на котвата","remove":"Премахване на котва"},"anchorId":"По ID на елемент","anchorName":"По име на котва","charset":"Тип на свързания ресурс","cssClasses":"Класове за CSS","emailAddress":"E-mail aдрес","emailBody":"Съдържание","emailSubject":"Тема","id":"ID","info":"Инфо за връзката","langCode":"Код за езика","langDir":"Посока на езика","langDirLTR":"Ляво на Дясно (ЛнД)","langDirRTL":"Дясно на Ляво (ДнЛ)","menu":"Промяна на връзка","name":"Име","noAnchors":"(Няма котви в текущия документ)","noEmail":"Моля въведете e-mail aдрес","noUrl":"Моля въведете URL адреса","other":"<друго>","popupDependent":"Зависимост (Netscape)","popupFeatures":"Функции на изкачащ прозорец","popupFullScreen":"Цял екран (IE)","popupLeft":"Лява позиция","popupLocationBar":"Лента с локацията","popupMenuBar":"Лента за меню","popupResizable":"Оразмеряем","popupScrollBars":"Скролери","popupStatusBar":"Статусна лента","popupToolbar":"Лента с инструменти","popupTop":"Горна позиция","rel":"Връзка","selectAnchor":"Изберете котва","styles":"Стил","tabIndex":"Ред на достъп","target":"Цел","targetFrame":"<frame>","targetFrameName":"Име на целевият прозорец","targetPopup":"<изкачащ прозорец>","targetPopupName":"Име на изкачащ прозорец","title":"Връзка","toAnchor":"Връзка към котва в текста","toEmail":"E-mail","toUrl":"Уеб адрес","toolbar":"Връзка","type":"Тип на връзката","unlink":"Премахни връзката","upload":"Качване"},"indent":{"indent":"Увеличаване на отстъпа","outdent":"Намаляване на отстъпа"},"image":{"alt":"Алтернативен текст","border":"Рамка","btnUpload":"Изпрати я на сървъра","button2Img":"Do you want to transform the selected image button on a simple image?","hSpace":"Хоризонтален отстъп","img2Button":"Do you want to transform the selected image on a image button?","infoTab":"Инфо за снимка","linkTab":"Връзка","lockRatio":"Заключване на съотношението","menu":"Настройки за снимка","resetSize":"Нулиране на размер","title":"Настройки за снимка","titleButton":"Настойки за бутон за снимка","upload":"Качване","urlMissing":"Image source URL is missing.","vSpace":"Вертикален отстъп","validateBorder":"Border must be a whole number.","validateHSpace":"HSpace must be a whole number.","validateVSpace":"VSpace must be a whole number."},"horizontalrule":{"toolbar":"Вмъкване на хоризонтална линия"},"format":{"label":"Формат","panelTitle":"Формат","tag_address":"Адрес","tag_div":"Параграф (DIV)","tag_h1":"Заглавие 1","tag_h2":"Заглавие 2","tag_h3":"Заглавие 3","tag_h4":"Заглавие 4","tag_h5":"Заглавие 5","tag_h6":"Заглавие 6","tag_p":"Нормален","tag_pre":"Форматиран"},"fakeobjects":{"anchor":"Кука","flash":"Флаш анимация","hiddenfield":"Скрито поле","iframe":"IFrame","unknown":"Неизвестен обект"},"elementspath":{"eleLabel":"Път за елементите","eleTitle":"%1 елемент"},"contextmenu":{"options":"Опции на контекстното меню"},"clipboard":{"copy":"Копирай","copyError":"Настройките за сигурност на вашия бразуър не разрешават на редактора да изпълни запаметяването. За целта използвайте клавиатурата (Ctrl/Cmd+C).","cut":"Отрежи","cutError":"Настройките за сигурност на Вашия браузър не позволяват на редактора автоматично да изъплни действията за отрязване. Моля ползвайте клавиатурните команди за целта (ctrl+x).","paste":"Вмъкни","pasteArea":"Зона за вмъкване","pasteMsg":"Вмъкнете тук съдъжанието с клавиатуарата (<STRONG>Ctrl/Cmd+V</STRONG>) и натиснете <STRONG>OK</STRONG>.","securityMsg":"Заради настройките за сигурност на Вашия браузър, редакторът не може да прочете данните от клипборда коректно.","title":"Вмъкни"},"button":{"selectedLabel":"%1 (Избрано)"},"blockquote":{"toolbar":"Блок за цитат"},"basicstyles":{"bold":"Удебелен","italic":"Наклонен","strike":"Зачертан текст","subscript":"Индексиран текст","superscript":"Суперскрипт","underline":"Подчертан"},"about":{"copy":"Copyright &copy; $1. All rights reserved.","dlgTitle":"Относно CKEditor","help":"Проверете $1 за помощ.","moreInfo":"За лицензионна информация моля посетете сайта ни:","title":"Относно CKEditor","userGuide":"CKEditor User's Guide"},"editor":"Текстов редактор за форматиран текст","editorPanel":"Панел на текстовия редактор","common":{"editorHelp":"натиснете ALT 0 за помощ","browseServer":"Избор от сървъра","url":"URL","protocol":"Протокол","upload":"Качване","uploadSubmit":"Изпращане към сървъра","image":"Снимка","flash":"Флаш","form":"Форма","checkbox":"Поле за избор","radio":"Радио бутон","textField":"Текстово поле","textarea":"Текстова зона","hiddenField":"Скрито поле","button":"Бутон","select":"Поле за избор","imageButton":"Бутон за снимка","notSet":"<не е избрано>","id":"ID","name":"Име","langDir":"Посока на езика","langDirLtr":"Ляво на дясно (ЛнД)","langDirRtl":"Дясно на ляво (ДнЛ)","langCode":"Код на езика","longDescr":"Уеб адрес за дълго описание","cssClass":"Класове за CSS","advisoryTitle":"Препоръчително заглавие","cssStyle":"Стил","ok":"ОК","cancel":"Отказ","close":"Затвори","preview":"Преглед","resize":"Влачете за да оразмерите","generalTab":"Общи","advancedTab":"Разширено","validateNumberFailed":"Тази стойност не е число","confirmNewPage":"Всички незапазени промени ще бъдат изгубени. Сигурни ли сте, че желаете да заредите нова страница?","confirmCancel":"Някои от опциите са променени. Сигурни ли сте, че желаете да затворите прозореца?","options":"Опции","target":"Цел","targetNew":"Нов прозорец (_blank)","targetTop":"Горна позиция (_top)","targetSelf":"Текущия прозорец (_self)","targetParent":"Основен прозорец (_parent)","langDirLTR":"Ляво на дясно (ЛнД)","langDirRTL":"Дясно на ляво (ДнЛ)","styles":"Стил","cssClasses":"Класове за CSS","width":"Ширина","height":"Височина","align":"Подравняване","alignLeft":"Ляво","alignRight":"Дясно","alignCenter":"Център","alignJustify":"Двустранно подравняване","alignTop":"Горе","alignMiddle":"По средата","alignBottom":"Долу","alignNone":"Без подравняване","invalidValue":"Невалидна стойност.","invalidHeight":"Височината трябва да е число.","invalidWidth":"Ширина требе да е число.","invalidCssLength":"Стойността на полето \"%1\" трябва да бъде положително число с или без валидна CSS измервателна единица (px, %, in, cm, mm, em, ex, pt, или pc).","invalidHtmlLength":"Стойността на полето \"%1\" трябва да бъде положително число с или без валидна HTML измервателна единица (px или %).","invalidInlineStyle":"Стойността на стилa трябва да съдържат една или повече двойки във формат \"name : value\", разделени с двоеточие.","cssLengthTooltip":"Въведете числена стойност в пиксели или друга валидна CSS единица (px, %, in, cm, mm, em, ex, pt, или pc).","unavailable":"%1<span class=\"cke_accessibility\">, недостъпно</span>"}};
+/**
+ * Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or http://ckeditor.com/license
+ */
+
+// This file contains style definitions that can be used by CKEditor plugins.
+//
+// The most common use for it is the "stylescombo" plugin, which shows a combo
+// in the editor toolbar, containing all styles. Other plugins instead, like
+// the div plugin, use a subset of the styles on their feature.
+//
+// If you don't have plugins that depend on this file, you can simply ignore it.
+// Otherwise it is strongly recommended to customize this file to match your
+// website requirements and design properly.
+
+CKEDITOR.stylesSet.add( 'default', [
+	/* Block Styles */
+
+	// These styles are already available in the "Format" combo ("format" plugin),
+	// so they are not needed here by default. You may enable them to avoid
+	// placing the "Format" combo in the toolbar, maintaining the same features.
+	/*
+	{ name: 'Paragraph',		element: 'p' },
+	{ name: 'Heading 1',		element: 'h1' },
+	{ name: 'Heading 2',		element: 'h2' },
+	{ name: 'Heading 3',		element: 'h3' },
+	{ name: 'Heading 4',		element: 'h4' },
+	{ name: 'Heading 5',		element: 'h5' },
+	{ name: 'Heading 6',		element: 'h6' },
+	{ name: 'Preformatted Text',element: 'pre' },
+	{ name: 'Address',			element: 'address' },
+	*/
+
+	{ name: 'Italic Title',		element: 'h2', styles: { 'font-style': 'italic' } },
+	{ name: 'Subtitle',			element: 'h3', styles: { 'color': '#aaa', 'font-style': 'italic' } },
+	{
+		name: 'Special Container',
+		element: 'div',
+		styles: {
+			padding: '5px 10px',
+			background: '#eee',
+			border: '1px solid #ccc'
+		}
+	},
+
+	/* Inline Styles */
+
+	// These are core styles available as toolbar buttons. You may opt enabling
+	// some of them in the Styles combo, removing them from the toolbar.
+	// (This requires the "stylescombo" plugin)
+	/*
+	{ name: 'Strong',			element: 'strong', overrides: 'b' },
+	{ name: 'Emphasis',			element: 'em'	, overrides: 'i' },
+	{ name: 'Underline',		element: 'u' },
+	{ name: 'Strikethrough',	element: 'strike' },
+	{ name: 'Subscript',		element: 'sub' },
+	{ name: 'Superscript',		element: 'sup' },
+	*/
+
+	{ name: 'Marker',			element: 'span', attributes: { 'class': 'marker' } },
+
+	{ name: 'Big',				element: 'big' },
+	{ name: 'Small',			element: 'small' },
+	{ name: 'Typewriter',		element: 'tt' },
+
+	{ name: 'Computer Code',	element: 'code' },
+	{ name: 'Keyboard Phrase',	element: 'kbd' },
+	{ name: 'Sample Text',		element: 'samp' },
+	{ name: 'Variable',			element: 'var' },
+
+	{ name: 'Deleted Text',		element: 'del' },
+	{ name: 'Inserted Text',	element: 'ins' },
+
+	{ name: 'Cited Work',		element: 'cite' },
+	{ name: 'Inline Quotation',	element: 'q' },
+
+	{ name: 'Language: RTL',	element: 'span', attributes: { 'dir': 'rtl' } },
+	{ name: 'Language: LTR',	element: 'span', attributes: { 'dir': 'ltr' } },
+
+	/* Object Styles */
+
+	{
+		name: 'Styled image (left)',
+		element: 'img',
+		attributes: { 'class': 'left' }
+	},
+
+	{
+		name: 'Styled image (right)',
+		element: 'img',
+		attributes: { 'class': 'right' }
+	},
+
+	{
+		name: 'Compact table',
+		element: 'table',
+		attributes: {
+			cellpadding: '5',
+			cellspacing: '0',
+			border: '1',
+			bordercolor: '#ccc'
+		},
+		styles: {
+			'border-collapse': 'collapse'
+		}
+	},
+
+	{ name: 'Borderless Table',		element: 'table',	styles: { 'border-style': 'hidden', 'background-color': '#E6E6FA' } },
+	{ name: 'Square Bulleted List',	element: 'ul',		styles: { 'list-style-type': 'square' } }
+] );
+
+
 /*!
  DataTables 1.10.12
  ©2008-2015 SpryMedia Ltd - datatables.net/license
@@ -7304,10 +7431,10 @@ $.extend( $.validator.messages, {
  * @Author  Almsaeed Studio
  * @Support <http://www.almsaeedstudio.com>
  * @Email   <support@almsaeedstudio.com>
- * @version 2.3.3
+ * @version 2.3.5
  * @license MIT <http://opensource.org/licenses/MIT>
  */
-function _init(){"use strict";$.AdminLTE.layout={activate:function(){var a=this;a.fix(),a.fixSidebar(),$(window,".wrapper").resize(function(){a.fix(),a.fixSidebar()})},fix:function(){var a=$(".main-header").outerHeight()+$(".main-footer").outerHeight(),b=$(window).height(),c=$(".sidebar").height();if($("body").hasClass("fixed"))$(".content-wrapper, .right-side").css("min-height",b-$(".main-footer").outerHeight());else{var d;b>=c?($(".content-wrapper, .right-side").css("min-height",b-a),d=b-a):($(".content-wrapper, .right-side").css("min-height",c),d=c);var e=$($.AdminLTE.options.controlSidebarOptions.selector);"undefined"!=typeof e&&e.height()>d&&$(".content-wrapper, .right-side").css("min-height",e.height())}},fixSidebar:function(){return $("body").hasClass("fixed")?("undefined"==typeof $.fn.slimScroll&&window.console&&window.console.error("Error: the fixed layout requires the slimscroll plugin!"),void($.AdminLTE.options.sidebarSlimScroll&&"undefined"!=typeof $.fn.slimScroll&&($(".sidebar").slimScroll({destroy:!0}).height("auto"),$(".sidebar").slimscroll({height:$(window).height()-$(".main-header").height()+"px",color:"rgba(0,0,0,0.2)",size:"3px"})))):void("undefined"!=typeof $.fn.slimScroll&&$(".sidebar").slimScroll({destroy:!0}).height("auto"))}},$.AdminLTE.pushMenu={activate:function(a){var b=$.AdminLTE.options.screenSizes;$(document).on("click",a,function(a){a.preventDefault(),$(window).width()>b.sm-1?$("body").hasClass("sidebar-collapse")?$("body").removeClass("sidebar-collapse").trigger("expanded.pushMenu"):$("body").addClass("sidebar-collapse").trigger("collapsed.pushMenu"):$("body").hasClass("sidebar-open")?$("body").removeClass("sidebar-open").removeClass("sidebar-collapse").trigger("collapsed.pushMenu"):$("body").addClass("sidebar-open").trigger("expanded.pushMenu")}),$(".content-wrapper").click(function(){$(window).width()<=b.sm-1&&$("body").hasClass("sidebar-open")&&$("body").removeClass("sidebar-open")}),($.AdminLTE.options.sidebarExpandOnHover||$("body").hasClass("fixed")&&$("body").hasClass("sidebar-mini"))&&this.expandOnHover()},expandOnHover:function(){var a=this,b=$.AdminLTE.options.screenSizes.sm-1;$(".main-sidebar").hover(function(){$("body").hasClass("sidebar-mini")&&$("body").hasClass("sidebar-collapse")&&$(window).width()>b&&a.expand()},function(){$("body").hasClass("sidebar-mini")&&$("body").hasClass("sidebar-expanded-on-hover")&&$(window).width()>b&&a.collapse()})},expand:function(){$("body").removeClass("sidebar-collapse").addClass("sidebar-expanded-on-hover")},collapse:function(){$("body").hasClass("sidebar-expanded-on-hover")&&$("body").removeClass("sidebar-expanded-on-hover").addClass("sidebar-collapse")}},$.AdminLTE.tree=function(a){var b=this,c=$.AdminLTE.options.animationSpeed;$(document).on("click",a+" li a",function(a){var d=$(this),e=d.next();if(e.is(".treeview-menu")&&e.is(":visible")&&!$("body").hasClass("sidebar-collapse"))e.slideUp(c,function(){e.removeClass("menu-open")}),e.parent("li").removeClass("active");else if(e.is(".treeview-menu")&&!e.is(":visible")){var f=d.parents("ul").first(),g=f.find("ul:visible").slideUp(c);g.removeClass("menu-open");var h=d.parent("li");e.slideDown(c,function(){e.addClass("menu-open"),f.find("li.active").removeClass("active"),h.addClass("active"),b.layout.fix()})}e.is(".treeview-menu")&&a.preventDefault()})},$.AdminLTE.controlSidebar={activate:function(){var a=this,b=$.AdminLTE.options.controlSidebarOptions,c=$(b.selector),d=$(b.toggleBtnSelector);d.on("click",function(d){d.preventDefault(),c.hasClass("control-sidebar-open")||$("body").hasClass("control-sidebar-open")?a.close(c,b.slide):a.open(c,b.slide)});var e=$(".control-sidebar-bg");a._fix(e),$("body").hasClass("fixed")?a._fixForFixed(c):$(".content-wrapper, .right-side").height()<c.height()&&a._fixForContent(c)},open:function(a,b){b?a.addClass("control-sidebar-open"):$("body").addClass("control-sidebar-open")},close:function(a,b){b?a.removeClass("control-sidebar-open"):$("body").removeClass("control-sidebar-open")},_fix:function(a){var b=this;$("body").hasClass("layout-boxed")?(a.css("position","absolute"),a.height($(".wrapper").height()),$(window).resize(function(){b._fix(a)})):a.css({position:"fixed",height:"auto"})},_fixForFixed:function(a){a.css({position:"fixed","max-height":"100%",overflow:"auto","padding-bottom":"50px"})},_fixForContent:function(a){$(".content-wrapper, .right-side").css("min-height",a.height())}},$.AdminLTE.boxWidget={selectors:$.AdminLTE.options.boxWidgetOptions.boxWidgetSelectors,icons:$.AdminLTE.options.boxWidgetOptions.boxWidgetIcons,animationSpeed:$.AdminLTE.options.animationSpeed,activate:function(a){var b=this;a||(a=document),$(a).on("click",b.selectors.collapse,function(a){a.preventDefault(),b.collapse($(this))}),$(a).on("click",b.selectors.remove,function(a){a.preventDefault(),b.remove($(this))})},collapse:function(a){var b=this,c=a.parents(".box").first(),d=c.find("> .box-body, > .box-footer, > form  >.box-body, > form > .box-footer");c.hasClass("collapsed-box")?(a.children(":first").removeClass(b.icons.open).addClass(b.icons.collapse),d.slideDown(b.animationSpeed,function(){c.removeClass("collapsed-box")})):(a.children(":first").removeClass(b.icons.collapse).addClass(b.icons.open),d.slideUp(b.animationSpeed,function(){c.addClass("collapsed-box")}))},remove:function(a){var b=a.parents(".box").first();b.slideUp(this.animationSpeed)}}}if("undefined"==typeof jQuery)throw new Error("AdminLTE requires jQuery");$.AdminLTE={},$.AdminLTE.options={navbarMenuSlimscroll:!0,navbarMenuSlimscrollWidth:"3px",navbarMenuHeight:"200px",animationSpeed:500,sidebarToggleSelector:"[data-toggle='offcanvas']",sidebarPushMenu:!0,sidebarSlimScroll:!0,sidebarExpandOnHover:!1,enableBoxRefresh:!0,enableBSToppltip:!0,BSTooltipSelector:"[data-toggle='tooltip']",enableFastclick:!0,enableControlSidebar:!0,controlSidebarOptions:{toggleBtnSelector:"[data-toggle='control-sidebar']",selector:".control-sidebar",slide:!0},enableBoxWidget:!0,boxWidgetOptions:{boxWidgetIcons:{collapse:"fa-minus",open:"fa-plus",remove:"fa-times"},boxWidgetSelectors:{remove:'[data-widget="remove"]',collapse:'[data-widget="collapse"]'}},directChat:{enable:!0,contactToggleSelector:'[data-widget="chat-pane-toggle"]'},colors:{lightBlue:"#3c8dbc",red:"#f56954",green:"#00a65a",aqua:"#00c0ef",yellow:"#f39c12",blue:"#0073b7",navy:"#001F3F",teal:"#39CCCC",olive:"#3D9970",lime:"#01FF70",orange:"#FF851B",fuchsia:"#F012BE",purple:"#8E24AA",maroon:"#D81B60",black:"#222222",gray:"#d2d6de"},screenSizes:{xs:480,sm:768,md:992,lg:1200}},$(function(){"use strict";$("body").removeClass("hold-transition"),"undefined"!=typeof AdminLTEOptions&&$.extend(!0,$.AdminLTE.options,AdminLTEOptions);var a=$.AdminLTE.options;_init(),$.AdminLTE.layout.activate(),$.AdminLTE.tree(".sidebar"),a.enableControlSidebar&&$.AdminLTE.controlSidebar.activate(),a.navbarMenuSlimscroll&&"undefined"!=typeof $.fn.slimscroll&&$(".navbar .menu").slimscroll({height:a.navbarMenuHeight,alwaysVisible:!1,size:a.navbarMenuSlimscrollWidth}).css("width","100%"),a.sidebarPushMenu&&$.AdminLTE.pushMenu.activate(a.sidebarToggleSelector),a.enableBSToppltip&&$("body").tooltip({selector:a.BSTooltipSelector}),a.enableBoxWidget&&$.AdminLTE.boxWidget.activate(),a.enableFastclick&&"undefined"!=typeof FastClick&&FastClick.attach(document.body),a.directChat.enable&&$(document).on("click",a.directChat.contactToggleSelector,function(){var a=$(this).parents(".direct-chat").first();a.toggleClass("direct-chat-contacts-open")}),$('.btn-group[data-toggle="btn-toggle"]').each(function(){var a=$(this);$(this).find(".btn").on("click",function(b){a.find(".btn.active").removeClass("active"),$(this).addClass("active"),b.preventDefault()})})}),function(a){"use strict";a.fn.boxRefresh=function(b){function c(a){a.append(f),e.onLoadStart.call(a)}function d(a){a.find(f).remove(),e.onLoadDone.call(a)}var e=a.extend({trigger:".refresh-btn",source:"",onLoadStart:function(a){return a},onLoadDone:function(a){return a}},b),f=a('<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>');return this.each(function(){if(""===e.source)return void(window.console&&window.console.log("Please specify a source first - boxRefresh()"));var b=a(this),f=b.find(e.trigger).first();f.on("click",function(a){a.preventDefault(),c(b),b.find(".box-body").load(e.source,function(){d(b)})})})}}(jQuery),function(a){"use strict";a.fn.activateBox=function(){a.AdminLTE.boxWidget.activate(this)},a.fn.toggleBox=function(){var b=a(a.AdminLTE.boxWidget.selectors.collapse,this);a.AdminLTE.boxWidget.collapse(b)},a.fn.removeBox=function(){var b=a(a.AdminLTE.boxWidget.selectors.remove,this);a.AdminLTE.boxWidget.remove(b)}}(jQuery),function(a){"use strict";a.fn.todolist=function(b){var c=a.extend({onCheck:function(a){return a},onUncheck:function(a){return a}},b);return this.each(function(){"undefined"!=typeof a.fn.iCheck?(a("input",this).on("ifChecked",function(){var b=a(this).parents("li").first();b.toggleClass("done"),c.onCheck.call(b)}),a("input",this).on("ifUnchecked",function(){var b=a(this).parents("li").first();b.toggleClass("done"),c.onUncheck.call(b)})):a("input",this).on("change",function(){var b=a(this).parents("li").first();b.toggleClass("done"),a("input",b).is(":checked")?c.onCheck.call(b):c.onUncheck.call(b)})})}}(jQuery);
+function _init(){"use strict";$.AdminLTE.layout={activate:function(){var a=this;a.fix(),a.fixSidebar(),$(window,".wrapper").resize(function(){a.fix(),a.fixSidebar()})},fix:function(){var a=$(".main-header").outerHeight()+$(".main-footer").outerHeight(),b=$(window).height(),c=$(".sidebar").height();if($("body").hasClass("fixed"))$(".content-wrapper, .right-side").css("min-height",b-$(".main-footer").outerHeight());else{var d;b>=c?($(".content-wrapper, .right-side").css("min-height",b-a),d=b-a):($(".content-wrapper, .right-side").css("min-height",c),d=c);var e=$($.AdminLTE.options.controlSidebarOptions.selector);"undefined"!=typeof e&&e.height()>d&&$(".content-wrapper, .right-side").css("min-height",e.height())}},fixSidebar:function(){return $("body").hasClass("fixed")?("undefined"==typeof $.fn.slimScroll&&window.console&&window.console.error("Error: the fixed layout requires the slimscroll plugin!"),void($.AdminLTE.options.sidebarSlimScroll&&"undefined"!=typeof $.fn.slimScroll&&($(".sidebar").slimScroll({destroy:!0}).height("auto"),$(".sidebar").slimscroll({height:$(window).height()-$(".main-header").height()+"px",color:"rgba(0,0,0,0.2)",size:"3px"})))):void("undefined"!=typeof $.fn.slimScroll&&$(".sidebar").slimScroll({destroy:!0}).height("auto"))}},$.AdminLTE.pushMenu={activate:function(a){var b=$.AdminLTE.options.screenSizes;$(document).on("click",a,function(a){a.preventDefault(),$(window).width()>b.sm-1?$("body").hasClass("sidebar-collapse")?$("body").removeClass("sidebar-collapse").trigger("expanded.pushMenu"):$("body").addClass("sidebar-collapse").trigger("collapsed.pushMenu"):$("body").hasClass("sidebar-open")?$("body").removeClass("sidebar-open").removeClass("sidebar-collapse").trigger("collapsed.pushMenu"):$("body").addClass("sidebar-open").trigger("expanded.pushMenu")}),$(".content-wrapper").click(function(){$(window).width()<=b.sm-1&&$("body").hasClass("sidebar-open")&&$("body").removeClass("sidebar-open")}),($.AdminLTE.options.sidebarExpandOnHover||$("body").hasClass("fixed")&&$("body").hasClass("sidebar-mini"))&&this.expandOnHover()},expandOnHover:function(){var a=this,b=$.AdminLTE.options.screenSizes.sm-1;$(".main-sidebar").hover(function(){$("body").hasClass("sidebar-mini")&&$("body").hasClass("sidebar-collapse")&&$(window).width()>b&&a.expand()},function(){$("body").hasClass("sidebar-mini")&&$("body").hasClass("sidebar-expanded-on-hover")&&$(window).width()>b&&a.collapse()})},expand:function(){$("body").removeClass("sidebar-collapse").addClass("sidebar-expanded-on-hover")},collapse:function(){$("body").hasClass("sidebar-expanded-on-hover")&&$("body").removeClass("sidebar-expanded-on-hover").addClass("sidebar-collapse")}},$.AdminLTE.tree=function(a){var b=this,c=$.AdminLTE.options.animationSpeed;$(document).off("click",a+" li a").on("click",a+" li a",function(a){var d=$(this),e=d.next();if(e.is(".treeview-menu")&&e.is(":visible")&&!$("body").hasClass("sidebar-collapse"))e.slideUp(c,function(){e.removeClass("menu-open")}),e.parent("li").removeClass("active");else if(e.is(".treeview-menu")&&!e.is(":visible")){var f=d.parents("ul").first(),g=f.find("ul:visible").slideUp(c);g.removeClass("menu-open");var h=d.parent("li");e.slideDown(c,function(){e.addClass("menu-open"),f.find("li.active").removeClass("active"),h.addClass("active"),b.layout.fix()})}e.is(".treeview-menu")&&a.preventDefault()})},$.AdminLTE.controlSidebar={activate:function(){var a=this,b=$.AdminLTE.options.controlSidebarOptions,c=$(b.selector),d=$(b.toggleBtnSelector);d.on("click",function(d){d.preventDefault(),c.hasClass("control-sidebar-open")||$("body").hasClass("control-sidebar-open")?a.close(c,b.slide):a.open(c,b.slide)});var e=$(".control-sidebar-bg");a._fix(e),$("body").hasClass("fixed")?a._fixForFixed(c):$(".content-wrapper, .right-side").height()<c.height()&&a._fixForContent(c)},open:function(a,b){b?a.addClass("control-sidebar-open"):$("body").addClass("control-sidebar-open")},close:function(a,b){b?a.removeClass("control-sidebar-open"):$("body").removeClass("control-sidebar-open")},_fix:function(a){var b=this;if($("body").hasClass("layout-boxed")){if(a.css("position","absolute"),a.height($(".wrapper").height()),b.hasBindedResize)return;$(window).resize(function(){b._fix(a)}),b.hasBindedResize=!0}else a.css({position:"fixed",height:"auto"})},_fixForFixed:function(a){a.css({position:"fixed","max-height":"100%",overflow:"auto","padding-bottom":"50px"})},_fixForContent:function(a){$(".content-wrapper, .right-side").css("min-height",a.height())}},$.AdminLTE.boxWidget={selectors:$.AdminLTE.options.boxWidgetOptions.boxWidgetSelectors,icons:$.AdminLTE.options.boxWidgetOptions.boxWidgetIcons,animationSpeed:$.AdminLTE.options.animationSpeed,activate:function(a){var b=this;a||(a=document),$(a).on("click",b.selectors.collapse,function(a){a.preventDefault(),b.collapse($(this))}),$(a).on("click",b.selectors.remove,function(a){a.preventDefault(),b.remove($(this))})},collapse:function(a){var b=this,c=a.parents(".box").first(),d=c.find("> .box-body, > .box-footer, > form  >.box-body, > form > .box-footer");c.hasClass("collapsed-box")?(a.children(":first").removeClass(b.icons.open).addClass(b.icons.collapse),d.slideDown(b.animationSpeed,function(){c.removeClass("collapsed-box")})):(a.children(":first").removeClass(b.icons.collapse).addClass(b.icons.open),d.slideUp(b.animationSpeed,function(){c.addClass("collapsed-box")}))},remove:function(a){var b=a.parents(".box").first();b.slideUp(this.animationSpeed)}}}if("undefined"==typeof jQuery)throw new Error("AdminLTE requires jQuery");$.AdminLTE={},$.AdminLTE.options={navbarMenuSlimscroll:!0,navbarMenuSlimscrollWidth:"3px",navbarMenuHeight:"200px",animationSpeed:500,sidebarToggleSelector:"[data-toggle='offcanvas']",sidebarPushMenu:!0,sidebarSlimScroll:!0,sidebarExpandOnHover:!1,enableBoxRefresh:!0,enableBSToppltip:!0,BSTooltipSelector:"[data-toggle='tooltip']",enableFastclick:!1,enableControlSidebar:!0,controlSidebarOptions:{toggleBtnSelector:"[data-toggle='control-sidebar']",selector:".control-sidebar",slide:!0},enableBoxWidget:!0,boxWidgetOptions:{boxWidgetIcons:{collapse:"fa-minus",open:"fa-plus",remove:"fa-times"},boxWidgetSelectors:{remove:'[data-widget="remove"]',collapse:'[data-widget="collapse"]'}},directChat:{enable:!0,contactToggleSelector:'[data-widget="chat-pane-toggle"]'},colors:{lightBlue:"#3c8dbc",red:"#f56954",green:"#00a65a",aqua:"#00c0ef",yellow:"#f39c12",blue:"#0073b7",navy:"#001F3F",teal:"#39CCCC",olive:"#3D9970",lime:"#01FF70",orange:"#FF851B",fuchsia:"#F012BE",purple:"#8E24AA",maroon:"#D81B60",black:"#222222",gray:"#d2d6de"},screenSizes:{xs:480,sm:768,md:992,lg:1200}},$(function(){"use strict";$("body").removeClass("hold-transition"),"undefined"!=typeof AdminLTEOptions&&$.extend(!0,$.AdminLTE.options,AdminLTEOptions);var a=$.AdminLTE.options;_init(),$.AdminLTE.layout.activate(),$.AdminLTE.tree(".sidebar"),a.enableControlSidebar&&$.AdminLTE.controlSidebar.activate(),a.navbarMenuSlimscroll&&"undefined"!=typeof $.fn.slimscroll&&$(".navbar .menu").slimscroll({height:a.navbarMenuHeight,alwaysVisible:!1,size:a.navbarMenuSlimscrollWidth}).css("width","100%"),a.sidebarPushMenu&&$.AdminLTE.pushMenu.activate(a.sidebarToggleSelector),a.enableBSToppltip&&$("body").tooltip({selector:a.BSTooltipSelector}),a.enableBoxWidget&&$.AdminLTE.boxWidget.activate(),a.enableFastclick&&"undefined"!=typeof FastClick&&FastClick.attach(document.body),a.directChat.enable&&$(document).on("click",a.directChat.contactToggleSelector,function(){var a=$(this).parents(".direct-chat").first();a.toggleClass("direct-chat-contacts-open")}),$('.btn-group[data-toggle="btn-toggle"]').each(function(){var a=$(this);$(this).find(".btn").on("click",function(b){a.find(".btn.active").removeClass("active"),$(this).addClass("active"),b.preventDefault()})})}),function(a){"use strict";a.fn.boxRefresh=function(b){function c(a){a.append(f),e.onLoadStart.call(a)}function d(a){a.find(f).remove(),e.onLoadDone.call(a)}var e=a.extend({trigger:".refresh-btn",source:"",onLoadStart:function(a){return a},onLoadDone:function(a){return a}},b),f=a('<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>');return this.each(function(){if(""===e.source)return void(window.console&&window.console.log("Please specify a source first - boxRefresh()"));var b=a(this),f=b.find(e.trigger).first();f.on("click",function(a){a.preventDefault(),c(b),b.find(".box-body").load(e.source,function(){d(b)})})})}}(jQuery),function(a){"use strict";a.fn.activateBox=function(){a.AdminLTE.boxWidget.activate(this)},a.fn.toggleBox=function(){var b=a(a.AdminLTE.boxWidget.selectors.collapse,this);a.AdminLTE.boxWidget.collapse(b)},a.fn.removeBox=function(){var b=a(a.AdminLTE.boxWidget.selectors.remove,this);a.AdminLTE.boxWidget.remove(b)}}(jQuery),function(a){"use strict";a.fn.todolist=function(b){var c=a.extend({onCheck:function(a){return a},onUncheck:function(a){return a}},b);return this.each(function(){"undefined"!=typeof a.fn.iCheck?(a("input",this).on("ifChecked",function(){var b=a(this).parents("li").first();b.toggleClass("done"),c.onCheck.call(b)}),a("input",this).on("ifUnchecked",function(){var b=a(this).parents("li").first();b.toggleClass("done"),c.onUncheck.call(b)})):a("input",this).on("change",function(){var b=a(this).parents("li").first();b.toggleClass("done"),a("input",b).is(":checked")?c.onCheck.call(b):c.onUncheck.call(b)})})}}(jQuery);
 /*
  Media manager
  */
@@ -7335,5 +7462,90 @@ $(function () {
     $('#slidebar-toggle-button').click(function (e) {
         $.cookie('administration-navigation-collapsed', !$('body').hasClass('sidebar-collapse'), {expires: 777, path: "/"});
     });
-})
+
+    /*
+     init ckeditors
+     */
+    /*
+     * Възможност за празни i/span тагове
+     */
+    CKEDITOR.config.protectedSource.push(/<i[^>]*><\/i>/g);
+    CKEDITOR.config.protectedSource.push(/<span[^>]*><\/span>/g);
+
+    /*
+     * textarea ckeditor
+     */
+    var ckEditorContentsCss=[];
+    var ckEditors = $("textarea.provision-ckeditor");
+    if (ckEditors.length) {
+
+        // var finder = new CKFinder();
+        // finder.basePath = '/ckeditor/browse/';
+
+        ckEditors.each(function (index) {
+
+            /*
+             * add bootstrap css
+             */
+            ckEditorContentsCss.push('/vendor/provision/administration/css/bootstrap.min.css');
+            ckEditorContentsCss.push('/vendor/provision/administration/css/ckeditor.css');
+
+            var ckEditorConfig = {
+                customConfig: '',
+                //extraPlugins: 'pbckcode,youtube,sourcedialog,codemirror,oembed,widget,bootstrapBreadcrumbs,bootstrapButtons,bootstrapCarousel,bootstrapCollapse,bootstrapListGroup,bootstrapPanel,bootstrapTab,textShadow',
+
+                /*
+                 * bootstrapCarousel config
+                 */
+                // bootstrapCarousel_managePopupTitle : true,
+                // bootstrapCarousel_managePopupCaption : true,
+                // bootstrapCarousel_fileManager : 'ckfinder',
+                // bootstrapCarousel_kcFinderAbsolutePath :  'http://'+domain+'/ckeditor/browse/',
+                // bootstrapCarousel_fileManagerAbsolutePath : 'http://'+domain+'/ckeditor/browse/',
+
+                /*
+                 * popUp
+                 */
+                // bootstrapCollapse_managePopupContent : true,
+                // bootstrapListGroup_managePopupContent : true,
+                // bootstrapPanel_managePopupContent : true,
+                // bootstrapTab_managePopupContent : true,
+
+
+                /*
+                 * oembed config
+                 */
+                // oembed_WrapperClass: 'embededContent',
+                // oembed_maxWidth: '560',
+                // oembed_maxHeight: '315',
+
+                toolbar: [['Source', 'Preview', '-', 'Templates'], ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'], ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'], ['Image', 'Youtube', 'oembed', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak'], '/', ['Format'], ['TextColor', 'BGColor'], ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'], ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote', 'pbckcode', 'CreateDiv'], ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'], ['Link', 'Unlink', 'Anchor'], ['Maximize', 'ShowBlocks'], '/', {
+                    name: 'insert',
+                   // items: ['BootstrapBreadcrumbs', 'BootstrapButtons', 'BootstrapCarousel', 'BootstrapCollapse', 'BootstrapListGroup', 'BootstrapPanel', 'BootstrapTab', 'TextShadow']
+                }],
+                language: language,
+                height: '300px',
+                width: '100%',
+                allowedContent: true, //allow html content
+                pbckcode: {
+                    cls: '',
+                    highlighter: 'PRETTIFY',
+                    modes: [['HTML', 'html'], ['CSS', 'css'], ['PHP', 'php'], ['JS', 'javascript'], ['Java', 'java'], ['C/C++', 'c_pp'], ['C#', 'csharp'], ['Diff', 'diff'], ['Java', 'java'], ['JSON', 'json'], ['JSP', 'jsp'], ['LESS', 'less'], ['Perl', 'perl'], ['Python', 'python'], ['R', 'ruby'], ['SCSS/Sass', 'scss'], ['SQL', 'sql'], ['XML', 'xml'], ['YAML', 'yaml']],
+                    theme: 'textmate',
+                    tab_size: '4'
+                },
+                youtube_related: false,
+                disableNativeSpellChecker: false,
+                resize_enabled: true,
+                //filebrowserBrowseUrl : '/ckeditor/browse/',
+                contentsCss: ckEditorContentsCss,
+                contentsLangDirection: $(this).attr('data-direction'),
+                // filebrowserUploadUrl : '/ckeditor/upload/',
+            };
+
+            $(this).ckeditor(function () {
+            }, ckEditorConfig);
+        });
+    }
+});
 //# sourceMappingURL=all.js.map

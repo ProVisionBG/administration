@@ -568,6 +568,9 @@
     --}}
 </div><!-- ./wrapper -->
 
+<script>
+    var language='{{Administration::getLanguage()}}';
+</script>
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
 
 

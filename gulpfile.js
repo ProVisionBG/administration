@@ -31,6 +31,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css',
         'resources/assets/bower_components/PACE/themes/green/pace-theme-flash.css',
         'resources/assets/bower_components/bootstrap-languages/languages.min.css',
+        'resources/assets/bower_components/ckeditor/skins/moono/editor.css',
 
         'resources/assets/bower_components/AdminLTE/dist/css/AdminLTE.min.css',
         'resources/assets/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css',
@@ -47,6 +48,10 @@ elixir(function (mix) {
         'resources/assets/bower_components/iCheck/icheck.js',
         'resources/assets/bower_components/fastclick/lib/fastclick.js',
         'resources/assets/bower_components/ckeditor/ckeditor.js',
+        'resources/assets/bower_components/ckeditor/adapters/jquery.js',
+        'resources/assets/bower_components/ckeditor/lang/bg.js',
+        'resources/assets/bower_components/ckeditor/styles.js',
+        // 'resources/assets/bower_components/ckeditor/config.js',
         'resources/assets/bower_components/datatables/media/js/jquery.dataTables.min.js',
         'resources/assets/bower_components/datatables/media/js/dataTables.bootstrap.min.js',
         'resources/assets/bower_components/datatables-responsive/js/dataTables.responsive.js',
@@ -73,6 +78,9 @@ elixir(function (mix) {
         .copy('resources/assets/bower_components/glyphicons/fonts', 'public/assets/fonts/')
         .copy('resources/assets/bower_components/iCheck/skins/square/blu*.png', 'public/assets/css/')
         .copy('resources/assets/bower_components/bootstrap-languages/languages.png', 'public/assets/css/')
+        .copy('resources/assets/bower_components/ckeditor/skins/moono/icons.png', 'public/assets/css/')
+        .copy('resources/assets/css/ckeditor.css', 'public/assets/css/')
+        .copy('resources/assets/bower_components/bootstrap/dist/css/bootstrap.min.css', 'public/assets/css/')
         .publish();
 });
 
