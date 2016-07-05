@@ -7,8 +7,8 @@ if ($translationOpened === false) {
         <?php
         foreach (Administration::getLanguages() as $key => $lang) {
             echo '<li class="' . (Administration::getLanguage() == $key ? 'active' : '') . '">
-                    <a href="#' . $key . '" data-toggle="tab" aria-expanded="false"><span class="lang-sm" lang="' . $key . '"></span> ' . $lang['name'] . '</a>
-                   </li>';
+                    <a href="#' . $key.$translationTabSuffix . '" data-toggle="tab" aria-expanded="false"><span class="lang-sm" lang="' . $key . '"></span> ' . $lang['name'] . '</a>
+                  </li>';
         }
         ?>
     </ul>
@@ -18,7 +18,7 @@ if ($translationOpened === false) {
     <div class="tab-content">
         <?php
         foreach (Administration::getLanguages() as $key => $lang) {
-            echo '<div class="tab-pane ' . (Administration::getLanguage() == $key ? 'active' : '') . '" id="' . $key . '">';
+            echo '<div class="tab-pane ' . (Administration::getLanguage() == $key ? 'active' : '') . '" id="' . $key.$translationTabSuffix . '">';
             foreach ($translationContainer as $field) {
 
                 if (empty($field->getOptions()['original_name'])) {

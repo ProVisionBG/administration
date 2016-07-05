@@ -28,51 +28,55 @@ if (!empty($formOptions['id'])) {
         <?php } ?>
 
         <?php if ($showFields) {
-        $translationContainer = [];
+        $translationContainer = []; //translate fields container
+        $translationTabSuffix=''; //suffix
+
         $translationOpened = false;
 
         foreach ($fields as $field) {
-        if (!in_array($field->getName(), $exclude)) {
+            if (!in_array($field->getName(), $exclude)) {
 
-        /*
-         * set required flag
-         */
-        if (!empty($field->getOptions()['validation_rules']['required']) && $field->getOptions()['validation_rules']['required'] == true) {
-            $field->setOptions(['rules' => 'required']);
-        }
+                /*
+                 * set required flag
+                 */
+                if (!empty($field->getOptions()['validation_rules']['required']) && $field->getOptions()['validation_rules']['required'] == true) {
+                    $field->setOptions(['rules' => 'required']);
+                }
 
-        /*
-         * check translation state is continues
-         */
-        if (empty($field->getOptions()['translate'])) {
-            $field->setOptions(['translate' => false]);
-        }
-        if ($field->getOptions()['translate'] !== $translationOpened) {
-        /*
-         * show translation tabs
-         */
-        if ($translationOpened === false && !empty($translationContainer)) {
-        //open translations
-        ?>
-        @include('administration::components.fields.translation_tabs')
-        <?php
-        } else {
-        //close translations & render fields
-        ?>
-        @include('administration::components.fields.translation_tabs')
-        <?php
-        $translationContainer = [];
-        }
-        $translationOpened = !$translationOpened;
-        }
+                /*
+                 * check translation state is continues
+                 */
+                if (empty($field->getOptions()['translate'])) {
+                    $field->setOptions(['translate' => false]);
+                }
+                if ($field->getOptions()['translate'] !== $translationOpened) {
+                /*
+                 * show translation tabs
+                 */
+                if ($translationOpened === false && count($translationContainer)==0) {
+                    //open translations
+                    $translationTabSuffix=str_random(7);
+                    ?>
+                    @include('administration::components.fields.translation_tabs')
+                    <?php
+                } else {
+                    //close translations & render fields
+                    ?>
+                    @include('administration::components.fields.translation_tabs')
+                    <?php
+                    $translationContainer = [];
+                    $translationTabSuffix='';
+                }
+                    $translationOpened = !$translationOpened;
+                }
 
-        if ($translationOpened) {
-            $translationContainer[] = $field;
-        } else {
-            $translationOpened = false;
-            echo $field->render();
-        }
-        }
+                if ($translationOpened) {
+                    $translationContainer[] = $field;
+                } else {
+                    $translationOpened = false;
+                    echo $field->render();
+                }
+            }
         }
         }
 
