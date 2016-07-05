@@ -37,8 +37,9 @@ if ($translationOpened === false) {
                 /*
                  * set translation value
                  */
+                $fieldName = $field->getOptions()['original_name'];
                 $field->setOptions([
-                        'value' => ($form->getModel() && $form->getModel()->translate($key) ? $form->getModel()->translate($key)->text : '')
+                        'value' => ($form->getModel() && $form->getModel()->translate($key) ? $form->getModel()->translate($key)->$$fieldName : '')
                 ]);
 
                 echo $field->render();
