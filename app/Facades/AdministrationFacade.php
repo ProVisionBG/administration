@@ -3,6 +3,7 @@ namespace ProVision\Administration\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use LaravelLocalization;
+use ProVision\Administration\StaticBlock;
 
 class Administration extends Facade {
 
@@ -64,4 +65,13 @@ class Administration extends Facade {
     public static function getLanguage() {
         return LaravelLocalization::setLocale();
     }
+
+    public static function getStaticBlock($key) {
+        $block = StaticBlock::where('key', $key)->first();
+        if ($block) {
+            return $block->text;
+        }
+        \Debugbar::error('static block not found: ' . $key);
+    }
+
 }

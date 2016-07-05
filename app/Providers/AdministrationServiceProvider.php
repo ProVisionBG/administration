@@ -7,6 +7,8 @@ use Config;
 use Form;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
+use ProVision\Administration\Facades\StaticBlockFacade;
+use ProVision\Administration\StaticBlock;
 
 class AdministrationServiceProvider extends ServiceProvider {
     /**

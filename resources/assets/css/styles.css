@@ -62,3 +62,8 @@ label[class*='lang-'] {
 .cke {
     visibility: inherit !important;
 }
+
+p.help-block {
+    padding-left: 10px;
+    font-size: 12px;
+}

@@ -10,6 +10,9 @@ class StaticBlockForm extends AdminForm {
             'validation_rules' => [
                 "required" => true,
                 "minlength" => 2
+            ],
+            'help_block' => [
+                'text' => trans('administration::static_blocks.how_to_use_code') . ' <b>{!! Administration::getStaticBlock(\'KEY\') !!}</b>'
             ]
         ]);
 
