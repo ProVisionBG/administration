@@ -165,7 +165,6 @@ class StaticBlocksController extends BaseAdministrationController {
         $staticBlock = StaticBlock::findOrFail($id);
 
         $requestData = Request::all();
-        dd($requestData);
 
         if ($staticBlock->validate($requestData)) {
             $staticBlock->fill($requestData);

@@ -19,6 +19,7 @@ class StaticBlock extends AdminModel {
         'active' => 'boolean'
     );
     public $table = 'static_blocks';
+    
     protected $fillable = [
         'key',
         'text',
