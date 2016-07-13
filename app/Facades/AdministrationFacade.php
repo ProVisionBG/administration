@@ -66,6 +66,9 @@ class Administration extends Facade {
         return LaravelLocalization::setLocale();
     }
 
+    /*
+     * get static block for blade templates
+     */
     public static function getStaticBlock($key) {
         $block = StaticBlock::where('key', $key)->first();
         if ($block) {
@@ -73,5 +76,24 @@ class Administration extends Facade {
         }
         \Debugbar::error('static block not found: ' . $key);
     }
+
+    /*
+     * Get module order index
+     */
+    public static function getModuleOrderIndex($module) {
+        $module = \Module::where('slug', $module);
+        if (!$module) {
+            return false;
+        }
+        return $module['order'];
+    }
+
+    /*
+     * get Administration menu instance
+     */
+    public static function getMenuInstance() {
+        return \Menu::get('ProVisionAdministrationMenu');
+    }
+
 
 }
