@@ -122,7 +122,17 @@ Route::group([
             /*
              * Media Manager
              */
-            
+            Route::resource('media', 'MediaController', [
+                'names' => [
+                    'index' => 'media.index',
+                    //                    'edit' => 'media.edit',
+                    //                    'create' => 'media.create',
+                    'store' => 'media.store',
+                    'update' => 'media.update',
+                    'destroy' => 'media.destroy',
+                ]
+            ]);
+
 
         });
 

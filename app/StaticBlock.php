@@ -15,7 +15,7 @@ class StaticBlock extends AdminModel {
 
     public $translatedAttributes = ['text'];
     public $rules = array(
-        'key' => 'required|max:25',
+        'module' => 'required|max:25',
         'active' => 'boolean'
     );
     public $table = 'static_blocks';

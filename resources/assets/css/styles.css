@@ -59,6 +59,10 @@ label[class*='lang-'] {
     background-color: #ecf0f5;
 }
 
+.nav-tabs-languages > .nav-tabs > li.active > a, .nav-tabs-custom > .nav-tabs > li.active:hover > a {
+    background-color: #dde1e6;
+}
+
 .cke {
     visibility: inherit !important;
 }
@@ -66,4 +70,21 @@ label[class*='lang-'] {
 p.help-block {
     padding-left: 10px;
     font-size: 12px;
+}
+
+.modal-media .media-items-container > .media-item {
+    float: left;
+    margin: 10px;
+    border: 1px solid #E7E7E7;
+    background: white;
+}
+
+.modal-media .media-items-container > .media-item > .img {
+    float: left;
+    margin: 2px;
+}
+
+.modal-media .media-items-container > .media-item > .bottom-controls {
+    float: left;
+    clear: both;
 }

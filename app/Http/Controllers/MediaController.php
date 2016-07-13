@@ -1,0 +1,179 @@
+<?php
+
+namespace ProVision\Administration\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+use ProVision\Administration\Media;
+use Response;
+
+class MediaController extends Controller {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request) {
+        if (!$request->has('itemId')) {
+            return Response::json(array('Invalid item_id'), 422);
+        }
+
+        if (!$request->has('moduleName')) {
+            return Response::json(array('Invalid module'), 422);
+        }
+
+        $mediaQuery = Media::where('item_id', $request->input('itemId'))
+            ->where('module', $request->input('moduleName'));
+
+        $items = $mediaQuery->orderBy('order_index')->get();
+
+        return view('administration::media.items', compact('items'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create() {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request) {
+        $file = $request->file('file');
+
+        if (!$file) {
+            return Response::json(array('not selected file'), 422);
+        }
+
+        if (!$file->isValid()) {
+            return Response::json(array('Invalid file'), 422);
+        }
+
+        $media = new Media();
+
+        if ($request->has('itemId')) {
+            $media->item_id = $request->input('itemId');
+        } else {
+            return Response::json(array('Invalid item_id'), 422);
+        }
+
+        if ($request->has('moduleName')) {
+            $media->module = $request->input('moduleName');
+        } else {
+            return Response::json(array('Invalid module'), 422);
+        }
+
+        if ($request->has('moduleSubName')) {
+            $media->sub_module = $request->input('moduleSubName');
+        }
+
+        $media->save();
+
+        $fullPath = public_path() . '/uploads/media/' . $media->module . '/';
+        if ($request->has('moduleSubName')) {
+            $fullPath .= '/' . $media->sub_module . '/';
+        }
+        $fullPath .= '/' . $media->item_id . '/' . $media->id . '/';
+
+        $extension = $file->getClientOriginalExtension();
+        $newFileName = md5($file->getFilename() . time());
+
+        $file->move($fullPath, $newFileName . '.' . $extension);
+
+        $media->file = $newFileName . '.' . $extension;
+        $media->save();
+
+        $media->resize($fullPath . $media->file);
+
+        return view('administration::media.item', ['item' => $media]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id) {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id) {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id) {
+        if ($request->has('type')) {
+            if ($request->input('type') == 'sort') {
+                /*
+                 * save sort
+                 */
+                $media = Media::findOrFail($id);
+
+                if ($request->has('before_id')) {
+                    $next = Media::findOrFail($request->input('before_id'));
+                    $media->moveBefore($next);
+                } else {
+                    $prev = Media::orderBy('order_index', 'desc')
+                        ->where('module', $media->module)
+                        ->where('sub_module', $media->sub_module)
+                        ->where('item_id', $media->item_id)->first();
+                    $media->moveAfter($prev);
+                }
+
+                return Response::json(['ok'], 200);
+
+            } elseif ($request->input('type') == 'choice-lang') {
+                /*
+                 * choice lang
+                 */
+                $media = Media::findOrFail($id);
+                if ($request->has('lang')) {
+                    $media->lang = $request->input('lang');
+                } else {
+                    $media->lang = null;
+                }
+                $media->save();
+                return Response::json(['ok'], 200);
+            }
+        }
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id) {
+        $media = Media::findOrFail($id);
+
+        \File::deleteDirectory(public_path($media->path));
+
+        $media->delete();
+
+        return \Response::json(['ok'], 200);
+    }
+}

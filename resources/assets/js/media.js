@@ -2,17 +2,128 @@
  Media manager
  */
 function runMedia(id) {
-    var modal = $(id);
-    console.log(modal);
+    var modal = $('#' + id);
+    var itemsContainer = modal.find('.media-items-container');
+
+    /*
+     clean data attributes
+     */
+    modal.removeData('bs.modal');
+
+    /*
+     clean old data if exist
+     */
+    itemsContainer.html('');
+
+    /*
+     load items
+     */
+    $.ajax({
+        method: "GET",
+        url: modal.attr('data-route-index'),
+        data: modal.data()
+    }).done(function (response) {
+        itemsContainer.append(response);
+    });
+
+    /*
+     upload file
+     */
     modal.find('input.upload-input').fileupload({
-        url: 'test',
-        dataType: 'json',
+        url: modal.attr('data-route-store'),
+        method: 'POST',
+        formData: modal.data(),
         add: function (e, data) {
-            data.context = $('<p/>').text('Uploading...').appendTo(document.body);
             data.submit();
         },
         done: function (e, data) {
-            data.context.text('Upload finished.');
+            itemsContainer.append(data.result);
         }
     }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+    /*
+     sortable
+     */
+    itemsContainer.sortable({
+        update: function (e, ui) {
+            $.ajax({
+                type: "PUT",
+                url: ui.item.attr('data-route-update'),
+                data: {
+                    'type': 'sort',
+                    'before_id': ui.item.next().attr('data-id')
+                },
+                success: function (data) {
+                    //code on success
+                },
+                error: function (data) {
+                    //alert('Error');
+                }
+            });
+        }
+    });
+    itemsContainer.disableSelection();
+
+    /*
+    style checkboxes
+     */
+    itemsContainer.find('input[type=checkbox]').iCheck({
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass: 'iradio_minimal-blue'
+    });
 }
+
+/*
+ confirmations
+ */
+$(document).on('click', '.modal-media button.btn-delete', function () {
+
+    var element = $(this).closest('.media-item');
+
+    $.confirm({
+        title: 'Confirm!',
+        content: 'Simple confirm!',
+        confirmButtonClass: 'btn-danger',
+        cancelButtonClass: 'btn-info',
+        confirm: function () {
+            $.ajax({
+                type: "DELETE",
+                url: element.attr('data-route-destroy'),
+                success: function (data) {
+                    element.remove();
+                },
+                error: function (data) {
+                }
+            });
+        },
+        cancel: function () {
+        }
+    });
+});
+
+/*
+ choice language
+ */
+$(document).on('click', '.media-item a.choice-lang', function () {
+
+    var $this = $(this);
+
+    var mediaItem = $this.closest('.media-item');
+
+
+    $.ajax({
+        type: "PUT",
+        url: mediaItem.attr('data-route-update'),
+        data: {
+            'type': 'choice-lang',
+            'lang': $(this).attr('data-lang')
+        },
+        success: function (data) {
+            //select new lang icon
+            mediaItem.find('button.btn-selected-lang>span').attr('lang', $this.attr('data-lang'));
+        },
+        error: function (data) {
+            //alert('Error');
+        }
+    });
+});

@@ -35,6 +35,7 @@
     "glyphicons": "^0.0.2",
     "jquery.cookie": "^1.4.1",
     "PACE": "pace#^1.0.2",
-    "blueimp-file-upload": "^9.12.5"
+    "blueimp-file-upload": "^9.12.5",
+    "jquery-confirm2": "craftpip/jquery-confirm#^2.5.1"
   }
 }

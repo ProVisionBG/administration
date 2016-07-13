@@ -1,0 +1,1 @@
+@each('administration::media.item', $items, 'item')
