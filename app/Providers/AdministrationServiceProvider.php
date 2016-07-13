@@ -61,12 +61,11 @@ class AdministrationServiceProvider extends ServiceProvider {
 
         /*
          * views
-         */
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'administration');
         $this->publishes([
             __DIR__ . '/../../resources/views' => resource_path('views/vendor/provision/administration'),
         ], 'views');
-
+        */
 
         /*
          * assets
