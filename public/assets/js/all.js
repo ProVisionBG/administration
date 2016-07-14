@@ -7537,6 +7537,36 @@ function runMedia(id) {
             $(this).prop('checked', ($this.attr('data-status') == 'true' ? true : false));
         });
     });
+
+    modal.find('.btn-delete-selected').unbind('click').on('click', function () {
+        var $this = $(this);
+
+        var checked = [];
+        modal.find('.media-items-container>.media-item input[type=checkbox]:checked').each(function () {
+            checked.push($(this).val());
+        });
+
+        if (checked.length < 1) {
+            return false;
+        }
+
+        $.ajax({
+            type: "DELETE",
+            url: itemsContainer.find(".media-item").first().attr('data-route-destroy'),
+            data: {
+                checked: checked
+            },
+            success: function (data) {
+                $.each(data, function (e, id) {
+                    $('div.media-item[data-id=' + id + ']').remove();
+                })
+            },
+            error: function (data) {
+            }
+        });
+
+
+    });
 }
 
 /*

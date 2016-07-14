@@ -30,7 +30,7 @@ $elementID = 'adminMediaButton-' . str_random(20);
             <div class="modal-footer">
 
                 <div class="btn-group btn-group-sm pull-left actions-group" role="group">
-                    <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{trans('administration::index.delete_selected')}}</button>
+                    <button type="button" class="btn btn-danger btn-delete-selected"><i class="fa fa-trash-o"></i> {{trans('administration::index.delete_selected')}}</button>
                     <button type="button" class="btn btn-default btn-select-all" data-status="true"><i class="fa fa-check-square-o" aria-hidden="true"></i> {{trans('administration::index.select_all')}}</button>
                     <button type="button" class="btn btn-default btn-select-all" data-status="false"><i class="fa fa-square-o" aria-hidden="true"></i> {{trans('administration::index.deselect_all')}}</button>
                 </div>

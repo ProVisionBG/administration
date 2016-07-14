@@ -177,6 +177,15 @@ class MediaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
+
+        if (\Request::has('checked')) {
+            foreach (\Request::input('checked') as $id) {
+                $media = Media::findOrFail($id);
+                $media->delete();
+            }
+            return \Response::json(\Request::input('checked'), 200);
+        }
+
         $media = Media::findOrFail($id);
         $media->delete();
 
