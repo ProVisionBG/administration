@@ -39,9 +39,7 @@ class AdministratorsController extends BaseAdministrationController {
                             $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.administrators.destroy', $user->id));
                         }
                     }
-
-                    $actions .= Form::adminMediaButton($user->id, 'users');
-
+                    
                     return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators.edit', $user->id)) . $actions;
                 })
                 ->filter(function ($query) {

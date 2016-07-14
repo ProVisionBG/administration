@@ -8,7 +8,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <link rel="stylesheet" href='{{asset("/vendor/provision/administration/css/all.css")}}'>
-
 </head>
 <body class="hold-transition skin-blue sidebar-mini @if(\Request::cookie('administration-navigation-collapsed')=='true') sidebar-collapse @endif">
 <!-- Site wrapper -->
@@ -569,7 +568,9 @@
 </div><!-- ./wrapper -->
 
 <script>
-    var language='{{Administration::getLanguage()}}';
+    var language = '{{Administration::getLanguage()}}';
+
+    var translates = {!! json_encode(Lang::get('administration::js')) !!};
 </script>
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
 

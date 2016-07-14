@@ -88,3 +88,7 @@ p.help-block {
     float: left;
     clear: both;
 }
+
+.jconfirm .jconfirm-box div.content-pane .content{
+    min-height: auto;
+}

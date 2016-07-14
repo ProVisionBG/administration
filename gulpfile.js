@@ -33,6 +33,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/bootstrap-languages/languages.min.css',
         'resources/assets/bower_components/ckeditor/skins/moono/editor.css',
         'resources/assets/bower_components/jquery-confirm2/dist/jquery-confirm.min.css',
+        'resources/assets/bower_components/blueimp-file-upload/css/jquery.fileupload.css',
 
         'resources/assets/bower_components/AdminLTE/dist/css/AdminLTE.min.css',
         'resources/assets/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css',

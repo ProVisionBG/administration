@@ -5,17 +5,22 @@ namespace ProVision\Administration;
 
 class Media extends AdminModel {
 
-    use \Rutorika\Sortable\SortableTrait;
-
+    protected static $sortableGroupField = [
+        'module',
+        'sub_module'
+    ];
     protected static $sortableField = 'order_index';
-
     public $rules = array(
         'key' => 'required|max:25',
         'item_id' => 'required|integer',
         'file' => 'required',
         'lang' => 'max:2|min:2|null'
     );
+
+    use \Rutorika\Sortable\SortableTrait;
     public $table = 'media';
+    protected $module = 'media';
+    protected $sub_module = null;
     protected $appends = ['path'];
     protected $fillable = [
         'module',
@@ -34,11 +39,26 @@ class Media extends AdminModel {
         parent::__construct();
     }
 
-    public function getPathAttribute() {
-        $path = '/uploads/media/' . $this->module;
+    public static function boot() {
 
-        if (!empty($this->sub_module)) {
-            $path .= '/' . $this->sub_module;
+        static::deleting(function ($model) {
+            /*
+             * automatic remove files
+             */
+            if (\File::exists(public_path($model->path))) {
+                \File::deleteDirectory(public_path($model->path));
+            }
+        });
+
+        parent::boot();
+
+    }
+
+    public function getPathAttribute() {
+        $path = '/uploads/media/' . $this->attributes['module'];
+
+        if (!empty($this->attributes['sub_module'])) {
+            $path .= '/' . $this->attributes['sub_module'];
         }
 
         //item_id

@@ -4,14 +4,13 @@ $elementID = 'adminMediaButton-' . str_random(20);
 <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#{{$elementID}}">
     <i class="fa fa-picture-o" aria-hidden="true"></i> {{trans('administration::media.button_label')}}
 </button>
-
 <div class="modal modal-default modal-media"
      id="{{$elementID}}"
      data-route-index="{{route('provision.administration.media.index')}}"
      data-route-store="{{route('provision.administration.media.store')}}"
-     data-item-id="{{$id}}"
-     data-module-name="{{$module}}"
-     data-module-sub-name="{{$sub_module}}"
+     data-item-id="{{$model->id}}"
+     data-module-name="{{$model->module}}"
+     data-module-sub-name="{{$model->sub_module}}"
      tabindex="-1" role="dialog"
      aria-labelledby="myMediaModalLabel"
      aria-hidden="true">
@@ -29,10 +28,19 @@ $elementID = 'adminMediaButton-' . str_random(20);
                 <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-primary pull-left upload-button"><i class="fa fa-upload" aria-hidden="true"></i> {{trans('administration::media.upload_items')}}</button>
-                <input class="upload-input" type="file" name="file" multiple>
-                {{--<button type="button" class="btn btn-sm btn-primary pull-left upload-button" data-dismiss="modal"><i class="fa fa-upload" aria-hidden="true"></i> {{trans('administration::media.upload_items')}}</button>--}}
-                {{--<button type="button" class="btn btn-outline btn-ok">{{trans('administration::index.delete')}}</button>--}}
+
+                <div class="btn-group btn-group-sm pull-left actions-group" role="group">
+                    <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{trans('administration::index.delete_selected')}}</button>
+                    <button type="button" class="btn btn-default btn-select-all" data-status="true"><i class="fa fa-check-square-o" aria-hidden="true"></i> {{trans('administration::index.select_all')}}</button>
+                    <button type="button" class="btn btn-default btn-select-all" data-status="false"><i class="fa fa-square-o" aria-hidden="true"></i> {{trans('administration::index.deselect_all')}}</button>
+                </div>
+
+                 <span class="btn btn-sm btn-primary pull-right upload-button fileinput-button">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                     <span>{{trans('administration::media.upload_items')}}</span>
+                     <input class="upload-input" type="file" name="file" multiple>
+                </span>
+
             </div>
         </div>
     </div>

@@ -9,6 +9,11 @@ class AdminModel extends Model {
 
     public $errors;
 
+    protected $appends = [
+        'module',
+        'sub_module'
+    ];
+
     /*
      * Сетване на NULL стойности на празните полета
      *
@@ -28,24 +33,97 @@ class AdminModel extends Model {
 
     public function __construct() {
         parent::__construct();
-    }
 
-    /*
-     * error container
-     */
+        /*
+         * Проверка за базовите property в модела
+         */
+        if (empty($this->module)) {
+            abort(500, ' Please define property $module in model!');
+        }
+
+        if (!property_exists($this, 'sub_module')) {
+            abort(500, 'Please define property $sub_module in model!');
+        }
+    }
 
     public static function boot() {
         parent::boot();
 
         static::saving(function ($model) {
+
+            /*
+             * set null values in db
+             */
             foreach ($model->attributes as $key => $value) {
-                if ($value == '') {
-                    $model->{$key} = null;
+                if ($value == '' || $value == null) {
+                    if (array_key_exists($key, $model->attributes)) {
+                        $model->attributes[$key] = null;
+                    } else {
+                        $model->{$key} = null;
+                    }
                 } elseif (is_string($value)) {
                     //$model->{$key} = trim($value);
                 }
             }
         });
+
+        static::deleting(function ($model) {
+
+            /*
+             * Ако модела не използва Soft Deleting изтриваме прикачените към него файлове!
+             */
+            $traits = class_uses($model);
+
+            if (in_array('Illuminate\\Database\\Eloquent\\SoftDeletes', $traits)) {
+                // Model uses soft deletes - NOT DELETE ATTACHED FILES
+            } else {
+                $q = Media::where('module', $model->module)
+                    ->where('item_id', $model->id);
+
+                if ($model->sub_module != null) {
+                    $q->where('sub_module', $model->sub_module);
+                } else {
+                    $q->whereNull('sub_module');
+                }
+
+                $mediaItems = $q->get();
+
+                if (!$mediaItems->isEmpty()) {
+                    foreach ($mediaItems as $mediaItem) {
+                        /*
+                         * Изтриваме ги 1 по 1 за да може да изтрие и физически файла със boot()::deleting
+                         */
+                        $mediaItem->delete();
+                    }
+                }
+            }
+
+
+        });
+    }
+
+    public function getModuleAttribute() {
+        if (!isset($this->attributes['module'])) {
+            return $this->module;
+        }
+        return $this->attributes['module'];
+    }
+
+    public function getSubModuleAttribute() {
+        if (!isset($this->attributes['sub_module'])) {
+            return $this->sub_module;
+        }
+        return $this->attributes['sub_module'];
+    }
+
+    public function setModuleAttribute($val) {
+        $this->module = strtolower($val);
+        $this->attributes['module'] = strtolower($val);
+    }
+
+    public function setSubModuleAttribute($val) {
+        $this->sub_module = strtolower($val);
+        $this->attributes['sub_module'] = strtolower($val);
     }
 
     public function validate($data) {
@@ -80,7 +158,7 @@ class AdminModel extends Model {
 
 
     public function setSlugAttribute($value) {
-        return $this->attributes['slug'] = $this->makeSlugUnique($this->generateSlug($value));
+        $this->attributes['slug'] = $this->makeSlugUnique($this->generateSlug($value));
     }
 
 

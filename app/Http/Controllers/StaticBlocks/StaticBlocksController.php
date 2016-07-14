@@ -38,7 +38,7 @@ class StaticBlocksController extends BaseAdministrationController {
                         $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.static-blocks.destroy', $staticBlock->id));
                     }
 
-                    $actions .= Form::adminMediaButton($staticBlock->id, 'users');
+                    $actions .= Form::adminMediaButton($staticBlock);
 
                     return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.static-blocks.edit', $staticBlock->id)) . $actions;
                 })

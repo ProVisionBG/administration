@@ -29,6 +29,16 @@ return [
     'dashboard' => 'Администраторско табло',
     'logout' => 'Изход',
     'settings' => 'Настройка',
-    'all' => 'Всички'
+    'all' => 'Всички',
+    'delete_selected' => 'Изтрии избраните',
+    'select_all' => 'Избери всички',
+    'deselect_all' => 'Премахни избраните',
+
+    /*
+     * meta
+     */
+    'meta_title' => 'Мета заглавие',
+    'meta_description' => 'Мета описание',
+    'meta_keywords' => 'Мета ключови думи',
 
 ];

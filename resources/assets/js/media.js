@@ -1,6 +1,8 @@
 /*
  Media manager
  */
+'use strict';
+
 function runMedia(id) {
     var modal = $('#' + id);
     var itemsContainer = modal.find('.media-items-container');
@@ -37,6 +39,7 @@ function runMedia(id) {
             data.submit();
         },
         done: function (e, data) {
+            itemsContainer.find('div.callout').remove(); //скриване съобщението за липсващи елементи
             itemsContainer.append(data.result);
         }
     }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
@@ -44,7 +47,11 @@ function runMedia(id) {
     /*
      sortable
      */
+    if (itemsContainer.sortable("instance") !== undefined) {
+        itemsContainer.sortable("destroy");
+    }
     itemsContainer.sortable({
+        cancel: '.callout', //да не може да се драгва съобщението за липсващи елементи
         update: function (e, ui) {
             $.ajax({
                 type: "PUT",
@@ -65,11 +72,23 @@ function runMedia(id) {
     itemsContainer.disableSelection();
 
     /*
-    style checkboxes
+     style checkboxes
      */
     itemsContainer.find('input[type=checkbox]').iCheck({
         checkboxClass: 'icheckbox_minimal-blue',
         radioClass: 'iradio_minimal-blue'
+    });
+
+
+    /*
+     select / deselect all
+     */
+    modal.find('.btn-select-all').unbind('click').on('click', function () {
+        var $this = $(this);
+
+        modal.find('.media-items-container>.media-item input[type=checkbox]').each(function () {
+            $(this).prop('checked', ($this.attr('data-status') == 'true' ? true : false));
+        });
     });
 }
 
@@ -81,8 +100,10 @@ $(document).on('click', '.modal-media button.btn-delete', function () {
     var element = $(this).closest('.media-item');
 
     $.confirm({
-        title: 'Confirm!',
-        content: 'Simple confirm!',
+        title: translates.confirm_title,
+        content: translates.confirm_text,
+        confirmButton: translates.yes,
+        cancelButton: translates.no,
         confirmButtonClass: 'btn-danger',
         cancelButtonClass: 'btn-info',
         confirm: function () {
@@ -110,7 +131,6 @@ $(document).on('click', '.media-item a.choice-lang', function () {
 
     var mediaItem = $this.closest('.media-item');
 
-
     $.ajax({
         type: "PUT",
         url: mediaItem.attr('data-route-update'),
@@ -127,3 +147,8 @@ $(document).on('click', '.media-item a.choice-lang', function () {
         }
     });
 });
+
+
+
+
+

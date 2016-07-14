@@ -19,6 +19,8 @@ class StaticBlock extends AdminModel {
         'active' => 'boolean'
     );
     public $table = 'static_blocks';
+    protected $module = 'administration';
+    protected $sub_module = 'static_blocks';
 
     protected $fillable = [
         'key',
@@ -34,7 +36,7 @@ class StaticBlock extends AdminModel {
     public function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * Return the sluggable configuration array for this model.
      *

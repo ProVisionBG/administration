@@ -121,9 +121,7 @@ class AdministrationServiceProvider extends ServiceProvider {
             'href'
         ]);
         Form::component('adminMediaButton', 'administration::components.form.admin_media_button', [
-            'id',
-            'module',
-            'sub_module'
+            'model'
         ]);
 
 

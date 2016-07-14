@@ -15,6 +15,7 @@ class MediaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
+
         if (!$request->has('itemId')) {
             return Response::json(array('Invalid item_id'), 422);
         }
@@ -25,6 +26,12 @@ class MediaController extends Controller {
 
         $mediaQuery = Media::where('item_id', $request->input('itemId'))
             ->where('module', $request->input('moduleName'));
+
+        if ($request->has('moduleSubName')) {
+            $mediaQuery->where('sub_module', $request->input('moduleSubName'));
+        } else {
+            $mediaQuery->whereNull('sub_module');
+        }
 
         $items = $mediaQuery->orderBy('order_index')->get();
 
@@ -71,8 +78,10 @@ class MediaController extends Controller {
             return Response::json(array('Invalid module'), 422);
         }
 
-        if ($request->has('moduleSubName')) {
+        if ($request->has('moduleSubName') && !empty($request->input('moduleSubName'))) {
             $media->sub_module = $request->input('moduleSubName');
+        } else {
+            $media->sub_module = null;
         }
 
         $media->save();
@@ -169,9 +178,6 @@ class MediaController extends Controller {
      */
     public function destroy($id) {
         $media = Media::findOrFail($id);
-
-        \File::deleteDirectory(public_path($media->path));
-
         $media->delete();
 
         return \Response::json(['ok'], 200);
