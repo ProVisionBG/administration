@@ -2,7 +2,6 @@ var elixir = require('laravel-elixir');
 var autoprefixer = require('gulp-autoprefixer');
 var shell = require("gulp-shell");
 
-
 elixir.config.css.autoprefix = {
     enabled: false,
     options: {
@@ -64,6 +63,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/jquery-validation/src/localization/messages_bg.js',
         'resources/assets/bower_components/PACE/pace.js',
         'resources/assets/bower_components/jquery-confirm2/dist/jquery-confirm.min.js',
+        'resources/assets/bower_components/jquery-locationpicker-plugin/dist/locationpicker.jquery.min.js',
 
 
         //file uploads

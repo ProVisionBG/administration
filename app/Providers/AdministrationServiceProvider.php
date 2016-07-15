@@ -107,6 +107,7 @@ class AdministrationServiceProvider extends ServiceProvider {
         Config::set('laravel-form-builder.template_prefix', 'administration::components.fields.');
         Config::set('laravel-form-builder.custom_fields.admin_footer', \ProVision\Administration\Forms\Fields\AdminFooter::class);
         Config::set('laravel-form-builder.custom_fields.ckeditor', \ProVision\Administration\Forms\Fields\CKEditor::class);
+        Config::set('laravel-form-builder.custom_fields.address_picker', \ProVision\Administration\Forms\Fields\AddressPicker::class);
 
         /*
          * Administration listing short buttons
