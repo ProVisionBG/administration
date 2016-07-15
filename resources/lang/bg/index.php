@@ -37,6 +37,7 @@ return [
     /*
      * meta
      */
+    'slug'=>'SEO адрес (slug)',
     'meta_title' => 'Мета заглавие',
     'meta_description' => 'Мета описание',
     'meta_keywords' => 'Мета ключови думи',

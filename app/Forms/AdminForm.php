@@ -16,33 +16,28 @@ class AdminForm extends Form {
         return $allLang;
     }
 
-    public function addSeoFields($lang = false, $required = false) {
+    public function addSeoFields($required = false, $inputs = false) {
 
-        /*
-         * @todo: да се изнесат в конфигурацията
-         */
-        $inputs = [
-            'meta_title',
-            'meta_description',
-            'meta_keywords'
-        ];
+        if (!is_array($inputs)) {
+            $inputs = [
+                'slug',
+                'meta_title',
+                'meta_description',
+                'meta_keywords'
+            ];
+        }
 
         foreach ($inputs as $input) {
-            $metaInputKey = $input;
-            if ($lang !== false) {
-                $metaInputKey = $lang . '[' . $input . ']';
-            }
-
-            $this->add($metaInputKey, 'text', [
+            $this->add($input, 'text', [
                 'label' => trans('administration::index.' . $input),
                 'validation_rules' => [
                     "required" => $required
-                ]
+                ],
+                'translate' => true
             ]);
         }
 
     }
-    
 
 
 }
