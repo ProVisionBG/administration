@@ -8,7 +8,7 @@
         <div class="login-box-body">
             <p class="login-box-msg">{{trans('administration::index.administration')}}</p>
 
-            <form action="" method="post">
+            <form action="{{route('provision.administration.login_post')}}" method="post">
                 {{ csrf_field() }}
                 <div class="form-group has-feedback">
                     <input type="email" name="email" class="form-control" placeholder="Email">

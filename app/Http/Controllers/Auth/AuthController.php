@@ -39,7 +39,5 @@ class AuthController extends Controller {
 
         //set admin default url
         $this->redirectTo = config('provision_administration.url_prefix');
-
-        //$this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 }
