@@ -11,6 +11,7 @@
 use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use ProVision\Administration\Permission;
 
 class EntrustAuto {
     protected $auth;
@@ -44,6 +45,18 @@ class EntrustAuto {
          */
         $permission = preg_replace('/^([a-z]{2}\.' . config('provision_administration.url_prefix') . '\.)/simx', '', $permission);
 
+        /*
+         * check permission exist in db
+         */
+        if (Permission::where('name', $permission)->first() === null) {
+            /*
+             * Несъществува такъв пермишън...
+             */
+            \Debugbar::info('Permission not found: ' . $permission);
+            return $next($request);
+        }
+
+        \Debugbar::info('Auto check permission: ' . $permission);
         if ($this->auth->guest() || !$this->auth->user()->can($permission)) {
             //abort(403, 'Require permission: ' . $permission);
             return response()->view("administration::errors.403", ['permission' => $permission], 403);

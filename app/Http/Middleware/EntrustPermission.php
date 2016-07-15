@@ -33,7 +33,7 @@ class EntrustPermission {
      * @return mixed
      */
     public function handle($request, Closure $next, $permissions) {
-        \Debugbar::info($permissions);
+        //\Debugbar::info($permissions);
         if ($this->auth->guest() || !$this->auth->user()->can(explode('|', $permissions))) {
             abort(403);
         }
