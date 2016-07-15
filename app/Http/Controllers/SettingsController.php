@@ -30,7 +30,7 @@ class SettingsController extends BaseAdministrationController {
             $breadcrumbs->parent('admin_home');
             $breadcrumbs->push(trans('administration::settings.title'), route('provision.administration.settings.index'));
         });
-        
+
         return view('administration::index');
     }
 

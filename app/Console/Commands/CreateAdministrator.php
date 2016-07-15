@@ -5,6 +5,7 @@ namespace ProVision\Administration\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use ProVision\Administration\AdminUser;
+use ProVision\Administration\Http\Controllers\Systems\RolesRepairController;
 use ProVision\Administration\Role;
 
 class CreateAdministrator extends Command {
@@ -90,5 +91,11 @@ class CreateAdministrator extends Command {
             $this->info('Assign admin role...');
             $adminUser->attachRole($adminRole);
         }
+
+        /*
+         * repair permissions
+         */
+        $permissionRepair = new RolesRepairController();
+        $permissionRepair->index();
     }
 }

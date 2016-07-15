@@ -8,7 +8,6 @@ use Form;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 use ProVision\Administration\Facades\StaticBlockFacade;
-use ProVision\Administration\StaticBlock;
 
 class AdministrationServiceProvider extends ServiceProvider {
     /**
@@ -296,8 +295,11 @@ class AdministrationServiceProvider extends ServiceProvider {
 
         //$this->app['router']->middleware('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
         $this->app['router']->middleware('role', \ProVision\Administration\Http\Middleware\EntrustRole::class);
-        $this->app['router']->middleware('permission', \Zizaco\Entrust\Middleware\EntrustPermission::class);
+        $this->app['router']->middleware('permission', \ProVision\Administration\Http\Middleware\EntrustPermission::class);
         $this->app['router']->middleware('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
+
+        //automatic check permissions to modules
+        $this->app['router']->pushMiddlewareToGroup('web', \ProVision\Administration\Http\Middleware\EntrustAuto::class);
 
         /*
          * Commands

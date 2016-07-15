@@ -10,7 +10,7 @@ use ProVision\Administration\Facades\Administration;
 class AdministrationController extends BaseAdministrationController {
     public function index() {
 
-        if (!Auth::guard('provision_administration')->check() || !Auth::guard('provision_administration')->user()->hasRole('admin')) {
+        if (!Auth::guard('provision_administration')->check() && !Auth::guard('provision_administration')->user()->can('administration-access')) {
             return redirect()->route('provision.administration.login');
         }
 

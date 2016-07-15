@@ -34,7 +34,7 @@ Route::group([
 
         Route::group([
             'middleware' => [
-                'role:admin'
+                'permission:administration-access'
             ]
         ], function () {
 
@@ -53,6 +53,7 @@ Route::group([
                 'names' => [
                     'index' => 'administrators.index',
                     'edit' => 'administrators.edit',
+                    'show' => 'administrators.edit',
                     'create' => 'administrators.create',
                     'store' => 'administrators.store',
                     'update' => 'administrators.update',
@@ -67,6 +68,7 @@ Route::group([
                 'names' => [
                     'index' => 'administrators-roles.index',
                     'edit' => 'administrators-roles.edit',
+                    'show' => 'administrators-roles.show',
                     'create' => 'administrators-roles.create',
                     'store' => 'administrators-roles.store',
                     'update' => 'administrators-roles.update',
@@ -81,6 +83,7 @@ Route::group([
                 'names' => [
                     'index' => 'static-blocks.index',
                     'edit' => 'static-blocks.edit',
+                    'show' => 'static-blocks.show',
                     'create' => 'static-blocks.create',
                     'store' => 'static-blocks.store',
                     'update' => 'static-blocks.update',
@@ -125,8 +128,9 @@ Route::group([
             Route::resource('media', 'MediaController', [
                 'names' => [
                     'index' => 'media.index',
-                    //                    'edit' => 'media.edit',
-                    //                    'create' => 'media.create',
+                    'edit' => 'media.edit',
+                    'show' => 'media.show',
+                    'create' => 'media.create',
                     'store' => 'media.store',
                     'update' => 'media.update',
                     'destroy' => 'media.destroy',
