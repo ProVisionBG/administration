@@ -111,6 +111,13 @@ class AdministratorsRolesController extends BaseAdministrationController {
             $role->fill($requestData);
             $role->save();
 
+            /*
+            * add permissions
+            */
+            if (!empty(Request::has('permissions'))) {
+                $role->perms()->sync(Request::input('permissions'));
+            }
+
             return \Redirect::route('provision.administration.administrators-roles.index');
         } else {
             return \Redirect::route('provision.administration.administrators-roles.create')

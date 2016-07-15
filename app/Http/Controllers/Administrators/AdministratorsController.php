@@ -39,7 +39,7 @@ class AdministratorsController extends BaseAdministrationController {
                             $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.administrators.destroy', $user->id));
                         }
                     }
-                    
+
                     return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators.edit', $user->id)) . $actions;
                 })
                 ->filter(function ($query) {
@@ -110,7 +110,19 @@ class AdministratorsController extends BaseAdministrationController {
 
         if ($adminUser->validate($requestData)) {
             $adminUser->fill($requestData);
+
+            /*
+            * add roles
+            */
+            $adminUser->roles()->detach();
+            if (!empty(Request::has('roles'))) {
+                foreach (Request::input('roles') as $role) {
+                    $adminUser->roles()->attach($role);
+                }
+            }
+
             $adminUser->save();
+
 
             return \Redirect::route('provision.administration.administrators.index');
         } else {
