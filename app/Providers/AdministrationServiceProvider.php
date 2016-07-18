@@ -85,13 +85,15 @@ class AdministrationServiceProvider extends ServiceProvider {
 
         /*
          * database
-         */
+
         $this->publishes([
             __DIR__ . '/../../database/migrations/' => database_path('migrations')
         ], 'migrations');
+
         $this->publishes([
             __DIR__ . '/../../database/seeds/' => database_path('seeds')
         ], 'seeds');
+        */
 
         $this->adminBoot();
     }
@@ -306,7 +308,8 @@ class AdministrationServiceProvider extends ServiceProvider {
          * Commands
          */
         $this->commands([
-            \ProVision\Administration\Console\Commands\CreateAdministrator::class
+            \ProVision\Administration\Console\Commands\CreateAdministrator::class,
+            \ProVision\Administration\Console\Commands\Migrate::class
         ]);
 
         $this->app['administration'] = $this->app->share(function ($app) {
