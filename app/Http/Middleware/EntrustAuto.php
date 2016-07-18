@@ -34,6 +34,14 @@ class EntrustAuto {
      * @return mixed
      */
     public function handle($request, Closure $next) {
+
+        /*
+         * check request is in administration
+         */
+        if (!$request->is('*/' . config('provision_administration.url_prefix') . '/*')) {
+            return $next($request);
+        }
+
         $permission = str_ireplace([
             'provision.administration.'
         ], [
