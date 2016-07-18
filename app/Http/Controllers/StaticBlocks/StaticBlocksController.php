@@ -64,7 +64,18 @@ class StaticBlocksController extends BaseAdministrationController {
             $breadcrumbs->push(trans('administration::static_blocks.name'), route('provision.administration.static-blocks.index'));
         });
 
-        return view('administration::static_blocks.index');
+        $table = Datatables::getHtmlBuilder()
+            ->addColumn([
+                'data' => 'id',
+                'name' => 'id',
+                'title' => trans('administration::administrators.id')
+            ])->addColumn([
+                'data' => 'key',
+                'name' => 'key',
+                'title' => trans('administration::static_blocks.key')
+            ]);
+
+        return view('administration::empty-listing',compact('table'));
     }
 
 

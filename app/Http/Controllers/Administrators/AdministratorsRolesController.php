@@ -2,10 +2,8 @@
 
 namespace ProVision\Administration\Http\Controllers\Administrators;
 
-use App\Http\Requests;
 use Datatables;
 use Form;
-use Guzzle\Http\Message\Response;
 use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\Facades\Administration;
 use ProVision\Administration\Forms\RolesForm;
@@ -63,7 +61,24 @@ class AdministratorsRolesController extends BaseAdministrationController {
             $breadcrumbs->push(trans('administration::administrators.administrators-roles'), route('provision.administration.administrators-roles.index'));
         });
 
-        return view('administration::administrators.roles');
+        $table = Datatables::getHtmlBuilder()
+            ->addColumn([
+                'data' => 'id',
+                'name' => 'id',
+                'title' => trans('administration::administrators.id')
+            ])->addColumn([
+                'data' => 'name',
+                'name' => 'name',
+                'title' => trans('administration::administrators.group_key')
+            ])
+            ->addColumn([
+                'data' => 'display_name',
+                'name' => 'display_name',
+                'title' => trans('administration::administrators.group_name')
+            ]);
+
+
+        return view('administration::empty-listing', compact('table'));
     }
 
 

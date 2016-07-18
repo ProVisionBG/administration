@@ -2,13 +2,12 @@
 
 namespace ProVision\Administration\Http\Controllers\Administrators;
 
-use App\Http\Requests;
 use Datatables;
 use Form;
-use Guzzle\Http\Message\Response;
 use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\AdminUser;
 use ProVision\Administration\Facades\Administration;
+use ProVision\Administration\Forms\AdministratorFilterForm;
 use ProVision\Administration\Forms\AdministratorForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use Request;
@@ -26,8 +25,14 @@ class AdministratorsController extends BaseAdministrationController {
      * @return \Illuminate\Http\Response
      */
     public function index() {
+
         if (Request::ajax()) {
-            $users = AdminUser::with('roles');
+            $users = AdminUser::select([
+                'id',
+                'name',
+                'email'
+            ])
+                ->with('roles');
 
             $datatables = Datatables::of($users)
                 ->addColumn('action', function ($user) {
@@ -51,20 +56,50 @@ class AdministratorsController extends BaseAdministrationController {
                         $query->where('email', 'like', "%" . Request::get('email') . "%");
                     }
 
-                    if (Request::has('delete') && Request::input('delete') == 'true') {
+                    if (Request::has('deleted') && Request::input('deleted') == 'true') {
                         $query->whereNotNull('deleted_at');
+                    }
+
+                    if (Request::has('all-users') && Request::input('all-users') == 'true') {
+                        //$query->whereNotNull('deleted_at');
+                    } else {
+                        $query->has('roles');
                     }
                 });
 
             return $datatables->make(true);
         }
 
+        $filterForm = $this->form(AdministratorFilterForm::class, [
+                'method' => 'POST',
+                'url' => route('provision.administration.administrators.index')
+            ]
+        );
+
+
+        $table = Datatables::getHtmlBuilder()
+            ->addColumn([
+                'data' => 'id',
+                'name' => 'id',
+                'title' => trans('administration::administrators.id')
+            ])->addColumn([
+                'data' => 'name',
+                'name' => 'name',
+                'title' => trans('administration::administrators.name')
+            ])
+            ->addColumn([
+                'data' => 'email',
+                'name' => 'email',
+                'title' => trans('administration::administrators.email')
+            ]);
+
         \Breadcrumbs::register('admin_final', function ($breadcrumbs) {
             $breadcrumbs->parent('admin_home');
             $breadcrumbs->push(trans('administration::administrators.administrators'), route('provision.administration.administrators.index'));
         });
 
-        return view('administration::administrators.index');
+//        return view('administration::administrators.index');
+        return view('administration::empty-listing', compact('table', 'filterForm'));
     }
 
 

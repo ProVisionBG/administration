@@ -89,6 +89,13 @@ p.help-block {
     clear: both;
 }
 
-.jconfirm .jconfirm-box div.content-pane .content{
+.jconfirm .jconfirm-box div.content-pane .content {
     min-height: auto;
+}
+
+#box-filter form .form-group label {
+    display: block;
+    float: left;
+    clear: both;
+    width: 100%;
 }

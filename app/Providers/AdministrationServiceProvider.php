@@ -172,7 +172,7 @@ class AdministrationServiceProvider extends ServiceProvider {
             $rolesMenu = $administratorsMenu->add(trans('administration::administrators.groups'), [
                 'nickname' => 'administrators.groups',
                 'route' => 'provision.administration.administrators-roles.index'
-            ])->data('icon', 'users')->data('order', 2);
+            ])->data('icon', 'users')->data('order', 3);
             $rolesMenu->add(trans('administration::index.view_all'), [
                 'nickname' => 'administrators.group_add',
                 'route' => 'provision.administration.administrators-roles.index'
