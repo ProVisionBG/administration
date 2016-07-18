@@ -60,9 +60,7 @@ class AdministratorsController extends BaseAdministrationController {
                         $query->whereNotNull('deleted_at');
                     }
 
-                    if (Request::has('all-users') && Request::input('all-users') == 'true') {
-                        //$query->whereNotNull('deleted_at');
-                    } else {
+                    if (!Request::has('all-users') || Request::input('all-users') != 'true') {
                         $query->has('roles');
                     }
                 });
