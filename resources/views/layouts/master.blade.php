@@ -571,9 +571,11 @@
     var language = '{{Administration::getLanguage()}}';
 
     var translates = {!! json_encode(Lang::get('administration::js')) !!};
+
+    //ckeditor path
+    window.CKEDITOR_BASEPATH = '/vendor/provision/administration/bower_components/ckeditor/';
 </script>
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
-
 
 @stack('js_scripts')
 

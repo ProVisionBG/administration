@@ -85,6 +85,7 @@ elixir(function (mix) {
         .copy('resources/assets/bower_components/ckeditor/skins/moono/icons.png', 'public/assets/css/')
         .copy('resources/assets/css/ckeditor.css', 'public/assets/css/')
         .copy('resources/assets/bower_components/bootstrap/dist/css/bootstrap.min.css', 'public/assets/css/')
+        .copy('resources/assets/bower_components/ckeditor/', 'public/assets/bower_components/ckeditor/')
         .publish();
 });
 
