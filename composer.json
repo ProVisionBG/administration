@@ -53,10 +53,10 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "php artisan vendor:publish --tag=public --tag=views --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\""
+      "php artisan vendor:publish --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\""
     ],
     "post-update-cmd": [
-      "php artisan vendor:publish --tag=public --tag=views --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\""
+      "php artisan vendor:publish --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\""
     ]
   }
 }
