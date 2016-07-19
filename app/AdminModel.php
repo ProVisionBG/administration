@@ -184,6 +184,23 @@ class AdminModel extends Model {
         return true;
     }
 
+    /*
+     * media relations
+     */
+    public function media() {
+        $relation = $this->hasMany(\ProVision\Administration\Media::class)
+            ->where('module', $this->module)
+            ->where('item_id', $this->id)
+            ->where('visible', 1)
+            ->orderBy('order_index', 'asc');
+
+        if ($this->sub_module != null) {
+            $relation->where('sub_module', $this->sub_module);
+        }
+
+        return $relation;
+    }
+
 }
 
 ?>
