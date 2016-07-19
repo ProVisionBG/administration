@@ -4,7 +4,7 @@
 >
 
     <div class="img">
-        <img src="{{$item->path}}/A_{{$item->file}}"/>
+        <img src="{{$item->path}}/_{{$item->file}}"/>
     </div>
 
     <div class="bottom-controls">

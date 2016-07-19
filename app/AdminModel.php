@@ -166,22 +166,50 @@ class AdminModel extends Model {
 
     function resize($file) {
 
-        //A_
+        //_
         Image::make($file)->fit(100, 100, function ($c) {
             $c->aspectRatio();
             $c->upsize();
-        })->save(dirname($file) . '/A_' . basename($file));
+        })->save(dirname($file) . '/_' . basename($file));
+
+        $sizes = config('provision_administration.image_sizes');
+
+        if (empty($sizes) || count($sizes) < 1) {
+            return true;
+        }
+
+        foreach ($sizes as $key => $size) {
+
+            //check mode
+            if (empty($size['mode']) || !in_array($size['mode'], [
+                    'fit',
+                    'resize'
+                ])
+            ) {
+                \Debugbar::error('Image resize wrong mode! (key: ' . $key . ')');
+                \Log::error('Image resize wrong mode! (key: ' . $key . ')');
+                continue;
+            }
+
+            //make resize
+            Image::make($file)->$size['mode']($size['width'], $size['height'], function ($c) use ($size) {
+                if (!empty($size['aspectRatio']) && $size['aspectRatio'] === true) {
+                    $c->aspectRatio();
+                }
+                if (!empty($size['upsize']) && $size['upsize'] === true) {
+                    $c->upsize();
+                }
+            })->save(dirname($file) . '/' . $key . '_' . basename($file));
+
+        }
 
         //B_
-        Image::make($file)->resize(400, null, function ($c) {
-            $c->aspectRatio();
-            $c->upsize();
-        })->save(dirname($file) . '/B_' . basename($file));
 
-        Image::make($file)->fit(400, 300, function ($c) {
-            $c->aspectRatio();
-            $c->upsize();
-        })->save(dirname($file) . '/C_' . basename($file));
+
+//        Image::make($file)->fit(400, 300, function ($c) {
+//            $c->aspectRatio();
+//            $c->upsize();
+//        })->save(dirname($file) . '/C_' . basename($file));
 
         return true;
     }
