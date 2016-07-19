@@ -190,7 +190,6 @@ class AdminModel extends Model {
     public function media() {
         $relation = $this->hasMany(\ProVision\Administration\Media::class, 'item_id', 'id')
             ->where('module', $this->module)
-            ->where('item_id', $this->id)
             ->where('visible', 1)
             ->orderBy('order_index', 'asc');
 
