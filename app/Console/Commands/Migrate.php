@@ -4,6 +4,7 @@ namespace ProVision\Administration\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 
+
 class Migrate extends Command {
     /**
      * Name of the command.
@@ -36,6 +37,8 @@ class Migrate extends Command {
      * Run the package migrations.
      */
     public function handle() {
-        \Artisan::call('migrate', ['--path' => 'vendor/provision/administration/database/migrations']);
+        $path = str_ireplace(base_path(), '', realpath(__DIR__ . '\\..\\..\\..\\database\\migrations'));
+        \Artisan::call('migrate', ['--path' => $path]);
+        $this->info(\Artisan::output());
     }
 }
