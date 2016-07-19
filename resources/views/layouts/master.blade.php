@@ -572,8 +572,14 @@
 
     var translates = {!! json_encode(Lang::get('administration::js')) !!};
 
-    //ckeditor path
+    //ckeditor settings
     window.CKEDITOR_BASEPATH = '/vendor/provision/administration/bower_components/ckeditor/';
+    var formModels = []; //ckeditor form->model container
+
+    /*
+    media settings
+     */
+    var mediaRouteIndex = '{{route('provision.administration.media.index')}}';
 </script>
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
 

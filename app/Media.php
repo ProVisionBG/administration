@@ -30,10 +30,11 @@ class Media extends AdminModel {
         'lang',
         'titles',
         'type',
-        'order_index'
+        'visible'
     ];
     protected $casts = [
-        'titles' => 'array'
+        'titles' => 'array',
+        'visible' => 'boolean'
     ];
 
     public function __construct() {

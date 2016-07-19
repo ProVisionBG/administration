@@ -7655,6 +7655,12 @@ $(function () {
     CKEDITOR.config.protectedSource.push(/<span[^>]*><\/span>/g);
 
     /*
+     custom plugins
+     */
+    CKEDITOR.plugins.addExternal('media', '/vendor/provision/administration/js/ckeditor-plugins/media/', 'plugin.js');
+    //CKEDITOR.plugins.addExternal('media', '/ckeditor-plugins/media/', 'plugin.js');
+
+    /*
      * textarea ckeditor
      */
     var ckEditorContentsCss = [];
@@ -7671,10 +7677,13 @@ $(function () {
              */
             ckEditorContentsCss.push('/vendor/provision/administration/css/bootstrap.min.css');
             ckEditorContentsCss.push('/vendor/provision/administration/css/ckeditor.css');
+            ckEditorContentsCss.push('/vendor/provision/administration/js/ckeditor-plugins/media/dialogs/style.css');
+            //ckEditorContentsCss.push('/ckeditor-plugins/media/dialogs/style.css');
 
             var ckEditorConfig = {
                 customConfig: '',
                 //extraPlugins: 'pbckcode,youtube,sourcedialog,codemirror,oembed,widget,bootstrapBreadcrumbs,bootstrapButtons,bootstrapCarousel,bootstrapCollapse,bootstrapListGroup,bootstrapPanel,bootstrapTab,textShadow',
+                extraPlugins: 'media',
 
                 /*
                  * bootstrapCarousel config
@@ -7701,10 +7710,10 @@ $(function () {
                 // oembed_maxWidth: '560',
                 // oembed_maxHeight: '315',
 
-                toolbar: [['Source', 'Preview', '-', 'Templates'], ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'], ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'], ['Image', 'Youtube', 'oembed', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak'], '/', ['Format'], ['TextColor', 'BGColor'], ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'], ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote', 'pbckcode', 'CreateDiv'], ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'], ['Link', 'Unlink', 'Anchor'], ['Maximize', 'ShowBlocks'], '/', {
-                    name: 'insert',
-                    // items: ['BootstrapBreadcrumbs', 'BootstrapButtons', 'BootstrapCarousel', 'BootstrapCollapse', 'BootstrapListGroup', 'BootstrapPanel', 'BootstrapTab', 'TextShadow']
-                }],
+                // toolbar: [['Source', 'Preview', '-', 'Templates'], ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'], ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'], ['Image', 'Youtube', 'oembed', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak'], '/', ['Format'], ['TextColor', 'BGColor'], ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'], ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote', 'pbckcode', 'CreateDiv'], ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'], ['Link', 'Unlink', 'Anchor'], ['Maximize', 'ShowBlocks'], '/', {
+                //     name: 'insert',
+                //     // items: ['BootstrapBreadcrumbs', 'BootstrapButtons', 'BootstrapCarousel', 'BootstrapCollapse', 'BootstrapListGroup', 'BootstrapPanel', 'BootstrapTab', 'TextShadow']
+                // }],
                 language: language,
                 height: '300px',
                 width: '100%',

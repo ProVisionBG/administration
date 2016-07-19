@@ -39,6 +39,11 @@ elixir(function (mix) {
         'resources/assets/css/styles.css'
     ], 'public/assets/css/all.css');
 
+    mix.combine([
+        'resources/assets/css/front.css',
+        'resources/assets/js/ckeditor-plugins/media/dialogs/style.css'
+    ], 'public/assets/css/front.css');
+
 
     mix.combine([
         'resources/assets/bower_components/jquery/dist/jquery.min.js',
@@ -85,7 +90,8 @@ elixir(function (mix) {
         .copy('resources/assets/bower_components/ckeditor/skins/moono/icons.png', 'public/assets/css/')
         .copy('resources/assets/css/ckeditor.css', 'public/assets/css/')
         .copy('resources/assets/bower_components/bootstrap/dist/css/bootstrap.min.css', 'public/assets/css/')
-        .copy('resources/assets/bower_components/ckeditor/', 'public/assets/bower_components/ckeditor/')
+        //.copy('resources/assets/bower_components/ckeditor/', 'public/assets/bower_components/ckeditor/')
+        .copy('resources/assets/js/ckeditor-plugins/', 'public/assets/js/ckeditor-plugins/')
         .publish();
 });
 

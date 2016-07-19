@@ -90,6 +90,9 @@ if (!empty($formOptions['id'])) {
 @push('bottom_js')
 <script>
     $(function () {
+
+       formModels["<?=$formID;?>"] = {!! json_encode($form->getModel()) !!};
+
         $("#<?=$formID;?>").validate({
             rules: {
                 <?php if ($showFields) {
