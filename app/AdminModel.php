@@ -41,8 +41,10 @@ class AdminModel extends Model {
             abort(500, ' Please define property $module in model!');
         }
 
-        if (!property_exists($this, 'sub_module')) {
-            abort(500, 'Please define property $sub_module in model!');
+        if (!property_exists($this, 'sub_module') || $this->sub_module == null) {
+            $this->sub_module = '';
+            $this->attributes['sub_module'] = '';
+//            abort(500, 'Please define property $sub_module in model! (NOT NULL)');
         }
     }
 
@@ -55,7 +57,7 @@ class AdminModel extends Model {
              * set null values in db
              */
             foreach ($model->attributes as $key => $value) {
-                if ($value == '' || $value == null) {
+                if ($value === null) {
                     if (array_key_exists($key, $model->attributes)) {
                         $model->attributes[$key] = null;
                     } else {
@@ -80,10 +82,10 @@ class AdminModel extends Model {
                 $q = Media::where('module', $model->module)
                     ->where('item_id', $model->id);
 
-                if ($model->sub_module != null) {
+                if (!empty($model->sub_module)) {
                     $q->where('sub_module', $model->sub_module);
                 } else {
-                    $q->whereNull('sub_module');
+                    $q->where('sub_module', '=', '');
                 }
 
                 $mediaItems = $q->get();

@@ -17,7 +17,7 @@ class CreateMediaTable extends Migration {
         Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
             $table->string('module', 25)->index();
-            $table->string('sub_module', 25)->nullable()->index();
+            $table->string('sub_module', 25)->index();
             $table->integer('item_id')->unsigned()->index();
             $table->string('lang', 2)->nullable()->index();
             $table->text('titles')->nullable();

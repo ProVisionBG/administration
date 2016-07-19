@@ -90,6 +90,7 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../database/migrations/' => database_path('migrations')
         ], 'migrations');
 
+
         $this->publishes([
             __DIR__ . '/../../database/seeds/' => database_path('seeds')
         ], 'seeds');
@@ -309,7 +310,8 @@ class AdministrationServiceProvider extends ServiceProvider {
          */
         $this->commands([
             \ProVision\Administration\Console\Commands\CreateAdministrator::class,
-            \ProVision\Administration\Console\Commands\Migrate::class
+            \ProVision\Administration\Console\Commands\Migrate::class,
+            //\ProVision\Administration\Console\Commands\MigrateRollback::class
         ]);
 
         $this->app['administration'] = $this->app->share(function ($app) {
@@ -323,7 +325,6 @@ class AdministrationServiceProvider extends ServiceProvider {
             //collapse navigation
             $object->disableFor('administration-navigation-collapsed');
         });
-
 
     }
 

@@ -3,7 +3,6 @@
 namespace ProVision\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use ProVision\Administration\Media;
 use Response;
@@ -30,10 +29,10 @@ class MediaController extends Controller {
         if ($request->has('moduleSubName')) {
             $mediaQuery->where('sub_module', $request->input('moduleSubName'));
         } else {
-            $mediaQuery->whereNull('sub_module');
+            $mediaQuery->where('sub_module', '=', '');
         }
 
-        $items = $mediaQuery->orderBy('order_index')->get();
+        $items = $mediaQuery->sorted()->get();
 
         return view('administration::media.items', compact('items'));
     }
@@ -81,7 +80,7 @@ class MediaController extends Controller {
         if ($request->has('moduleSubName') && !empty($request->input('moduleSubName'))) {
             $media->sub_module = $request->input('moduleSubName');
         } else {
-            $media->sub_module = null;
+            $media->sub_module = '';
         }
 
         $media->save();

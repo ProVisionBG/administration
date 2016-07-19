@@ -4,10 +4,12 @@ namespace ProVision\Administration;
 
 
 class Media extends AdminModel {
+    use \Rutorika\Sortable\SortableTrait;
 
     protected static $sortableGroupField = [
         'module',
-        'sub_module'
+        'sub_module',
+        'item_id'
     ];
     protected static $sortableField = 'order_index';
     public $rules = array(
@@ -17,10 +19,9 @@ class Media extends AdminModel {
         'lang' => 'max:2|min:2|null'
     );
 
-    use \Rutorika\Sortable\SortableTrait;
+
     public $table = 'media';
     protected $module = 'media';
-    protected $sub_module = null;
     protected $appends = ['path'];
     protected $fillable = [
         'module',
