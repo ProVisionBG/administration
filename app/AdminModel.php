@@ -41,9 +41,9 @@ class AdminModel extends Model {
             abort(500, ' Please define property $module in model!');
         }
 
-        if (!property_exists($this, 'sub_module') || is_null($this->sub_module) || is_null($this->attributes['sub_module'])) {
+        if (!property_exists($this, 'sub_module') || is_null($this->sub_module) || !isset($this->attributes['sub_module']) || is_null($this->attributes['sub_module'])) {
             $this->sub_module = '';
-            $this->attributes['sub_module'] = '';
+//            $this->attributes['sub_module'] = '';
 //            abort(500, 'Please define property $sub_module in model! (NOT NULL)');
         }
     }
