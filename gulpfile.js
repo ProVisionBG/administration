@@ -76,6 +76,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/blueimp-file-upload/js/jquery.fileupload.js',
 
         'resources/assets/bower_components/AdminLTE/dist/js/app.min.js',
+        'resources/assets/bower_components/AdminLTE/dist/js/demo.js', //rights settings bar
 
         'resources/assets/js/media.js',
         'resources/assets/js/scripts.js'
