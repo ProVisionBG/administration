@@ -311,6 +311,7 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->commands([
             \ProVision\Administration\Console\Commands\CreateAdministrator::class,
             \ProVision\Administration\Console\Commands\Migrate::class,
+            \ProVision\Administration\Console\Commands\MediaResize::class,
             //\ProVision\Administration\Console\Commands\MigrateRollback::class
         ]);
 

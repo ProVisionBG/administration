@@ -71,4 +71,11 @@ class Media extends AdminModel {
 
         return $path;
     }
+
+    /*
+     * quick resize media item
+     */
+    public function quickResize() {
+        parent::resize(realpath(public_path($this->path . '/' . $this->file)));
+    }
 }
