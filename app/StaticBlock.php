@@ -19,8 +19,8 @@ class StaticBlock extends AdminModel {
         'active' => 'boolean'
     );
     public $table = 'static_blocks';
-    protected $module = 'administration';
-    protected $sub_module = 'static_blocks';
+    public $module = 'administration';
+    public $sub_module = 'static_blocks';
 
     protected $fillable = [
         'key',

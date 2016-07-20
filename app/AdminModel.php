@@ -7,12 +7,15 @@ use Validator;
 
 class AdminModel extends Model {
 
-    public $errors;
+    /*
+     * module settings
+     */
+    public $module, $sub_module;
 
-    protected $appends = [
-        'module',
-        'sub_module'
-    ];
+    /*
+     * Errors container
+     */
+    public $errors;
 
     /*
      * Сетване на NULL стойности на празните полета
@@ -41,7 +44,7 @@ class AdminModel extends Model {
             abort(500, ' Please define property $module in model!');
         }
 
-        if (!property_exists($this, 'sub_module') || is_null($this->sub_module) || !isset($this->attributes['sub_module']) || is_null($this->attributes['sub_module'])) {
+        if (!property_exists($this, 'sub_module') || is_null($this->sub_module)) {
             $this->sub_module = '';
 //            $this->attributes['sub_module'] = '';
 //            abort(500, 'Please define property $sub_module in model! (NOT NULL)');
@@ -60,8 +63,6 @@ class AdminModel extends Model {
                 if ($value === null) {
                     if (array_key_exists($key, $model->attributes)) {
                         $model->attributes[$key] = null;
-                    } else {
-                        $model->{$key} = null;
                     }
                 } elseif (is_string($value)) {
                     //$model->{$key} = trim($value);
@@ -104,30 +105,31 @@ class AdminModel extends Model {
         });
     }
 
-    public function getModuleAttribute() {
-        if (!isset($this->attributes['module'])) {
-            return $this->module;
+    /*
+        public function getModuleAttribute() {
+            if (!isset($this->attributes['module'])) {
+                return $this->module;
+            }
+            return $this->attributes['module'];
         }
-        return $this->attributes['module'];
-    }
 
-    public function getSubModuleAttribute() {
-        if (!isset($this->attributes['sub_module'])) {
-            return $this->sub_module;
+        public function getSubModuleAttribute() {
+            if (!isset($this->attributes['sub_module'])) {
+                return $this->sub_module;
+            }
+            return $this->attributes['sub_module'];
         }
-        return $this->attributes['sub_module'];
-    }
 
-    public function setModuleAttribute($val) {
-        $this->module = strtolower($val);
-        $this->attributes['module'] = strtolower($val);
-    }
+        public function setModuleAttribute($val) {
+            $this->module = strtolower($val);
+            //$this->attributes['module'] = strtolower($val);
+        }
 
-    public function setSubModuleAttribute($val) {
-        $this->sub_module = strtolower($val);
-        $this->attributes['sub_module'] = strtolower($val);
-    }
-
+        public function setSubModuleAttribute($val) {
+            $this->sub_module = strtolower($val);
+            //$this->attributes['sub_module'] = strtolower($val);
+        }
+    */
     public function validate($data) {
         // make a new validator object
         $v = Validator::make($data, $this->rules, $this->messages);
@@ -178,7 +180,7 @@ class AdminModel extends Model {
 
         $sizes = config('provision_administration.image_sizes');
 
-        if (empty($sizes) || count($sizes) < 1) {
+        if (empty($sizes)) {
             return true;
         }
 

@@ -21,7 +21,7 @@ class Media extends AdminModel {
 
 
     public $table = 'media';
-    protected $module = 'media';
+    public $module = 'media';
     protected $appends = ['path'];
     protected $fillable = [
         'module',
