@@ -72,15 +72,15 @@ class MediaController extends Controller {
         }
 
         if ($request->has('moduleName')) {
-            $media->module = $request->input('moduleName');
+            $media->setModuleAttribute($request->input('moduleName'));
         } else {
             return Response::json(array('Invalid module'), 422);
         }
 
         if ($request->has('moduleSubName') && !empty($request->input('moduleSubName'))) {
-            $media->sub_module = $request->input('moduleSubName');
+            $media->setSubModuleAttribute($request->input('moduleSubName'));
         } else {
-            $media->sub_module = '';
+            $media->setSubModuleAttribute('');
         }
 
         $media->save();

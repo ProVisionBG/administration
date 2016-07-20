@@ -13,7 +13,7 @@ class Media extends AdminModel {
     ];
     protected static $sortableField = 'order_index';
     public $rules = array(
-        'key' => 'required|max:25',
+        'module' => 'required',
         'item_id' => 'required|integer',
         'file' => 'required',
         'lang' => 'max:2|min:2|null'
@@ -55,6 +55,32 @@ class Media extends AdminModel {
         parent::boot();
 
     }
+
+
+    public function getModuleAttribute() {
+        if (!isset($this->attributes['module'])) {
+            return $this->module;
+        }
+        return $this->attributes['module'];
+    }
+
+    public function getSubModuleAttribute() {
+        if (!isset($this->attributes['sub_module'])) {
+            return $this->sub_module;
+        }
+        return $this->attributes['sub_module'];
+    }
+
+    public function setModuleAttribute($val) {
+        $this->module = strtolower($val);
+        $this->attributes['module'] = strtolower($val);
+    }
+
+    public function setSubModuleAttribute($val) {
+        $this->sub_module = strtolower($val);
+        $this->attributes['sub_module'] = strtolower($val);
+    }
+
 
     public function getPathAttribute() {
         $path = '/uploads/media/' . $this->attributes['module'];

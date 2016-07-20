@@ -105,31 +105,7 @@ class AdminModel extends Model {
         });
     }
 
-    /*
-        public function getModuleAttribute() {
-            if (!isset($this->attributes['module'])) {
-                return $this->module;
-            }
-            return $this->attributes['module'];
-        }
 
-        public function getSubModuleAttribute() {
-            if (!isset($this->attributes['sub_module'])) {
-                return $this->sub_module;
-            }
-            return $this->attributes['sub_module'];
-        }
-
-        public function setModuleAttribute($val) {
-            $this->module = strtolower($val);
-            //$this->attributes['module'] = strtolower($val);
-        }
-
-        public function setSubModuleAttribute($val) {
-            $this->sub_module = strtolower($val);
-            //$this->attributes['sub_module'] = strtolower($val);
-        }
-    */
     public function validate($data) {
         // make a new validator object
         $v = Validator::make($data, $this->rules, $this->messages);
@@ -148,18 +124,6 @@ class AdminModel extends Model {
     public function errors() {
         return $this->errors;
     }
-
-    /*
-     public function save(array $options = array()) {
-     //if ($this->validate()) {
-     return parent::save($options);
-     //}
-
-
-     return false;
-     }
-     */
-
 
     public function setSlugAttribute($value) {
         $this->attributes['slug'] = $this->makeSlugUnique($this->generateSlug($value));
