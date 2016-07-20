@@ -166,6 +166,10 @@ class AdminModel extends Model {
 
     function resize($file) {
 
+        if (!File::exists($file)) {
+            return false;
+        }
+
         //_
         Image::make($file)->fit(100, 100, function ($c) {
             $c->aspectRatio();
