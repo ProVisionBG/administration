@@ -166,7 +166,7 @@ class AdminModel extends Model {
 
     function resize($file) {
 
-        if (!File::exists($file)) {
+        if (!\File::exists($file)) {
             return false;
         }
 
