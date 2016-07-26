@@ -38,7 +38,7 @@ class EntrustAuto {
         /*
          * check request is in administration
          */
-        if (!$request->is('*/' . config('provision_administration.url_prefix') . '*')) {
+        if (\Administration::routeInAdministration()) {
             return $next($request);
         }
 
