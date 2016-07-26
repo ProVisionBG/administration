@@ -3,7 +3,6 @@ namespace ProVision\Administration;
 
 use Illuminate\Support\Facades\Facade;
 use LaravelLocalization;
-use ProVision\Administration\StaticBlock;
 
 class Administration extends Facade {
 
@@ -116,6 +115,10 @@ class Administration extends Facade {
         }
 
         return true;
+    }
+
+    public static function routePrefix() {
+        return \LaravelLocalization::setLocale();
     }
 
 }
