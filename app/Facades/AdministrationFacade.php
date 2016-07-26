@@ -67,7 +67,7 @@ class Administration extends Facade {
         if (!empty($locale)) {
             return $locale;
         } else {
-            \App::getLocale();
+            return \App::getLocale();
         }
     }
 
