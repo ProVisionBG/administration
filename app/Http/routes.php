@@ -1,7 +1,7 @@
 <?php
 
 Route::group([
-    'prefix' => \Administration::getLanguage(),
+    'prefix' => LaravelLocalization::setLocale(),
     'middleware' => [
         'web',
         'localeSessionRedirect',

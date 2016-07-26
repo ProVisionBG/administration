@@ -1,5 +1,5 @@
 <?php
-namespace ProVision\Administration\Facades;
+namespace ProVision\Administration;
 
 use Illuminate\Support\Facades\Facade;
 use LaravelLocalization;
