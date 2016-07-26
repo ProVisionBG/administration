@@ -37,7 +37,8 @@ class Migrate extends Command {
      * Run the package migrations.
      */
     public function handle() {
-        $path = str_ireplace('app\Console\Commands', 'database\migrations', str_ireplace(base_path(), '', realpath(__DIR__)));
+
+        $path = str_ireplace(base_path(), '', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations'));
         $this->info('Path to migrate: ' . $path);
         \Artisan::call('migrate', ['--path' => $path]);
         $this->info(\Artisan::output());
