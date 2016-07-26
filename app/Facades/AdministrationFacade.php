@@ -63,7 +63,12 @@ class Administration extends Facade {
      * get current language code
      */
     public static function getLanguage() {
-        return LaravelLocalization::setLocale();
+        $locale = LaravelLocalization::setLocale();
+        if (!empty($locale)) {
+            return $locale;
+        } else {
+            \App::getLocale();
+        }
     }
 
     /*
