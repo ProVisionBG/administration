@@ -117,11 +117,35 @@ class Administration extends Facade {
         return true;
     }
 
+    /*
+     * Web site prefix in route
+     */
     public static function routePrefix() {
         return \LaravelLocalization::setLocale();
     }
 
-    public static function routeAs() {
+    /*
+     * Administration prefix in route
+     */
+    public static function routeAdministrationPrefix() {
+        return config('provision_administration.url_prefix');
+    }
+
+    /*
+     * default middleware for route
+     */
+    public static function routeMiddleware($middleware = []) {
+        $default = [
+            'localeSessionRedirect',
+            'localizationRedirect',
+        ];
+        return array_merge($default, $middleware);
+    }
+
+    /*
+     * Administration AS in route
+     */
+    public static function routeAdministrationAs() {
         return \Administration::getLanguage() . '.';
     }
 
