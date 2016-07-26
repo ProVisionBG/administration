@@ -121,4 +121,8 @@ class Administration extends Facade {
         return \LaravelLocalization::setLocale();
     }
 
+    public static function routeAs() {
+        return \Administration::getLanguage() . '.';
+    }
+
 }
