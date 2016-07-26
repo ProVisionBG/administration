@@ -101,8 +101,15 @@ class AdministrationServiceProvider extends ServiceProvider {
 
     private function adminBoot() {
 
-        if (!\ProVision\Administration\Facades\Administration::routeInAdministration()) {
-            return false;
+        //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
+        if (!empty(\LaravelLocalization::setLocale())) {
+            if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
+                return false;
+            }
+        } else {
+            if (!\Request::is(config('provision_administration.url_prefix') . '*')) {
+                return false;
+            }
         }
 
         /*
