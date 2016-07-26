@@ -100,5 +100,22 @@ class Administration extends Facade {
         return \Menu::get('ProVisionAdministrationMenu');
     }
 
+    /*
+     * check request URL is in administration
+     */
+    public static function routeInAdministration() {
+        //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
+        if (!empty(\LaravelLocalization::setLocale())) {
+            if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
+                return false;
+            }
+        } else {
+            if (!\Request::is(config('provision_administration.url_prefix') . '*')) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 }
