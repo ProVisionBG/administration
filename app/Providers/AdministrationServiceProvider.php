@@ -103,7 +103,7 @@ class AdministrationServiceProvider extends ServiceProvider {
 
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
         if (!empty(\LaravelLocalization::setLocale())) {
-            if (!\Request::is(\Administration::getLanguage() . '/' . config('provision_administration.url_prefix') . '*')) {
+            if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
                 return false;
             }
         } else {
