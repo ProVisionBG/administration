@@ -38,7 +38,7 @@ class EntrustAuto {
         /*
          * check request is in administration
          */
-        if (\Administration::routeInAdministration()) {
+        if (!\Administration::routeInAdministration()) {
             return $next($request);
         }
 
