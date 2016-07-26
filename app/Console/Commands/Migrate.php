@@ -38,6 +38,7 @@ class Migrate extends Command {
      */
     public function handle() {
         $path = str_ireplace(base_path(), '', realpath(__DIR__ . '\\..\\..\\..\\database\\migrations'));
+        $this->info('Path to migrate: ' . $path);
         \Artisan::call('migrate', ['--path' => $path]);
         $this->info(\Artisan::output());
     }
