@@ -283,7 +283,10 @@ class AdministrationServiceProvider extends ServiceProvider {
          * Create aliases for the dependency.
          */
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        //system
         $loader->alias('Administration', \ProVision\Administration\Facades\Administration::class);
+        $loader->alias('Dashboard', \ProVision\Administration\Dashboard::class);
+        //library
         $loader->alias('LaravelLocalization', \Mcamara\LaravelLocalization\Facades\LaravelLocalization::class);
         $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
         $loader->alias('Module', \Caffeinated\Modules\Facades\Module::class);

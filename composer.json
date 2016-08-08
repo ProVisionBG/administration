@@ -29,7 +29,7 @@
     "caffeinated/modules": "^3.1",
     "lavary/laravel-menu": "^1.6",
     "yajra/laravel-datatables-oracle": "^6.10",
-    "cviebrock/eloquent-sluggable": "^4.0.2",
+    "cviebrock/eloquent-sluggable": "^4.0",
     "torann/laravel-meta-tags": "^3.0",
     "edvinaskrucas/notification": "5.*",
     "laravel/socialite": "^2.0",
@@ -43,9 +43,21 @@
     "dimsav/laravel-translatable": "^5.6",
     "rutorika/sortable": "^3.2"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^5.4"
+  },
   "autoload": {
     "classmap": [
       "database"
+    ],
+    "psr-4": {
+      "ProVision\\Administration\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "database",
+      "tests/TestCase.php"
     ],
     "psr-4": {
       "ProVision\\Administration\\": "app/"
@@ -57,7 +69,7 @@
       "php artisan admin:migrate"
     ],
     "post-update-cmd": [
-      "php artisan vendor:publish --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\"",
+      "php artisan vendor:publish --tag=views --tag=public --tag=lang --tag=migrations --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\"",
       "php artisan admin:migrate"
     ]
   }

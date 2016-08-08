@@ -19,6 +19,8 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a href="#"><i class="fa fa-pencil-square-o"></i> Редактирай</a></li>
+                <li><a href="#" title="{{$item->file}}"><i class="fa fa-pencil-square-o"></i> Преименувай файла</a></li>
+                <li><a href="#"><i class="fa fa-pencil-square-o"></i> Добави описание</a></li>
             </ul>
         </div>
     </div>

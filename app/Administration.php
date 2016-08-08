@@ -149,4 +149,21 @@ class Administration extends Facade {
         return \Administration::getLanguage() . '.';
     }
 
+    /*
+     * Route is in Administration  Dashboard?
+     */
+    public static function isDashboard() {
+        if (!empty(\LaravelLocalization::setLocale())) {
+            if (\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix'))) {
+                return true;
+            }
+        } else {
+            if (\Request::is(config('provision_administration.url_prefix'))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
