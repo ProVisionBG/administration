@@ -7,8 +7,8 @@ class LinkBox extends DashboardBox {
 
     private $boxBackgroundClass = 'bg-aqua';
     private $iconClass = 'fa-cogs';
-    private $title = 'Info box';
-    private $value = '90%';
+    private $title = 'Link box';
+    private $value = '90';
     private $link = '#';
     private $linkText = 'More info';
 
