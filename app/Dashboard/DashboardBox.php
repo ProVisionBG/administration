@@ -3,7 +3,7 @@ namespace ProVision\Administration\Dashboard;
 
 abstract class DashboardBox {
 
-    protected $boxClass = 'col-md-3';
+    protected $boxClass = 'col-lg-3 col-xs-6';
 
     abstract public function render();
 
