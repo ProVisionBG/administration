@@ -161,8 +161,11 @@ class AdminModel extends Model {
                 continue;
             }
 
+            //set resize mode
+            $mode = $size['mode'];
+
             //make resize
-            Image::make($file)->$size['mode']($size['width'], $size['height'], function ($c) use ($size) {
+            Image::make($file)->$mode($size['width'], $size['height'], function ($c) use ($size) {
                 if (!empty($size['aspectRatio']) && $size['aspectRatio'] === true) {
                     $c->aspectRatio();
                 }
