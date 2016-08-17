@@ -83,7 +83,7 @@
             rowReorder: {
                 selector: 'button.btn-row-reorder',
                 snapX: 10,
-                update: true
+                update: false
             },
             "columns": {!! json_encode($table->columns([])->collection) !!}
         };
@@ -112,7 +112,7 @@
                     'data': data
                 },
                 success: function (response) {
-                    //console.log(response);
+                    administrationTable.ajax.reload();
                 },
                 dataType: 'json'
             });
