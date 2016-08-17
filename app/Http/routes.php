@@ -125,7 +125,20 @@ Route::group([
             /*
              * Media Manager
              */
-            Route::resource('media', 'MediaController', [
+            Route::group([
+                'as' => 'ajax.',
+                'prefix' => 'ajax'
+            ], function () {
+                Route::post('save-order', [
+                    'as' => 'save-order',
+                    'uses' => 'AjaxController@saveOrder'
+                ]);
+            });
+
+            /*
+             * Ajax utilities
+             */
+            Route::resource('ajax', 'AjaxController', [
                 'names' => [
                     'index' => 'media.index',
                     'edit' => 'media.edit',

@@ -35,16 +35,19 @@
         {{--<div class="box-header with-border">--}}
         {{--<h3 class="box-title">{{trans('administration::index.administrators')}}</h3>--}}
         {{--</div>--}}
-        <div class="box-body">
-            <div class="panel-body">
-                <?php
-                $table->addAction([
-                        'title' => trans('administration::index.actions')
-                ]);
-                ?>
+        <div class="box-body no-padding">
 
-                {!! $table->table() !!}
-            </div>
+            <?php
+            $table->addAction([
+                    'title' => trans('administration::index.actions')
+            ]);
+            $table->setTableAttributes([
+                    'class' => 'table table-hover'
+            ]);
+            ?>
+
+            {!! $table->table() !!}
+
         </div>
     </div>
 
@@ -54,7 +57,8 @@
 {{--{!! $table->scripts() !!}--}}
 <script>
     $(function () {
-        var administrationTable = $('#dataTableBuilder').DataTable({
+
+        var datatableConfig = {
             "lengthChange": false,
             "responsive": true,
             "processing": true,
@@ -76,7 +80,42 @@
             },
             "autoWidth": true,
             "serverSide": true,
+            rowReorder: {
+                selector: 'button.btn-row-reorder',
+                snapX: 10,
+                update: true
+            },
             "columns": {!! json_encode($table->columns([])->collection) !!}
+        };
+
+        var administrationTable = $('#dataTableBuilder').DataTable(datatableConfig);
+
+        /*
+         order save
+         */
+        administrationTable.on('row-reorder', function (e, diff, edit) {
+            var data = [];
+            //console.log(edit.triggerRow.data());
+            $.each(diff, function (index, item) {
+                buttonData = $(item.node).find('button.btn-row-reorder').data();
+                if (buttonData.id == edit.triggerRow.data().id) {
+                    data[index] = buttonData;
+                    data[index].oldPosition = item.oldPosition;
+                    data[index].newPosition = item.newPosition;
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('provision.administration.ajax.save-order')}}',
+                data: {
+                    'data': data
+                },
+                success: function (response) {
+                    //console.log(response);
+                },
+                dataType: 'json'
+            });
         });
 
         $('#box-filter form').on('submit', function (e) {

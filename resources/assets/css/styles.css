@@ -99,3 +99,12 @@ p.help-block {
     clear: both;
     width: 100%;
 }
+
+/*
+datatables
+*/
+tr.dt-rowReorder-moving {
+    background: #F7F7F7;
+    outline: 2px solid #555;
+    outline-offset: -2px;
+}

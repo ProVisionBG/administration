@@ -33,11 +33,12 @@ return [
     'delete_selected' => 'Изтрии избраните',
     'select_all' => 'Избери всички',
     'deselect_all' => 'Премахни избраните',
+    'order' => 'Сортиране',
 
     /*
      * meta
      */
-    'slug'=>'SEO адрес (slug)',
+    'slug' => 'SEO адрес (slug)',
     'meta_title' => 'Мета заглавие',
     'meta_description' => 'Мета описание',
     'meta_keywords' => 'Мета ключови думи',

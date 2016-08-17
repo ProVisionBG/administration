@@ -134,6 +134,9 @@ class AdministrationServiceProvider extends ServiceProvider {
         Form::component('adminMediaButton', 'administration::components.form.admin_media_button', [
             'model'
         ]);
+        Form::component('adminOrderButton', 'administration::components.form.admin_order_button', [
+            'model'
+        ]);
 
 
         /*
@@ -227,6 +230,9 @@ class AdministrationServiceProvider extends ServiceProvider {
                 'route' => 'provision.administration.systems.roles-repair'
             ])->data('icon', 'user-secret');
 
+            /*
+             * Translates
+             */
             $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])->data('order', 10004)->data('icon', 'globe');
 
         });
