@@ -1,8 +1,8 @@
 <?php
 $elementID = 'adminMediaButton-' . str_random(20);
 ?>
-<button class="btn btn-sm btn-default" data-toggle="modal" data-target="#{{$elementID}}">
-    <i class="fa fa-picture-o" aria-hidden="true"></i> {{trans('administration::media.button_label')}}
+<button title="{{trans('administration::media.button_label')}}" class="btn btn-sm btn-default" data-toggle="modal" data-target="#{{$elementID}}">
+    <i class="fa fa-picture-o" aria-hidden="true"></i>
 </button>
 <div class="modal modal-default modal-media"
      id="{{$elementID}}"

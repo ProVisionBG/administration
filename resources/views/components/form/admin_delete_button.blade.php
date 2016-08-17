@@ -1,8 +1,8 @@
 <?php
 $elementID = 'adminDeleteButton-' . str_random(20);
 ?>
-<button class="btn btn-sm btn-danger" data-href="{{$href}}" data-toggle="modal" data-target="#{{$elementID}}">
-    <i class="fa fa-trash-o" aria-hidden="true"></i> {{$name}}
+<button title="{{$name}}" class="btn btn-sm btn-danger" data-href="{{$href}}" data-toggle="modal" data-target="#{{$elementID}}">
+    <i class="fa fa-trash-o" aria-hidden="true"></i>
 </button>
 
 <div class="modal modal-danger" id="{{$elementID}}" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
