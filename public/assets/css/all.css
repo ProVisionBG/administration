@@ -553,4 +553,15 @@ tr.dt-rowReorder-moving {
     outline-offset: -2px;
 }
 
+#dataTableBuilder_length {
+    padding: 10px 0 0 10px;
+}
+
+#dataTableBuilder_info {
+    padding: 0 0 0 10px;
+}
+
+#dataTableBuilder_paginate {
+    padding: 0 10px 0 0;
+}
 /*# sourceMappingURL=all.css.map */

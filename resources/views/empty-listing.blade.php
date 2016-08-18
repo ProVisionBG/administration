@@ -59,7 +59,8 @@
     $(function () {
 
         var datatableConfig = {
-            "lengthChange": false,
+            "stateSave": true,
+            "lengthChange": true,
             "responsive": true,
             "processing": true,
             "ordering": true,
@@ -112,7 +113,8 @@
                     'data': data
                 },
                 success: function (response) {
-                    administrationTable.ajax.reload();
+                    //няма нужда да ги зарежда отново...
+                    //administrationTable.ajax.reload();
                 },
                 dataType: 'json'
             });
