@@ -128,7 +128,12 @@ class Administration extends Facade {
      * Administration prefix in route
      */
     public static function routeAdministrationPrefix() {
-        return config('provision_administration.url_prefix');
+        if (!empty(\LaravelLocalization::setLocale())) {
+            return \LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix');
+        } else {
+            return config('provision_administration.url_prefix');
+        }
+
     }
 
     /*
@@ -147,6 +152,17 @@ class Administration extends Facade {
      */
     public static function routeAdministrationAs() {
         return \Administration::getLanguage() . '.';
+    }
+
+    /*
+     * Адреси за администраторските route
+     */
+    public static function routeAdministrationName($name) {
+        if (!empty(\LaravelLocalization::setLocale())) {
+            return \LaravelLocalization::setLocale() . '.' . $name;
+        } else {
+            return $name;
+        }
     }
 
     /*
