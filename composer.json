@@ -23,7 +23,7 @@
   "type": "library",
   "require": {
     "php": "^5.5 || ^7.0",
-    "laravel/framework": "5.2.*",
+    "laravel/framework": "5.2.* || 5.3.*",
     "mcamara/laravel-localization": "^1.1",
     "zizaco/entrust": "5.2.x-dev",
     "caffeinated/modules": "^3.1",
