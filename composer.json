@@ -26,7 +26,7 @@
     "laravel/framework": "5.2.* || 5.3.*",
     "mcamara/laravel-localization": "^1.1",
     "zizaco/entrust": "5.2.x-dev",
-    "caffeinated/modules": "^3.1",
+    "caffeinated/modules": "^4.0",
     "lavary/laravel-menu": "^1.6",
     "yajra/laravel-datatables-oracle": "^6.10",
     "cviebrock/eloquent-sluggable": "^4.0",
