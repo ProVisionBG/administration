@@ -284,6 +284,7 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->app->register(\DaveJamesMiller\Breadcrumbs\ServiceProvider::class);
         //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
+        $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
 
         /*
          * Create aliases for the dependency.
