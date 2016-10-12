@@ -4,7 +4,7 @@ namespace ProVision\Administration\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller {
     /*
@@ -27,16 +27,17 @@ class AuthController extends Controller {
      */
     protected $redirectTo = '';
 
-    protected $guard = 'provision_administration';
-
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
     public function __construct() {
-
         //set admin default url
         $this->redirectTo = config('provision_administration.url_prefix');
+    }
+
+    protected function guard() {
+        return Auth::guard('provision_administration');
     }
 }

@@ -29,8 +29,9 @@ Route::group([
         Route::post('login', [
             'as' => 'login_post',
             'middleware' => ['role:guest'],
-            'uses' => 'Auth\AuthController@postLogin'
+            'uses' => 'Auth\AuthController@login'
         ]);
+        //\Auth::routes();
 
         Route::group([
             'middleware' => [
