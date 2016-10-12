@@ -12,7 +12,7 @@ class BaseAdministrationController extends Controller {
         /*
          * Breadcrumbs::register('home', function($breadcrumbs)
          */
-        if (!App::runningInConsole()) {
+        if (!\App::runningInConsole()) {
             \Breadcrumbs::register('admin_home', function ($breadcrumbs) {
                 $breadcrumbs->push(trans('administration::index.home'), route('provision.administration.index'), ['icon' => 'fa-home']);
             });
