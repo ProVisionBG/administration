@@ -21,8 +21,8 @@ class RolesForm extends AdminForm {
         ]);
 
         $this->add('permissions', 'choice', [
-            'choices' => Permission::lists('display_name', 'id')->toArray(),
-            'selected' => (!empty($this->model) ? @$this->model->perms->lists('id', 'name')->toArray() : null),
+            'choices' => Permission::pluck('display_name', 'id')->toArray(),
+            'selected' => (!empty($this->model) ? @$this->model->perms->pluck('id', 'name')->toArray() : null),
             'expanded' => true,
             'multiple' => true,
             'label' => trans('administration::administrators.permissions')

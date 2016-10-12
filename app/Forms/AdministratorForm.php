@@ -57,8 +57,8 @@ class AdministratorForm extends AdminForm {
             ]
         ]);
         $this->add('roles', 'choice', [
-            'choices' => Role::lists('display_name', 'id')->toArray(),
-            'selected' => (!empty($this->model) ? @$this->model->roles->lists('id')->toArray() : null),
+            'choices' => Role::pluck('display_name', 'id')->toArray(),
+            'selected' => (!empty($this->model) ? @$this->model->roles->pluck('id')->toArray() : null),
             'expanded' => true,
             'multiple' => true,
             'label' => trans('administration::administrators.groups')
