@@ -34,7 +34,8 @@ class AuthController extends Controller {
      */
     public function __construct() {
         //set admin default url
-        $this->redirectTo = config('provision_administration.url_prefix');
+        //$this->redirectTo = config('provision_administration.url_prefix');
+        $this->redirectTo = route('provision.administration.index');
     }
 
     protected function guard() {
