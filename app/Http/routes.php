@@ -139,7 +139,7 @@ Route::group([
             /*
              * Ajax utilities
              */
-            Route::resource('ajax', 'AjaxController', [
+            Route::resource('ajax', 'MediaController', [
                 'names' => [
                     'index' => 'media.index',
                     'edit' => 'media.edit',
