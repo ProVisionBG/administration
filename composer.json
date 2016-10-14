@@ -30,7 +30,7 @@
     "lavary/laravel-menu": "^1.6",
     "yajra/laravel-datatables-oracle": "^6.10",
     "cviebrock/eloquent-sluggable": "^4.0",
-    "torann/laravel-meta-tags": "^3.0",
+    "provision/laravel-meta-tags": "^3.0",
     "edvinaskrucas/notification": "5.*",
     "laravel/socialite": "^2.0",
     "intervention/image": "^2.3",
