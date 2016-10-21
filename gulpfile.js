@@ -14,7 +14,7 @@ elixir.config.css.autoprefix = {
 elixir.extend("publish", function () {
     gulp.task("publish_assets", function () {
         gulp.src("").pipe(shell([
-            "C:\\xampp\\php\\php.exe C:\\Users\\Venko\\PhpstormProjects\\provision-cms-5\\artisan vendor:publish --tag=public --tag=views --force"
+            "C:\\xampp\\php\\php.exe C:\\Users\\Venko\\PhpstormProjects\\provision-cms-5.3\\artisan vendor:publish --tag=public --tag=views --force"
         ]));
     });
 });
@@ -68,8 +68,6 @@ elixir(function (mix) {
         'resources/assets/bower_components/jquery-validation/src/localization/messages_bg.js',
         'resources/assets/bower_components/PACE/pace.js',
         'resources/assets/bower_components/jquery-confirm2/dist/jquery-confirm.min.js',
-        'resources/assets/bower_components/jquery-locationpicker-plugin/dist/locationpicker.jquery.min.js',
-
 
         //file uploads
         'resources/assets/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js',
