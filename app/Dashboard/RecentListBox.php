@@ -87,7 +87,7 @@ class RecentListBox extends DashboardBox {
             $html .= '
                 <li class="item">
                   ' . ($item['image'] ? '<div class="product-img"><img src="' . $item['image'] . '" alt="' . $item['title'] . '"> </div>' : '') . '
-                  <div class="product-info">
+                  <div class="product-info" ' . ($item['image'] ? '' : 'style="margin-left:0;"') . '>
                     <a href="' . ($item['href'] ? $item['href'] : 'javascript:void(0)') . '" class="product-title">
                     ' . $item['title'] . '
                       
