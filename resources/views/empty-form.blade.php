@@ -1,5 +1,13 @@
 @extends('administration::layouts.master')
 
 @section('content')
+    @if(!empty($before))
+        {!! $before !!}
+    @endif
+
     {!! form($form) !!}
+
+    @if(!empty($after))
+        {!! $after !!}
+    @endif
 @stop
