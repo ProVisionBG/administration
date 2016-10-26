@@ -11,3 +11,9 @@
         {!! $after !!}
     @endif
 @stop
+
+@if(!empty($js_scripts))
+    @push('js_scripts')
+    {!! $js_scripts !!}
+    @endpush
+@endif
