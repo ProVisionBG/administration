@@ -15,7 +15,7 @@ class Dashboard extends Facade {
         }
 
         if (!$index) {
-            dd(max(array_keys(static::$dashboards)));
+            $index = max(array_keys(static::$dashboards));
         }
 
         static::$dashboards[$index] = $object;
