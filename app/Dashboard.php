@@ -9,7 +9,15 @@ class Dashboard extends Facade {
 
     private static $dashboards = [];
 
-    public static function add(DashboardBox $object, $index = 100) {
+    public static function add(DashboardBox $object, $index = false) {
+        if (count(static::$dashboards) == 0) {
+            $index = 100;
+        }
+
+        if (!$index) {
+            dd(max(array_keys(static::$dashboards)));
+        }
+
         static::$dashboards[$index] = $object;
     }
 
