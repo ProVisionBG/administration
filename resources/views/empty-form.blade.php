@@ -17,3 +17,9 @@
     {!! $js_scripts !!}
     @endpush
 @endif
+
+@if(!empty($css))
+    @push('top_css')
+    {!! $css !!}
+    @endpush
+@endif

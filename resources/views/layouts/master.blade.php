@@ -8,6 +8,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <link rel="stylesheet" href='{{asset("/vendor/provision/administration/css/all.css")}}'>
+
+    @stack('top_css')
 </head>
 <body class="hold-transition skin-blue sidebar-mini @if(\Request::cookie('administration-navigation-collapsed')=='true') sidebar-collapse @endif">
 <!-- Site wrapper -->
