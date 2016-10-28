@@ -14,8 +14,12 @@ class Dashboard extends Facade {
             $index = 100;
         }
 
-        if (!$index) {
-            $index = max(array_keys(static::$dashboards));
+        if ($index == false) {
+            $index = max(array_keys(static::$dashboards)) + 1;
+        }
+
+        if (isset(static::$dashboards[$index])) {
+            die('Box index duplicate: ' . $index);
         }
 
         static::$dashboards[$index] = $object;
