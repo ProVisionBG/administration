@@ -3,6 +3,7 @@
 namespace ProVision\Administration\Providers;
 
 use App\Http\Middleware\EncryptCookies;
+use Caffeinated\Modules\Facades\Module;
 use Config;
 use Form;
 use Illuminate\Support\ServiceProvider;
@@ -97,6 +98,7 @@ class AdministrationServiceProvider extends ServiceProvider {
         */
 
         $this->adminBoot();
+        $this->modulesBoot();
     }
 
     private function adminBoot() {
@@ -236,6 +238,49 @@ class AdministrationServiceProvider extends ServiceProvider {
             $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])->data('order', 10004)->data('icon', 'globe');
 
         });
+    }
+
+    private function modulesBoot() {
+        if (!\Administration::routeInAdministration()) {
+            return false;
+        }
+
+        $modules = Module::all();
+        foreach ($modules as $module) {
+
+            $adminInitClass = module_class($module['slug'], 'Administration');
+
+            if (class_exists($adminInitClass)) {
+
+                //load module translations
+                $this->loadTranslationsFrom(app_path('Modules/' . $module['basename'] . '/Resources/Lang'), $module['slug']);
+                
+                $moduleAdminInit = new $adminInitClass();
+
+                //init routes
+                if (method_exists($moduleAdminInit, 'routes')) {
+                    \Route::group([
+                        'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
+                        'as' => \ProVision\Administration\Administration::routeAdministrationAs() . 'admin.',
+                        'middleware' => \ProVision\Administration\Administration::routeMiddleware()
+                    ], function () use ($moduleAdminInit, $module) {
+                        $moduleAdminInit->routes($module);
+                    });
+                }
+
+                //init menu
+                if (method_exists($moduleAdminInit, 'menu')) {
+                    $moduleAdminInit->menu($module);
+                }
+
+                //init dashboard
+                if (method_exists($moduleAdminInit, 'dashboard')) {
+                    $moduleAdminInit->dashboard($module);
+                }
+
+            }
+        }
+
     }
 
     /**

@@ -96,7 +96,11 @@ class Administration extends Facade {
      * get Administration menu instance
      */
     public static function getMenuInstance() {
-        return \Menu::get('ProVisionAdministrationMenu');
+        $menu = \Menu::get('ProVisionAdministrationMenu');
+        if (empty($menu)) {
+            $menu = \Menu::make('ProVisionAdministrationMenu', []);
+        }
+        return $menu;
     }
 
     /*
