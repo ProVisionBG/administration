@@ -121,6 +121,16 @@ Route::group([
                     'as' => 'roles-repair',
                     'uses' => 'Systems\RolesRepairController@index'
                 ]);
+
+                Route::get('maintenance-mode', [
+                    'as' => 'maintenance-mode',
+                    'uses' => 'Systems\MaintenanceModeController@index'
+                ]);
+
+                Route::post('maintenance-mode-update', [
+                    'as' => 'maintenance-mode-update',
+                    'uses' => 'Systems\MaintenanceModeController@update'
+                ]);
             });
 
             /*

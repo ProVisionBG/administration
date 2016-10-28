@@ -1,6 +1,7 @@
 <?php
 namespace ProVision\Administration;
 
+use File;
 use Illuminate\Support\Facades\Facade;
 use LaravelLocalization;
 
@@ -101,6 +102,14 @@ class Administration extends Facade {
             $menu = \Menu::make('ProVisionAdministrationMenu', []);
         }
         return $menu;
+    }
+
+    /**
+     * Is in
+     * @return mixed
+     */
+    public static function isInMaintenanceMode() {
+        return File::exists(storage_path('/framework/down-provision-administration'));
     }
 
     /*

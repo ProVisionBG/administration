@@ -219,7 +219,6 @@
                     {{Breadcrumbs::setView('administration::partials.breadcrumbs')}}
                     {!! Breadcrumbs::render('admin_final') !!}
                 @endif
-
             </section>
 
             @if (!empty($errors) && count($errors) > 0)

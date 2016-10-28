@@ -21,6 +21,17 @@ class AdministrationController extends BaseAdministrationController {
 
         Administration::setTitle(trans('administration::index.dashboard'));
 
+        if (Administration::isInMaintenanceMode()) {
+            $box = new \ProVision\Administration\Dashboard\HtmlBox();
+            $box->setBoxClass('col-xs-12');
+            $box->setHtml('<div class="callout callout-danger">
+                <h4><i class="icon fa fa-ban"></i> Сайта е спрян!</h4>
+                <p>Може да активирате сайта от <a href="' . route('provision.administration.systems.maintenance-mode') . '">тук</a>.</p>
+              </div>');
+            \Dashboard::add($box, 0);
+        }
+
+
         return view('administration::index');
     }
 

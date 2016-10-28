@@ -232,6 +232,11 @@ class AdministrationServiceProvider extends ServiceProvider {
                 'route' => 'provision.administration.systems.roles-repair'
             ])->data('icon', 'user-secret');
 
+            $systemMenu->add(trans('administration::systems.maintenance-mode'), [
+                'nickname' => 'system-maintenance-mode',
+                'route' => 'provision.administration.systems.maintenance-mode'
+            ])->data('icon', 'hand-paper-o');
+
             /*
              * Translates
              */
@@ -252,9 +257,17 @@ class AdministrationServiceProvider extends ServiceProvider {
 
             if (class_exists($adminInitClass)) {
 
-                //load module translations
+                //load module translations @todo: да се помисли НЕ Е ДОБРЕ ТУК!
                 $this->loadTranslationsFrom(app_path('Modules/' . $module['basename'] . '/Resources/Lang'), $module['slug']);
-                
+
+                //load routes @todo: да се помисли НЕ Е ДОБРЕ ТУК!
+                \Route::group([
+                    'middleware' => 'web',
+                    'namespace' => config('modules.namespace') . $module['basename'],
+                ], function ($router) use ($module) {
+                    require module_path($module['slug'], 'Routes/web.php');
+                });
+
                 $moduleAdminInit = new $adminInitClass();
 
                 //init routes
@@ -368,6 +381,8 @@ class AdministrationServiceProvider extends ServiceProvider {
 
         //automatic check permissions to modules
         $this->app['router']->pushMiddlewareToGroup('web', \ProVision\Administration\Http\Middleware\EntrustAuto::class);
+        $this->app['router']->pushMiddlewareToGroup('web', \ProVision\Administration\Http\Middleware\CheckForMaintenanceMode::class);
+        $this->app['router']->pushMiddlewareToGroup('api', \ProVision\Administration\Http\Middleware\CheckForMaintenanceMode::class);
 
         /*
          * Commands
