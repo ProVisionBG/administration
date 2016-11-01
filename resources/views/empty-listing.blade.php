@@ -3,7 +3,7 @@
 @section('content')
 
     @if(!empty($filterForm))
-        <div class="box box-default collapsed-box" id="box-filter">
+        <div class="box box-default @if($filterForm->getFormOption('collapsed')===true) collapsed-box @endif" id="box-filter">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-filter" aria-hidden="true"></i> {{trans('administration::index.filter')}}</h3>
 
