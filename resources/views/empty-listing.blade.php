@@ -86,6 +86,7 @@
                 snapX: 10,
                 update: false
             },
+            "aaSorting": [[ 0, "desc" ]], // @todo: да може да се сменя от контролера дефоутлният ордер
             "columns": {!! json_encode($table->columns([])->collection) !!}
         };
 
