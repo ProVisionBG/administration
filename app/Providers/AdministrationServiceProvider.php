@@ -246,9 +246,9 @@ class AdministrationServiceProvider extends ServiceProvider {
     }
 
     private function modulesBoot() {
-        if (!\Administration::routeInAdministration()) {
-            return false;
-        }
+//        if (!\Administration::routeInAdministration()) {
+//            return false;
+//        }
 
         $modules = Module::all();
         foreach ($modules as $module) {
@@ -265,7 +265,7 @@ class AdministrationServiceProvider extends ServiceProvider {
                     'middleware' => 'web',
                     'namespace' => config('modules.namespace') . $module['basename'],
                 ], function ($router) use ($module) {
-                    require module_path($module['slug'], 'Routes/web.php');
+                    require_once module_path($module['slug'], 'Routes/web.php');
                 });
 
                 $moduleAdminInit = new $adminInitClass();
@@ -282,12 +282,12 @@ class AdministrationServiceProvider extends ServiceProvider {
                 }
 
                 //init menu
-                if (method_exists($moduleAdminInit, 'menu')) {
+                if (method_exists($moduleAdminInit, 'menu') && \Administration::routeInAdministration()) {
                     $moduleAdminInit->menu($module);
                 }
 
                 //init dashboard
-                if (method_exists($moduleAdminInit, 'dashboard')) {
+                if (method_exists($moduleAdminInit, 'dashboard') && \Administration::isDashboard()) {
                     $moduleAdminInit->dashboard($module);
                 }
 
