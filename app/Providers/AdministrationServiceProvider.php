@@ -260,6 +260,7 @@ class AdministrationServiceProvider extends ServiceProvider {
                 //load module translations @todo: да се помисли НЕ Е ДОБРЕ ТУК!
                 $this->loadTranslationsFrom(app_path('Modules/' . $module['basename'] . '/Resources/Lang'), $module['slug']);
 
+                /*
                 //load routes @todo: да се помисли НЕ Е ДОБРЕ ТУК!
                 \Route::group([
                     'middleware' => 'web',
@@ -267,6 +268,7 @@ class AdministrationServiceProvider extends ServiceProvider {
                 ], function ($router) use ($module) {
                     require_once module_path($module['slug'], 'Routes/web.php');
                 });
+                */
 
                 $moduleAdminInit = new $adminInitClass();
 
