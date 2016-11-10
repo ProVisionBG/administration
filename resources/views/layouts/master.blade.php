@@ -35,6 +35,11 @@
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    <li class="goto-to-site">
+                        <a href="/" target="_blank" title="{{trans('administration::index.go_to_website')}}">
+                            <i class="fa  fa-external-link"></i>
+                        </a>
+                    </li>
                     <!-- Messages: style can be found in dropdown.less-->
                 {{--<li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">

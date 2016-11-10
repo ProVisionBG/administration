@@ -34,6 +34,7 @@ return [
     'select_all' => 'Избери всички',
     'deselect_all' => 'Премахни избраните',
     'order' => 'Сортиране',
+    'go_to_website' => 'Виж уеб сайта',
 
     /*
      * meta
