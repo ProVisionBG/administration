@@ -22,6 +22,12 @@
     </div>
 @endif
 
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+
 @yield('content')
 
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>

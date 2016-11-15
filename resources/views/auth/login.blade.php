@@ -3,7 +3,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="http://www.provision.bg/" target="_blank"><b>{{Request::server ("SERVER_NAME")}}</b></a>
+            <a href="/" target="_blank"><b>{{Request::server ("SERVER_NAME")}}</b></a>
         </div><!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">{{trans('administration::index.administration')}}</p>
@@ -22,7 +22,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" name="remember">{{trans('administration::index.remember-me')}}
+                                <input type="checkbox" name="remember"> {{trans('administration::index.remember-me')}}
                             </label>
                         </div>
                     </div><!-- /.col -->
@@ -42,7 +42,7 @@
            --}}
 
 
-            <a href="#">{{trans('administration::index.i-forgot-my-password')}}</a><br>
+            <a href="{{route('provision.administration.password_reset')}}">{{trans('administration::index.i-forgot-my-password')}}</a><br>
             {{--<a href="register.html" class="text-center">Register a new membership</a>--}}
 
         </div><!-- /.login-box-body -->

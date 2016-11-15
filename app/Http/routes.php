@@ -1,5 +1,6 @@
 <?php
 
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => [
@@ -20,18 +21,60 @@ Route::group([
             'uses' => 'AdministrationController@index'
         ]);
 
+//        Route::get('login', [
+//            'as' => 'login',
+//            'middleware' => ['role:guest'],
+//            'uses' => 'AdministrationController@getLogin'
+//        ]);
+//
+//        Route::post('login', [
+//            'as' => 'login_post',
+//            'middleware' => ['role:guest'],
+//            'uses' => 'Auth\AuthController@login'
+//        ]);
+
+//        \Auth::routes([
+//            'prefix' => LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix'),
+//        ]);
+
+        // Authentication Routes...
         Route::get('login', [
             'as' => 'login',
-            'middleware' => ['role:guest'],
-            'uses' => 'AdministrationController@getLogin'
+            'uses' => 'Auth\LoginController@showLoginForm'
         ]);
 
         Route::post('login', [
             'as' => 'login_post',
-            'middleware' => ['role:guest'],
-            'uses' => 'Auth\AuthController@login'
+            'uses' => 'Auth\LoginController@login'
         ]);
-        //\Auth::routes();
+
+        Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+        // Registration Routes...
+        //Route::get('register', 'Auth\RegisterController@showRegistrationForm');
+        //Route::post('register', 'Auth\RegisterController@register');
+
+        // Password Reset Routes...
+        Route::get('password/reset', [
+            'as' => 'password_reset',
+            'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
+        ]);
+
+        Route::post('password/email', [
+            'as' => 'password_email_post',
+            'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail'
+        ]);
+
+        Route::get('password/reset/{token}', [
+            'as' => 'password_reset_token',
+            'uses' => 'Auth\ResetPasswordController@showResetForm'
+        ]);
+
+        Route::post('password/reset', [
+            'as' => 'password_reset_post',
+            'uses' => 'Auth\ResetPasswordController@reset'
+        ]);
+
 
         Route::group([
             'middleware' => [

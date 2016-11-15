@@ -5,6 +5,8 @@ namespace ProVision\Administration;
 use Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use ProVision\Administration\Notifications\ResetPassword;
 use Validator;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
@@ -12,7 +14,7 @@ class AdminUser extends Authenticatable {
     use EntrustUserTrait {
         EntrustUserTrait::restore insteadof SoftDeletes;
     }
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
 
     /*
     * validation rules
@@ -73,7 +75,13 @@ class AdminUser extends Authenticatable {
         return $this->errors;
     }
 
-    public function setPasswordAttribute($value) {
-        $this->attributes['password'] = Hash::make($value);
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token) {
+        $this->notify(new ResetPassword($token));
     }
 }

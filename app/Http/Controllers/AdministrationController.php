@@ -31,16 +31,7 @@ class AdministrationController extends BaseAdministrationController {
             \Dashboard::add($box, 0);
         }
 
-
         return view('administration::index');
     }
 
-
-    public function getLogin() {
-        return view('administration::login');
-    }
-
-    public function postLogin() {
-        return view('administration::login');
-    }
 }
