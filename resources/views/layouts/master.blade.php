@@ -124,12 +124,14 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email),160}}" class="user-image" alt="User Image">--}}
+                            <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=25" class="user-image" alt="User Image">
                             <span class="hidden-xs">{{Auth::guard('provision_administration')->user()->name}}</span> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email,160)}}" class="img-circle" alt="User Image">--}}
+                                <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=160" class="img-circle" alt="User Image">
                                 <p>
                                     {{Auth::guard('provision_administration')->user()->name}}
                                     <small>Member since {{Auth::guard('provision_administration')->user()->created_at}}</small>
@@ -179,28 +181,30 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
-        {{--<div class="user-panel">--}}
-        {{--<div class="pull-left image">--}}
-        {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email),160}}" class="img-circle" alt="User Image">--}}
-        {{--</div>--}}
-        {{--<div class="pull-left info">--}}
-        {{--<p>{{Auth::guard('provision_administration')->user()->first_name}} {{Auth::guard('provision_administration')->user()->last_name}}</p>--}}
-        {{--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=45" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>{{Auth::guard('provision_administration')->user()->name}}</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
             <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
           </span>
-            </div>
-        </form>
-        <!-- /.search form -->
-        --}}
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+                </div>
+            </form>
+            <!-- /.search form -->
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 @include('administration::partials.navigation', ['items' => \Menu::get('ProVisionAdministrationMenu')->sortBy('order', 'asc')->roots()])
             </ul>

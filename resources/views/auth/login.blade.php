@@ -6,7 +6,7 @@
             <a href="/" target="_blank"><b>{{Request::server ("SERVER_NAME")}}</b></a>
         </div><!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">{{trans('administration::index.administration')}}</p>
+            <p class="login-box-msg">{{trans('administration::auth.login-box-title')}}</p>
 
             <form action="{{route('provision.administration.login_post')}}" method="post">
                 {{ csrf_field() }}
@@ -27,7 +27,7 @@
                         </div>
                     </div><!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" name="sign_in" class="btn btn-primary btn-block btn-flat">{{trans('administration::index.sign-in')}}</button>
+                        <button type="submit" name="sign_in" class="btn btn-primary btn-block">{{trans('administration::index.sign-in')}}</button>
                     </div><!-- /.col -->
                 </div>
             </form>
@@ -41,14 +41,11 @@
            </div><!-- /.social-auth-links -->
            --}}
 
-
-            <a href="{{route('provision.administration.password_reset')}}">{{trans('administration::index.i-forgot-my-password')}}</a><br>
+            <a class="btn btn-xs" href="{{route('provision.administration.password_reset')}}"><i class="fa fa-caret-right"></i> {{trans('administration::index.i-forgot-my-password')}}</a><br>
             {{--<a href="register.html" class="text-center">Register a new membership</a>--}}
 
         </div><!-- /.login-box-body -->
-        <div class="text-center">
-            <small><a href="http://www.provision.bg/" target="_blank"><b>ProVision</b></a> CMS v{{Config::get('provision_administration.version')}}</small>
-        </div>
+
     </div>
 
 @stop

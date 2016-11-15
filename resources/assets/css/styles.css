@@ -1,3 +1,28 @@
+/*
+override LTE font
+*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese');
+
+body {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* H1 - H6 font */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: 'Open Sans', sans-serif;
+}
+
 label.control-label.required:after {
     content: "*";
     color: red;
@@ -9,6 +34,10 @@ label.control-label.required:after {
 
 img.flag {
     width: 20px;
+}
+
+.reset-password-box, .login-box {
+    margin: 7% auto 1% auto;
 }
 
 .modal {

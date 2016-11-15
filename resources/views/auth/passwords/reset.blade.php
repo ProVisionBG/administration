@@ -1,7 +1,7 @@
 @extends('administration::layouts.login')
 
 @section('content')
-    <div class="container">
+    <div class="container reset-password-box">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
@@ -59,7 +59,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         Reset Password
                                     </button>
+                                    <a class="btn" href="{{route('provision.administration.login')}}">{{trans('administration::index.home')}}</a>
                                 </div>
+
                             </div>
                         </form>
                     </div>

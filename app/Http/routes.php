@@ -139,6 +139,8 @@ Route::group([
              * Settings
              */
             Route::resource('settings', \Config::get('provision_administration.settings_controller'), [
+                'namespace' => '',
+                'as' => 'settings',
                 'names' => [
                     'index' => 'settings.index',
                     // 'edit' => 'administrators-roles.edit',

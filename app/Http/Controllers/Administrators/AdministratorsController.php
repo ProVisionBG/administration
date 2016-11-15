@@ -57,7 +57,7 @@ class AdministratorsController extends BaseAdministrationController {
                     }
 
                     if (Request::has('deleted') && Request::input('deleted') == 'true') {
-                        $query->whereNotNull('deleted_at');
+                        $query->withTrashed();
                     }
 
                     if (!Request::has('all-users') || Request::input('all-users') != 'true') {

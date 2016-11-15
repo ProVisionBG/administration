@@ -44,7 +44,8 @@ class CheckForMaintenanceMode {
         if (File::exists($this->app->storagePath() . '/framework/down-provision-administration')) {
             $data = json_decode(file_get_contents($this->app->storagePath() . '/framework/down-provision-administration'), true);
 
-            throw new MaintenanceModeException($data['time'], $data['retry'], $data['message']);
+            //throw new MaintenanceModeException($data['time'], $data['retry'], $data['message']);
+            return response(view('administration::errors.maintenance_mode',compact('data')), 503);
         }
 
         return $next($request);
