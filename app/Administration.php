@@ -154,6 +154,7 @@ class Administration extends Facade {
      */
     public static function routeMiddleware($middleware = []) {
         $default = [
+            'web',
             'localeSessionRedirect',
             'localizationRedirect',
         ];
