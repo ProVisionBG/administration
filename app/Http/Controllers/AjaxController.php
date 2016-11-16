@@ -3,12 +3,15 @@
 namespace ProVision\Administration\Http\Controllers;
 
 
+use Illuminate\Support\Facades\DB;
+use ProVision\Administration\Http\Requests\AjaxQuickSwichRequest;
+
 class AjaxController extends BaseAdministrationController {
 
-    /*
-    * Автоматично запазване на сортиране в списък
+    /**
+     * Автоматично запазване на сортиране в списък
      * @todo: да се направи и за модели които не ползват NodeTrait
-    */
+     */
     public function saveOrder() {
         if (!empty(\Request::input('data'))) {
             //$debug = [];
@@ -41,5 +44,26 @@ class AjaxController extends BaseAdministrationController {
             ]);
 
         }
+    }
+
+    /**
+     * Автоматично запазване на switch state - за листинг таблица
+     * @param AjaxQuickSwichRequest $request
+     * @return mixed
+     */
+    public function saveQuickSwitch(AjaxQuickSwichRequest $request) {
+
+        if ($request->state == 'true') {
+            $request->state = 1;
+        } else {
+            $request->state = 0;
+        }
+
+        return DB::table($request->table)
+            ->where('id', $request->id)
+            ->update([
+                $request->field => $request->state
+            ]);
+
     }
 }

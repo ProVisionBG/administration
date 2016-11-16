@@ -253,6 +253,7 @@ class AdministratorsController extends BaseAdministrationController {
      */
     public function destroy($id) {
         $object = AdminUser::withTrashed()->find($id);
+
         if (!$object->trashed()) {
             $object->delete();
         } else {

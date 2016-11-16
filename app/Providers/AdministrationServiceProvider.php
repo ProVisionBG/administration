@@ -133,6 +133,10 @@ class AdministrationServiceProvider extends ServiceProvider {
             'name',
             'href'
         ]);
+        Form::component('adminSwitchButton', 'administration::components.form.admin_switch_button', [
+            'name',
+            'model'
+        ]);
         Form::component('adminEditButton', 'administration::components.form.admin_edit_button', [
             'name',
             'href'

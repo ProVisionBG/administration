@@ -189,6 +189,11 @@ Route::group([
                     'as' => 'save-order',
                     'uses' => 'AjaxController@saveOrder'
                 ]);
+
+                Route::post('save-switch', [
+                    'as' => 'save-switch',
+                    'uses' => 'AjaxController@saveQuickSwitch'
+                ]);
             });
 
             /*
