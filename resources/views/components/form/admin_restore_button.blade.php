@@ -34,7 +34,8 @@ $elementID = 'adminRestoreButton-' . str_random(20);
                 url: $(e.relatedTarget).data('href'),
                 type: 'DELETE',
                 success: function (result) {
-                    window.location.reload();
+                    $('#dataTableBuilder').DataTable().draw();
+                    $('#{{$elementID}}').modal('hide');
                 }
             });
         })
