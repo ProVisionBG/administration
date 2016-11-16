@@ -6,15 +6,17 @@ use Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use ProVision\Administration\Notifications\ResetPassword;
 use Validator;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class AdminUser extends Authenticatable {
-    use EntrustUserTrait {
-        EntrustUserTrait::restore insteadof SoftDeletes;
+    use SoftDeletes, Notifiable, EntrustUserTrait {
+        SoftDeletes::restore as sdRestore;
+        EntrustUserTrait::restore as euRestore;
     }
-    use SoftDeletes, Notifiable;
 
     /*
     * validation rules
@@ -83,5 +85,13 @@ class AdminUser extends Authenticatable {
      */
     public function sendPasswordResetNotification($token) {
         $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * Fix SoftDeletes::restore & EntrustUserTrait::restore
+     */
+    public function restore() {
+        $this->sdRestore();
+        Cache::tags(Config::get('entrust.role_user_table'))->flush();
     }
 }

@@ -1,11 +1,11 @@
 <?php
-$elementID = 'adminDeleteButton-' . str_random(20);
+$elementID = 'adminRestoreButton-' . str_random(20);
 ?>
-<button title="{{$name}}" class="btn btn-sm btn-danger" data-href="{{$href}}" data-toggle="modal" data-target="#{{$elementID}}">
-    <i class="fa fa-trash-o" aria-hidden="true"></i>
+<button title="{{$name}}" class="btn btn-sm btn-warning" data-href="{{$href}}" data-toggle="modal" data-target="#{{$elementID}}">
+    <i class="fa fa-undo" aria-hidden="true"></i>
 </button>
 
-<div class="modal modal-danger" id="{{$elementID}}" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
+<div class="modal modal-warning" id="{{$elementID}}" tabindex="-1" role="dialog" aria-labelledby="myRestoreModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,11 +14,11 @@ $elementID = 'adminDeleteButton-' . str_random(20);
                 <h4 class="modal-title">{{trans('administration::index.confirm_title')}}</h4>
             </div>
             <div class="modal-body">
-                <p>One fine body…</p>
+                <p>{{trans('administration::index.confirm_text')}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{trans('administration::index.cancel')}}</button>
-                <button type="button" class="btn btn-outline btn-ok">{{trans('administration::index.delete')}}</button>
+                <button type="button" class="btn btn-outline btn-ok">{{trans('administration::index.restore')}}</button>
             </div>
         </div>
         <!-- /.modal-content -->

@@ -30,7 +30,8 @@ class AdministratorsController extends BaseAdministrationController {
             $users = AdminUser::select([
                 'id',
                 'name',
-                'email'
+                'email',
+                'deleted_at'
             ])
                 ->with('roles');
 
@@ -38,7 +39,7 @@ class AdministratorsController extends BaseAdministrationController {
                 ->addColumn('action', function ($user) {
                     $actions = '';
                     if (!empty($user->deleted_at)) {
-                        //restore button
+                        $actions .= Form::adminRestoreButton(trans('administration::index.restore'), route('provision.administration.administrators.destroy', $user->id));
                     } else {
                         if ($user->id != \Auth::guard('provision_administration')->user()->id) {
                             $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.administrators.destroy', $user->id));
@@ -57,7 +58,7 @@ class AdministratorsController extends BaseAdministrationController {
                     }
 
                     if (Request::has('deleted') && Request::input('deleted') == 'true') {
-                        $query->withTrashed();
+                        $query->onlyTrashed();
                     }
 
                     if (!Request::has('all-users') || Request::input('all-users') != 'true') {
@@ -251,8 +252,8 @@ class AdministratorsController extends BaseAdministrationController {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $object = AdminUser::withTrashed()->where('id', $id);
-        if (empty($object->deleted_at)) {
+        $object = AdminUser::withTrashed()->find($id);
+        if (!$object->trashed()) {
             $object->delete();
         } else {
             $object->restore();

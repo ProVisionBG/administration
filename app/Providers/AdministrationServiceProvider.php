@@ -129,6 +129,10 @@ class AdministrationServiceProvider extends ServiceProvider {
             'name',
             'href'
         ]);
+        Form::component('adminRestoreButton', 'administration::components.form.admin_restore_button', [
+            'name',
+            'href'
+        ]);
         Form::component('adminEditButton', 'administration::components.form.admin_edit_button', [
             'name',
             'href'
