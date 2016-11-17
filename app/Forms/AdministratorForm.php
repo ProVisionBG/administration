@@ -61,6 +61,7 @@ class AdministratorForm extends AdminForm {
             'selected' => (!empty($this->model) ? @$this->model->roles->pluck('id')->toArray() : null),
             'expanded' => true,
             'multiple' => true,
+            'wrapper_children' => 'col-lg-3 col-md-4 col-sm-6 col-xs-12',
             'label' => trans('administration::administrators.groups')
         ]);
 //        $this->add('permissions', 'choice', [

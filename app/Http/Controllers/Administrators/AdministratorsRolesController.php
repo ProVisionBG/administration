@@ -67,14 +67,13 @@ class AdministratorsRolesController extends BaseAdministrationController {
                 'name' => 'id',
                 'title' => trans('administration::administrators.id')
             ])->addColumn([
-                'data' => 'name',
-                'name' => 'name',
-                'title' => trans('administration::administrators.group_key')
-            ])
-            ->addColumn([
                 'data' => 'display_name',
                 'name' => 'display_name',
                 'title' => trans('administration::administrators.group_name')
+            ])->addColumn([
+                'data' => 'name',
+                'name' => 'name',
+                'title' => trans('administration::administrators.group_key')
             ]);
 
 

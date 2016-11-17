@@ -129,6 +129,10 @@ p.help-block {
     width: 100%;
 }
 
+.form-group > .wrapper_children {
+    padding: 2px 0;
+}
+
 /*
 datatables
 */
