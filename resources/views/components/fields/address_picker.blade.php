@@ -31,9 +31,7 @@
 
             <div id="{!!$uniqId!!}-map" class="" style="height: 300px; width:100%;"></div>
 
-            @if(isset($options['help']))
-                <span class="help-block">{!!$options['help']!!} </span>
-            @endif
+            @include('administration::components.fields.help_block')
         </div>
         @if ($showLabel && $showField && !$options['is_child'])
     </div>

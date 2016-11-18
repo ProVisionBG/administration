@@ -34,6 +34,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/jquery-confirm2/dist/jquery-confirm.min.css',
         'resources/assets/bower_components/blueimp-file-upload/css/jquery.fileupload.css',
         'resources/assets/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
+        'resources/assets/bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
 
         'resources/assets/bower_components/AdminLTE/dist/css/AdminLTE.min.css',
         'resources/assets/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css',
@@ -70,6 +71,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/PACE/pace.js',
         'resources/assets/bower_components/jquery-confirm2/dist/jquery-confirm.min.js',
         'resources/assets/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js',
+        'resources/assets/bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js',
 
         //file uploads
         'resources/assets/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js',
