@@ -14,7 +14,7 @@
         <div class="input-group-addon">
             <i class="fa fa-clock-o"></i>
         </div>
-        <?= Form::input($type, $name, $options['value'], $options['attr']) ?>
+        <?= Form::input('text', $name, $options['value'], $options['attr']) ?>
     </div>
 
     @push('js_scripts')

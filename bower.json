@@ -39,6 +39,7 @@
     "jquery-confirm2": "craftpip/jquery-confirm#^2.5.1",
     "jquery-locationpicker-plugin": "^0.1.12",
     "bootstrap-switch": "^3.3.2",
-    "smalot-bootstrap-datetimepicker": "^2.3.11"
+    "smalot-bootstrap-datetimepicker": "^2.3.11",
+    "select2": "^4.0.3"
   }
 }
