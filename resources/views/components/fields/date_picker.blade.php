@@ -9,10 +9,13 @@
     <?php endif; ?>
 
     <?php if ($showField): ?>
-    <?php
-    $options['attr']['id'] = str_random(20);
-    ?>
-    <?= Form::input($type, $name, $options['value'], $options['attr']) ?>
+
+    <div class="input-group">
+        <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+        </div>
+        <?= Form::input($type, $name, $options['value'], $options['attr']) ?>
+    </div>
 
     @push('js_scripts')
     <script>
