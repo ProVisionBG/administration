@@ -59,7 +59,7 @@
     $(function () {
 
         var datatableConfig = {
-            "aaSorting": [[ 0, "desc" ]], // @todo: да може да се сменя от контролера дефоутлният ордер
+            "aaSorting": [[0, "desc"]], // @todo: да може да се сменя от контролера дефоутлният ордер
             "stateSave": true,
             "lengthChange": true,
             "responsive": true,
@@ -71,7 +71,7 @@
                 url: '{{route(\Request::route()->getName())}}',
                 data: function (d) {
                     //console.log(d);
-                    $('#box-filter form input').each(function () {
+                    $('#box-filter form input, #box-filter form select').each(function () {
                         if ($(this).is(':checkbox')) {
                             d[$(this).attr('name')] = $(this).prop("checked");
                         } else {
