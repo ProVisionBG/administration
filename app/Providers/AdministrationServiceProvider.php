@@ -6,6 +6,7 @@ use App\Http\Middleware\EncryptCookies;
 use Caffeinated\Modules\Facades\Module;
 use Config;
 use Form;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 use ProVision\Administration\Facades\StaticBlockFacade;
@@ -17,6 +18,14 @@ class AdministrationServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+
+        if (config('app.debug') === true) {
+            /*
+             * Enable query logging
+             */
+            DB::enableQueryLog();
+        }
+
         /*
        * config
        */
