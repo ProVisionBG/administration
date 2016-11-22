@@ -574,6 +574,15 @@ p.help-block {
     float: left;
     clear: both;
     width: 100%;
+    font-size: 13px;
+}
+
+#box-filter form select, #box-filter form input {
+    height: 30px;
+}
+
+#box-filter form div.bootstrap-switch {
+    margin-top: 17px;
 }
 
 .form-group > .wrapper_children {
