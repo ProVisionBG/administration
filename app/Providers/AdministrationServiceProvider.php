@@ -117,9 +117,12 @@ class AdministrationServiceProvider extends ServiceProvider {
           * LogViewer settings
           */
         if (config('provision_administration.packages.log-viewer')) {
+
+            //check app settings
             if (config('app.log') != 'daily') {
                 die('config/app.php => log != daily');
             }
+
             //set middleware
             Config::set('log-viewer.route.attributes.middleware', [
                 'web',
@@ -277,14 +280,15 @@ class AdministrationServiceProvider extends ServiceProvider {
                 'route' => 'provision.administration.systems.maintenance-mode'
             ])->data('icon', 'hand-paper-o');
 
+            // Log Viewer
             if (config('provision_administration.packages.log-viewer')) {
                 $systemMenu->add(trans('administration::systems.log-viewer'), [
                     'nickname' => 'system-log-viewer',
                     'url' => config('log-viewer.route.attributes.prefix'),
-                    //'route' => 'log-viewer::dashboard'
-                ])->data('icon', 'bug')->link->attr([
-                    'target' => '_blank',
-                ]);
+                ])->data('icon', 'bug')
+                    ->link->attr([
+                        'target' => '_blank',
+                    ]);
             }
 
             /*
