@@ -106,8 +106,22 @@ class AdministrationServiceProvider extends ServiceProvider {
         ], 'seeds');
         */
 
+
+        $this->publicBoot();
         $this->adminBoot();
         $this->modulesBoot();
+    }
+
+    private function publicBoot() {
+        /*
+          * LogViewer settings
+          */
+        if (config('provision_administration.packages.log-viewer')) {
+            Config::set('log-viewer.route.attributes.middleware', [
+                'web',
+                'permission:administrators.index'
+            ]);
+        }
     }
 
     private function adminBoot() {
@@ -256,6 +270,16 @@ class AdministrationServiceProvider extends ServiceProvider {
                 'route' => 'provision.administration.systems.maintenance-mode'
             ])->data('icon', 'hand-paper-o');
 
+            if (config('provision_administration.packages.log-viewer')) {
+                $systemMenu->add(trans('administration::systems.log-viewer'), [
+                    'nickname' => 'system-log-viewer',
+                    'url' => config('log-viewer.route.attributes.prefix'),
+                    //'route' => 'log-viewer::dashboard'
+                ])->data('icon', 'bug')->link->attr([
+                    'target' => '_blank',
+                ]);
+            }
+
             /*
              * Translates
              */
@@ -364,6 +388,11 @@ class AdministrationServiceProvider extends ServiceProvider {
         //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
         $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+
+        if (config('provision_administration.packages.log-viewer')) {
+            // https://github.com/ARCANEDEV/LogViewer
+            $this->app->register(\Arcanedev\LogViewer\LogViewerServiceProvider::class);
+        }
 
         /*
          * Create aliases for the dependency.

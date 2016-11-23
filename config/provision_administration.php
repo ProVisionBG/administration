@@ -37,5 +37,12 @@ return [
             'width' => 200,
             'height' => 200
         ]
+    ],
+
+    /*
+     * Additional packages
+     */
+    'packages' => [
+        'log-viewer' => true, //LogViewer: https://github.com/ARCANEDEV/LogViewer
     ]
 ];

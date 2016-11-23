@@ -10,4 +10,5 @@ return [
     'maintenance-mode-note' => 'Съобщение',
     'maintenance-mode-start' => 'Спри сайта',
     'maintenance-mode-stop' => 'Пусни сайта',
+    'log-viewer' => 'Log Viewer'
 ];
