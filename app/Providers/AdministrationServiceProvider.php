@@ -117,10 +117,14 @@ class AdministrationServiceProvider extends ServiceProvider {
           * LogViewer settings
           */
         if (config('provision_administration.packages.log-viewer')) {
+            //set middleware
             Config::set('log-viewer.route.attributes.middleware', [
                 'web',
                 'permission:administrators.index'
             ]);
+
+            //set url
+            Config::set('log-viewer.route.attributes.prefix', Administration::getLanguage() . '/' . Config::get('provision_administration.url_prefix') . '/log-viewer');
         }
     }
 
