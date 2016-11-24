@@ -3,6 +3,7 @@
 namespace ProVision\Administration\Http\Controllers;
 
 use App\Http\Request;
+use Arcanedev\LogViewer\Facades\LogViewer;
 use Auth;
 use ProVision\Administration\Facades\Administration;
 
@@ -29,6 +30,25 @@ class AdministrationController extends BaseAdministrationController {
                 <p>Може да активирате сайта от <a href="' . route('provision.administration.systems.maintenance-mode') . '">тук</a>.</p>
               </div>');
             \Dashboard::add($box, 0);
+        }
+
+        /*
+         * total errors - log viewer
+         */
+        if (config('provision_administration.packages.log-viewer')) {
+            $totalErrorCounts = LogViewer::total('error');
+
+            $box = new \ProVision\Administration\Dashboard\LinkBox();
+            $box->setTitle('Errors');
+            $box->setValue($totalErrorCounts);
+            if ($totalErrorCounts > 0) {
+                $box->setBoxBackgroundClass('bg-red');
+            } else {
+                $box->setBoxBackgroundClass('bg-green');
+            }
+            $box->setIconClass('fa-bug');
+            $box->setLink('View all errors', '/' . config('log-viewer.route.attributes.prefix'), ['target' => '_blank']);
+            \Dashboard::add($box);
         }
 
         return view('administration::index');
