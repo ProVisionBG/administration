@@ -19,12 +19,12 @@ class CreateMediaTable extends Migration {
             $table->string('module', 25)->index();
             $table->string('sub_module', 25)->index();
             $table->integer('item_id')->unsigned()->index();
-            $table->string('lang', 2)->nullable()->index();
-            $table->text('titles')->nullable();
-            $table->string('type')->nullable()->index();
+            $table->string('lang', 2)->nullable()->default(null)->index();
+            $table->text('titles')->nullable()->default(null);
+            $table->string('type')->nullable()->default(null)->index();
             $table->smallInteger('order_index')->unsigned()->index();
 
-            $table->string('file');
+            $table->string('file')->nullable()->default(null);
 
             $table->timestamps();
         });
