@@ -80,7 +80,7 @@
                     })
                 }
             },
-            "autoWidth": true,
+            "autoWidth": false, //има проблем при firefox - таблицата минава в responsive при true стойност!
             "serverSide": true,
             rowReorder: {
                 selector: 'button.btn-row-reorder',
