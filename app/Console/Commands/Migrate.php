@@ -39,8 +39,12 @@ class Migrate extends Command {
     public function handle() {
 
         $path = str_ireplace(base_path(), '', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations'));
-        $this->info('Path to migrate: ' . $path);
+        $this->info('Path to migrate (provision/administration): ' . $path);
         \Artisan::call('migrate', ['--path' => $path]);
+        $this->info(\Artisan::output());
+
+        $this->info('Migrate: VentureCraft/revisionable');
+        \Artisan::call('migrate', ['--path' => 'vendor/venturecraft/revisionable/src/migrations']);
         $this->info(\Artisan::output());
     }
 }
