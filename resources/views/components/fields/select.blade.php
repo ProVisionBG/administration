@@ -10,7 +10,10 @@
 
     @if($showField)
         <?php $emptyVal = $options['empty_value'] ? ['' => $options['empty_value']] : null; ?>
-        <?php  $options['attr']['id'] = str_random(20); ?>
+        <?php if (empty($options['attr']['id'])) {
+            $options['attr']['id'] = str_random(20);
+        }
+        ?>
         <?= Form::select($name, (array)$emptyVal + $options['choices'], $options['selected'], $options['attr']) ?>
         @include('administration::components.fields.help_block')
         @push('js_scripts')
