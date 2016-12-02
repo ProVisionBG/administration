@@ -20,14 +20,15 @@
         @include('administration::components.fields.help_block')
         @push('js_scripts')
         <script type="text/javascript">
-            /**
-             @todo: Да се подават опции от form builder!
-             */
-            var options = {
-                placeholder: '{{$options['empty_value']}}',
-                allowClear: true,
-            };
+            //check select2 is inited from other JS
             if (!$('#<?=$options['attr']['id'];?>').data('select2')) {
+                /**
+                 @todo: Да се подават опции от form builder!
+                 */
+                var options = {
+                    placeholder: '{{$options['empty_value']}}',
+                    allowClear: true,
+                };
                 $('#<?=$options['attr']['id'];?>').select2(options);
             }
 
