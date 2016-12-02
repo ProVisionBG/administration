@@ -9,8 +9,10 @@
 <?php endif; ?>
 
     @if($showField)
-        <?php $emptyVal = $options['empty_value'] ? ['' => $options['empty_value']] : null; ?>
-        <?php if (empty($options['attr']['id'])) {
+        <?php
+        $emptyVal = $options['empty_value'] ? ['' => $options['empty_value']] : null;
+
+        if (empty($options['attr']['id'])) {
             $options['attr']['id'] = str_random(20);
         }
         ?>
@@ -25,7 +27,10 @@
                 placeholder: '{{$options['empty_value']}}',
                 allowClear: true,
             };
-            $('#<?=$options['attr']['id'];?>').select2(options);
+            if (!$('#<?=$options['attr']['id'];?>').data('select2')) {
+                $('#<?=$options['attr']['id'];?>').select2(options);
+            }
+
         </script>
         @endpush
     @endif
