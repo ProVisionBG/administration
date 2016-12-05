@@ -151,32 +151,6 @@ class AdminModel extends Model {
 
         return $relation;
     }
-
-    /**
-     * override revisionable trait!
-     * @todo: да се махне ако качат промените в библиотеката
-     */
-    public function getSystemUserId() {
-        if (!isset($this->guard)) {
-            $this->guard = 'web';
-        }
-
-        try {
-            if (class_exists($class = '\SleepingOwl\AdminAuth\Facades\AdminAuth')
-                || class_exists($class = '\Cartalyst\Sentry\Facades\Laravel\Sentry')
-                || class_exists($class = '\Cartalyst\Sentinel\Laravel\Facades\Sentinel')
-            ) {
-                return ($class::guard($this->guard)->check()) ? $class::getUser()->id : null;
-            } elseif (\Auth::guard($this->guard)->check()) {
-                return \Auth::guard($this->guard)->user()->getAuthIdentifier();
-            }
-        } catch (\Exception $e) {
-            return null;
-        }
-
-        return null;
-    }
-
 }
 
 ?>
