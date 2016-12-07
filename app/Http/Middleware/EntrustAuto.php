@@ -49,16 +49,6 @@ class EntrustAuto {
         ], \Route::currentRouteName());
 
         /*
-         * repair permission for module
-         */
-        $permission = preg_replace('/^([a-z]{2}\.' . config('provision_administration.url_prefix') . '\.)/simx', '', $permission);
-
-        //use default access
-        if ($permission == 'index') {
-            $permission = 'administration-access';
-        }
-
-        /*
          * check permission exist in db
          */
         if (Permission::where('name', $permission)->first() === null) {
