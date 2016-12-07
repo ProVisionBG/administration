@@ -12,6 +12,7 @@ use ProVision\Administration\Administration;
 use ProVision\Administration\Facades\StaticBlockFacade;
 
 class AdministrationServiceProvider extends ServiceProvider {
+
     /**
      * Bootstrap the application services.
      *
@@ -330,7 +331,7 @@ class AdministrationServiceProvider extends ServiceProvider {
                 if (method_exists($moduleAdminInit, 'routes')) {
                     \Route::group([
                         'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
-                        'as' => \ProVision\Administration\Administration::routeAdministrationAs() . 'admin.',
+                        'as' => Administration::AS_MODULE_PREFIX,
                         'middleware' => \ProVision\Administration\Administration::routeMiddleware()
                     ], function () use ($moduleAdminInit, $module) {
                         $moduleAdminInit->routes($module);
