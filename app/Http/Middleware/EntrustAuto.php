@@ -53,6 +53,11 @@ class EntrustAuto {
          */
         $permission = preg_replace('/^([a-z]{2}\.' . config('provision_administration.url_prefix') . '\.)/simx', '', $permission);
 
+        //use default access
+        if ($permission == 'index') {
+            $permission = 'administration-access';
+        }
+
         /*
          * check permission exist in db
          */
@@ -65,7 +70,9 @@ class EntrustAuto {
         }
 
         \Debugbar::info('Auto check permission: ' . $permission);
+
         if ($this->auth->guest() || !$this->auth->user()->can($permission)) {
+            \Debugbar::error('Permission error: ' . $permission);
             //abort(403, 'Require permission: ' . $permission);
             return response()->view("administration::errors.403", ['permission' => $permission], 403);
         }

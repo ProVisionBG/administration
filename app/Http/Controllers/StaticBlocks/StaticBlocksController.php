@@ -75,7 +75,7 @@ class StaticBlocksController extends BaseAdministrationController {
                 'title' => trans('administration::static_blocks.key')
             ]);
 
-        return view('administration::empty-listing',compact('table'));
+        return view('administration::empty-listing', compact('table'));
     }
 
 

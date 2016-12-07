@@ -33,12 +33,14 @@ class RolesRepairController extends BaseAdministrationController {
                 continue;
             }
 
-            if (preg_match('/(provision\.administration|[a-z]{2}\.' . config('provision_administration.url_prefix') . '|\.' . config('provision_administration.url_prefix') . ')\.([\-a-z1-9]+\.[a-z\-1-9]+)/simx', $route->getName(), $regs)) {
+            if (preg_match('/(provision\.administration\.([\-a-z1-9]+\.[a-z\-1-9\.]+))/simx', $route->getName(), $regs)) {
+                //dd($regs);
                 $permission = $regs[2];
                 $this->checkPermissions(['name' => 'Administration'], $permission, $permission);
             }
         }
-        //additional permissions
+
+        //additional permissions for access to administration
         $this->checkPermissions(['name' => 'Administration'], 'administration-access', 'administration-access');
 
         /*
