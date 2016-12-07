@@ -144,6 +144,7 @@ class AdministratorsController extends BaseAdministrationController {
 
         if ($adminUser->validate($requestData)) {
             $adminUser->fill($requestData);
+            $adminUser->save();
 
             /*
             * add roles
@@ -154,9 +155,6 @@ class AdministratorsController extends BaseAdministrationController {
                     $adminUser->roles()->attach($role);
                 }
             }
-
-            $adminUser->save();
-
 
             return \Redirect::route('provision.administration.administrators.index');
         } else {
