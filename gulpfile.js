@@ -29,7 +29,6 @@ elixir(function (mix) {
         'resources/assets/bower_components/jquery-ui/themes/base/jquery-ui.min.css',
         'resources/assets/bower_components/PACE/themes/green/pace-theme-flash.css',
         'resources/assets/bower_components/bootstrap-languages/languages.min.css',
-        'resources/assets/bower_components/ckeditor/skins/moono/editor.css',
         'resources/assets/bower_components/jquery-confirm2/dist/jquery-confirm.min.css',
         'resources/assets/bower_components/blueimp-file-upload/css/jquery.fileupload.css',
         'resources/assets/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
@@ -43,7 +42,6 @@ elixir(function (mix) {
 
     mix.combine([
         'resources/assets/css/front.css',
-        'resources/assets/js/ckeditor-plugins/media/dialogs/style.css'
     ], 'public/assets/css/front.css');
 
 
@@ -55,10 +53,8 @@ elixir(function (mix) {
         'resources/assets/bower_components/bootstrap/dist/js/bootstrap.min.js',
         'resources/assets/bower_components/iCheck/icheck.js',
         'resources/assets/bower_components/fastclick/lib/fastclick.js',
-        'resources/assets/bower_components/ckeditor/ckeditor.js',
-        'resources/assets/bower_components/ckeditor/adapters/jquery.js',
-        'resources/assets/bower_components/ckeditor/lang/bg.js',
-        'resources/assets/bower_components/ckeditor/styles.js',
+        'resources/assets/bower_components/tinymce/tinymce.min.js',
+
         'resources/assets/bower_components/datatables/media/js/jquery.dataTables.min.js',
         'resources/assets/bower_components/datatables/media/js/dataTables.bootstrap.min.js',
         'resources/assets/bower_components/datatables-responsive/js/dataTables.responsive.js',
@@ -88,11 +84,10 @@ elixir(function (mix) {
         .copy('resources/assets/bower_components/glyphicons/fonts', 'public/assets/fonts/')
         .copy('resources/assets/bower_components/iCheck/skins/square/blu*.png', 'public/assets/css/')
         .copy('resources/assets/bower_components/bootstrap-languages/languages.png', 'public/assets/css/')
-        .copy('resources/assets/bower_components/ckeditor/skins/moono/icons.png', 'public/assets/css/')
-        .copy('resources/assets/css/ckeditor.css', 'public/assets/css/')
         .copy('resources/assets/bower_components/bootstrap/dist/css/bootstrap.min.css', 'public/assets/css/')
-        //.copy('resources/assets/bower_components/ckeditor/', 'public/assets/bower_components/ckeditor/')
-        .copy('resources/assets/js/ckeditor-plugins/', 'public/assets/js/ckeditor-plugins/')
+        .copy('resources/assets/bower_components/tinymce/themes', 'public/assets/js/themes/')
+        .copy('resources/assets/bower_components/tinymce/skins', 'public/assets/js/skins/')
+        .copy('resources/assets/bower_components/tinymce/plugins', 'public/assets/js/plugins/')
         .publish();
 });
 

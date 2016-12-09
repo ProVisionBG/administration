@@ -154,6 +154,7 @@ class AdministrationServiceProvider extends ServiceProvider {
         Config::set('laravel-form-builder.template_prefix', 'administration::components.fields.');
         Config::set('laravel-form-builder.custom_fields.admin_footer', \ProVision\Administration\Forms\Fields\AdminFooter::class);
         Config::set('laravel-form-builder.custom_fields.ckeditor', \ProVision\Administration\Forms\Fields\CKEditor::class);
+        Config::set('laravel-form-builder.custom_fields.editor', \ProVision\Administration\Forms\Fields\Editor::class);
         Config::set('laravel-form-builder.custom_fields.address_picker', \ProVision\Administration\Forms\Fields\AddressPicker::class);
         Config::set('laravel-form-builder.custom_fields.date_picker', \ProVision\Administration\Forms\Fields\DatePicker::class);
         Config::set('laravel-form-builder.custom_fields.datetime_picker', \ProVision\Administration\Forms\Fields\DatetimePicker::class);
