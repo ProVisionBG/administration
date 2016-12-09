@@ -2,12 +2,12 @@
 namespace ProVision\Administration;
 
 use Illuminate\Database\Eloquent\Model;
-use ProVision\Administration\Traits\Image;
+use ProVision\Administration\Traits\MediaTrait;
 use Validator;
 
 class AdminModel extends Model {
 
-    use Image;
+    use MediaTrait;
 
     /*
      * module settings

@@ -3,7 +3,7 @@
 namespace ProVision\Administration\Traits;
 
 
-trait Image {
+trait MediaTrait {
     /**
      * Resize image
      *
