@@ -233,15 +233,15 @@ class AdministrationServiceProvider extends ServiceProvider {
             $rolesMenu = $administratorsMenu->add(trans('administration::administrators.groups'), [
                 'nickname' => 'administrators.groups',
                 'route' => 'provision.administration.administrators-roles.index'
-            ])->data('icon', 'users')->data('order', 3);
-            $rolesMenu->add(trans('administration::index.view_all'), [
-                'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.administrators-roles.index'
-            ])->data('icon', 'list')->data('order', 1);
+            ])->data('icon', 'users')->data('order', 2);
             $rolesMenu->add(trans('administration::index.add'), [
                 'nickname' => 'administrators.group_add',
                 'route' => 'provision.administration.administrators-roles.create'
-            ])->data('icon', 'plus')->data('order', 2);
+            ])->data('icon', 'plus')->data('order', 1);
+            $rolesMenu->add(trans('administration::index.view_all'), [
+                'nickname' => 'administrators.group_add',
+                'route' => 'provision.administration.administrators-roles.index'
+            ])->data('icon', 'list')->data('order', 2);
 
             /*
              * Static blocks
@@ -250,14 +250,15 @@ class AdministrationServiceProvider extends ServiceProvider {
                 'nickname' => 'administrators.static_blocks',
                 'route' => 'provision.administration.static-blocks.index'
             ])->data('icon', 'th-large')->data('order', 10002);
-            $staticMenu->add(trans('administration::index.view_all'), [
-                'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.static-blocks.index'
-            ])->data('icon', 'list')->data('order', 1);
             $staticMenu->add(trans('administration::index.add'), [
                 'nickname' => 'administrators.group_add',
                 'route' => 'provision.administration.static-blocks.create'
-            ])->data('icon', 'plus')->data('order', 2);
+            ])->data('icon', 'plus')->data('order', 1);
+            $staticMenu->add(trans('administration::index.view_all'), [
+                'nickname' => 'administrators.group_add',
+                'route' => 'provision.administration.static-blocks.index'
+            ])->data('icon', 'list')->data('order', 2);
+
 
             /*
              * Settings
@@ -283,7 +284,7 @@ class AdministrationServiceProvider extends ServiceProvider {
             ])->data('icon', 'hand-paper-o');
 
             // Log Viewer
-            if (config('provision_administration.packages.log-viewer')) {
+            if (config('provision_administration.packages.log-viewer', false)) {
                 $systemMenu->add(trans('administration::systems.log-viewer'), [
                     'nickname' => 'system-log-viewer',
                     'url' => config('log-viewer.route.attributes.prefix'),

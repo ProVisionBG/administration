@@ -112,10 +112,6 @@ class AdministratorsController extends BaseAdministrationController {
                 'method' => 'POST',
                 'url' => route('provision.administration.administrators.store'),
             ]
-//            [
-//                'title' => 'Тестова форма',
-//                'type' => 'danger'
-//            ]
         );
 
 
@@ -136,7 +132,7 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(\Illuminate\Http\Request $request) {
+    public function store(Request $request) {
 
         $adminUser = new AdminUser();
 

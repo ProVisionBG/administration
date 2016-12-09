@@ -2,6 +2,7 @@
 namespace ProVision\Administration\Console\Commands;
 
 use Illuminate\Console\Command;
+use ProVision\Administration\Media;
 
 
 class MediaResize extends Command {
@@ -34,7 +35,7 @@ class MediaResize extends Command {
      */
     public function handle() {
 
-        \ProVision\Administration\Media::chunk(100, function ($media) {
+        Media::chunk(100, function ($media) {
             foreach ($media as $m) {
                 /*
                  * remove old sizes

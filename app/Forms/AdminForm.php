@@ -4,21 +4,10 @@ namespace ProVision\Administration\Forms;
 use Kris\LaravelFormBuilder\Form;
 
 class AdminForm extends Form {
-    public function __construct() {
-        // $this->addCustomField('admin_text', \ProVision\Administration\Forms\Fields\AdminText::class);
-    }
 
-    public function getLanguages() {
-        $allLang = [];
-        foreach (\LaravelLocalization::getSupportedLocales() as $key => $lang) {
-            $allLang[$key] = $lang['name'];
-        }
-        return $allLang;
-    }
+    public function addSeoFields($required = false, $inputs = []) {
 
-    public function addSeoFields($required = false, $inputs = false) {
-
-        if (!is_array($inputs)) {
+        if (empty($inputs) || !is_array($inputs)) {
             $inputs = [
                 'slug',
                 'meta_title',
