@@ -14,4 +14,11 @@
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="APP_KEY" value="base64:xFJlTt4+mnHAExbQnDJbSLaFN2kaisMOUi4tXL6GwQA="/>
+    </php>
 </phpunit>

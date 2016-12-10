@@ -1,19 +1,25 @@
 <?php
-
-/*
- * ProVision Administration, http://ProVision.bg
- * Author: Venelin Iliev, http://veneliniliev.com
- */
+namespace ProVision\Administration\Tests;
 
 class BaseTest extends TestCase
 {
-    public function testVersion()
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testRun()
     {
-        $this->visit('/bg/admin/login');
+        $this->visit("/")->see('Laravel');
+        $this->visit("/admin")->see('ProVision');
+    }
 
-        dd($this->response->getContent());
-
-//        $this->visit('/bg/' . config('provision_administration.url_prefix') . '/login')
-//            ->see('ProVisionnn');
+    public function testLogin()
+    {
+        $this->visit('admin')
+            ->type('admin@provision.bg', 'email')
+            ->type('password', 'password')
+            ->press('sign_in')
+            ->see('Администраторско табло');
     }
 }

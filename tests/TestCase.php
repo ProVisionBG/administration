@@ -7,7 +7,7 @@
 
 namespace ProVision\Administration\Tests;
 
-class TestCase extends \Illuminate\Foundation\Testing\TestCase
+class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
      * The base URL to use while testing the application.
@@ -23,16 +23,17 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-        $app = require_once __DIR__.'/../bootstrap/app.php';
+//        $app = require __DIR__ . '/../vendor/laravel/laravel/bootstrap/app.php';
+        $app = require __DIR__ . '/../../../../bootstrap/app.php';
 
-        $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
-
-        $response = $kernel->handle(
-            $request = \Illuminate\Http\Request::capture()
-        );
-
-        $response->send();
+        $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
     }
+
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
 }
