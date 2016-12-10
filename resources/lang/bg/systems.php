@@ -1,4 +1,10 @@
 <?php
+
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 return [
     'title' => 'Системни функции',
     'roles-repair' => 'Поправка на права',
@@ -10,5 +16,5 @@ return [
     'maintenance-mode-note' => 'Съобщение',
     'maintenance-mode-start' => 'Спри сайта',
     'maintenance-mode-stop' => 'Пусни сайта',
-    'log-viewer' => 'Log Viewer'
+    'log-viewer' => 'Log Viewer',
 ];

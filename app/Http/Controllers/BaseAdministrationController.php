@@ -1,22 +1,28 @@
 <?php
+
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-
-class BaseAdministrationController extends Controller {
+class BaseAdministrationController extends Controller
+{
     use FormBuilderTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         /*
          * Breadcrumbs::register('home', function($breadcrumbs)
          */
-        if (!\App::runningInConsole()) {
+        if (! \App::runningInConsole()) {
             \Breadcrumbs::register('admin_home', function ($breadcrumbs) {
                 $breadcrumbs->push(trans('administration::index.home'), route('provision.administration.index'), ['icon' => 'fa-home']);
             });
         }
     }
-
 }

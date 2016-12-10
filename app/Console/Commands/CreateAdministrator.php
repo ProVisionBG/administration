@@ -1,14 +1,20 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Console\Commands;
 
 use Illuminate\Console\Command;
+use ProVision\Administration\Role;
 use Illuminate\Support\Facades\Hash;
 use ProVision\Administration\AdminUser;
 use ProVision\Administration\Http\Controllers\Systems\RolesRepairController;
-use ProVision\Administration\Role;
 
-class CreateAdministrator extends Command {
+class CreateAdministrator extends Command
+{
     /**
      * The name and signature of the console command.
      *
@@ -28,12 +34,13 @@ class CreateAdministrator extends Command {
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
 
         /*
          * command fix
          */
-        $this->signature = config('provision_administration.command_prefix') . ':admin {email} {password}';
+        $this->signature = config('provision_administration.command_prefix').':admin {email} {password}';
 
         parent::__construct();
     }
@@ -43,7 +50,8 @@ class CreateAdministrator extends Command {
      *
      * @return mixed
      */
-    public function handle() {
+    public function handle()
+    {
 
         /*
         * check is created user
@@ -57,12 +65,12 @@ class CreateAdministrator extends Command {
             $adminUser = AdminUser::create([
                 'name' => 'ProVision Administrator',
                 'email' => $this->argument('email'),
-                'password' => Hash::make($this->argument('password'))
+                'password' => Hash::make($this->argument('password')),
             ]);
 
             $this->info('Creating admin user...');
-            $this->info('email: ' . $adminUser->email);
-            $this->info('password: ' . $this->argument('password'));
+            $this->info('email: '.$adminUser->email);
+            $this->info('password: '.$this->argument('password'));
         } else {
             /*
              * Reset admin password
@@ -71,8 +79,8 @@ class CreateAdministrator extends Command {
             $adminUser->save();
 
             $this->info('Reset admin user...');
-            $this->info('email: ' . $adminUser->email);
-            $this->info('password: ' . $this->argument('password'));
+            $this->info('email: '.$adminUser->email);
+            $this->info('password: '.$this->argument('password'));
         }
 
         /*
@@ -87,7 +95,7 @@ class CreateAdministrator extends Command {
             $adminRole->save();
             $this->info('Create admin role...');
         }
-        if (!$adminUser->hasRole('admin')) {
+        if (! $adminUser->hasRole('admin')) {
             $this->info('Assign admin role...');
             $adminUser->attachRole($adminRole);
         }

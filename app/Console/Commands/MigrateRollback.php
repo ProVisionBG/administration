@@ -1,11 +1,17 @@
 <?php
+
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 
-
-class MigrateRollback extends Command {
+class MigrateRollback extends Command
+{
     /**
      * Name of the command.
      *
@@ -23,12 +29,13 @@ class MigrateRollback extends Command {
     /**
      * Setup the application container as we'll need this for running migrations.
      */
-    public function __construct(Container $app) {
+    public function __construct(Container $app)
+    {
         $this->app = $app;
         /*
         * command fix
         */
-        $this->signature = config('provision_administration.command_prefix') . ':migrate-rollback';
+        $this->signature = config('provision_administration.command_prefix').':migrate-rollback';
 
         parent::__construct();
     }
@@ -36,8 +43,9 @@ class MigrateRollback extends Command {
     /**
      * Run the package migrations.
      */
-    public function handle() {
-        $path = str_ireplace(base_path(), '', realpath(__DIR__ . '\\..\\..\\..\\database\\migrations'));
+    public function handle()
+    {
+        $path = str_ireplace(base_path(), '', realpath(__DIR__.'\\..\\..\\..\\database\\migrations'));
         \Artisan::call('migrate:rollback', ['--path' => $path]);
         $this->info(\Artisan::output());
     }

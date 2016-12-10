@@ -1,6 +1,13 @@
-<?php namespace ProVision\Administration\Http\Middleware;
+<?php
 
-/**
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
+namespace ProVision\Administration\Http\Middleware;
+
+/*
  * This file is part of Entrust,
  * a role & permission management solution for Laravel.
  *
@@ -12,7 +19,8 @@ use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class EntrustPermission {
+class EntrustPermission
+{
     protected $auth;
 
     /**
@@ -20,7 +28,8 @@ class EntrustPermission {
      *
      * @param Guard $auth
      */
-    public function __construct(Guard $auth) {
+    public function __construct(Guard $auth)
+    {
         $this->auth = Auth::guard('provision_administration');
     }
 
@@ -32,9 +41,10 @@ class EntrustPermission {
      * @param  $permissions
      * @return mixed
      */
-    public function handle($request, Closure $next, $permissions) {
+    public function handle($request, Closure $next, $permissions)
+    {
         //\Debugbar::info($permissions);
-        if ($this->auth->guest() || !$this->auth->user()->can(explode('|', $permissions))) {
+        if ($this->auth->guest() || ! $this->auth->user()->can(explode('|', $permissions))) {
             abort(403);
         }
 

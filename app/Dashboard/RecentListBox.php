@@ -1,48 +1,59 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Dashboard;
 
-
-class RecentListBox extends DashboardBox {
-
+class RecentListBox extends DashboardBox
+{
     private $boxBackgroundClass = 'box-default';
     private $title = 'Recent list box';
     private $rowsContainer = [];
     private $notFoundRowsText = 'Data is empty';
     private $footerButton = '';
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
-    public function setIconBoxBackgroundClass($class) {
+    public function setIconBoxBackgroundClass($class)
+    {
         $this->boxBackgroundClass = $class;
     }
 
-    public function setNotFoundRowsText($text) {
+    public function setNotFoundRowsText($text)
+    {
         $this->notFoundRowsText = $text;
     }
 
-    public function addItem($title, $href = false, $desc = false, $tag = false, $image = false) {
+    public function addItem($title, $href = false, $desc = false, $tag = false, $image = false)
+    {
         $this->rowsContainer[] = [
             'title' => $title,
             'href' => $href,
             'desc' => $desc,
             'tag' => $tag,
-            'image' => $image
+            'image' => $image,
         ];
+
         return true;
     }
 
-    public function setFooterButton($text, $href) {
-        $this->footerButton = '<div class="box-footer text-center"><a href="' . $href . '" class="uppercase">' . $text . '</a></div>';
+    public function setFooterButton($text, $href)
+    {
+        $this->footerButton = '<div class="box-footer text-center"><a href="'.$href.'" class="uppercase">'.$text.'</a></div>';
     }
 
-    public function render() {
-        return '<div class="' . $this->boxClass . '">
-        <div class="box ' . $this->boxBackgroundClass . '">
+    public function render()
+    {
+        return '<div class="'.$this->boxClass.'">
+        <div class="box '.$this->boxBackgroundClass.'">
             <div class="box-header with-border">
-              <h3 class="box-title">' . $this->title . '</h3>
+              <h3 class="box-title">'.$this->title.'</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -51,16 +62,17 @@ class RecentListBox extends DashboardBox {
             </div>
 
             <div class="box-body">
-              ' . $this->generateRows() . '
+              '.$this->generateRows().'
             </div>
             
-              ' . $this->footerButton . '
+              '.$this->footerButton.'
             
             </div>
           </div>';
     }
 
-    private function generateRows() {
+    private function generateRows()
+    {
         if (empty($this->rowsContainer)) {
             return $this->notFoundRowsText;
         }
@@ -86,19 +98,20 @@ class RecentListBox extends DashboardBox {
         foreach ($this->rowsContainer as $item) {
             $html .= '
                 <li class="item">
-                  ' . ($item['image'] ? '<div class="product-img"><img src="' . $item['image'] . '" alt="' . $item['title'] . '"> </div>' : '') . '
-                  <div class="product-info" ' . ($item['image'] ? '' : 'style="margin-left:0;"') . '>
-                    <a href="' . ($item['href'] ? $item['href'] : 'javascript:void(0)') . '" class="product-title">
-                    ' . $item['title'] . '
+                  '.($item['image'] ? '<div class="product-img"><img src="'.$item['image'].'" alt="'.$item['title'].'"> </div>' : '').'
+                  <div class="product-info" '.($item['image'] ? '' : 'style="margin-left:0;"').'>
+                    <a href="'.($item['href'] ? $item['href'] : 'javascript:void(0)').'" class="product-title">
+                    '.$item['title'].'
                       
-                      ' . ($item['tag'] ? '<span class="label label-warning pull-right">' . $item['tag'] . '</span></a>' : '') . '
+                      '.($item['tag'] ? '<span class="label label-warning pull-right">'.$item['tag'].'</span></a>' : '').'
                         
                         <span class="product-description">
-                          ' . $item['desc'] . '
+                          '.$item['desc'].'
                         </span>
                   </div>
                 </li>';
         }
-        return $html . '</ul>';
+
+        return $html.'</ul>';
     }
 }

@@ -1,21 +1,26 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers\StaticBlocks;
 
-use App\Http\Requests;
-use Datatables;
 use Form;
+use Request;
+use Datatables;
 use Guzzle\Http\Message\Response;
 use Kris\LaravelFormBuilder\FormBuilder;
-use ProVision\Administration\Facades\Administration;
-use ProVision\Administration\Forms\StaticBlockForm;
-use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use ProVision\Administration\StaticBlock;
-use Request;
+use ProVision\Administration\Forms\StaticBlockForm;
+use ProVision\Administration\Facades\Administration;
+use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 
-
-class StaticBlocksController extends BaseAdministrationController {
-    public function __construct() {
+class StaticBlocksController extends BaseAdministrationController
+{
+    public function __construct()
+    {
         parent::__construct();
         Administration::setTitle(trans('administration::static_blocks.name'));
     }
@@ -25,14 +30,15 @@ class StaticBlocksController extends BaseAdministrationController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         if (Request::ajax()) {
             $staticBlocks = StaticBlock::query();
 
             $datatables = Datatables::of($staticBlocks)
                 ->addColumn('action', function ($staticBlock) {
                     $actions = '';
-                    if (!empty($staticBlock->deleted_at)) {
+                    if (! empty($staticBlock->deleted_at)) {
                         //restore button
                     } else {
                         $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.static-blocks.destroy', $staticBlock->id));
@@ -40,15 +46,15 @@ class StaticBlocksController extends BaseAdministrationController {
 
                     $actions .= Form::adminMediaButton($staticBlock);
 
-                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.static-blocks.edit', $staticBlock->id)) . $actions;
+                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.static-blocks.edit', $staticBlock->id)).$actions;
                 })
                 ->filter(function ($query) {
                     if (Request::has('key')) {
-                        $query->where('key', 'like', "%" . Request::get('key') . "%");
+                        $query->where('key', 'like', '%'.Request::get('key').'%');
                     }
 
                     if (Request::has('text')) {
-                        $query->where('text', 'like', "%" . Request::get('text') . "%");
+                        $query->where('text', 'like', '%'.Request::get('text').'%');
                     }
 
                     if (Request::has('delete') && Request::input('delete') == 'true') {
@@ -68,29 +74,28 @@ class StaticBlocksController extends BaseAdministrationController {
             ->addColumn([
                 'data' => 'id',
                 'name' => 'id',
-                'title' => trans('administration::administrators.id')
+                'title' => trans('administration::administrators.id'),
             ])->addColumn([
                 'data' => 'key',
                 'name' => 'key',
-                'title' => trans('administration::static_blocks.key')
+                'title' => trans('administration::static_blocks.key'),
             ]);
 
         return view('administration::empty-listing', compact('table'));
     }
-
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FormBuilder $formBuilder) {
+    public function create(FormBuilder $formBuilder)
+    {
         $form = $formBuilder->create(StaticBlockForm::class, [
                 'method' => 'POST',
                 'url' => route('provision.administration.static-blocks.store'),
             ]
         );
-
 
         Administration::setTitle(trans('administration::static_blocks.create'));
 
@@ -109,8 +114,8 @@ class StaticBlocksController extends BaseAdministrationController {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(\Illuminate\Http\Request $request) {
-
+    public function store(\Illuminate\Http\Request $request)
+    {
         $staticBlock = new StaticBlock();
 
         $requestData = Request::all();
@@ -133,7 +138,8 @@ class StaticBlocksController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -143,7 +149,8 @@ class StaticBlocksController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormBuilder $formBuilder, $id) {
+    public function edit(FormBuilder $formBuilder, $id)
+    {
         $staticBlock = StaticBlock::where('id', $id)->withTrashed()->first();
 
         $form = $formBuilder->create(StaticBlockForm::class, [
@@ -151,7 +158,7 @@ class StaticBlocksController extends BaseAdministrationController {
             'url' => route('provision.administration.static-blocks.update', $id),
             'role' => 'form',
             'id' => 'formID',
-            'model' => $staticBlock
+            'model' => $staticBlock,
         ]);
 
         Administration::setTitle(trans('administration::static_blocks.edit', ['key' => $staticBlock->key]));
@@ -172,7 +179,8 @@ class StaticBlocksController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $staticBlock = StaticBlock::findOrFail($id);
 
         $requestData = Request::all();
@@ -195,7 +203,8 @@ class StaticBlocksController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $object = StaticBlock::where('id', $id);
         if (empty($object->deleted_at)) {
             $object->delete();

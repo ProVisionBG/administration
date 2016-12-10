@@ -1,13 +1,19 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
-class ForgotPasswordController extends Controller {
+class ForgotPasswordController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -26,7 +32,8 @@ class ForgotPasswordController extends Controller {
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('guest');
     }
 
@@ -36,7 +43,8 @@ class ForgotPasswordController extends Controller {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function sendResetLinkEmail(Request $request) {
+    public function sendResetLinkEmail(Request $request)
+    {
         $this->validate($request, ['email' => 'required|email']);
 
         // We will send the password reset link to this user. Once we have attempted
@@ -47,14 +55,14 @@ class ForgotPasswordController extends Controller {
         );
 
         if ($response === Password::RESET_LINK_SENT) {
-            return back()->with('status', trans('administration::' . $response));
+            return back()->with('status', trans('administration::'.$response));
         }
 
         // If an error was returned by the password broker, we will get this message
         // translated so we can notify a user of the problem. We'll redirect back
         // to where the users came from so they can attempt this process again.
         return back()->withErrors(
-            ['email' => trans('administration::' . $response)]
+            ['email' => trans('administration::'.$response)]
         );
     }
 
@@ -63,7 +71,8 @@ class ForgotPasswordController extends Controller {
      *
      * @return PasswordBroker
      */
-    public function broker() {
+    public function broker()
+    {
         return Password::broker('provision_administration');
     }
 
@@ -72,7 +81,8 @@ class ForgotPasswordController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLinkRequestForm() {
+    public function showLinkRequestForm()
+    {
         return view('administration::auth.passwords.email');
     }
 }

@@ -1,14 +1,20 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 
-class ResetPasswordController extends Controller {
+class ResetPasswordController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -27,7 +33,8 @@ class ResetPasswordController extends Controller {
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->redirectTo = route('provision.administration.login');
         $this->middleware('guest');
     }
@@ -41,11 +48,12 @@ class ResetPasswordController extends Controller {
      * @param  string|null $token
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showResetForm(Request $request, $token = null) {
+    public function showResetForm(Request $request, $token = null)
+    {
         return view('administration::auth.passwords.reset')->with(
             [
                 'token' => $token,
-                'email' => $request->email
+                'email' => $request->email,
             ]
         );
     }
@@ -55,11 +63,13 @@ class ResetPasswordController extends Controller {
      *
      * @return PasswordBroker
      */
-    public function broker() {
+    public function broker()
+    {
         return Password::broker('provision_administration');
     }
 
-    protected function guard() {
+    protected function guard()
+    {
         return Auth::guard('provision_administration');
     }
 
@@ -69,9 +79,10 @@ class ResetPasswordController extends Controller {
      * @param  string $response
      * @return \Illuminate\Http\Response
      */
-    protected function sendResetResponse($response) {
+    protected function sendResetResponse($response)
+    {
         return redirect($this->redirectPath())
-            ->with('status', trans('administration::' . $response));
+            ->with('status', trans('administration::'.$response));
     }
 
     /**
@@ -81,9 +92,10 @@ class ResetPasswordController extends Controller {
      * @param  string $response
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function sendResetFailedResponse(Request $request, $response) {
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
         return redirect()->back()
             ->withInput($request->only('email'))
-            ->withErrors(['email' => trans('administration::' . $response)]);
+            ->withErrors(['email' => trans('administration::'.$response)]);
     }
 }

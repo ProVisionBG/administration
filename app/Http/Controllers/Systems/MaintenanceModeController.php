@@ -1,16 +1,21 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers\Systems;
 
 use File;
 use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\Forms\MaintenanceModeForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
-use Request;
 
-class MaintenanceModeController extends BaseAdministrationController {
-
-    public function __construct() {
+class MaintenanceModeController extends BaseAdministrationController
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -19,8 +24,8 @@ class MaintenanceModeController extends BaseAdministrationController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(FormBuilder $formBuilder) {
-
+    public function index(FormBuilder $formBuilder)
+    {
         $form = $formBuilder->create(MaintenanceModeForm::class, [
             'method' => 'POST',
             'url' => route('provision.administration.systems.maintenance-mode-update'),
@@ -39,14 +44,15 @@ class MaintenanceModeController extends BaseAdministrationController {
         return view('administration::empty-form', compact('form'));
     }
 
-    public function update() {
+    public function update()
+    {
         $request = \Request::all();
 
         if (isset($request['start'])) {
             File::put(storage_path('/framework/down-provision-administration'), json_encode([
                 'time' => time(),
                 'retry' => false,
-                'message' => $request['message']
+                'message' => $request['message'],
             ]));
 
             return \Redirect::route('provision.administration.systems.maintenance-mode')
@@ -56,14 +62,12 @@ class MaintenanceModeController extends BaseAdministrationController {
             if (File::exists(storage_path('/framework/down-provision-administration'))) {
                 File::delete(storage_path('/framework/down-provision-administration'));
             }
+
             return \Redirect::route('provision.administration.systems.maintenance-mode')
                 ->withInput()
                 ->withErrors(['Сайта е пуснат!']);
         }
 
         //dd($request);
-
     }
-
-
 }

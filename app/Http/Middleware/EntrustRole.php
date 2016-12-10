@@ -1,6 +1,13 @@
-<?php namespace ProVision\Administration\Http\Middleware;
+<?php
 
-/**
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
+namespace ProVision\Administration\Http\Middleware;
+
+/*
  * This file is part of Entrust,
  * a role & permission management solution for Laravel.
  *
@@ -12,7 +19,8 @@ use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class EntrustRole {
+class EntrustRole
+{
     protected $auth;
 
     /**
@@ -20,7 +28,8 @@ class EntrustRole {
      *
      * @param Guard $auth
      */
-    public function __construct(Guard $auth) {
+    public function __construct(Guard $auth)
+    {
         $this->auth = Auth::guard('provision_administration');
         // dd(Auth::guard('provision_administration')->user()->hasRole('admin'));
     }
@@ -33,21 +42,22 @@ class EntrustRole {
      * @param  $roles
      * @return mixed
      */
-    public function handle($request, Closure $next, $roles) {
+    public function handle($request, Closure $next, $roles)
+    {
 
         /*
          * Guest admin user
          */
         if ($roles == 'guest') {
-            if (!$this->auth->guest()) {
+            if (! $this->auth->guest()) {
                 return redirect()->route('provision.administration.index');
             } else {
                 return $next($request);
             }
         }
 
-        if ($this->auth->guest() || !$this->auth->user()->hasRole(explode('|', $roles))) {
-            if ($request->is('*/' . config('provision_administration.url_prefix')) || $request->is(config('provision_administration.url_prefix') . '*')) {
+        if ($this->auth->guest() || ! $this->auth->user()->hasRole(explode('|', $roles))) {
+            if ($request->is('*/'.config('provision_administration.url_prefix')) || $request->is(config('provision_administration.url_prefix').'*')) {
                 return redirect()->route('provision.administration.login');
             } else {
                 abort(403);

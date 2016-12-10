@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 return [
     'defaults'      => [
         'wrapper_class'       => 'form-group',
@@ -8,7 +13,7 @@ return [
         'field_class'         => 'form-control',
         'help_block_class'    => 'help-block',
         'error_class'         => 'text-danger',
-        'required_class'      => 'required'
+        'required_class'      => 'required',
     ],
     // Templates
     'form'          => 'form',
@@ -31,5 +36,5 @@ return [
 
     'custom_fields' => [
 //        'datetime' => App\Forms\Fields\Datetime::class
-    ]
+    ],
 ];

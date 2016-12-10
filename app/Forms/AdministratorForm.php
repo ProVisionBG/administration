@@ -1,33 +1,39 @@
 <?php
+
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Forms;
 
 use ProVision\Administration\Role;
 
-class AdministratorForm extends AdminForm {
-
-    public function buildForm() {
-
+class AdministratorForm extends AdminForm
+{
+    public function buildForm()
+    {
         $this->add('name', 'text', [
             'label' => trans('administration::administrators.name'),
             'validation_rules' => [
-                "required" => true,
-                "minlength" => 2
-            ]
+                'required' => true,
+                'minlength' => 2,
+            ],
         ]);
 
         $this->add('email', 'text', [
             'label' => trans('administration::administrators.email'),
             'validation_rules' => [
-                "required" => true,
-                "email" => true
-            ]
+                'required' => true,
+                'email' => true,
+            ],
         ]);
 
         $passwordValidatorRules = [
-            "required" => true,
-            "minlength" => 5
+            'required' => true,
+            'minlength' => 5,
         ];
-        if (!empty($this->model)) {
+        if (! empty($this->model)) {
             $passwordValidatorRules['required'] = false;
         }
 
@@ -35,17 +41,17 @@ class AdministratorForm extends AdminForm {
             'label' => trans('administration::administrators.password'),
             'value' => '',
             'attr' => [
-                "autocomplete" => "off"
+                'autocomplete' => 'off',
             ],
-            'validation_rules' => $passwordValidatorRules
+            'validation_rules' => $passwordValidatorRules,
         ]);
 
         $confirmPasswordValidatorRules = [
-            "required" => true,
-            "minlength" => 5,
-            "equalTo" => "#password"
+            'required' => true,
+            'minlength' => 5,
+            'equalTo' => '#password',
         ];
-        if (!empty($this->model)) {
+        if (! empty($this->model)) {
             $confirmPasswordValidatorRules['required'] = false;
         }
 
@@ -53,16 +59,16 @@ class AdministratorForm extends AdminForm {
             'label' => trans('administration::administrators.password_confirm'),
             'validation_rules' => $confirmPasswordValidatorRules,
             'attr' => [
-                "autocomplete" => "off"
-            ]
+                'autocomplete' => 'off',
+            ],
         ]);
         $this->add('roles', 'choice', [
             'choices' => Role::pluck('display_name', 'id')->toArray(),
-            'selected' => (!empty($this->model) ? @$this->model->roles->pluck('id')->toArray() : null),
+            'selected' => (! empty($this->model) ? @$this->model->roles->pluck('id')->toArray() : null),
             'expanded' => true,
             'multiple' => true,
             'wrapper_children' => 'col-lg-3 col-md-4 col-sm-6 col-xs-12',
-            'label' => trans('administration::administrators.groups')
+            'label' => trans('administration::administrators.groups'),
         ]);
 //        $this->add('permissions', 'choice', [
 //            'choices' => Permission::lists('display_name', 'name')->toArray(),
@@ -75,11 +81,8 @@ class AdministratorForm extends AdminForm {
         $this->add('send', 'submit', [
             'label' => trans('administration::index.save'),
             'attr' => [
-                'name' => 'save'
-            ]
+                'name' => 'save',
+            ],
         ]);
-
     }
-
-
 }

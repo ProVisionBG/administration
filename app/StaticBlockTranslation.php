@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration;
 
-use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Validator;
-
-
-class StaticBlockTranslation extends AdminModelTranslations {
+class StaticBlockTranslation extends AdminModelTranslations
+{
     public $timestamps = false;
     public $table = 'static_blocks_translations';
 
     protected $fillable = ['text'];
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
-
 }

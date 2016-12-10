@@ -1,10 +1,15 @@
 <?php
 
-class BaseTest extends TestCase {
-    public function testVersion() {
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
 
+class BaseTest extends TestCase
+{
+    public function testVersion()
+    {
         $this->visit('/bg/admin/login');
-
 
         dd($this->response->getContent());
 
@@ -12,5 +17,3 @@ class BaseTest extends TestCase {
 //            ->see('ProVisionnn');
     }
 }
-
-?>

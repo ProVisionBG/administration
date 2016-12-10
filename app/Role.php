@@ -1,24 +1,31 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration;
 
 use Validator;
 use Zizaco\Entrust\EntrustRole;
 
-class Role extends EntrustRole {
-    public $rules = array(
+class Role extends EntrustRole
+{
+    public $rules = [
         'name' => 'required',
         'display_name' => 'required',
-    );
-    protected $messages = array();
-    protected $errors = array();
+    ];
+    protected $messages = [];
+    protected $errors = [];
 
     protected $fillable = [
         'name',
-        'display_name'
+        'display_name',
     ];
 
-    public function validate($data) {
+    public function validate($data)
+    {
         // make a new validator object
         $v = Validator::make($data, $this->rules, $this->messages);
 
@@ -26,6 +33,7 @@ class Role extends EntrustRole {
         if ($v->fails()) {
             // set errors and return false
             $this->errors = $v->errors();
+
             return false;
         }
 
@@ -33,7 +41,8 @@ class Role extends EntrustRole {
         return true;
     }
 
-    public function errors() {
+    public function errors()
+    {
         return $this->errors;
     }
 }

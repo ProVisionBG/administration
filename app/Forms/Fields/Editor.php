@@ -1,11 +1,18 @@
 <?php
+
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Forms\Fields;
 
 use Kris\LaravelFormBuilder\Fields\FormField;
 
-class Editor extends FormField {
-
-    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true) {
+class Editor extends FormField
+{
+    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
+    {
 
         /*
          * add ckeditor class
@@ -21,7 +28,8 @@ class Editor extends FormField {
         return parent::render($options, $showLabel, $showField, $showError);
     }
 
-    protected function getTemplate() {
+    protected function getTemplate()
+    {
         return 'ckeditor';
     }
 }

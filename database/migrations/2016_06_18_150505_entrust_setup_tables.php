@@ -1,14 +1,22 @@
 <?php
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 
-class EntrustSetupTables extends Migration {
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class EntrustSetupTables extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return  void
      */
-    public function up() {
+    public function up()
+    {
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
@@ -30,7 +38,7 @@ class EntrustSetupTables extends Migration {
 
             $table->primary([
                 'user_id',
-                'role_id'
+                'role_id',
             ]);
         });
 
@@ -55,7 +63,7 @@ class EntrustSetupTables extends Migration {
 
             $table->primary([
                 'permission_id',
-                'role_id'
+                'role_id',
             ]);
         });
     }
@@ -65,7 +73,8 @@ class EntrustSetupTables extends Migration {
      *
      * @return  void
      */
-    public function down() {
+    public function down()
+    {
         Schema::drop('permission_role');
         Schema::drop('permissions');
         Schema::drop('role_user');

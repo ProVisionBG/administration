@@ -1,18 +1,25 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers\Administrators;
 
-use Datatables;
 use Form;
-use Kris\LaravelFormBuilder\FormBuilder;
-use ProVision\Administration\Facades\Administration;
-use ProVision\Administration\Forms\RolesForm;
-use ProVision\Administration\Http\Controllers\BaseAdministrationController;
-use ProVision\Administration\Role;
 use Request;
+use Datatables;
+use ProVision\Administration\Role;
+use Kris\LaravelFormBuilder\FormBuilder;
+use ProVision\Administration\Forms\RolesForm;
+use ProVision\Administration\Facades\Administration;
+use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 
-class AdministratorsRolesController extends BaseAdministrationController {
-    public function __construct() {
+class AdministratorsRolesController extends BaseAdministrationController
+{
+    public function __construct()
+    {
         parent::__construct();
         Administration::setTitle(trans('administration::administrators.administrators-roles'));
     }
@@ -22,14 +29,15 @@ class AdministratorsRolesController extends BaseAdministrationController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         if (Request::ajax()) {
             $roles = Role::all();
 
             $datatables = Datatables::of($roles)
                 ->addColumn('action', function ($role) {
                     $actions = '';
-                    if (!empty($role->deleted_at)) {
+                    if (! empty($role->deleted_at)) {
                         //restore button
                     } else {
                         if ($role->id != \Auth::guard('provision_administration')->user()->id) {
@@ -37,10 +45,10 @@ class AdministratorsRolesController extends BaseAdministrationController {
                         }
                     }
 
-                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators-roles.edit', $role->id)) . $actions;
+                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators-roles.edit', $role->id)).$actions;
                 })
                 ->filter(function ($query) {
-//                    if (Request::has('name')) {
+                    //                    if (Request::has('name')) {
 //                        $query->where('name', 'like', "%" . Request::get('name') . "%");
 //                    }
 //
@@ -65,28 +73,27 @@ class AdministratorsRolesController extends BaseAdministrationController {
             ->addColumn([
                 'data' => 'id',
                 'name' => 'id',
-                'title' => trans('administration::administrators.id')
+                'title' => trans('administration::administrators.id'),
             ])->addColumn([
                 'data' => 'display_name',
                 'name' => 'display_name',
-                'title' => trans('administration::administrators.group_name')
+                'title' => trans('administration::administrators.group_name'),
             ])->addColumn([
                 'data' => 'name',
                 'name' => 'name',
-                'title' => trans('administration::administrators.group_key')
+                'title' => trans('administration::administrators.group_key'),
             ]);
-
 
         return view('administration::empty-listing', compact('table'));
     }
-
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FormBuilder $formBuilder) {
+    public function create(FormBuilder $formBuilder)
+    {
         $form = $formBuilder->create(RolesForm::class, [
                 'method' => 'POST',
                 'url' => route('provision.administration.administrators-roles.store'),
@@ -96,7 +103,6 @@ class AdministratorsRolesController extends BaseAdministrationController {
 //                'type' => 'danger'
 //            ]
         );
-
 
         Administration::setTitle(trans('administration::administrators.create_role'));
 
@@ -115,8 +121,8 @@ class AdministratorsRolesController extends BaseAdministrationController {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(\Illuminate\Http\Request $request) {
-
+    public function store(\Illuminate\Http\Request $request)
+    {
         $role = new Role();
 
         $requestData = Request::all();
@@ -128,7 +134,7 @@ class AdministratorsRolesController extends BaseAdministrationController {
             /*
             * add permissions
             */
-            if (!empty(Request::has('permissions'))) {
+            if (! empty(Request::has('permissions'))) {
                 $role->perms()->sync(Request::input('permissions'));
             }
 
@@ -146,7 +152,8 @@ class AdministratorsRolesController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -156,7 +163,8 @@ class AdministratorsRolesController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormBuilder $formBuilder, $id) {
+    public function edit(FormBuilder $formBuilder, $id)
+    {
         $role = Role::where('id', $id)->first();
 
         $form = $formBuilder->create(RolesForm::class, [
@@ -164,7 +172,7 @@ class AdministratorsRolesController extends BaseAdministrationController {
             'url' => route('provision.administration.administrators-roles.update', $id),
             'role' => 'form',
             'id' => 'formID',
-            'model' => $role
+            'model' => $role,
         ]);
 
         Administration::setTitle(trans('administration::administrators.edit_role', ['name' => $role->name]));
@@ -185,7 +193,8 @@ class AdministratorsRolesController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $role = Role::findOrFail($id);
 
         $requestData = Request::all();
@@ -197,7 +206,7 @@ class AdministratorsRolesController extends BaseAdministrationController {
             /*
              * add permissions
              */
-            if (!empty(Request::has('permissions'))) {
+            if (! empty(Request::has('permissions'))) {
                 $role->perms()->sync(Request::input('permissions'));
             }
 
@@ -215,7 +224,8 @@ class AdministratorsRolesController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $object = Role::where('id', $id);
         if (empty($object->deleted_at)) {
             $object->forceDelete();

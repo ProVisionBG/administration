@@ -1,18 +1,23 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration;
 
-use Hash;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Validator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
-use ProVision\Administration\Notifications\ResetPassword;
-use Validator;
+use Illuminate\Notifications\Notifiable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use ProVision\Administration\Notifications\ResetPassword;
 
-class AdminUser extends Authenticatable {
+class AdminUser extends Authenticatable
+{
     use SoftDeletes, Notifiable, EntrustUserTrait {
         SoftDeletes::restore as sdRestore;
         EntrustUserTrait::restore as euRestore;
@@ -21,13 +26,13 @@ class AdminUser extends Authenticatable {
     /*
     * validation rules
     */
-    public $rules = array(
+    public $rules = [
         'password' => 'min:5|confirmed',
         'email' => 'required|email|unique:users,email',
-        'name' => 'required'
-    );
-    protected $messages = array();
-    protected $errors = array();
+        'name' => 'required',
+    ];
+    protected $messages = [];
+    protected $errors = [];
     protected $table = 'users';
 
     /**
@@ -53,12 +58,13 @@ class AdminUser extends Authenticatable {
 
     protected $guarded = [
         'password',
-        'remember_token'
+        'remember_token',
     ];
 
     protected $dates = ['deleted_at'];
 
-    public function validate($data) {
+    public function validate($data)
+    {
         // make a new validator object
         $v = Validator::make($data, $this->rules, $this->messages);
 
@@ -66,6 +72,7 @@ class AdminUser extends Authenticatable {
         if ($v->fails()) {
             // set errors and return false
             $this->errors = $v->errors();
+
             return false;
         }
 
@@ -73,7 +80,8 @@ class AdminUser extends Authenticatable {
         return true;
     }
 
-    public function errors() {
+    public function errors()
+    {
         return $this->errors;
     }
 
@@ -83,14 +91,16 @@ class AdminUser extends Authenticatable {
      * @param  string $token
      * @return void
      */
-    public function sendPasswordResetNotification($token) {
+    public function sendPasswordResetNotification($token)
+    {
         $this->notify(new ResetPassword($token));
     }
 
     /**
-     * Fix SoftDeletes::restore & EntrustUserTrait::restore
+     * Fix SoftDeletes::restore & EntrustUserTrait::restore.
      */
-    public function restore() {
+    public function restore()
+    {
         $this->sdRestore();
         Cache::tags(Config::get('entrust.role_user_table'))->flush();
     }

@@ -1,17 +1,22 @@
 <?php
-/*
- * @todo: да се премести в пакета
- */
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 
-class CreateStaticBlocksTable extends Migration {
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateStaticBlocksTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         Schema::create('static_blocks', function (Blueprint $table) {
             $table->increments('id');
 
@@ -31,7 +36,7 @@ class CreateStaticBlocksTable extends Migration {
 
             $table->unique([
                 'static_block_id',
-                'locale'
+                'locale',
             ]);
             $table->foreign('static_block_id')->references('id')->on('static_blocks')->onDelete('cascade');
         });
@@ -42,7 +47,8 @@ class CreateStaticBlocksTable extends Migration {
      *
      * @return void
      */
-    public function down() {
+    public function down()
+    {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::drop('static_blocks');
         Schema::drop('static_blocks_translations');

@@ -1,20 +1,25 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers\Systems;
 
 use Module;
+use ProVision\Administration\Role;
+use ProVision\Administration\Permission;
 use ProVision\Administration\Facades\Administration;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
-use ProVision\Administration\Permission;
-use ProVision\Administration\Role;
 
-
-class RolesRepairController extends BaseAdministrationController {
-
+class RolesRepairController extends BaseAdministrationController
+{
     private $adminRole;
     private $responses = [];
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->adminRole = Role::where('name', 'admin')->first();
     }
@@ -24,7 +29,8 @@ class RolesRepairController extends BaseAdministrationController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         Administration::setTitle(trans('administration::systems.roles-repair'));
 
         $routes = \Route::getRoutes();
@@ -69,15 +75,16 @@ class RolesRepairController extends BaseAdministrationController {
         */
         array_push($this->responses, [
             'status' => 'info',
-            'message' => trans('administration::systems.roles-repair-end')
+            'message' => trans('administration::systems.roles-repair-end'),
         ]);
 
         $responses = $this->responses;
+
         return view('administration::systems.roles-repair', compact('responses'));
     }
 
-    function checkPermissions($module, $key, $name) {
-
+    public function checkPermissions($module, $key, $name)
+    {
         $permission = Permission::where('name', $key)->first();
         if (empty($permission)) {
             $permission = new Permission();
@@ -88,24 +95,21 @@ class RolesRepairController extends BaseAdministrationController {
                 'status' => 'success',
                 'message' => trans('administration::systems.add-new-permissions', [
                     'module' => $module['name'],
-                    'permission' => $key
-                ])
+                    'permission' => $key,
+                ]),
             ]);
         }
 
-        if (!$this->adminRole->perms()->where('permission_id', $permission->id)->first()) {
+        if (! $this->adminRole->perms()->where('permission_id', $permission->id)->first()) {
             array_push($this->responses, [
                 'status' => 'info',
                 'message' => trans('administration::systems.add-new-permissions-to-admin-role', [
                     'module' => $module['name'],
-                    'permission' => $key
-                ])
+                    'permission' => $key,
+                ]),
             ]);
 
             $this->adminRole->attachPermission($permission);
         }
-
     }
-
-
 }

@@ -1,21 +1,25 @@
 <?php
 
-namespace ProVision\Administration\Traits;
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
 
+namespace ProVision\Administration\Traits;
 
 use Illuminate\Support\Facades\Validator;
 
-trait ValidationTrait {
-
+trait ValidationTrait
+{
     /**
-     * Errors container
+     * Errors container.
      *
      * @var array
      */
     private $errors = [];
 
     /**
-     * Rules container
+     * Rules container.
      *
      * @var array
      */
@@ -27,12 +31,13 @@ trait ValidationTrait {
     private $messages = [];
 
     /**
-     * Validate data
+     * Validate data.
      *
      * @param $data
      * @return bool
      */
-    public function validate($data) {
+    public function validate($data)
+    {
         // make a new validator object
         $v = Validator::make($data, $this->rules, $this->messages);
 
@@ -40,6 +45,7 @@ trait ValidationTrait {
         if ($v->fails()) {
             // set errors and return false
             $this->errors = $v->errors();
+
             return false;
         }
 
@@ -50,28 +56,27 @@ trait ValidationTrait {
     /**
      * @return array
      */
-    public function getValidationErrors() {
+    public function getValidationErrors()
+    {
         return $this->errors;
     }
 
     /**
-     * Set single rule
+     * Set single rule.
      *
      * @param $rule
      * @param $value
      */
-    public function setValidationRule($rule, $value) {
+    public function setValidationRule($rule, $value)
+    {
         $this->rules[$rule] = $value;
     }
 
     /**
      * @param array $rules
      */
-    public function setValidationRules(array $rules) {
+    public function setValidationRules(array $rules)
+    {
         $this->rules = array_merge($this->rules, $rules);
     }
-
-
 }
-
-?>

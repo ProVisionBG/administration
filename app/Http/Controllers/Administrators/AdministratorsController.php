@@ -1,20 +1,26 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers\Administrators;
 
-use Datatables;
 use Form;
-use Kris\LaravelFormBuilder\FormBuilder;
-use ProVision\Administration\AdminUser;
-use ProVision\Administration\Facades\Administration;
-use ProVision\Administration\Forms\AdministratorFilterForm;
-use ProVision\Administration\Forms\AdministratorForm;
-use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use Request;
+use Datatables;
+use ProVision\Administration\AdminUser;
+use Kris\LaravelFormBuilder\FormBuilder;
+use ProVision\Administration\Facades\Administration;
+use ProVision\Administration\Forms\AdministratorForm;
+use ProVision\Administration\Forms\AdministratorFilterForm;
+use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 
-
-class AdministratorsController extends BaseAdministrationController {
-    public function __construct() {
+class AdministratorsController extends BaseAdministrationController
+{
+    public function __construct()
+    {
         parent::__construct();
         Administration::setTitle(trans('administration::administrators.administrators'));
     }
@@ -24,21 +30,21 @@ class AdministratorsController extends BaseAdministrationController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-
+    public function index()
+    {
         if (Request::ajax()) {
             $users = AdminUser::select([
                 'id',
                 'name',
                 'email',
-                'deleted_at'
+                'deleted_at',
             ])
                 ->with('roles');
 
             $datatables = Datatables::of($users)
                 ->addColumn('action', function ($user) {
                     $actions = '';
-                    if (!empty($user->deleted_at)) {
+                    if (! empty($user->deleted_at)) {
                         $actions .= Form::adminRestoreButton(trans('administration::index.restore'), route('provision.administration.administrators.destroy', $user->id));
                     } else {
                         if ($user->id != \Auth::guard('provision_administration')->user()->id) {
@@ -46,22 +52,22 @@ class AdministratorsController extends BaseAdministrationController {
                         }
                     }
 
-                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators.edit', $user->id)) . $actions;
+                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators.edit', $user->id)).$actions;
                 })
                 ->filter(function ($query) {
                     if (Request::has('name')) {
-                        $query->where('name', 'like', "%" . Request::get('name') . "%");
+                        $query->where('name', 'like', '%'.Request::get('name').'%');
                     }
 
                     if (Request::has('email')) {
-                        $query->where('email', 'like', "%" . Request::get('email') . "%");
+                        $query->where('email', 'like', '%'.Request::get('email').'%');
                     }
 
                     if (Request::has('deleted') && Request::input('deleted') == 'true') {
                         $query->onlyTrashed();
                     }
 
-                    if (!Request::has('all-users') || Request::input('all-users') != 'true') {
+                    if (! Request::has('all-users') || Request::input('all-users') != 'true') {
                         $query->has('roles');
                     }
                 });
@@ -71,25 +77,24 @@ class AdministratorsController extends BaseAdministrationController {
 
         $filterForm = $this->form(AdministratorFilterForm::class, [
                 'method' => 'POST',
-                'url' => route('provision.administration.administrators.index')
+                'url' => route('provision.administration.administrators.index'),
             ]
         );
-
 
         $table = Datatables::getHtmlBuilder()
             ->addColumn([
                 'data' => 'id',
                 'name' => 'id',
-                'title' => trans('administration::administrators.id')
+                'title' => trans('administration::administrators.id'),
             ])->addColumn([
                 'data' => 'name',
                 'name' => 'name',
-                'title' => trans('administration::administrators.name')
+                'title' => trans('administration::administrators.name'),
             ])
             ->addColumn([
                 'data' => 'email',
                 'name' => 'email',
-                'title' => trans('administration::administrators.email')
+                'title' => trans('administration::administrators.email'),
             ]);
 
         \Breadcrumbs::register('admin_final', function ($breadcrumbs) {
@@ -101,19 +106,18 @@ class AdministratorsController extends BaseAdministrationController {
         return view('administration::empty-listing', compact('table', 'filterForm'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FormBuilder $formBuilder) {
+    public function create(FormBuilder $formBuilder)
+    {
         $form = $formBuilder->create(AdministratorForm::class, [
                 'method' => 'POST',
                 'url' => route('provision.administration.administrators.store'),
             ]
         );
-
 
         Administration::setTitle(trans('administration::administrators.create_administrator'));
 
@@ -132,8 +136,8 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-
+    public function store(Request $request)
+    {
         $adminUser = new AdminUser();
 
         $requestData = Request::all();
@@ -146,7 +150,7 @@ class AdministratorsController extends BaseAdministrationController {
             * add roles
             */
             $adminUser->roles()->detach();
-            if (!empty(Request::has('roles'))) {
+            if (! empty(Request::has('roles'))) {
                 foreach (Request::input('roles') as $role) {
                     $adminUser->roles()->attach($role);
                 }
@@ -166,7 +170,8 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -176,7 +181,8 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormBuilder $formBuilder, $id) {
+    public function edit(FormBuilder $formBuilder, $id)
+    {
         $user = AdminUser::withTrashed()->where('id', $id)->first();
 
         $form = $formBuilder->create(AdministratorForm::class, [
@@ -184,7 +190,7 @@ class AdministratorsController extends BaseAdministrationController {
             'url' => route('provision.administration.administrators.update', $id),
             'role' => 'form',
             'id' => 'formID',
-            'model' => $user
+            'model' => $user,
         ]);
 
         Administration::setTitle(trans('administration::administrators.edit_administrator', ['name' => $user->name]));
@@ -205,16 +211,17 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $adminUser = AdminUser::findOrFail($id);
 
         $requestData = Request::all();
 
-        if (!Request::has('password')) {
+        if (! Request::has('password')) {
             unset($adminUser->rules['password']);
             unset($requestData['password']);
         }
-        $adminUser->rules['email'] .= ',' . $adminUser->id;
+        $adminUser->rules['email'] .= ','.$adminUser->id;
 
         if ($adminUser->validate($requestData)) {
 
@@ -222,7 +229,7 @@ class AdministratorsController extends BaseAdministrationController {
              * add roles
              */
             $adminUser->roles()->detach();
-            if (!empty(Request::has('roles'))) {
+            if (! empty(Request::has('roles'))) {
                 foreach (Request::input('roles') as $role) {
                     $adminUser->roles()->attach($role);
                 }
@@ -245,10 +252,11 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $object = AdminUser::withTrashed()->find($id);
 
-        if (!$object->trashed()) {
+        if (! $object->trashed()) {
             $object->delete();
         } else {
             $object->restore();
