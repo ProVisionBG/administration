@@ -4,4 +4,4 @@
 
 Read our [Wiki](https://github.com/ProVisionBG/administration/wiki)
 
-![StyleCI](https://styleci.io/repos/62281927/shield?branch=master)
+[![StyleCI](https://styleci.io/repos/62281927/shield?branch=master)](https://styleci.io/repos/62281927)
