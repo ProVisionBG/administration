@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Facade;
 use LaravelLocalization;
 use Lavary\Menu\Menu;
 
-class Administration extends Facade {
+class Administration extends Facade
+{
 
     const AS_MODULE_PREFIX = 'provision.administration.module.'; //administration module route prefix
 
@@ -33,7 +34,8 @@ class Administration extends Facade {
      * @param $name
      * @return string
      */
-    public static function setTitle($name) {
+    public static function setTitle($name)
+    {
         Administration::$currentModuleTitle = $name;
         return $name;
     }
@@ -42,7 +44,8 @@ class Administration extends Facade {
      * Get current module name
      * @return string
      */
-    public static function getTitle() {
+    public static function getTitle()
+    {
         return Administration::$currentModuleTitle;
     }
 
@@ -51,7 +54,8 @@ class Administration extends Facade {
      * @param $name
      * @return string
      */
-    public static function setSubTitle($name) {
+    public static function setSubTitle($name)
+    {
         Administration::$currentModuleSubTitle = $name;
         return $name;
     }
@@ -60,7 +64,8 @@ class Administration extends Facade {
      * Get current module sub name
      * @return string
      */
-    public static function getSubTitle() {
+    public static function getSubTitle()
+    {
         return Administration::$currentModuleSubTitle;
     }
 
@@ -68,7 +73,8 @@ class Administration extends Facade {
      * Get all language codes
      * @return array
      */
-    public static function getLanguages() {
+    public static function getLanguages()
+    {
         return LaravelLocalization::getSupportedLocales();
     }
 
@@ -76,7 +82,8 @@ class Administration extends Facade {
      * Get current language code
      * @return string
      */
-    public static function getLanguage() {
+    public static function getLanguage()
+    {
         $locale = LaravelLocalization::setLocale();
         if (!empty($locale)) {
             return $locale;
@@ -90,7 +97,8 @@ class Administration extends Facade {
      * @param $key
      * @return mixed
      */
-    public static function getStaticBlock($key) {
+    public static function getStaticBlock($key)
+    {
         $block = StaticBlock::where('key', $key)->first();
         if ($block) {
             return $block->text;
@@ -105,7 +113,8 @@ class Administration extends Facade {
      * @param $module
      * @return mixed
      */
-    public static function getModuleOrderIndex($module) {
+    public static function getModuleOrderIndex($module)
+    {
         $module = \Module::where('slug', $module);
         if (!$module) {
             return false;
@@ -117,7 +126,8 @@ class Administration extends Facade {
      * Get administration menu instance
      * @return Menu
      */
-    public static function getMenuInstance() {
+    public static function getMenuInstance()
+    {
         $menu = \Menu::get('ProVisionAdministrationMenu');
         if (empty($menu)) {
             $menu = \Menu::make('ProVisionAdministrationMenu', []);
@@ -129,7 +139,8 @@ class Administration extends Facade {
      * Is in maintenance mode
      * @return bool
      */
-    public static function isInMaintenanceMode() {
+    public static function isInMaintenanceMode()
+    {
         return File::exists(storage_path('/framework/down-provision-administration'));
     }
 
@@ -137,7 +148,8 @@ class Administration extends Facade {
      * Check request URL is in administration
      * @return bool
      */
-    public static function routeInAdministration() {
+    public static function routeInAdministration()
+    {
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
         if (!empty(\LaravelLocalization::setLocale())) {
             if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
@@ -156,7 +168,8 @@ class Administration extends Facade {
      * Web site prefix in route
      * @return string
      */
-    public static function routePrefix() {
+    public static function routePrefix()
+    {
         return \LaravelLocalization::setLocale();
     }
 
@@ -164,7 +177,8 @@ class Administration extends Facade {
      * Administration AS in route
      * @return string
      */
-    public static function routeAdministrationAs() {
+    public static function routeAdministrationAs()
+    {
         return \Administration::getLanguage() . '.';
     }
 
@@ -175,7 +189,8 @@ class Administration extends Facade {
      * @param bool $absolute
      * @return string
      */
-    public static function route($name, $parameters = [], $absolute = true) {
+    public static function route($name, $parameters = [], $absolute = true)
+    {
         return route(Administration::routeAdministrationName($name), $parameters, $absolute);
     }
 
@@ -184,7 +199,8 @@ class Administration extends Facade {
      * @param $name
      * @return string
      */
-    public static function routeAdministrationName($name) {
+    public static function routeAdministrationName($name)
+    {
         return self::AS_MODULE_PREFIX . $name;
     }
 
@@ -193,7 +209,8 @@ class Administration extends Facade {
      * @param $name
      * @return string
      */
-    public static function routeName($name) {
+    public static function routeName($name)
+    {
         return Administration::routeAdministrationName($name);
     }
 
@@ -201,7 +218,8 @@ class Administration extends Facade {
      * Check request is in administration dashboard
      * @return bool
      */
-    public static function isDashboard() {
+    public static function isDashboard()
+    {
         if (!empty(\LaravelLocalization::setLocale())) {
             if (\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix'))) {
                 return true;
@@ -215,7 +233,14 @@ class Administration extends Facade {
         return false;
     }
 
-    public static function bootModule($module, $administrationClass) {
+    /**
+     * Boot module init class
+     *
+     * @param $module
+     * @param $administrationClass
+     */
+    public static function bootModule($module, $administrationClass)
+    {
         $moduleAdminInit = new $administrationClass();
 
         //init routes
@@ -244,7 +269,8 @@ class Administration extends Facade {
      * Administration prefix in route
      * @return mixed|string
      */
-    public static function routeAdministrationPrefix() {
+    public static function routeAdministrationPrefix()
+    {
         if (!empty(\LaravelLocalization::setLocale())) {
             return \LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix');
         } else {
@@ -258,7 +284,8 @@ class Administration extends Facade {
      * @param array $middleware
      * @return array
      */
-    public static function routeMiddleware($middleware = []) {
+    public static function routeMiddleware($middleware = [])
+    {
         $default = [
             'web',
             'localeSessionRedirect',

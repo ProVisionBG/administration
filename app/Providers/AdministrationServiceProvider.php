@@ -11,14 +11,16 @@ use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 use ProVision\Administration\Facades\StaticBlockFacade;
 
-class AdministrationServiceProvider extends ServiceProvider {
+class AdministrationServiceProvider extends ServiceProvider
+{
 
     /**
      * Bootstrap the application services.
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
 
         if (config('app.debug') === true) {
             /*
@@ -113,7 +115,8 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->modulesBoot();
     }
 
-    private function publicBoot() {
+    private function publicBoot()
+    {
         /*
           * LogViewer settings
           */
@@ -135,7 +138,8 @@ class AdministrationServiceProvider extends ServiceProvider {
         }
     }
 
-    private function adminBoot() {
+    private function adminBoot()
+    {
 
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
         if (!empty(\LaravelLocalization::setLocale())) {
@@ -190,8 +194,12 @@ class AdministrationServiceProvider extends ServiceProvider {
       * Administration menu init
       */
         \Menu::make('ProVisionAdministrationMenu', function ($menu) {
-            //main header
-            $menu->add(trans('administration::index.main_navigation'), ['nickname' => 'navigation'])->data('header', true)->data('order', 1);
+            /*
+             * MAIN
+             */
+            $menu->add(trans('administration::index.main_navigation'), ['nickname' => 'navigation'])
+                ->data('header', true)
+                ->data('order', 1);
 
             //home
             $menu->add(trans('administration::index.home'), [
@@ -200,77 +208,95 @@ class AdministrationServiceProvider extends ServiceProvider {
             ])
                 ->data('icon', 'home')
                 ->data('order', 2);
-            //->active('xxx/');
-
-            //modules
-            $menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true)->data('order', 1000);
-
-//            var_dump( 'provision.administration.' . \LaravelLocalization::setLocale() . '.admin.administartors.index');
-//            dd(\Route::getRoutes());
-
-            //system settings
-            $menu->add(trans('administration::index.system-settings'), ['nickname' => 'system-settings'])->data('header', true)->data('order', 10000);
 
             /*
-             * Administrators
+             * MODULES
+             */
+            $menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true)->data('order', 1000);
+
+            /*
+             * SYSTEM
+             */
+            $menu->add(trans('administration::index.system-settings'), ['nickname' => 'system-settings'])
+                ->data('header', true)
+                ->data('order', 10000);
+
+            /*
+             * System -> Administrators
              */
             $administratorsMenu = $menu->add(trans('administration::administrators.administrators'), [
                 'nickname' => 'administrators.menu.item',
-            ])->data('order', 10001)->data('icon', 'users');
+            ])
+                ->data('order', 10001)
+                ->data('icon', 'users');
             $administratorsMenu->add(trans('administration::administrators.create_administrator'), [
                 'nickname' => 'administrators.create',
                 'route' => 'provision.administration.administrators.create'
-            ])->data('icon', 'plus')->data('order', 1);
+            ])
+                ->data('icon', 'plus')
+                ->data('order', 1);
             $administratorsMenu->add(trans('administration::index.view_all'), [
                 'nickname' => 'administrators',
                 'route' => 'provision.administration.administrators.index'
-            ])->data('icon', 'list')->data('order', 2);
+            ])
+                ->data('icon', 'list')
+                ->data('order', 2);
 
 
             /*
-             * Administrators/Roles
+             * System -> Administrators -> Roles
              */
             $rolesMenu = $administratorsMenu->add(trans('administration::administrators.groups'), [
                 'nickname' => 'administrators.groups',
                 'route' => 'provision.administration.administrators-roles.index'
-            ])->data('icon', 'users')->data('order', 2);
+            ])
+                ->data('icon', 'users')
+                ->data('order', 2);
             $rolesMenu->add(trans('administration::index.add'), [
                 'nickname' => 'administrators.group_add',
                 'route' => 'provision.administration.administrators-roles.create'
-            ])->data('icon', 'plus')->data('order', 1);
+            ])
+                ->data('icon', 'plus')
+                ->data('order', 1);
             $rolesMenu->add(trans('administration::index.view_all'), [
                 'nickname' => 'administrators.group_add',
                 'route' => 'provision.administration.administrators-roles.index'
-            ])->data('icon', 'list')->data('order', 2);
+            ])
+                ->data('icon', 'list')
+                ->data('order', 2);
 
             /*
-             * Static blocks
+             * System -> Static blocks
              */
             $staticMenu = $menu->add(trans('administration::static_blocks.name'), [
                 'nickname' => 'administrators.static_blocks',
                 'route' => 'provision.administration.static-blocks.index'
-            ])->data('icon', 'th-large')->data('order', 10002);
+            ])->data('icon', 'th-large')
+                ->data('order', 10002);
             $staticMenu->add(trans('administration::index.add'), [
                 'nickname' => 'administrators.group_add',
                 'route' => 'provision.administration.static-blocks.create'
-            ])->data('icon', 'plus')->data('order', 1);
+            ])->data('icon', 'plus')
+                ->data('order', 1);
             $staticMenu->add(trans('administration::index.view_all'), [
                 'nickname' => 'administrators.group_add',
                 'route' => 'provision.administration.static-blocks.index'
-            ])->data('icon', 'list')->data('order', 2);
+            ])->data('icon', 'list')
+                ->data('order', 2);
 
 
             /*
-             * Settings
+             * System -> Settings
              */
             $menu->add(trans('administration::settings.title'), [
                 'nickname' => 'settings',
                 'route' => 'provision.administration.settings.index'
-            ])->data('order', 10002)->data('icon', 'sliders');
+            ])->data('order', 10002)
+                ->data('icon', 'sliders');
 
 
             /*
-             * System
+             * System -> System
              */
             $systemMenu = $menu->add(trans('administration::systems.title'), ['nickname' => 'system'])->data('order', 10003)->data('icon', 'cogs');
             $systemMenu->add(trans('administration::systems.roles-repair'), [
@@ -283,7 +309,7 @@ class AdministrationServiceProvider extends ServiceProvider {
                 'route' => 'provision.administration.systems.maintenance-mode'
             ])->data('icon', 'hand-paper-o');
 
-            // Log Viewer
+            // System -> System -> Log Viewer
             if (config('provision_administration.packages.log-viewer', false)) {
                 $systemMenu->add(trans('administration::systems.log-viewer'), [
                     'nickname' => 'system-log-viewer',
@@ -295,14 +321,17 @@ class AdministrationServiceProvider extends ServiceProvider {
             }
 
             /*
-             * Translates
+             * System -> Translates
              */
-            $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])->data('order', 10004)->data('icon', 'globe');
+            $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])
+                ->data('order', 10004)
+                ->data('icon', 'globe');
 
         });
     }
 
-    private function modulesBoot() {
+    private function modulesBoot()
+    {
 
 
         /*
@@ -327,7 +356,8 @@ class AdministrationServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
 
         //reset session cookie
         Config::set(['session.cookie' => 'provision_session']);
