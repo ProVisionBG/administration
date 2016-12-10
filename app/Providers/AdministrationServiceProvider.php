@@ -303,56 +303,23 @@ class AdministrationServiceProvider extends ServiceProvider {
     }
 
     private function modulesBoot() {
-//        if (!\Administration::routeInAdministration()) {
-//            return false;
-//        }
 
-        $modules = Module::all();
-        foreach ($modules as $module) {
+
+        /*
+         * load user installed modules
+         */
+        foreach (Module::all() as $module) {
 
             $adminInitClass = module_class($module['slug'], 'Administration');
 
             if (class_exists($adminInitClass)) {
-
                 //load module translations @todo: да се помисли НЕ Е ДОБРЕ ТУК!
                 $this->loadTranslationsFrom(app_path('Modules/' . $module['basename'] . '/Resources/Lang'), $module['slug']);
 
-                /*
-                //load routes @todo: да се помисли НЕ Е ДОБРЕ ТУК!
-                \Route::group([
-                    'middleware' => 'web',
-                    'namespace' => config('modules.namespace') . $module['basename'],
-                ], function ($router) use ($module) {
-                    require_once module_path($module['slug'], 'Routes/web.php');
-                });
-                */
-
-                $moduleAdminInit = new $adminInitClass();
-
-                //init routes
-                if (method_exists($moduleAdminInit, 'routes')) {
-                    \Route::group([
-                        'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
-                        'as' => Administration::AS_MODULE_PREFIX,
-                        'middleware' => \ProVision\Administration\Administration::routeMiddleware()
-                    ], function () use ($moduleAdminInit, $module) {
-                        $moduleAdminInit->routes($module);
-                    });
-                }
-
-                //init menu
-                if (method_exists($moduleAdminInit, 'menu') && \Administration::routeInAdministration()) {
-                    $moduleAdminInit->menu($module);
-                }
-
-                //init dashboard
-                if (method_exists($moduleAdminInit, 'dashboard') && \Administration::isDashboard()) {
-                    $moduleAdminInit->dashboard($module);
-                }
-
+                //boot module /Administration.php
+                Administration::bootModule($module, $adminInitClass);
             }
         }
-
     }
 
     /**

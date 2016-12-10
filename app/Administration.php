@@ -161,33 +161,6 @@ class Administration extends Facade {
     }
 
     /**
-     * Administration prefix in route
-     * @return mixed|string
-     */
-    public static function routeAdministrationPrefix() {
-        if (!empty(\LaravelLocalization::setLocale())) {
-            return \LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix');
-        } else {
-            return config('provision_administration.url_prefix');
-        }
-
-    }
-
-    /**
-     * Default middleware for route
-     * @param array $middleware
-     * @return array
-     */
-    public static function routeMiddleware($middleware = []) {
-        $default = [
-            'web',
-            'localeSessionRedirect',
-            'localizationRedirect',
-        ];
-        return array_merge($default, $middleware);
-    }
-
-    /**
      * Administration AS in route
      * @return string
      */
@@ -240,6 +213,58 @@ class Administration extends Facade {
         }
 
         return false;
+    }
+
+    public static function bootModule($module, $administrationClass) {
+        $moduleAdminInit = new $administrationClass();
+
+        //init routes
+        if (method_exists($moduleAdminInit, 'routes')) {
+            \Route::group([
+                'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
+                'as' => Administration::AS_MODULE_PREFIX,
+                'middleware' => \ProVision\Administration\Administration::routeMiddleware()
+            ], function () use ($moduleAdminInit, $module) {
+                $moduleAdminInit->routes($module);
+            });
+        }
+
+        //init menu
+        if (method_exists($moduleAdminInit, 'menu') && \Administration::routeInAdministration()) {
+            $moduleAdminInit->menu($module);
+        }
+
+        //init dashboard
+        if (method_exists($moduleAdminInit, 'dashboard') && \Administration::isDashboard()) {
+            $moduleAdminInit->dashboard($module);
+        }
+    }
+
+    /**
+     * Administration prefix in route
+     * @return mixed|string
+     */
+    public static function routeAdministrationPrefix() {
+        if (!empty(\LaravelLocalization::setLocale())) {
+            return \LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix');
+        } else {
+            return config('provision_administration.url_prefix');
+        }
+
+    }
+
+    /**
+     * Default middleware for route
+     * @param array $middleware
+     * @return array
+     */
+    public static function routeMiddleware($middleware = []) {
+        $default = [
+            'web',
+            'localeSessionRedirect',
+            'localizationRedirect',
+        ];
+        return array_merge($default, $middleware);
     }
 
 }
