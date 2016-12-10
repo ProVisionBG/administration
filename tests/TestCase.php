@@ -23,8 +23,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     public function createApplication()
     {
-//        $app = require __DIR__ . '/../vendor/laravel/laravel/bootstrap/app.php';
-        $app = require __DIR__ . '/../../../../bootstrap/app.php';
+        //        $app = require __DIR__ . '/../vendor/laravel/laravel/bootstrap/app.php';
+        $app = require __DIR__.'/../../../../bootstrap/app.php';
 
         $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
@@ -35,5 +35,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
     }
-
 }

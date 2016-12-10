@@ -1,4 +1,10 @@
 <?php
+
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Tests;
 
 class BaseTest extends TestCase
@@ -10,8 +16,8 @@ class BaseTest extends TestCase
      */
     public function testRun()
     {
-        $this->visit("/")->see('Laravel');
-        $this->visit("/admin")->see('ProVision');
+        $this->visit('/')->see('Laravel');
+        $this->visit('/admin')->see('ProVision');
     }
 
     public function testLogin()
