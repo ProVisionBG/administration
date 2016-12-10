@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 return [
     'admin_title' => 'Администраторски панел',
     'administration' => 'Администрация',

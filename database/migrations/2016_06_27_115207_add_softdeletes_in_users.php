@@ -1,15 +1,21 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
 
-class AddSoftdeletesInUsers extends Migration {
+use Illuminate\Database\Migrations\Migration;
+
+class AddSoftdeletesInUsers extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         Schema::table('users', function ($table) {
             $table->softDeletes();
         });
@@ -20,7 +26,8 @@ class AddSoftdeletesInUsers extends Migration {
      *
      * @return void
      */
-    public function down() {
+    public function down()
+    {
         //
     }
 }

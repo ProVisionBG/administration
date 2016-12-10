@@ -1,23 +1,27 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Dimsav\Translatable\Translatable;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Validator;
 
-
-class StaticBlock extends AdminModel {
+class StaticBlock extends AdminModel
+{
     use Sluggable;
     use Translatable;
     use SoftDeletes;
 
     public $translatedAttributes = ['text'];
-    public $rules = array(
+    public $rules = [
         'key' => 'required|max:25',
-        'active' => 'boolean'
-    );
+        'active' => 'boolean',
+    ];
     public $table = 'static_blocks';
     public $module = 'administration';
     public $sub_module = 'static_blocks';
@@ -25,15 +29,16 @@ class StaticBlock extends AdminModel {
     protected $fillable = [
         'key',
         'text',
-        'active'
+        'active',
     ];
     protected $with = ['translations'];
 
     protected $casts = [
-        'active' => 'boolean'
+        'active' => 'boolean',
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -42,12 +47,12 @@ class StaticBlock extends AdminModel {
      *
      * @return array
      */
-    public function sluggable() {
+    public function sluggable()
+    {
         return [
             'key' => [
-                'source' => 'key'
-            ]
+                'source' => 'key',
+            ],
         ];
     }
-
 }

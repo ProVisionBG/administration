@@ -1,11 +1,17 @@
 <?php
+
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 
-
-class Migrate extends Command {
+class Migrate extends Command
+{
     /**
      * Name of the command.
      *
@@ -23,12 +29,13 @@ class Migrate extends Command {
     /**
      * Setup the application container as we'll need this for running migrations.
      */
-    public function __construct(Container $app) {
+    public function __construct(Container $app)
+    {
         $this->app = $app;
         /*
         * command fix
         */
-        $this->signature = config('provision_administration.command_prefix') . ':migrate';
+        $this->signature = config('provision_administration.command_prefix').':migrate';
 
         parent::__construct();
     }
@@ -36,10 +43,10 @@ class Migrate extends Command {
     /**
      * Run the package migrations.
      */
-    public function handle() {
-
-        $path = str_ireplace(base_path(), '', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations'));
-        $this->info('Path to migrate (provision/administration): ' . $path);
+    public function handle()
+    {
+        $path = str_ireplace(base_path(), '', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations'));
+        $this->info('Path to migrate (provision/administration): '.$path);
         \Artisan::call('migrate', ['--path' => $path]);
         $this->info(\Artisan::output());
 

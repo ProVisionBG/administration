@@ -1,20 +1,24 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers;
 
-use App\Http\Requests;
-use Datatables;
 use Form;
-use Guzzle\Http\Message\Response;
-use Kris\LaravelFormBuilder\FormBuilder;
-use ProVision\Administration\Facades\Administration;
-use ProVision\Administration\Forms\RolesForm;
-use ProVision\Administration\Role;
 use Request;
+use Guzzle\Http\Message\Response;
+use ProVision\Administration\Role;
+use Kris\LaravelFormBuilder\FormBuilder;
+use ProVision\Administration\Forms\RolesForm;
+use ProVision\Administration\Facades\Administration;
 
-
-class SettingsController extends BaseAdministrationController {
-    public function __construct() {
+class SettingsController extends BaseAdministrationController
+{
+    public function __construct()
+    {
         parent::__construct();
         Administration::setTitle(trans('administration::settings.title'));
     }
@@ -24,8 +28,8 @@ class SettingsController extends BaseAdministrationController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-
+    public function index()
+    {
         \Breadcrumbs::register('admin_final', function ($breadcrumbs) {
             $breadcrumbs->parent('admin_home');
             $breadcrumbs->push(trans('administration::settings.title'), route('provision.administration.settings.index'));
@@ -34,13 +38,13 @@ class SettingsController extends BaseAdministrationController {
         return view('administration::index');
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FormBuilder $formBuilder) {
+    public function create(FormBuilder $formBuilder)
+    {
         $form = $formBuilder->create(RolesForm::class, [
                 'method' => 'POST',
                 'url' => route('provision.administration.administrators-roles.store'),
@@ -50,7 +54,6 @@ class SettingsController extends BaseAdministrationController {
 //                'type' => 'danger'
 //            ]
         );
-
 
         Administration::setTitle(trans('administration::administrators.create_role'));
 
@@ -69,8 +72,8 @@ class SettingsController extends BaseAdministrationController {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(\Illuminate\Http\Request $request) {
-
+    public function store(\Illuminate\Http\Request $request)
+    {
         $role = new Role();
 
         $requestData = Request::all();
@@ -93,7 +96,8 @@ class SettingsController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -103,7 +107,8 @@ class SettingsController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormBuilder $formBuilder, $id) {
+    public function edit(FormBuilder $formBuilder, $id)
+    {
         $role = Role::where('id', $id)->first();
 
         $form = $formBuilder->create(RolesForm::class, [
@@ -111,7 +116,7 @@ class SettingsController extends BaseAdministrationController {
             'url' => route('provision.administration.administrators-roles.update', $id),
             'role' => 'form',
             'id' => 'formID',
-            'model' => $role
+            'model' => $role,
         ]);
 
         Administration::setTitle(trans('administration::administrators.edit_role', ['name' => $role->name]));
@@ -132,7 +137,8 @@ class SettingsController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $role = Role::findOrFail($id);
 
         $requestData = Request::all();
@@ -144,7 +150,7 @@ class SettingsController extends BaseAdministrationController {
             /*
              * add permissions
              */
-            if (!empty(Request::has('permissions'))) {
+            if (! empty(Request::has('permissions'))) {
                 $role->perms()->sync(Request::input('permissions'));
             }
 
@@ -162,7 +168,8 @@ class SettingsController extends BaseAdministrationController {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $object = Role::where('id', $id);
         if (empty($object->deleted_at)) {
             $object->forceDelete();

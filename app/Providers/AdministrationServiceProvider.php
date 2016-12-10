@@ -1,19 +1,22 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Providers;
 
+use Form;
+use Config;
+use Illuminate\Support\Facades\DB;
 use App\Http\Middleware\EncryptCookies;
 use Caffeinated\Modules\Facades\Module;
-use Config;
-use Form;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
-use ProVision\Administration\Facades\StaticBlockFacade;
 
 class AdministrationServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      *
@@ -21,7 +24,6 @@ class AdministrationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         if (config('app.debug') === true) {
             /*
              * Enable query logging
@@ -33,12 +35,12 @@ class AdministrationServiceProvider extends ServiceProvider
        * config
        */
         $this->publishes([
-            __DIR__ . '/../../config/provision_administration.php' => config_path('provision_administration.php'),
-            __DIR__ . '/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
-            __DIR__ . '/../../config/entrust.php' => config_path('entrust.php'),
-            __DIR__ . '/../../config/laravel-form-builder.php' => config_path('laravel-form-builder.php'),
-            __DIR__ . '/../../config/laravel-menu/settings.php' => config_path('laravel-menu/settings.php'),
-            __DIR__ . '/../../config/laravel-menu/views.php' => config_path('laravel-menu/views.php'),
+            __DIR__.'/../../config/provision_administration.php' => config_path('provision_administration.php'),
+            __DIR__.'/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
+            __DIR__.'/../../config/entrust.php' => config_path('entrust.php'),
+            __DIR__.'/../../config/laravel-form-builder.php' => config_path('laravel-form-builder.php'),
+            __DIR__.'/../../config/laravel-menu/settings.php' => config_path('laravel-menu/settings.php'),
+            __DIR__.'/../../config/laravel-menu/views.php' => config_path('laravel-menu/views.php'),
         ], 'config');
 
         //set custom auth provider & guard
@@ -46,13 +48,13 @@ class AdministrationServiceProvider extends ServiceProvider
             'auth.guards.provision_administration' => [
                 'driver' => 'session',
                 'provider' => 'provision_administration',
-            ]
+            ],
         ]);
         Config::set([
             'auth.providers.provision_administration' => [
                 'driver' => 'eloquent',
-                'model' => \ProVision\Administration\AdminUser::class
-            ]
+                'model' => \ProVision\Administration\AdminUser::class,
+            ],
         ]);
         Config::set([
             'auth.passwords.provision_administration' => [
@@ -60,21 +62,20 @@ class AdministrationServiceProvider extends ServiceProvider
                 'email' => 'auth.emails.password',
                 'table' => 'password_resets',
                 'expire' => 60,
-            ]
+            ],
         ]);
-
 
         /*
          * Routes
          */
-        if (!$this->app->routesAreCached()) {
-            include __DIR__ . '/../Http/routes.php';
+        if (! $this->app->routesAreCached()) {
+            include __DIR__.'/../Http/routes.php';
         }
 
         /*
          * views
          */
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'administration');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'administration');
         /*
         $this->publishes([
             __DIR__ . '/../../resources/views' => resource_path('views/vendor/provision/administration'),
@@ -85,15 +86,15 @@ class AdministrationServiceProvider extends ServiceProvider
          * assets
          */
         $this->publishes([
-            __DIR__ . '/../../public/assets' => public_path('vendor/provision/administration'),
+            __DIR__.'/../../public/assets' => public_path('vendor/provision/administration'),
         ], 'public');
 
         /*
          * translations
          */
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'administration');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'administration');
         $this->publishes([
-            __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/provision/administration'),
+            __DIR__.'/../../resources/lang' => resource_path('lang/vendor/provision/administration'),
         ], 'lang');
 
         /*
@@ -108,7 +109,6 @@ class AdministrationServiceProvider extends ServiceProvider
             __DIR__ . '/../../database/seeds/' => database_path('seeds')
         ], 'seeds');
         */
-
 
         $this->publicBoot();
         $this->adminBoot();
@@ -130,11 +130,11 @@ class AdministrationServiceProvider extends ServiceProvider
             //set middleware
             Config::set('log-viewer.route.attributes.middleware', [
                 'web',
-                'permission:administrators.index'
+                'permission:administrators.index',
             ]);
 
             //set url
-            Config::set('log-viewer.route.attributes.prefix', Administration::getLanguage() . '/' . Config::get('provision_administration.url_prefix') . '/log-viewer');
+            Config::set('log-viewer.route.attributes.prefix', Administration::getLanguage().'/'.Config::get('provision_administration.url_prefix').'/log-viewer');
         }
     }
 
@@ -142,12 +142,12 @@ class AdministrationServiceProvider extends ServiceProvider
     {
 
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
-        if (!empty(\LaravelLocalization::setLocale())) {
-            if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
+        if (! empty(\LaravelLocalization::setLocale())) {
+            if (! \Request::is(\LaravelLocalization::setLocale().'/'.config('provision_administration.url_prefix').'*')) {
                 return false;
             }
         } else {
-            if (!\Request::is(config('provision_administration.url_prefix') . '*')) {
+            if (! \Request::is(config('provision_administration.url_prefix').'*')) {
                 return false;
             }
         }
@@ -168,27 +168,26 @@ class AdministrationServiceProvider extends ServiceProvider
          */
         Form::component('adminDeleteButton', 'administration::components.form.admin_delete_button', [
             'name',
-            'href'
+            'href',
         ]);
         Form::component('adminRestoreButton', 'administration::components.form.admin_restore_button', [
             'name',
-            'href'
+            'href',
         ]);
         Form::component('adminSwitchButton', 'administration::components.form.admin_switch_button', [
             'name',
-            'model'
+            'model',
         ]);
         Form::component('adminEditButton', 'administration::components.form.admin_edit_button', [
             'name',
-            'href'
+            'href',
         ]);
         Form::component('adminMediaButton', 'administration::components.form.admin_media_button', [
-            'model'
+            'model',
         ]);
         Form::component('adminOrderButton', 'administration::components.form.admin_order_button', [
-            'model'
+            'model',
         ]);
-
 
         /*
       * Administration menu init
@@ -204,7 +203,7 @@ class AdministrationServiceProvider extends ServiceProvider
             //home
             $menu->add(trans('administration::index.home'), [
                 'route' => 'provision.administration.index',
-                'nickname' => 'home'
+                'nickname' => 'home',
             ])
                 ->data('icon', 'home')
                 ->data('order', 2);
@@ -231,36 +230,35 @@ class AdministrationServiceProvider extends ServiceProvider
                 ->data('icon', 'users');
             $administratorsMenu->add(trans('administration::administrators.create_administrator'), [
                 'nickname' => 'administrators.create',
-                'route' => 'provision.administration.administrators.create'
+                'route' => 'provision.administration.administrators.create',
             ])
                 ->data('icon', 'plus')
                 ->data('order', 1);
             $administratorsMenu->add(trans('administration::index.view_all'), [
                 'nickname' => 'administrators',
-                'route' => 'provision.administration.administrators.index'
+                'route' => 'provision.administration.administrators.index',
             ])
                 ->data('icon', 'list')
                 ->data('order', 2);
-
 
             /*
              * System -> Administrators -> Roles
              */
             $rolesMenu = $administratorsMenu->add(trans('administration::administrators.groups'), [
                 'nickname' => 'administrators.groups',
-                'route' => 'provision.administration.administrators-roles.index'
+                'route' => 'provision.administration.administrators-roles.index',
             ])
                 ->data('icon', 'users')
                 ->data('order', 2);
             $rolesMenu->add(trans('administration::index.add'), [
                 'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.administrators-roles.create'
+                'route' => 'provision.administration.administrators-roles.create',
             ])
                 ->data('icon', 'plus')
                 ->data('order', 1);
             $rolesMenu->add(trans('administration::index.view_all'), [
                 'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.administrators-roles.index'
+                'route' => 'provision.administration.administrators-roles.index',
             ])
                 ->data('icon', 'list')
                 ->data('order', 2);
@@ -270,30 +268,28 @@ class AdministrationServiceProvider extends ServiceProvider
              */
             $staticMenu = $menu->add(trans('administration::static_blocks.name'), [
                 'nickname' => 'administrators.static_blocks',
-                'route' => 'provision.administration.static-blocks.index'
+                'route' => 'provision.administration.static-blocks.index',
             ])->data('icon', 'th-large')
                 ->data('order', 10002);
             $staticMenu->add(trans('administration::index.add'), [
                 'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.static-blocks.create'
+                'route' => 'provision.administration.static-blocks.create',
             ])->data('icon', 'plus')
                 ->data('order', 1);
             $staticMenu->add(trans('administration::index.view_all'), [
                 'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.static-blocks.index'
+                'route' => 'provision.administration.static-blocks.index',
             ])->data('icon', 'list')
                 ->data('order', 2);
-
 
             /*
              * System -> Settings
              */
             $menu->add(trans('administration::settings.title'), [
                 'nickname' => 'settings',
-                'route' => 'provision.administration.settings.index'
+                'route' => 'provision.administration.settings.index',
             ])->data('order', 10002)
                 ->data('icon', 'sliders');
-
 
             /*
              * System -> System
@@ -301,12 +297,12 @@ class AdministrationServiceProvider extends ServiceProvider
             $systemMenu = $menu->add(trans('administration::systems.title'), ['nickname' => 'system'])->data('order', 10003)->data('icon', 'cogs');
             $systemMenu->add(trans('administration::systems.roles-repair'), [
                 'nickname' => 'system-roles-repair',
-                'route' => 'provision.administration.systems.roles-repair'
+                'route' => 'provision.administration.systems.roles-repair',
             ])->data('icon', 'user-secret');
 
             $systemMenu->add(trans('administration::systems.maintenance-mode'), [
                 'nickname' => 'system-maintenance-mode',
-                'route' => 'provision.administration.systems.maintenance-mode'
+                'route' => 'provision.administration.systems.maintenance-mode',
             ])->data('icon', 'hand-paper-o');
 
             // System -> System -> Log Viewer
@@ -326,24 +322,21 @@ class AdministrationServiceProvider extends ServiceProvider
             $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])
                 ->data('order', 10004)
                 ->data('icon', 'globe');
-
         });
     }
 
     private function modulesBoot()
     {
 
-
         /*
          * load user installed modules
          */
         foreach (Module::all() as $module) {
-
             $adminInitClass = module_class($module['slug'], 'Administration');
 
             if (class_exists($adminInitClass)) {
                 //load module translations @todo: да се помисли НЕ Е ДОБРЕ ТУК!
-                $this->loadTranslationsFrom(app_path('Modules/' . $module['basename'] . '/Resources/Lang'), $module['slug']);
+                $this->loadTranslationsFrom(app_path('Modules/'.$module['basename'].'/Resources/Lang'), $module['slug']);
 
                 //boot module /Administration.php
                 Administration::bootModule($module, $adminInitClass);
@@ -363,22 +356,21 @@ class AdministrationServiceProvider extends ServiceProvider
         Config::set(['session.cookie' => 'provision_session']);
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/provision_administration.php', 'provision_administration'
+            __DIR__.'/../../config/provision_administration.php', 'provision_administration'
         );
 
         /*
          * lib configs
          */
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/entrust.php', 'entrust'
+            __DIR__.'/../../config/entrust.php', 'entrust'
         );
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/laravellocalization.php', 'laravellocalization'
+            __DIR__.'/../../config/laravellocalization.php', 'laravellocalization'
         );
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/laravel-form-builder.php', 'laravel-form-builder'
+            __DIR__.'/../../config/laravel-form-builder.php', 'laravel-form-builder'
         );
-
 
         /*
         * Register the service provider for the dependency.
@@ -466,7 +458,5 @@ class AdministrationServiceProvider extends ServiceProvider
             //collapse navigation
             $object->disableFor('administration-navigation-collapsed');
         });
-
     }
-
 }

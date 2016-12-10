@@ -1,7 +1,12 @@
 <?php
 
-return array(
-    'default' => array(
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
+return [
+    'default' => [
         'auto_activate' => true,
         'activate_parents' => true,
         'active_class' => 'active',
@@ -11,5 +16,5 @@ return array(
         // string|array
         'active_element' => 'item',
         // item|link
-    )
-);
+    ],
+];

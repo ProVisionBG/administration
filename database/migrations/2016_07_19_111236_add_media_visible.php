@@ -1,18 +1,25 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 use Illuminate\Database\Migrations\Migration;
 
 /*
  * todo@ да се премести в пакета
  */
 
-class AddMediaVisible extends Migration {
+class AddMediaVisible extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         Schema::table('media', function ($table) {
             $table->boolean('visible')->index()->default(true);
         });
@@ -23,7 +30,8 @@ class AddMediaVisible extends Migration {
      *
      * @return void
      */
-    public function down() {
+    public function down()
+    {
         Schema::table('media', function ($table) {
             $table->dropColumn(['visible']);
         });

@@ -1,14 +1,20 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Middleware;
 
-use Closure;
 use File;
+use Closure;
+use ProVision\Administration\Administration;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
-use ProVision\Administration\Administration;
 
-class CheckForMaintenanceMode {
+class CheckForMaintenanceMode
+{
     /**
      * The application implementation.
      *
@@ -22,7 +28,8 @@ class CheckForMaintenanceMode {
      * @param  \Illuminate\Contracts\Foundation\Application $app
      * @return void
      */
-    public function __construct(Application $app) {
+    public function __construct(Application $app)
+    {
         $this->app = $app;
     }
 
@@ -35,17 +42,17 @@ class CheckForMaintenanceMode {
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    public function handle($request, Closure $next) {
-
+    public function handle($request, Closure $next)
+    {
         if (Administration::routeInAdministration()) {
             return $next($request);
         }
 
-        if (File::exists($this->app->storagePath() . '/framework/down-provision-administration')) {
-            $data = json_decode(file_get_contents($this->app->storagePath() . '/framework/down-provision-administration'), true);
+        if (File::exists($this->app->storagePath().'/framework/down-provision-administration')) {
+            $data = json_decode(file_get_contents($this->app->storagePath().'/framework/down-provision-administration'), true);
 
             //throw new MaintenanceModeException($data['time'], $data['retry'], $data['message']);
-            return response(view('administration::errors.maintenance_mode',compact('data')), 503);
+            return response(view('administration::errors.maintenance_mode', compact('data')), 503);
         }
 
         return $next($request);

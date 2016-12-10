@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 return [
 
     /*
@@ -15,6 +20,6 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'login-box-title' => 'Вход в административен панел'
+    'login-box-title' => 'Вход в административен панел',
 
 ];

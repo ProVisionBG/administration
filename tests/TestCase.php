@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Tests;
 
-class TestCase extends \Illuminate\Foundation\Testing\TestCase {
+class TestCase extends \Illuminate\Foundation\Testing\TestCase
+{
     /**
      * The base URL to use while testing the application.
      *
@@ -15,9 +21,9 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase {
      *
      * @return \Illuminate\Foundation\Application
      */
-    public function createApplication() {
-        $app = require_once __DIR__ . '/../bootstrap/app.php';
-
+    public function createApplication()
+    {
+        $app = require_once __DIR__.'/../bootstrap/app.php';
 
         $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
 

@@ -1,6 +1,13 @@
-<?php namespace ProVision\Administration\Http\Middleware;
+<?php
 
-/**
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
+namespace ProVision\Administration\Http\Middleware;
+
+/*
  * This file is part of Entrust,
  * a role & permission management solution for Laravel.
  *
@@ -13,7 +20,8 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use ProVision\Administration\Permission;
 
-class EntrustAuto {
+class EntrustAuto
+{
     protected $auth;
 
     /**
@@ -21,7 +29,8 @@ class EntrustAuto {
      *
      * @param Guard $auth
      */
-    public function __construct(Guard $auth) {
+    public function __construct(Guard $auth)
+    {
         $this->auth = Auth::guard('provision_administration');
     }
 
@@ -33,19 +42,20 @@ class EntrustAuto {
      * @param  $permissions
      * @return mixed
      */
-    public function handle($request, Closure $next) {
+    public function handle($request, Closure $next)
+    {
 
         /*
          * check request is in administration
          */
-        if (!\Administration::routeInAdministration()) {
+        if (! \Administration::routeInAdministration()) {
             return $next($request);
         }
 
         $permission = str_ireplace([
-            'provision.administration.'
+            'provision.administration.',
         ], [
-            ''
+            '',
         ], \Route::currentRouteName());
 
         /*
@@ -55,16 +65,17 @@ class EntrustAuto {
             /*
              * Несъществува такъв пермишън...
              */
-            \Debugbar::info('Permission not found: ' . $permission);
+            \Debugbar::info('Permission not found: '.$permission);
+
             return $next($request);
         }
 
-        \Debugbar::info('Auto check permission: ' . $permission);
+        \Debugbar::info('Auto check permission: '.$permission);
 
-        if ($this->auth->guest() || !$this->auth->user()->can($permission)) {
-            \Debugbar::error('Permission error: ' . $permission);
+        if ($this->auth->guest() || ! $this->auth->user()->can($permission)) {
+            \Debugbar::error('Permission error: '.$permission);
             //abort(403, 'Require permission: ' . $permission);
-            return response()->view("administration::errors.403", ['permission' => $permission], 403);
+            return response()->view('administration::errors.403', ['permission' => $permission], 403);
         }
 
         return $next($request);

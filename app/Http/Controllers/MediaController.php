@@ -1,26 +1,32 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Response;
 use Illuminate\Http\Request;
 use ProVision\Administration\Media;
-use Response;
+use App\Http\Controllers\Controller;
 
-class MediaController extends Controller {
+class MediaController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request) {
-
-        if (!$request->has('itemId')) {
-            return Response::json(array('Invalid item_id'), 422);
+    public function index(Request $request)
+    {
+        if (! $request->has('itemId')) {
+            return Response::json(['Invalid item_id'], 422);
         }
 
-        if (!$request->has('moduleName')) {
-            return Response::json(array('Invalid module'), 422);
+        if (! $request->has('moduleName')) {
+            return Response::json(['Invalid module'], 422);
         }
 
         $mediaQuery = Media::where('item_id', $request->input('itemId'))
@@ -42,7 +48,8 @@ class MediaController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -52,15 +59,16 @@ class MediaController extends Controller {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $file = $request->file('file');
 
-        if (!$file) {
-            return Response::json(array('not selected file'), 422);
+        if (! $file) {
+            return Response::json(['not selected file'], 422);
         }
 
-        if (!$file->isValid()) {
-            return Response::json(array('Invalid file'), 422);
+        if (! $file->isValid()) {
+            return Response::json(['Invalid file'], 422);
         }
 
         $media = new Media();
@@ -68,16 +76,16 @@ class MediaController extends Controller {
         if ($request->has('itemId')) {
             $media->item_id = $request->input('itemId');
         } else {
-            return Response::json(array('Invalid item_id'), 422);
+            return Response::json(['Invalid item_id'], 422);
         }
 
         if ($request->has('moduleName')) {
             $media->setModuleAttribute($request->input('moduleName'));
         } else {
-            return Response::json(array('Invalid module'), 422);
+            return Response::json(['Invalid module'], 422);
         }
 
-        if ($request->has('moduleSubName') && !empty($request->input('moduleSubName'))) {
+        if ($request->has('moduleSubName') && ! empty($request->input('moduleSubName'))) {
             $media->setSubModuleAttribute($request->input('moduleSubName'));
         } else {
             $media->setSubModuleAttribute('');
@@ -85,21 +93,21 @@ class MediaController extends Controller {
 
         $media->save();
 
-        $fullPath = public_path() . '/uploads/media/' . $media->module . '/';
+        $fullPath = public_path().'/uploads/media/'.$media->module.'/';
         if ($request->has('moduleSubName')) {
-            $fullPath .= '/' . $media->sub_module . '/';
+            $fullPath .= '/'.$media->sub_module.'/';
         }
-        $fullPath .= '/' . $media->item_id . '/' . $media->id . '/';
+        $fullPath .= '/'.$media->item_id.'/'.$media->id.'/';
 
         $extension = $file->getClientOriginalExtension();
-        $newFileName = md5($file->getFilename() . time());
+        $newFileName = md5($file->getFilename().time());
 
-        $file->move($fullPath, $newFileName . '.' . $extension);
+        $file->move($fullPath, $newFileName.'.'.$extension);
 
-        $media->file = $newFileName . '.' . $extension;
+        $media->file = $newFileName.'.'.$extension;
         $media->save();
 
-        $media->resize($fullPath . $media->file);
+        $media->resize($fullPath.$media->file);
 
         return view('administration::media.item', ['item' => $media]);
     }
@@ -110,7 +118,8 @@ class MediaController extends Controller {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -120,7 +129,8 @@ class MediaController extends Controller {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
@@ -131,7 +141,8 @@ class MediaController extends Controller {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         if ($request->has('type')) {
             if ($request->input('type') == 'sort') {
                 /*
@@ -151,7 +162,6 @@ class MediaController extends Controller {
                 }
 
                 return Response::json(['ok'], 200);
-
             } elseif ($request->input('type') == 'choice-lang') {
                 /*
                  * choice lang
@@ -163,11 +173,11 @@ class MediaController extends Controller {
                     $media->lang = null;
                 }
                 $media->save();
+
                 return Response::json(['ok'], 200);
             }
         }
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -175,13 +185,14 @@ class MediaController extends Controller {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-
+    public function destroy($id)
+    {
         if (\Request::has('checked')) {
             foreach (\Request::input('checked') as $id) {
                 $media = Media::findOrFail($id);
                 $media->delete();
             }
+
             return \Response::json(\Request::input('checked'), 200);
         }
 

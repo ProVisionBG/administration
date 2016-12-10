@@ -1,24 +1,26 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => [
         'web',
         'localeSessionRedirect',
-        'localizationRedirect'
-    ]
+        'localizationRedirect',
+    ],
 ], function () {
-
     Route::group([
         'namespace' => 'ProVision\Administration\Http\Controllers',
         'prefix' => config('provision_administration.url_prefix'),
-        'as' => 'provision.administration.'
+        'as' => 'provision.administration.',
     ], function () {
-
         Route::get('/', [
             'as' => 'index',
-            'uses' => 'AdministrationController@index'
+            'uses' => 'AdministrationController@index',
         ]);
 
 //        Route::get('login', [
@@ -40,12 +42,12 @@ Route::group([
         // Authentication Routes...
         Route::get('login', [
             'as' => 'login',
-            'uses' => 'Auth\LoginController@showLoginForm'
+            'uses' => 'Auth\LoginController@showLoginForm',
         ]);
 
         Route::post('login', [
             'as' => 'login_post',
-            'uses' => 'Auth\LoginController@login'
+            'uses' => 'Auth\LoginController@login',
         ]);
 
         Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -57,37 +59,36 @@ Route::group([
         // Password Reset Routes...
         Route::get('password/reset', [
             'as' => 'password_reset',
-            'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
+            'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm',
         ]);
 
         Route::post('password/email', [
             'as' => 'password_email_post',
-            'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail'
+            'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail',
         ]);
 
         Route::get('password/reset/{token}', [
             'as' => 'password_reset_token',
-            'uses' => 'Auth\ResetPasswordController@showResetForm'
+            'uses' => 'Auth\ResetPasswordController@showResetForm',
         ]);
 
         Route::post('password/reset', [
             'as' => 'password_reset_post',
-            'uses' => 'Auth\ResetPasswordController@reset'
+            'uses' => 'Auth\ResetPasswordController@reset',
         ]);
-
 
         Route::group([
             'middleware' => [
-                'permission:administration-access'
-            ]
+                'permission:administration-access',
+            ],
         ], function () {
-
             Route::get('logout', [
                 'as' => 'logout',
                 function () {
                     Auth::guard('provision_administration')->logout();
+
                     return Redirect::route('provision.administration.login');
-                }
+                },
             ]);
 
             /*
@@ -101,8 +102,8 @@ Route::group([
                     'create' => 'administrators.create',
                     'store' => 'administrators.store',
                     'update' => 'administrators.update',
-                    'destroy' => 'administrators.destroy'
-                ]
+                    'destroy' => 'administrators.destroy',
+                ],
             ]);
 
             /*
@@ -116,8 +117,8 @@ Route::group([
                     'create' => 'administrators-roles.create',
                     'store' => 'administrators-roles.store',
                     'update' => 'administrators-roles.update',
-                    'destroy' => 'administrators-roles.destroy'
-                ]
+                    'destroy' => 'administrators-roles.destroy',
+                ],
             ]);
 
             /*
@@ -131,8 +132,8 @@ Route::group([
                     'create' => 'static-blocks.create',
                     'store' => 'static-blocks.store',
                     'update' => 'static-blocks.update',
-                    'destroy' => 'static-blocks.destroy'
-                ]
+                    'destroy' => 'static-blocks.destroy',
+                ],
             ]);
 
             /*
@@ -151,8 +152,8 @@ Route::group([
                 ],
                 'only' => [
                     'index',
-                    'update'
-                ]
+                    'update',
+                ],
             ]);
 
             /*
@@ -160,21 +161,21 @@ Route::group([
              */
             Route::group([
                 'as' => 'systems.',
-                'prefix' => 'systems'
+                'prefix' => 'systems',
             ], function () {
                 Route::get('roles-repair', [
                     'as' => 'roles-repair',
-                    'uses' => 'Systems\RolesRepairController@index'
+                    'uses' => 'Systems\RolesRepairController@index',
                 ]);
 
                 Route::get('maintenance-mode', [
                     'as' => 'maintenance-mode',
-                    'uses' => 'Systems\MaintenanceModeController@index'
+                    'uses' => 'Systems\MaintenanceModeController@index',
                 ]);
 
                 Route::post('maintenance-mode-update', [
                     'as' => 'maintenance-mode-update',
-                    'uses' => 'Systems\MaintenanceModeController@update'
+                    'uses' => 'Systems\MaintenanceModeController@update',
                 ]);
             });
 
@@ -183,16 +184,16 @@ Route::group([
              */
             Route::group([
                 'as' => 'ajax.',
-                'prefix' => 'ajax'
+                'prefix' => 'ajax',
             ], function () {
                 Route::post('save-order', [
                     'as' => 'save-order',
-                    'uses' => 'AjaxController@saveOrder'
+                    'uses' => 'AjaxController@saveOrder',
                 ]);
 
                 Route::post('save-switch', [
                     'as' => 'save-switch',
-                    'uses' => 'AjaxController@saveQuickSwitch'
+                    'uses' => 'AjaxController@saveQuickSwitch',
                 ]);
             });
 
@@ -208,12 +209,8 @@ Route::group([
                     'store' => 'media.store',
                     'update' => 'media.update',
                     'destroy' => 'media.destroy',
-                ]
+                ],
             ]);
-
-
         });
-
     });
-
 });

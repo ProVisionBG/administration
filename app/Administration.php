@@ -1,76 +1,83 @@
 <?php
+
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 namespace ProVision\Administration;
 
 use File;
-use Illuminate\Support\Facades\Facade;
-use LaravelLocalization;
 use Lavary\Menu\Menu;
+use LaravelLocalization;
+use Illuminate\Support\Facades\Facade;
 
 class Administration extends Facade
 {
-
     const AS_MODULE_PREFIX = 'provision.administration.module.'; //administration module route prefix
 
     /**
-     * inited modules container
+     * inited modules container.
      * @var string
      */
     private static $modules;
 
     /**
-     * Current module name
+     * Current module name.
      * @var string
      */
     private static $currentModuleTitle = 'Enter module name here!';
 
     /**
-     * Current module sub name
+     * Current module sub name.
      * @var string
      */
     private static $currentModuleSubTitle = '';
 
     /**
-     * Set current module name for administration titles
+     * Set current module name for administration titles.
      * @param $name
      * @return string
      */
     public static function setTitle($name)
     {
-        Administration::$currentModuleTitle = $name;
+        self::$currentModuleTitle = $name;
+
         return $name;
     }
 
     /**
-     * Get current module name
+     * Get current module name.
      * @return string
      */
     public static function getTitle()
     {
-        return Administration::$currentModuleTitle;
+        return self::$currentModuleTitle;
     }
 
     /**
-     * Set current module sub name for administration titles
+     * Set current module sub name for administration titles.
      * @param $name
      * @return string
      */
     public static function setSubTitle($name)
     {
-        Administration::$currentModuleSubTitle = $name;
+        self::$currentModuleSubTitle = $name;
+
         return $name;
     }
 
     /**
-     * Get current module sub name
+     * Get current module sub name.
      * @return string
      */
     public static function getSubTitle()
     {
-        return Administration::$currentModuleSubTitle;
+        return self::$currentModuleSubTitle;
     }
 
     /**
-     * Get all language codes
+     * Get all language codes.
      * @return array
      */
     public static function getLanguages()
@@ -79,13 +86,13 @@ class Administration extends Facade
     }
 
     /**
-     * Get current language code
+     * Get current language code.
      * @return string
      */
     public static function getLanguage()
     {
         $locale = LaravelLocalization::setLocale();
-        if (!empty($locale)) {
+        if (! empty($locale)) {
             return $locale;
         } else {
             return \App::getLocale();
@@ -93,7 +100,7 @@ class Administration extends Facade
     }
 
     /**
-     * Get static block for blade templates
+     * Get static block for blade templates.
      * @param $key
      * @return mixed
      */
@@ -104,26 +111,28 @@ class Administration extends Facade
             return $block->text;
         }
 
-        \Debugbar::error('static block not found: ' . $key);
+        \Debugbar::error('static block not found: '.$key);
+
         return false;
     }
 
     /**
-     * Get module order index
+     * Get module order index.
      * @param $module
      * @return mixed
      */
     public static function getModuleOrderIndex($module)
     {
         $module = \Module::where('slug', $module);
-        if (!$module) {
+        if (! $module) {
             return false;
         }
+
         return $module['order'];
     }
 
     /**
-     * Get administration menu instance
+     * Get administration menu instance.
      * @return Menu
      */
     public static function getMenuInstance()
@@ -132,11 +141,12 @@ class Administration extends Facade
         if (empty($menu)) {
             $menu = \Menu::make('ProVisionAdministrationMenu', []);
         }
+
         return $menu;
     }
 
     /**
-     * Is in maintenance mode
+     * Is in maintenance mode.
      * @return bool
      */
     public static function isInMaintenanceMode()
@@ -145,18 +155,18 @@ class Administration extends Facade
     }
 
     /**
-     * Check request URL is in administration
+     * Check request URL is in administration.
      * @return bool
      */
     public static function routeInAdministration()
     {
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
-        if (!empty(\LaravelLocalization::setLocale())) {
-            if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
+        if (! empty(\LaravelLocalization::setLocale())) {
+            if (! \Request::is(\LaravelLocalization::setLocale().'/'.config('provision_administration.url_prefix').'*')) {
                 return false;
             }
         } else {
-            if (!\Request::is(config('provision_administration.url_prefix') . '*')) {
+            if (! \Request::is(config('provision_administration.url_prefix').'*')) {
                 return false;
             }
         }
@@ -165,7 +175,7 @@ class Administration extends Facade
     }
 
     /**
-     * Web site prefix in route
+     * Web site prefix in route.
      * @return string
      */
     public static function routePrefix()
@@ -174,16 +184,16 @@ class Administration extends Facade
     }
 
     /**
-     * Administration AS in route
+     * Administration AS in route.
      * @return string
      */
     public static function routeAdministrationAs()
     {
-        return \Administration::getLanguage() . '.';
+        return \Administration::getLanguage().'.';
     }
 
     /**
-     * Адреси за администраторските route
+     * Адреси за администраторските route.
      * @param $name
      * @param array $parameters
      * @param bool $absolute
@@ -191,37 +201,37 @@ class Administration extends Facade
      */
     public static function route($name, $parameters = [], $absolute = true)
     {
-        return route(Administration::routeAdministrationName($name), $parameters, $absolute);
+        return route(self::routeAdministrationName($name), $parameters, $absolute);
     }
 
     /**
-     * Име на администраторският route
+     * Име на администраторският route.
      * @param $name
      * @return string
      */
     public static function routeAdministrationName($name)
     {
-        return self::AS_MODULE_PREFIX . $name;
+        return self::AS_MODULE_PREFIX.$name;
     }
 
     /**
-     * Get route administration name
+     * Get route administration name.
      * @param $name
      * @return string
      */
     public static function routeName($name)
     {
-        return Administration::routeAdministrationName($name);
+        return self::routeAdministrationName($name);
     }
 
     /**
-     * Check request is in administration dashboard
+     * Check request is in administration dashboard.
      * @return bool
      */
     public static function isDashboard()
     {
-        if (!empty(\LaravelLocalization::setLocale())) {
-            if (\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix'))) {
+        if (! empty(\LaravelLocalization::setLocale())) {
+            if (\Request::is(\LaravelLocalization::setLocale().'/'.config('provision_administration.url_prefix'))) {
                 return true;
             }
         } else {
@@ -234,7 +244,7 @@ class Administration extends Facade
     }
 
     /**
-     * Boot module init class
+     * Boot module init class.
      *
      * @param $module
      * @param $administrationClass
@@ -247,8 +257,8 @@ class Administration extends Facade
         if (method_exists($moduleAdminInit, 'routes')) {
             \Route::group([
                 'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
-                'as' => Administration::AS_MODULE_PREFIX,
-                'middleware' => \ProVision\Administration\Administration::routeMiddleware()
+                'as' => self::AS_MODULE_PREFIX,
+                'middleware' => \ProVision\Administration\Administration::routeMiddleware(),
             ], function () use ($moduleAdminInit, $module) {
                 $moduleAdminInit->routes($module);
             });
@@ -266,21 +276,20 @@ class Administration extends Facade
     }
 
     /**
-     * Administration prefix in route
+     * Administration prefix in route.
      * @return mixed|string
      */
     public static function routeAdministrationPrefix()
     {
-        if (!empty(\LaravelLocalization::setLocale())) {
-            return \LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix');
+        if (! empty(\LaravelLocalization::setLocale())) {
+            return \LaravelLocalization::setLocale().'/'.config('provision_administration.url_prefix');
         } else {
             return config('provision_administration.url_prefix');
         }
-
     }
 
     /**
-     * Default middleware for route
+     * Default middleware for route.
      * @param array $middleware
      * @return array
      */
@@ -291,7 +300,7 @@ class Administration extends Facade
             'localeSessionRedirect',
             'localizationRedirect',
         ];
+
         return array_merge($default, $middleware);
     }
-
 }

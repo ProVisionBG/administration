@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * ProVision Administration, http://ProVision.bg
+ * Author: Venelin Iliev, http://veneliniliev.com
+ */
+
 return [
 
     'version' => '0.0.1',
@@ -35,8 +40,8 @@ return [
         'A' => [
             'mode' => 'resize',
             'width' => 200,
-            'height' => 200
-        ]
+            'height' => 200,
+        ],
     ],
 
     /*
@@ -44,5 +49,5 @@ return [
      */
     'packages' => [
         'log-viewer' => true, //LogViewer: https://github.com/ARCANEDEV/LogViewer
-    ]
+    ],
 ];
