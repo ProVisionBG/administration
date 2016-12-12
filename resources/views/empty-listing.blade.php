@@ -60,7 +60,7 @@
 
         var datatableConfig = {
             "aaSorting": [[0, "desc"]], // @todo: да може да се сменя от контролера дефоутлният ордер
-            "stateSave": true,
+            //"stateSave": true,
             "lengthChange": true,
             "responsive": true,
             "processing": true,
