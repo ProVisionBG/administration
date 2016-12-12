@@ -257,13 +257,20 @@ trait RevisionableTrait
      **/
     public function getSystemUserId()
     {
+
         if (\ProVision\Administration\Administration::routeInAdministration()) {
             $this->guard = 'provision_administration';
         } else {
             $this->guard = 'web';
         }
 
-        return \Auth::guard($this->guard)->user()->id;
+
+        if (\Auth::guard($this->guard)->check()) {
+            return \Auth::guard($this->guard)->user()->id;
+        }
+
+        return null;
+
 //
 //        try {
 //            if (class_exists($class = '\SleepingOwl\AdminAuth\Facades\AdminAuth')

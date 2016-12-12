@@ -36,10 +36,10 @@
                         @foreach($revData->sortBy('created_at')->reverse() as $history)
                             <li>
                                 @if($history->key == 'created_at' && !$history->old_value)
-                                    <b>{{ $history->userResponsible()->name }}</b> created this resource
+                                    <b>{{ @$history->userResponsible()->name }}</b> created this resource
                                     at {{ $history->newValue() }}
                                 @else
-                                    <b>{{ $history->userResponsible()->name }}</b> changed
+                                    <b>{{ @$history->userResponsible()->name }}</b> changed
                                     <b>{{trans($form->getModel()->module.'::admin.'.$history->fieldName())  }}</b>
                                     from <b>{{ $history->oldValue() }}</b> to <b>{{ $history->newValue() }}</b>
                                 @endif
