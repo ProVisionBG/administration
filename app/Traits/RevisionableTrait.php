@@ -260,6 +260,7 @@ trait RevisionableTrait
         if (!isset($this->guard)) {
             $this->guard = 'web';
         }
+
         return \Auth::guard($this->guard)->user()->id;
 //
 //        try {
