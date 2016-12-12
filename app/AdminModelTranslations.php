@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdminModelTranslations extends Model
 {
+    /**
+     * Guard used in administration.
+     *
+     * @var string
+     */
+    public $guard = 'provision_administration';
+
     public function __construct()
     {
         parent::__construct();
