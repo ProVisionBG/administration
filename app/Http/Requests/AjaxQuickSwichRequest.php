@@ -32,7 +32,7 @@ class AjaxQuickSwichRequest extends FormRequest
             'id' => 'required|integer',
             'field' => 'required',
             'state' => 'required|in:true,false',
-            'class' => 'required'
+            'class' => 'required',
         ];
     }
 }

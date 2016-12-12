@@ -17,7 +17,7 @@ class AjaxController extends BaseAdministrationController
      */
     public function saveOrder()
     {
-        if (!empty(\Request::input('data'))) {
+        if (! empty(\Request::input('data'))) {
             //$debug = [];
             foreach (\Request::input('data') as $index => $item) {
                 if (empty($item)) {
@@ -65,7 +65,7 @@ class AjaxController extends BaseAdministrationController
         $object = new $request->class;
         $object = $object->where('id', $request->id)->first();
         $object->update([
-            $request->field => $request->state
+            $request->field => $request->state,
         ]);
 
         return $object;
