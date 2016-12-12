@@ -55,7 +55,7 @@ trait RevisionableTrait
     {
         parent::boot();
 
-        if (! method_exists(get_called_class(), 'bootTraits')) {
+        if (!method_exists(get_called_class(), 'bootTraits')) {
             static::bootRevisionableTrait();
         }
     }
@@ -105,7 +105,7 @@ trait RevisionableTrait
      */
     public function preSave()
     {
-        if (! isset($this->revisionEnabled) || $this->revisionEnabled) {
+        if (!isset($this->revisionEnabled) || $this->revisionEnabled) {
             // if there's no revisionEnabled. Or if there is, if it's true
 
             $this->originalData = $this->original;
@@ -114,7 +114,7 @@ trait RevisionableTrait
             // we can only safely compare basic items,
             // so for now we drop any object based items, like DateTime
             foreach ($this->updatedData as $key => $val) {
-                if (gettype($val) == 'object' && ! method_exists($val, '__toString')) {
+                if (gettype($val) == 'object' && !method_exists($val, '__toString')) {
                     unset($this->originalData[$key]);
                     unset($this->updatedData[$key]);
                     array_push($this->dontKeep, $key);
@@ -158,7 +158,7 @@ trait RevisionableTrait
         }
 
         // check if the model already exists
-        if (((! isset($this->revisionEnabled) || $this->revisionEnabled) && $this->updating) && (! $LimitReached || $RevisionCleanup)) {
+        if (((!isset($this->revisionEnabled) || $this->revisionEnabled) && $this->updating) && (!$LimitReached || $RevisionCleanup)) {
             // if it does, it means we're updating
 
             $changes_to_record = $this->changedRevisionableFields();
@@ -212,8 +212,8 @@ trait RevisionableTrait
         foreach ($this->dirtyData as $key => $value) {
             // check that the field is revisionable, and double check
             // that it's actually new data in case dirty is, well, clean
-            if ($this->isRevisionable($key) && ! is_array($value)) {
-                if (! isset($this->originalData[$key]) || $this->originalData[$key] != $this->updatedData[$key]) {
+            if ($this->isRevisionable($key) && !is_array($value)) {
+                if (!isset($this->originalData[$key]) || $this->originalData[$key] != $this->updatedData[$key]) {
                     $changes_to_record[$key] = $value;
                 }
             } else {
@@ -257,11 +257,10 @@ trait RevisionableTrait
      **/
     public function getSystemUserId()
     {
+        if (!isset($this->guard)) {
+            $this->guard = 'web';
+        }
         return \Auth::guard($this->guard)->user()->id;
-
-//        if (!isset($this->guard)) {
-//            $this->guard = 'web';
-//        }
 //
 //        try {
 //            if (class_exists($class = '\SleepingOwl\AdminAuth\Facades\AdminAuth')
@@ -290,7 +289,7 @@ trait RevisionableTrait
             return false;
         }
 
-        if ((! isset($this->revisionEnabled) || $this->revisionEnabled)) {
+        if ((!isset($this->revisionEnabled) || $this->revisionEnabled)) {
             $revisions[] = [
                 'revisionable_type' => $this->getMorphClass(),
                 'revisionable_id' => $this->getKey(),
@@ -313,7 +312,7 @@ trait RevisionableTrait
      */
     public function postDelete()
     {
-        if ((! isset($this->revisionEnabled) || $this->revisionEnabled)
+        if ((!isset($this->revisionEnabled) || $this->revisionEnabled)
             && $this->isSoftDelete()
             && $this->isRevisionable($this->getDeletedAtColumn())
         ) {
@@ -342,7 +341,7 @@ trait RevisionableTrait
     {
         // check flag variable used in laravel 4.2+
         if (isset($this->forceDeleting)) {
-            return ! $this->forceDeleting;
+            return !$this->forceDeleting;
         }
 
         // otherwise, look for flag used in older versions
@@ -421,7 +420,7 @@ trait RevisionableTrait
      */
     public function disableRevisionField($field)
     {
-        if (! isset($this->dontKeepRevisionOf)) {
+        if (!isset($this->dontKeepRevisionOf)) {
             $this->dontKeepRevisionOf = [];
         }
         if (is_array($field)) {
