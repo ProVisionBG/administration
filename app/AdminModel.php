@@ -40,7 +40,7 @@ class AdminModel extends Model
             abort(500, ' Please define property $module in model!');
         }
 
-        if (!property_exists($this, 'sub_module') || is_null($this->sub_module)) {
+        if (! property_exists($this, 'sub_module') || is_null($this->sub_module)) {
             $this->sub_module = '';
         }
     }
