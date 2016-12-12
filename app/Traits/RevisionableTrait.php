@@ -187,7 +187,7 @@ trait RevisionableTrait
                 }
                 $revision = new \Venturecraft\Revisionable\Revision();
                 \DB::table($revision->getTable())->insert($revisions);
-                \Event::fire('revisionable.saved', ['model' => $this, 'revisions' => $revisions]);
+                \Illuminate\Support\Facades\Event::fire('revisionable.saved', ['model' => $this, 'revisions' => $revisions]);
             }
         }
     }
