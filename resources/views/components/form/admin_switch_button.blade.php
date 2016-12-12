@@ -10,7 +10,6 @@
 $elementID = 'adminSwitch-' . str_random(20);
 ?>
 <input id="{{$elementID}}" type="checkbox" name="{{$name}}" @if($model->$name==true) checked @endif>
-
 <script>
     $("#{{$elementID}}").bootstrapSwitch({
         size: 'small',
@@ -23,10 +22,10 @@ $elementID = 'adminSwitch-' . str_random(20);
                 url: '{{route('provision.administration.ajax.save-switch')}}',
                 type: 'POST',
                 data: {
-                    table: '{{$model->getTable()}}',
                     id: {{$model->id}},
                     state: state,
-                    field: '{{$name}}'
+                    field: '{{$name}}',
+                    class: '{{str_ireplace('\\','\\\\',get_class($model))}}'
                 },
                 success: function (result) {
                     console.log(result);

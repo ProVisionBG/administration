@@ -7,7 +7,6 @@
 
 namespace ProVision\Administration\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use ProVision\Administration\Http\Requests\AjaxQuickSwichRequest;
 
 class AjaxController extends BaseAdministrationController
@@ -18,7 +17,7 @@ class AjaxController extends BaseAdministrationController
      */
     public function saveOrder()
     {
-        if (! empty(\Request::input('data'))) {
+        if (!empty(\Request::input('data'))) {
             //$debug = [];
             foreach (\Request::input('data') as $index => $item) {
                 if (empty($item)) {
@@ -63,10 +62,12 @@ class AjaxController extends BaseAdministrationController
             $request->state = 0;
         }
 
-        return DB::table($request->table)
-            ->where('id', $request->id)
-            ->update([
-                $request->field => $request->state,
-            ]);
+        $object = new $request->class;
+        $object = $object->where('id', $request->id)->first();
+        $object->update([
+            $request->field => $request->state
+        ]);
+
+        return $object;
     }
 }

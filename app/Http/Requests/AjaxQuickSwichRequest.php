@@ -29,10 +29,10 @@ class AjaxQuickSwichRequest extends FormRequest
     public function rules()
     {
         return [
-            'table' => 'required',
             'id' => 'required|integer',
             'field' => 'required',
             'state' => 'required|in:true,false',
+            'class' => 'required'
         ];
     }
 }
