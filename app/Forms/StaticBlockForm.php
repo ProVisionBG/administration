@@ -22,7 +22,7 @@ class StaticBlockForm extends AdminForm
             ],
         ]);
 
-        $this->add('text', 'ckeditor', [
+        $this->add('text', 'editor', [
             'label' => trans('administration::static_blocks.text'),
             'validation_rules' => [
             ],
