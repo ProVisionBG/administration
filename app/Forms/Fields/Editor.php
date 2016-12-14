@@ -30,6 +30,6 @@ class Editor extends FormField
 
     protected function getTemplate()
     {
-        return 'ckeditor';
+        return 'editor';
     }
 }

@@ -9,15 +9,12 @@
     <?php endif; ?>
 
     <?php if ($showField): ?>
-        <?php
-        //add attributes
-        echo Form::textarea($name, $options['value'], $options['attr']);
-        ?>
+    {{Form::textarea($name, $options['value'], $options['attr'])}}
 
-        <?php include 'help_block.php' ?>
+    @include('administration::components.fields.help_block')
     <?php endif; ?>
 
-    <?php include 'errors.php' ?>
+    @include('administration::components.fields.errors')
 
     <?php if ($showLabel && $showField): ?>
     <?php if ($options['wrapper'] !== false): ?>
