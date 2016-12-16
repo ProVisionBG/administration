@@ -3,9 +3,11 @@
 @section('content')
 
     @if(!empty($filterForm))
-        <div class="box box-default @if($filterForm->getFormOption('collapsed')===true) collapsed-box @endif" id="box-filter">
+        <div class="box box-default @if($filterForm->getFormOption('collapsed')===true) collapsed-box @endif"
+             id="box-filter">
             <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-filter" aria-hidden="true"></i> {{trans('administration::index.filter')}}</h3>
+                <h3 class="box-title"><i class="fa fa-filter"
+                                         aria-hidden="true"></i> {{trans('administration::index.filter')}}</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
@@ -19,11 +21,11 @@
 
                 //set submit button
                 $filterForm->add('filter', 'button', [
-                        'label' => '<i class="fa fa-search" aria-hidden="true"></i> ' . trans('administration::index.filter'),
-                        'attr' => [
-                                'type' => 'submit',
-                                'class' => 'btn btn-sm btn-primary'
-                        ]
+                    'label' => '<i class="fa fa-search" aria-hidden="true"></i> ' . trans('administration::index.filter'),
+                    'attr' => [
+                        'type' => 'submit',
+                        'class' => 'btn btn-sm btn-primary'
+                    ]
                 ]);
                 ?>
                 {!! form($filterForm) !!}
@@ -39,10 +41,10 @@
 
             <?php
             $table->addAction([
-                    'title' => trans('administration::index.actions')
+                'title' => trans('administration::index.actions')
             ]);
             $table->setTableAttributes([
-                    'class' => 'table table-hover'
+                'class' => 'table table-hover'
             ]);
             ?>
 
@@ -54,10 +56,10 @@
 @stop
 
 @push('js_scripts')
-{{--{!! $table->scripts() !!}--}}
+
+
 <script>
     $(function () {
-
         var datatableConfig = {
             "aaSorting": [[0, "desc"]], // @todo: да може да се сменя от контролера дефоутлният ордер
             //"stateSave": true,
@@ -77,7 +79,12 @@
                         } else {
                             d[$(this).attr('name')] = $(this).val();
                         }
-                    })
+                    });
+
+                    {{-- Взема всички GET параметри и ги пуска в AJAX параметрите --}}
+                    $.each({!!  json_encode(Request::all()) !!}, function (key, val) {
+                        d[key] = val;
+                    });
                 }
             },
             "autoWidth": false, //има проблем при firefox - таблицата минава в responsive при true стойност!
