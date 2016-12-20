@@ -3,7 +3,7 @@
 @section('content')
 
     @if(!empty($filterForm))
-        <div class="box box-default @if($filterForm->getFormOption('collapsed')===true) collapsed-box @endif"
+        <div class="empty-listing-filter box box-default @if($filterForm->getFormOption('collapsed')===true) collapsed-box @endif"
              id="box-filter">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-filter"
@@ -33,7 +33,7 @@
         </div>
     @endif
 
-    <div class="box box-primary">
+    <div class="box box-primary empty-listing">
         {{--<div class="box-header with-border">--}}
         {{--<h3 class="box-title">{{trans('administration::index.administrators')}}</h3>--}}
         {{--</div>--}}
