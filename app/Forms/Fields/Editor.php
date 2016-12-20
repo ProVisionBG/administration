@@ -13,7 +13,6 @@ class Editor extends FormField
 {
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
     {
-
         /*
          * add ckeditor class
          */
@@ -24,6 +23,9 @@ class Editor extends FormField
             $options['attr']['class'] = 'form-control ';
         }
         $options['attr']['class'] .= ' provision-editor';
+
+        //get parent model in form
+        $options['model'] = $this->getParent()->getModel();
 
         return parent::render($options, $showLabel, $showField, $showError);
     }

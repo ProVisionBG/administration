@@ -43,8 +43,7 @@
     "rutorika/sortable": "^3.2",
     "barryvdh/laravel-debugbar": "^2.3",
     "arcanedev/log-viewer": "^4.1",
-    "caouecs/laravel-lang": "~3.0",
-    "webwizo/laravel-shortcodes": "^1.0"
+    "caouecs/laravel-lang": "~3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",

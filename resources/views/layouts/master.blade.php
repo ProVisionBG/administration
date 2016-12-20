@@ -3,9 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title> @if(!empty(\Administration::getTitle())){{\Administration::getTitle()}} | @endif{{ Lang::get('administration::index.admin_title') }}</title>
+    <title> @if(!empty(\Administration::getTitle())){{\Administration::getTitle()}}
+        | @endif{{ Lang::get('administration::index.admin_title') }}</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href='{{asset("/vendor/provision/administration/css/all.css")}}'>
 
@@ -124,17 +126,21 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email),160}}" class="user-image" alt="User Image">--}}
-                            <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=25" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{Auth::guard('provision_administration')->user()->name}}</span> <i class="fa fa-caret-down"></i>
+                            <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=25"
+                                 class="user-image" alt="User Image">
+                            <span class="hidden-xs">{{Auth::guard('provision_administration')->user()->name}}</span> <i
+                                    class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email,160)}}" class="img-circle" alt="User Image">--}}
-                                <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=160" class="img-circle" alt="User Image">
+                                <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=160"
+                                     class="img-circle" alt="User Image">
                                 <p>
                                     {{Auth::guard('provision_administration')->user()->name}}
-                                    <small>Member since {{Auth::guard('provision_administration')->user()->created_at}}</small>
+                                    <small>Member
+                                        since {{Auth::guard('provision_administration')->user()->created_at}}</small>
                                 </p>
                             </li>
                         {{--
@@ -154,10 +160,12 @@
                         <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{route('provision.administration.administrators.edit',[Auth::guard('provision_administration')->user()->id])}}" class="btn btn-default btn-flat">{{trans('administration::index.settings')}}</a>
+                                    <a href="{{route('provision.administration.administrators.edit',[Auth::guard('provision_administration')->user()->id])}}"
+                                       class="btn btn-default btn-flat">{{trans('administration::index.settings')}}</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="{{route('provision.administration.logout')}}" class="btn btn-default btn-flat">{{trans('administration::index.logout')}}</a>
+                                    <a href="{{route('provision.administration.logout')}}"
+                                       class="btn btn-default btn-flat">{{trans('administration::index.logout')}}</a>
                                 </div>
                             </li>
 
@@ -183,7 +191,8 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=45" class="img-circle" alt="User Image">
+                    <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=45"
+                         class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{Auth::guard('provision_administration')->user()->name}}</p>
@@ -198,7 +207,8 @@
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search...">
                     <span class="input-group-btn">
-            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
+                        class="fa fa-search"></i></button>
           </span>
                 </div>
             </form>
@@ -248,7 +258,8 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> {{Config::get('provision_administration.version')}}
         </div>
-        <strong><a href="http://www.provision.bg/?ref=cms5" target="_blank"><b>ProVision</b></a> Administration</strong>. All rights reserved.
+        <strong><a href="http://www.provision.bg/?ref=cms5" target="_blank"><b>ProVision</b></a> Administration</strong>.
+        All rights reserved.
     </footer>
 
 
@@ -298,7 +309,7 @@
 <script>
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 </script>

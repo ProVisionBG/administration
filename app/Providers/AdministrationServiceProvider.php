@@ -424,7 +424,6 @@ class AdministrationServiceProvider extends ServiceProvider
         $loader->alias('Form', \Collective\Html\FormFacade::class);
         $loader->alias('Html', \Collective\Html\HtmlFacade::class);
         $loader->alias('Debugbar', \Barryvdh\Debugbar\Facade::class);
-        $loader->alias('Shortcode', \Webwizo\Shortcodes\Facades\Shortcode::class);
 
         /*
          * middleware

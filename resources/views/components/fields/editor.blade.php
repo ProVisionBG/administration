@@ -5,7 +5,14 @@
     <?php endif; ?>
 
     <?php if ($showLabel && $options['label'] !== false && $options['label_show']): ?>
-        <?= Form::label($name, $options['label'], $options['label_attr']) ?>
+    <?= Form::label($name, $options['label'], $options['label_attr']) ?>
+
+    @if(!empty($options['model']))
+        <a href="{{\Administration::route('visual_builder.index',['id'=> $options['model']->id ,'field'=>$name, 'model'=>get_class($options['model'])])}} "
+           class="btn btn-xs btn-primary pull-right">Edit with
+            VisualBuilder</a>
+    @endif
+
     <?php endif; ?>
 
     <?php if ($showField): ?>
@@ -21,3 +28,4 @@
 </div>
 <?php endif; ?>
 <?php endif; ?>
+

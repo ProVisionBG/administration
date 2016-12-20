@@ -211,6 +211,14 @@ Route::group([
                     'destroy' => 'media.destroy',
                 ],
             ]);
+
+            /*
+             * TinyMCE proxy
+             */
+            Route::get('tinymce/proxy', [
+                'as' => 'tinymce.proxy',
+                'uses' => 'TinyMCEController@proxy'
+            ]);
         });
     });
 });

@@ -37,11 +37,12 @@
                             <li>
                                 @if($history->key == 'created_at' && !$history->old_value)
                                     <b>{{ @$history->userResponsible()->name }}</b> created this resource
-                                    at {{ $history->newValue() }}
+                                    at {{str_limit($history->newValue(),50) }}
                                 @else
                                     <b>{{ @$history->userResponsible()->name }}</b> changed
                                     <b>{{trans($form->getModel()->module.'::admin.'.$history->fieldName())  }}</b>
-                                    from <b>{{ $history->oldValue() }}</b> to <b>{{ $history->newValue() }}</b>
+                                    from <b>{{ str_limit($history->oldValue(),50) }}</b> to
+                                    <b>{{str_limit($history->newValue(),50) }}</b>
                                 @endif
 
                                 <small class="label bg-yellow">{{$history->created_at}}</small>
