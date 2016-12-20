@@ -11,7 +11,7 @@
         $options['attr']['class'] = '';
     }
     $options['attr']['id'] = str_random(20);
-    echo Form::checkbox($name, $options['value'], $options['checked'], $options['attr']);
+    echo Form::checkbox($name, $options['value'], (boolean)$options['checked'], $options['attr']);
     ?>
 
     @push('js_scripts')
