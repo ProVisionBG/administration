@@ -7,11 +7,11 @@
 
 namespace ProVision\Administration\Providers;
 
-use Form;
-use Config;
-use Illuminate\Support\Facades\DB;
 use App\Http\Middleware\EncryptCookies;
 use Caffeinated\Modules\Facades\Module;
+use Config;
+use Form;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 
@@ -35,12 +35,12 @@ class AdministrationServiceProvider extends ServiceProvider
        * config
        */
         $this->publishes([
-            __DIR__.'/../../config/provision_administration.php' => config_path('provision_administration.php'),
-            __DIR__.'/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
-            __DIR__.'/../../config/entrust.php' => config_path('entrust.php'),
-            __DIR__.'/../../config/laravel-form-builder.php' => config_path('laravel-form-builder.php'),
-            __DIR__.'/../../config/laravel-menu/settings.php' => config_path('laravel-menu/settings.php'),
-            __DIR__.'/../../config/laravel-menu/views.php' => config_path('laravel-menu/views.php'),
+            __DIR__ . '/../../config/provision_administration.php' => config_path('provision_administration.php'),
+            __DIR__ . '/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
+            __DIR__ . '/../../config/entrust.php' => config_path('entrust.php'),
+            __DIR__ . '/../../config/laravel-form-builder.php' => config_path('laravel-form-builder.php'),
+            __DIR__ . '/../../config/laravel-menu/settings.php' => config_path('laravel-menu/settings.php'),
+            __DIR__ . '/../../config/laravel-menu/views.php' => config_path('laravel-menu/views.php'),
         ], 'config');
 
         //set custom auth provider & guard
@@ -68,14 +68,14 @@ class AdministrationServiceProvider extends ServiceProvider
         /*
          * Routes
          */
-        if (! $this->app->routesAreCached()) {
-            include __DIR__.'/../Http/routes.php';
+        if (!$this->app->routesAreCached()) {
+            include __DIR__ . '/../Http/routes.php';
         }
 
         /*
          * views
          */
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'administration');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'administration');
         /*
         $this->publishes([
             __DIR__ . '/../../resources/views' => resource_path('views/vendor/provision/administration'),
@@ -86,15 +86,15 @@ class AdministrationServiceProvider extends ServiceProvider
          * assets
          */
         $this->publishes([
-            __DIR__.'/../../public/assets' => public_path('vendor/provision/administration'),
+            __DIR__ . '/../../public/assets' => public_path('vendor/provision/administration'),
         ], 'public');
 
         /*
          * translations
          */
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'administration');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'administration');
         $this->publishes([
-            __DIR__.'/../../resources/lang' => resource_path('lang/vendor/provision/administration'),
+            __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/provision/administration'),
         ], 'lang');
 
         /*
@@ -134,7 +134,7 @@ class AdministrationServiceProvider extends ServiceProvider
             ]);
 
             //set url
-            Config::set('log-viewer.route.attributes.prefix', Administration::getLanguage().'/'.Config::get('provision_administration.url_prefix').'/log-viewer');
+            Config::set('log-viewer.route.attributes.prefix', Administration::getLanguage() . '/' . Config::get('provision_administration.url_prefix') . '/log-viewer');
         }
     }
 
@@ -142,12 +142,12 @@ class AdministrationServiceProvider extends ServiceProvider
     {
 
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
-        if (! empty(\LaravelLocalization::setLocale())) {
-            if (! \Request::is(\LaravelLocalization::setLocale().'/'.config('provision_administration.url_prefix').'*')) {
+        if (!empty(\LaravelLocalization::setLocale())) {
+            if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
                 return false;
             }
         } else {
-            if (! \Request::is(config('provision_administration.url_prefix').'*')) {
+            if (!\Request::is(config('provision_administration.url_prefix') . '*')) {
                 return false;
             }
         }
@@ -180,6 +180,13 @@ class AdministrationServiceProvider extends ServiceProvider
         Form::component('adminEditButton', 'administration::components.form.admin_edit_button', [
             'name',
             'href',
+        ]);
+        Form::component('adminLinkButton', 'administration::components.form.admin_link_button', [
+            'name',
+            'href',
+            'target',
+            'class',
+            'icon'
         ]);
         Form::component('adminMediaButton', 'administration::components.form.admin_media_button', [
             'model',
@@ -335,7 +342,7 @@ class AdministrationServiceProvider extends ServiceProvider
 
             if (class_exists($adminInitClass)) {
                 //load module translations @todo: да се помисли НЕ Е ДОБРЕ ТУК!
-                $this->loadTranslationsFrom(app_path('Modules/'.$module['basename'].'/Resources/Lang'), $module['slug']);
+                $this->loadTranslationsFrom(app_path('Modules/' . $module['basename'] . '/Resources/Lang'), $module['slug']);
 
                 //boot module /Administration.php
                 Administration::bootModule($module, $adminInitClass);
@@ -355,20 +362,20 @@ class AdministrationServiceProvider extends ServiceProvider
         Config::set(['session.cookie' => 'provision_session']);
 
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/provision_administration.php', 'provision_administration'
+            __DIR__ . '/../../config/provision_administration.php', 'provision_administration'
         );
 
         /*
          * lib configs
          */
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/entrust.php', 'entrust'
+            __DIR__ . '/../../config/entrust.php', 'entrust'
         );
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/laravellocalization.php', 'laravellocalization'
+            __DIR__ . '/../../config/laravellocalization.php', 'laravellocalization'
         );
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/laravel-form-builder.php', 'laravel-form-builder'
+            __DIR__ . '/../../config/laravel-form-builder.php', 'laravel-form-builder'
         );
 
         /*
@@ -390,6 +397,7 @@ class AdministrationServiceProvider extends ServiceProvider
         //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
         $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        $this->app->register(\Webwizo\Shortcodes\ShortcodesServiceProvider::class);
 
         if (config('provision_administration.packages.log-viewer')) {
             // https://github.com/ARCANEDEV/LogViewer
@@ -418,6 +426,7 @@ class AdministrationServiceProvider extends ServiceProvider
         $loader->alias('Form', \Collective\Html\FormFacade::class);
         $loader->alias('Html', \Collective\Html\HtmlFacade::class);
         $loader->alias('Debugbar', \Barryvdh\Debugbar\Facade::class);
+        $loader->alias('Shortcode', \Webwizo\Shortcodes\Facades\Shortcode::class);
 
         /*
          * middleware
