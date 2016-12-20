@@ -9,6 +9,7 @@ namespace ProVision\Administration\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
+use ProVision\Administration\Administration;
 
 class Migrate extends Command
 {
@@ -35,7 +36,7 @@ class Migrate extends Command
         /*
         * command fix
         */
-        $this->signature = config('provision_administration.command_prefix').':migrate';
+        $this->signature = config('provision_administration.command_prefix') . ':migrate';
 
         parent::__construct();
     }
@@ -45,13 +46,25 @@ class Migrate extends Command
      */
     public function handle()
     {
-        $path = str_ireplace(base_path(), '', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations'));
-        $this->info('Path to migrate (provision/administration): '.$path);
+        $path = str_ireplace(base_path(), '', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations'));
+        $this->info('Path to migrate (provision/administration): ' . $path);
         \Artisan::call('migrate', ['--path' => $path]);
         $this->info(\Artisan::output());
 
         $this->info('Migrate: VentureCraft/revisionable');
         \Artisan::call('migrate', ['--path' => 'vendor/venturecraft/revisionable/src/migrations']);
         $this->info(\Artisan::output());
+
+        /*
+         * инсталиране на миграцията за другите provision/* модули
+         */
+        $installedModules = Administration::getModules();
+        if (count($installedModules) > 0) {
+            foreach ($installedModules as $key => $module) {
+                $this->info('Migrate: provision/' . $key);
+                \Artisan::call('migrate', ['--path' => 'vendor/provision/' . $key . '/Database/Migrations']);
+                $this->info(\Artisan::output());
+            }
+        }
     }
 }

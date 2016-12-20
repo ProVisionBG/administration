@@ -8,9 +8,9 @@
 namespace ProVision\Administration;
 
 use File;
-use Lavary\Menu\Menu;
-use LaravelLocalization;
 use Illuminate\Support\Facades\Facade;
+use LaravelLocalization;
+use Lavary\Menu\Menu;
 
 class Administration extends Facade
 {
@@ -18,9 +18,9 @@ class Administration extends Facade
 
     /**
      * inited modules container.
-     * @var string
+     * @var array
      */
-    private static $modules;
+    private static $modules = [];
 
     /**
      * Current module name.
@@ -92,7 +92,7 @@ class Administration extends Facade
     public static function getLanguage()
     {
         $locale = LaravelLocalization::setLocale();
-        if (! empty($locale)) {
+        if (!empty($locale)) {
             return $locale;
         } else {
             return \App::getLocale();
@@ -111,7 +111,7 @@ class Administration extends Facade
             return $block->text;
         }
 
-        \Debugbar::error('static block not found: '.$key);
+        \Debugbar::error('static block not found: ' . $key);
 
         return false;
     }
@@ -124,7 +124,7 @@ class Administration extends Facade
     public static function getModuleOrderIndex($module)
     {
         $module = \Module::where('slug', $module);
-        if (! $module) {
+        if (!$module) {
             return false;
         }
 
@@ -161,12 +161,12 @@ class Administration extends Facade
     public static function routeInAdministration()
     {
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
-        if (! empty(\LaravelLocalization::setLocale())) {
-            if (! \Request::is(\LaravelLocalization::setLocale().'/'.config('provision_administration.url_prefix').'*')) {
+        if (!empty(\LaravelLocalization::setLocale())) {
+            if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
                 return false;
             }
         } else {
-            if (! \Request::is(config('provision_administration.url_prefix').'*')) {
+            if (!\Request::is(config('provision_administration.url_prefix') . '*')) {
                 return false;
             }
         }
@@ -189,7 +189,7 @@ class Administration extends Facade
      */
     public static function routeAdministrationAs()
     {
-        return \Administration::getLanguage().'.';
+        return \Administration::getLanguage() . '.';
     }
 
     /**
@@ -211,7 +211,7 @@ class Administration extends Facade
      */
     public static function routeAdministrationName($name)
     {
-        return self::AS_MODULE_PREFIX.$name;
+        return self::AS_MODULE_PREFIX . $name;
     }
 
     /**
@@ -230,8 +230,8 @@ class Administration extends Facade
      */
     public static function isDashboard()
     {
-        if (! empty(\LaravelLocalization::setLocale())) {
-            if (\Request::is(\LaravelLocalization::setLocale().'/'.config('provision_administration.url_prefix'))) {
+        if (!empty(\LaravelLocalization::setLocale())) {
+            if (\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix'))) {
                 return true;
             }
         } else {
@@ -273,6 +273,13 @@ class Administration extends Facade
         if (method_exists($moduleAdminInit, 'dashboard') && \Administration::isDashboard()) {
             $moduleAdminInit->dashboard($module);
         }
+
+        /*
+         * Кои са заредените модули?
+         */
+        if (!is_array($module)) {
+            self::$modules[$module] = $module;
+        }
     }
 
     /**
@@ -281,8 +288,8 @@ class Administration extends Facade
      */
     public static function routeAdministrationPrefix()
     {
-        if (! empty(\LaravelLocalization::setLocale())) {
-            return \LaravelLocalization::setLocale().'/'.config('provision_administration.url_prefix');
+        if (!empty(\LaravelLocalization::setLocale())) {
+            return \LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix');
         } else {
             return config('provision_administration.url_prefix');
         }
@@ -302,5 +309,10 @@ class Administration extends Facade
         ];
 
         return array_merge($default, $middleware);
+    }
+
+    public static function getModules()
+    {
+        return self::$modules;
     }
 }
