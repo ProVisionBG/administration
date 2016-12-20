@@ -184,9 +184,7 @@ class AdministrationServiceProvider extends ServiceProvider
         Form::component('adminLinkButton', 'administration::components.form.admin_link_button', [
             'name',
             'href',
-            'target',
-            'class',
-            'icon'
+            'attributes'
         ]);
         Form::component('adminMediaButton', 'administration::components.form.admin_media_button', [
             'model',
