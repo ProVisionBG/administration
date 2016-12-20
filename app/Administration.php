@@ -276,6 +276,7 @@ class Administration extends Facade
 
         /*
          * Кои са заредените модули?
+         * само допълнителни инсталирани през composer -> provision/*
          */
         if (!is_array($module)) {
             self::$modules[$module] = $module;

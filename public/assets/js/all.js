@@ -6980,6 +6980,7 @@ $(function () {
     tinymce.init({
         selector: "textarea.provision-editor",
         height: 400,
+        verify_html: false,
         plugins: [
             'advlist autolink lists link image charmap print preview hr anchor pagebreak',
             'searchreplace wordcount visualblocks visualchars code fullscreen',
