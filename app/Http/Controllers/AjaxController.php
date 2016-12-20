@@ -56,7 +56,7 @@ class AjaxController extends BaseAdministrationController
      */
     public function saveQuickSwitch(AjaxQuickSwichRequest $request)
     {
-        if ($request->state == 'true') {
+        if ($request->state == 'true' || $request->state == '1' || $request->state == 1) {
             $request->state = 1;
         } else {
             $request->state = 0;
