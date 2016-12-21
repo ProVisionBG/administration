@@ -32,7 +32,7 @@ $elementID = 'adminDeleteButton-' . str_random(20);
 
 <script>
     $('#{{$elementID}}').on('show.bs.modal', function (e) {
-        $(this).find('.btn-ok').on('click', function () {
+        $(this).find('.btn-ok').unbind('click').on('click', function () {
             $.ajax({
                 url: $(e.relatedTarget).data('href'),
                 type: 'DELETE',
