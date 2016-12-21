@@ -395,7 +395,6 @@ class AdministrationServiceProvider extends ServiceProvider
         //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
         $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
-        $this->app->register(\Webwizo\Shortcodes\ShortcodesServiceProvider::class);
 
         if (config('provision_administration.packages.log-viewer')) {
             // https://github.com/ARCANEDEV/LogViewer
