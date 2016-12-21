@@ -293,14 +293,126 @@
     //translations for JS
     var translates = {!! json_encode(Lang::get('administration::js')) !!};
 
-    //ckeditor settings
-    window.CKEDITOR_BASEPATH = '/vendor/provision/administration/bower_components/ckeditor/';
-    var formModels = []; //ckeditor form->model container
+    //editor settings
+    var formModels = []; //editor form->model container
 
     /*
      media settings
      */
     var mediaRouteIndex = '{{route('provision.administration.media.index')}}';
+
+    /*
+     init tinymce
+     */
+    window.tinymceConfig = {
+        selector: "textarea.provision-editor",
+        height: 400,
+        verify_html: false,
+        paste_as_text: true,
+
+        plugins: [
+            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen',
+            'insertdatetime media nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+        ],
+
+        toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+
+        templates: [
+            {title: 'Test template 1', content: 'Test 1'},
+            {title: 'Test template 2', content: 'Test 2'}
+        ],
+
+        relative_urls: true,
+        remove_script_host: false,
+        convert_urls: false,
+
+        image_advtab: true,
+        imagetools_proxy: '{{route('provision.administration.tinymce.proxy')}}',
+        imagetools_toolbar: "editimage imageoptions",
+
+        images_upload_url: '{{route('provision.administration.tinymce.upload')}}',
+        images_upload_base_path: '/',
+        images_upload_credentials: true,
+        automatic_uploads: true,
+        paste_data_images: true,
+        file_picker_types: 'image',
+        image_title: true,
+        image_caption: true,
+        image_dimensions: false,
+        image_class_list: [
+            {title: 'Responsive', value: 'img-responsive'},
+            {title: 'Left', value: 'pull-left img-responsive'},
+            {title: 'Right', value: 'pull-right img-responsive'}
+        ],
+        setup: function (editor) {
+            editor.on('init', function (args) {
+                editor = args.target;
+                /*
+                 remove image dimensions
+                 */
+                editor.on('NodeChange', function (e) {
+                    if (e && e.element.nodeName.toLowerCase() == 'img') {
+                        tinyMCE.DOM.setAttribs(e.element, {'width': null, 'height': null});
+
+//                        width = e.element.width;
+//                        height = e.element.height;
+//                        tinyMCE.DOM.setAttribs(e.element,
+//                            {'style': 'width:' + width + 'px; height:' + height + 'px;'});
+                    }
+                });
+            });
+        },
+        images_upload_handler: function (blobInfo, success, failure) {
+            var formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+            $.ajax({
+                type: 'POST',
+                url: '{{route('provision.administration.tinymce.upload')}}',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (json) {
+                    success(json.location);
+                },
+                error: function (data) {
+                    failure('HTTP Error: ' + data);
+                }
+            });
+        },
+        file_picker_callback: function (cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            // Note: In modern browsers input[type="file"] is functional without
+            // even adding it to the DOM, but that might not be the case in some older
+            // or quirky browsers like IE, so you might want to add it to the DOM
+            // just in case, and visually hide it. And do not forget do remove it
+            // once you do not need it anymore.
+
+            input.onchange = function () {
+                var file = this.files[0];
+
+                // Note: Now we need to register the blob in TinyMCEs image blob
+                // registry. In the next release this part hopefully won't be
+                // necessary, as we are looking to handle it internally.
+                var id = 'blobid' + (new Date()).getTime();
+                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                var blobInfo = blobCache.create(id, file);
+                blobCache.add(blobInfo);
+
+                // call the callback and populate the Title field with the file name
+                cb(blobInfo.blobUri(), {title: file.name});
+            };
+
+            input.click();
+        }
+    };
 </script>
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
 

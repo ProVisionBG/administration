@@ -219,6 +219,11 @@ Route::group([
                 'as' => 'tinymce.proxy',
                 'uses' => 'TinyMCEController@proxy'
             ]);
+
+            Route::post('tinymce/upload', [
+                'as' => 'tinymce.upload',
+                'uses' => 'TinyMCEController@upload'
+            ]);
         });
     });
 });
