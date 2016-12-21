@@ -1,11 +1,13 @@
 <?php
 $elementID = 'adminDeleteButton-' . str_random(20);
 ?>
-<button title="{{$name}}" class="btn btn-sm btn-danger" data-href="{{$href}}" data-toggle="modal" data-target="#{{$elementID}}">
+<button title="{{$name}}" class="btn btn-sm btn-danger" data-href="{{$href}}" data-toggle="modal"
+        data-target="#{{$elementID}}">
     <i class="fa fa-trash-o" aria-hidden="true"></i>
 </button>
 
-<div class="modal modal-danger" id="{{$elementID}}" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
+<div class="modal modal-danger" id="{{$elementID}}" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -17,7 +19,8 @@ $elementID = 'adminDeleteButton-' . str_random(20);
                 <p>One fine body…</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{trans('administration::index.cancel')}}</button>
+                <button type="button" class="btn btn-outline pull-left"
+                        data-dismiss="modal">{{trans('administration::index.cancel')}}</button>
                 <button type="button" class="btn btn-outline btn-ok">{{trans('administration::index.delete')}}</button>
             </div>
         </div>
@@ -35,6 +38,12 @@ $elementID = 'adminDeleteButton-' . str_random(20);
                 type: 'DELETE',
                 success: function (result) {
                     $('#dataTableBuilder').DataTable().draw();
+                    $('#{{$elementID}}').modal('hide');
+                },
+                error: function (result) {
+                    $.each(result.responseJSON, function (index, value) {
+                        toastr.error(value);
+                    });
                     $('#{{$elementID}}').modal('hide');
                 }
             });

@@ -66,33 +66,5 @@ class TinyMCEController extends BaseAdministrationController
         } else {
             abort(500, 'Server Error');
         }
-
-//        reset($_FILES);
-//        $temp = current($_FILES);
-//        if (is_uploaded_file($temp['tmp_name'])) {
-//
-//            // Sanitize input
-//            if (preg_match("/([^\w\s\d\-_~,;:\[\]\(\).])|([\.]{2,})/", $temp['name'])) {
-//                abort(500, 'Invalid file name');
-//            }
-//
-//            // Verify extension
-//            if (!in_array(strtolower(pathinfo($temp['name'], PATHINFO_EXTENSION)), array("gif", "jpg", "png"))) {
-//                abort('500', 'Invalid extension.');
-//            }
-//
-//            // Accept upload if there was no origin, or if it is an accepted origin
-//            $filetowrite = public_path('uploads/tinymce/') . $temp['name'];
-//
-//            if (!File::exists(basename($filetowrite))) {
-//                File::makeDirectory(basename($filetowrite));
-//            }
-//
-//            move_uploaded_file($temp['tmp_name'], $filetowrite);
-//
-//            return response()->json(['location' => $filetowrite]);
-//        } else {
-//            abort(500, 'Server Error');
-//        }
     }
 }
