@@ -312,8 +312,24 @@ class Administration extends Facade
         return array_merge($default, $middleware);
     }
 
+    /**
+     * Get all inited modules
+     * @return array
+     */
     public static function getModules()
     {
         return self::$modules;
     }
+
+    /**
+     * Check modules is loaded
+     * @param $name
+     * @return bool
+     */
+    public static function isLoadedModule($name)
+    {
+        return isset(self::$modules[$name]);
+    }
+
+
 }
