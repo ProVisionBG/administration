@@ -14,7 +14,7 @@
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
         </div>
-        <?= Form::input('text', $name, $options['value'], $options['attr']) ?>
+        <?= Form::input('text', $name, \Carbon\Carbon::parse($options['value'])->format('Y-m-d'), $options['attr']) ?>
     </div>
 
     @push('js_scripts')

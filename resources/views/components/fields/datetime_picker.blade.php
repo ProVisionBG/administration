@@ -14,7 +14,7 @@
         <div class="input-group-addon">
             <i class="fa fa-clock-o"></i>
         </div>
-        <?= Form::input('text', $name, $options['value'], $options['attr']) ?>
+        <?= Form::input('text', $name, \Carbon\Carbon::parse($options['value'])->format('Y-m-d H:i:s'), $options['attr']) ?>
     </div>
 
     @push('js_scripts')
