@@ -12,7 +12,7 @@
 
 <?php if ($showLabel && $options['label'] !== false && $options['label_show']): ?>
     <?php if ($options['is_child']): ?>
-        <label <?= $options['labelAttrs'] ?>><?= $options['label'] ?></label>
+        <label <?= @$options['labelAttrs'] ?>><?= $options['label'] ?></label>
     <?php else: ?>
         <?= Form::label($name, $options['label'], $options['label_attr']) ?>
     <?php endif; ?>
