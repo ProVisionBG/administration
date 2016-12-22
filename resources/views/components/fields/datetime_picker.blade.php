@@ -20,7 +20,7 @@
     @push('js_scripts')
     <script>
         $('#<?=$options['attr']['id'];?>').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii',
+            format: 'yyyy-mm-dd hh:ii:ss',
             weekStart: 1,
             todayBtn: true,
             todayHighlight: true,
