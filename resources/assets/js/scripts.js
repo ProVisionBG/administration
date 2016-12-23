@@ -11,6 +11,9 @@ $(function () {
         });
     });
 
+    if (typeof window.tinymceConfig == 'undefined') {
+        window.tinymceConfig = {}; //само на вътрешните страници се генерира конфигурацията на tinymce - в layouts.master
+    }
     tinymce.init(window.tinymceConfig);
 
 });
