@@ -45,20 +45,20 @@ class AdministrationServiceProvider extends ServiceProvider
 
         //set custom auth provider & guard
         Config::set([
-            'auth.guards.provision_administration' => [
+            'auth.guards.' . config('provision_administration.guard') => [
                 'driver' => 'session',
-                'provider' => 'provision_administration',
+                'provider' => config('provision_administration.guard'),
             ],
         ]);
         Config::set([
-            'auth.providers.provision_administration' => [
+            'auth.providers.' . config('provision_administration.guard') => [
                 'driver' => 'eloquent',
                 'model' => \ProVision\Administration\AdminUser::class,
             ],
         ]);
         Config::set([
-            'auth.passwords.provision_administration' => [
-                'provider' => 'provision_administration',
+            'auth.passwords.' . config('provision_administration.guard') => [
+                'provider' => config('provision_administration.guard'),
                 'email' => 'auth.emails.password',
                 'table' => 'password_resets',
                 'expire' => 60,

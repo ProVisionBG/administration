@@ -47,7 +47,7 @@ class AdministratorsController extends BaseAdministrationController
                     if (! empty($user->deleted_at)) {
                         $actions .= Form::adminRestoreButton(trans('administration::index.restore'), route('provision.administration.administrators.destroy', $user->id));
                     } else {
-                        if ($user->id != \Auth::guard('provision_administration')->user()->id) {
+                        if ($user->id != \Auth::guard(config('provision_administration.guard'))->user()->id) {
                             $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.administrators.destroy', $user->id));
                         }
                     }

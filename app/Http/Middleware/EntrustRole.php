@@ -30,8 +30,8 @@ class EntrustRole
      */
     public function __construct(Guard $auth)
     {
-        $this->auth = Auth::guard('provision_administration');
-        // dd(Auth::guard('provision_administration')->user()->hasRole('admin'));
+        $this->auth = Auth::guard(config('provision_administration.guard'));
+        // dd(Auth::guard(config('provision_administration.guard'))->user()->hasRole('admin'));
     }
 
     /**

@@ -16,6 +16,11 @@ return [
     'url_prefix' => 'admin',
 
     /*
+     * Administration guard name
+     */
+    'guard' => 'provision_administration',
+
+    /*
      * префикс за командите с artisan
      */
     'command_prefix' => 'admin',

@@ -57,7 +57,7 @@ class LoginController extends Controller
 
     protected function guard()
     {
-        return Auth::guard('provision_administration');
+        return Auth::guard(config('provision_administration.guard'));
     }
 
     /**

@@ -125,22 +125,22 @@
                 <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email),160}}" class="user-image" alt="User Image">--}}
-                            <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=25"
+                            {{--<img src="{{Gravatar::get(Auth::guard(config('provision_administration.guard'))->user()->email),160}}" class="user-image" alt="User Image">--}}
+                            <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard(config('provision_administration.guard'))->user()->email ) ) )}}?d=identicon&f=y&r=g&s=25"
                                  class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{Auth::guard('provision_administration')->user()->name}}</span> <i
+                            <span class="hidden-xs">{{Auth::guard(config('provision_administration.guard'))->user()->name}}</span> <i
                                     class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                {{--<img src="{{Gravatar::get(Auth::guard('provision_administration')->user()->email,160)}}" class="img-circle" alt="User Image">--}}
-                                <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=160"
+                                {{--<img src="{{Gravatar::get(Auth::guard(config('provision_administration.guard'))->user()->email,160)}}" class="img-circle" alt="User Image">--}}
+                                <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard(config('provision_administration.guard'))->user()->email ) ) )}}?d=identicon&f=y&r=g&s=160"
                                      class="img-circle" alt="User Image">
                                 <p>
-                                    {{Auth::guard('provision_administration')->user()->name}}
+                                    {{Auth::guard(config('provision_administration.guard'))->user()->name}}
                                     <small>Member
-                                        since {{Auth::guard('provision_administration')->user()->created_at}}</small>
+                                        since {{Auth::guard(config('provision_administration.guard'))->user()->created_at}}</small>
                                 </p>
                             </li>
                         {{--
@@ -160,7 +160,7 @@
                         <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{route('provision.administration.administrators.edit',[Auth::guard('provision_administration')->user()->id])}}"
+                                    <a href="{{route('provision.administration.administrators.edit',[Auth::guard(config('provision_administration.guard'))->user()->id])}}"
                                        class="btn btn-default btn-flat">{{trans('administration::index.settings')}}</a>
                                 </div>
                                 <div class="pull-right">
@@ -191,11 +191,11 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard('provision_administration')->user()->email ) ) )}}?d=identicon&f=y&r=g&s=45"
+                    <img src="https://www.gravatar.com/avatar/{{md5( strtolower( trim( Auth::guard(config('provision_administration.guard'))->user()->email ) ) )}}?d=identicon&f=y&r=g&s=45"
                          class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>{{Auth::guard('provision_administration')->user()->name}}</p>
+                    <p>{{Auth::guard(config('provision_administration.guard'))->user()->name}}</p>
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
@@ -411,6 +411,30 @@
             };
 
             input.click();
+        },
+        file_browser_callback: function RoxyFileBrowser(field_name, url, type, win) {
+            var roxyFileman = '/fileman/index.html';
+            if (roxyFileman.indexOf("?") < 0) {
+                roxyFileman += "?type=" + type;
+            }
+            else {
+                roxyFileman += "&type=" + type;
+            }
+            roxyFileman += '&input=' + field_name + '&value=' + win.document.getElementById(field_name).value;
+            if (tinyMCE.activeEditor.settings.language) {
+                roxyFileman += '&langCode=' + tinyMCE.activeEditor.settings.language;
+            }
+            tinyMCE.activeEditor.windowManager.open({
+                file: roxyFileman,
+                title: 'Roxy Fileman',
+                width: 850,
+                height: 650,
+                resizable: "yes",
+                plugins: "media",
+                inline: "yes",
+                close_previous: "no"
+            }, {window: win, input: field_name});
+            return false;
         }
     };
 </script>

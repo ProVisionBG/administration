@@ -85,7 +85,7 @@ Route::group([
             Route::get('logout', [
                 'as' => 'logout',
                 function () {
-                    Auth::guard('provision_administration')->logout();
+                    Auth::guard(config('provision_administration.guard'))->logout();
 
                     return Redirect::route('provision.administration.login');
                 },

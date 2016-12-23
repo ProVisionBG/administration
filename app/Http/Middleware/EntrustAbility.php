@@ -30,7 +30,7 @@ class EntrustAbility
      */
     public function __construct(Guard $auth)
     {
-        $this->auth = Auth::guard('provision_administration');
+        $this->auth = Auth::guard(config('provision_administration.guard'));
     }
 
     /**

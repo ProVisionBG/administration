@@ -15,12 +15,12 @@ class AdministrationController extends BaseAdministrationController
 {
     public function index()
     {
-        if (! Auth::guard('provision_administration')->check()) {
+        if (! Auth::guard(config('provision_administration.guard'))->check()) {
             return redirect()->route('provision.administration.login');
         }
 
-        if (! Auth::guard('provision_administration')->user()->can('administration-access')) {
-            Auth::guard('provision_administration')->logout();
+        if (! Auth::guard(config('provision_administration.guard'))->user()->can('administration-access')) {
+            Auth::guard(config('provision_administration.guard'))->logout();
 
             return response()->view('administration::errors.403', ['permission' => 'administration-access'], 403);
         }

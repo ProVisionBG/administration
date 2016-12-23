@@ -40,7 +40,7 @@ class AdministratorsRolesController extends BaseAdministrationController
                     if (! empty($role->deleted_at)) {
                         //restore button
                     } else {
-                        if ($role->id != \Auth::guard('provision_administration')->user()->id) {
+                        if ($role->id != \Auth::guard(config('provision_administration.guard'))->user()->id) {
                             $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.administrators-roles.destroy', $role->id));
                         }
                     }
