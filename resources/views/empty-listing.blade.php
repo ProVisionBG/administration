@@ -72,6 +72,12 @@
             "ajax": {
                 url: '{{\Request::url()}}',
                 data: function (d) {
+
+                   {{-- Взема всички GET параметри и ги пуска в AJAX параметрите --}}
+                   $.each({!!  json_encode(Request::all()) !!}, function (key, val) {
+                        d[key] = val;
+                    });
+
                     //console.log(d);
                     $('#box-filter form input, #box-filter form select').each(function () {
                         if ($(this).is(':checkbox')) {
@@ -79,11 +85,6 @@
                         } else {
                             d[$(this).attr('name')] = $(this).val();
                         }
-                    });
-
-                    {{-- Взема всички GET параметри и ги пуска в AJAX параметрите --}}
-                    $.each({!!  json_encode(Request::all()) !!}, function (key, val) {
-                        d[key] = val;
                     });
                 }
             },
