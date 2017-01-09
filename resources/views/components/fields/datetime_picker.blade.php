@@ -14,7 +14,13 @@
         <div class="input-group-addon">
             <i class="fa fa-clock-o"></i>
         </div>
-        <?= Form::input('text', $name, \Carbon\Carbon::parse($options['value'])->format('Y-m-d H:i:s'), $options['attr']) ?>
+        <?php
+        $value = '';
+        if (!empty($options['value'])) {
+            $value = \Carbon\Carbon::parse($options['value'])->format('Y-m-d H:i:s');
+        }
+        echo Form::input('text', $name, $value, $options['attr'])
+        ?>
     </div>
 
     @push('js_scripts')
