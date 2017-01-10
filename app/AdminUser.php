@@ -7,14 +7,15 @@
 
 namespace ProVision\Administration;
 
-use Validator;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Notifications\Notifiable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 use ProVision\Administration\Notifications\ResetPassword;
+use Validator;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class AdminUser extends Authenticatable
 {
@@ -83,6 +84,15 @@ class AdminUser extends Authenticatable
     public function errors()
     {
         return $this->errors;
+    }
+
+    /**
+     * Password hash set
+     * @param string $value
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
     }
 
     /**
