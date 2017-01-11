@@ -25,6 +25,7 @@ if (!empty($formOptions['id'])) {
 
     {{Form::open($formOptions)}}
     <div class="box-body">
+        <div class="row">
         <?php } ?>
 
         <?php if ($showFields) {
@@ -85,6 +86,7 @@ if (!empty($formOptions['id'])) {
         @if ($showEnd)
     </div>
     <?= Form::close() ?>
+</div>
 </div>
 
 @push('bottom_js')

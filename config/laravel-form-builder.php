@@ -7,7 +7,7 @@
 
 return [
     'defaults'      => [
-        'wrapper_class'       => 'form-group',
+        'wrapper_class'       => 'form-group col-sm-12',
         'wrapper_error_class' => 'has-error',
         'label_class'         => 'control-label',
         'field_class'         => 'form-control',
