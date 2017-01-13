@@ -7,19 +7,19 @@
 
 namespace ProVision\Administration\Http\Controllers;
 
-use Auth;
 use Arcanedev\LogViewer\Facades\LogViewer;
+use Auth;
 use ProVision\Administration\Facades\Administration;
 
 class AdministrationController extends BaseAdministrationController
 {
     public function index()
     {
-        if (! Auth::guard(config('provision_administration.guard'))->check()) {
+        if (!Auth::guard(config('provision_administration.guard'))->check()) {
             return redirect()->route('provision.administration.login');
         }
 
-        if (! Auth::guard(config('provision_administration.guard'))->user()->can('administration-access')) {
+        if (!Auth::guard(config('provision_administration.guard'))->user()->can('administration-access')) {
             Auth::guard(config('provision_administration.guard'))->logout();
 
             return response()->view('administration::errors.403', ['permission' => 'administration-access'], 403);
@@ -32,9 +32,21 @@ class AdministrationController extends BaseAdministrationController
             $box->setBoxClass('col-xs-12');
             $box->setHtml('<div class="callout callout-danger">
                 <h4><i class="icon fa fa-ban"></i> Сайта е спрян!</h4>
-                <p>Може да активирате сайта от <a href="'.route('provision.administration.systems.maintenance-mode').'">тук</a>.</p>
+                <p>Може да активирате сайта от <a href="' . route('provision.administration.systems.maintenance-mode') . '">тук</a>.</p>
               </div>');
             \Dashboard::add($box, 0);
+        }
+
+        /*
+         * load dashboard of modules
+         */
+        $modules = \ProVision\Administration\Administration::getModules();
+        if ($modules) {
+            foreach ($modules as $module) {
+                if (method_exists($module, 'dashboard')) {
+                    $module->dashboard($module);
+                }
+            }
         }
 
         /*
@@ -52,9 +64,10 @@ class AdministrationController extends BaseAdministrationController
                 $box->setBoxBackgroundClass('bg-green');
             }
             $box->setIconClass('fa-bug');
-            $box->setLink('View all errors', '/'.config('log-viewer.route.attributes.prefix'), ['target' => '_blank']);
+            $box->setLink('View all errors', '/' . config('log-viewer.route.attributes.prefix'), ['target' => '_blank']);
             \Dashboard::add($box);
         }
+
 
         return view('administration::index');
     }

@@ -269,17 +269,13 @@ class Administration extends Facade
             $moduleAdminInit->menu($module);
         }
 
-        //init dashboard
-        if (method_exists($moduleAdminInit, 'dashboard') && \Administration::isDashboard()) {
-            $moduleAdminInit->dashboard($module);
-        }
-
         /*
          * Кои са заредените модули?
-         * само допълнителни инсталирани през composer -> provision/*
          */
         if (!is_array($module)) {
-            self::$modules[$module] = $module;
+            self::$modules[$module] = $moduleAdminInit;
+        } else {
+            self::$modules[$module['slug']] = $moduleAdminInit;
         }
     }
 
