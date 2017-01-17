@@ -26,17 +26,21 @@ class BaseAdministrationController extends Controller
         }
 
         /*
-         * load menu of modules
+         * Boot modules menus with session access!
+         * @todo: да се помисли дали е добре да е тук?!
          */
-        $modules = \ProVision\Administration\Administration::getModules();
-        if ($modules) {
-            foreach ($modules as $moduleArray) {
-                $module = new $moduleArray['administrationClass'];
-                if (method_exists($module, 'menu')) {
-                    $module->menu($moduleArray);
+        $this->middleware(function ($request, $next) {
+            $modules = \ProVision\Administration\Administration::getModules();
+            if ($modules) {
+                foreach ($modules as $moduleArray) {
+                    $module = new $moduleArray['administrationClass'];
+                    if (method_exists($module, 'menu')) {
+                        $module->menu($moduleArray);
+                    }
                 }
             }
-        }
+            return $next($request);
+        });
 
 
     }
