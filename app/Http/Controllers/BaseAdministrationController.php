@@ -19,10 +19,24 @@ class BaseAdministrationController extends Controller
         /*
          * Breadcrumbs::register('home', function($breadcrumbs)
          */
-        if (! \App::runningInConsole()) {
+        if (!\App::runningInConsole()) {
             \Breadcrumbs::register('admin_home', function ($breadcrumbs) {
                 $breadcrumbs->push(trans('administration::index.home'), route('provision.administration.index'), ['icon' => 'fa-home']);
             });
         }
+
+        /*
+         * load menu of modules
+         */
+        $modules = \ProVision\Administration\Administration::getModules();
+        if ($modules) {
+            foreach ($modules as $module) {
+                if (method_exists($module, 'menu')) {
+                    $module->menu($module);
+                }
+            }
+        }
+
+
     }
 }

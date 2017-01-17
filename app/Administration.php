@@ -177,6 +177,7 @@ class Administration extends Facade
     /**
      * Web site prefix in route.
      * @return string
+     * @deprecated
      */
     public static function routePrefix()
     {
@@ -186,6 +187,7 @@ class Administration extends Facade
     /**
      * Administration AS in route.
      * @return string
+     * @deprecated
      */
     public static function routeAdministrationAs()
     {
@@ -201,13 +203,14 @@ class Administration extends Facade
      */
     public static function route($name, $parameters = [], $absolute = true)
     {
-        return route(self::routeAdministrationName($name), $parameters, $absolute);
+        return route(self::routeName($name), $parameters, $absolute);
     }
 
     /**
      * Име на администраторският route.
      * @param $name
      * @return string
+     * @deprecated
      */
     public static function routeAdministrationName($name)
     {
@@ -221,12 +224,13 @@ class Administration extends Facade
      */
     public static function routeName($name)
     {
-        return self::routeAdministrationName($name);
+        return self::AS_MODULE_PREFIX . $name;
     }
 
     /**
      * Check request is in administration dashboard.
      * @return bool
+     * @deprecated
      */
     public static function isDashboard()
     {
@@ -262,11 +266,6 @@ class Administration extends Facade
             ], function () use ($moduleAdminInit, $module) {
                 $moduleAdminInit->routes($module);
             });
-        }
-
-        //init menu
-        if (method_exists($moduleAdminInit, 'menu') && \Administration::routeInAdministration()) {
-            $moduleAdminInit->menu($module);
         }
 
         /*
