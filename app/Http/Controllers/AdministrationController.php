@@ -45,7 +45,7 @@ class AdministrationController extends BaseAdministrationController
             foreach ($modules as $moduleArray) {
                 $module = new $moduleArray['administrationClass'];
                 if (method_exists($module, 'dashboard')) {
-                    $module->dashboard($module);
+                    $module->dashboard($moduleArray);
                 }
             }
         }

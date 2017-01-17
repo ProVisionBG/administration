@@ -33,7 +33,7 @@ class BaseAdministrationController extends Controller
             foreach ($modules as $moduleArray) {
                 $module = new $moduleArray['administrationClass'];
                 if (method_exists($module, 'menu')) {
-                    $module->menu($module);
+                    $module->menu($moduleArray);
                 }
             }
         }
