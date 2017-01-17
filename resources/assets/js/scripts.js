@@ -16,4 +16,11 @@ $(function () {
     }
     tinymce.init(window.tinymceConfig);
 
+    /*
+     jQuery confirm default settings
+     */
+    jconfirm.defaults = {
+        theme: 'supervan'
+    }
+
 });
