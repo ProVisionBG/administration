@@ -61,8 +61,10 @@ class Migrate extends Command
         $installedModules = Administration::getModules();
         if (count($installedModules) > 0) {
             foreach ($installedModules as $key => $module) {
+                $modulePath = str_ireplace('administration', $key, $path);
                 $this->info('Migrate: provision/' . $key);
-                \Artisan::call('migrate', ['--path' => 'vendor/provision/' . $key . '/Database/Migrations']);
+                $this->info('Path: ' . $path);
+                \Artisan::call('migrate', ['--path' => $modulePath]);
                 $this->info(\Artisan::output());
             }
         }

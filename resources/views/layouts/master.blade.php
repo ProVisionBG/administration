@@ -10,6 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href='{{asset("/vendor/provision/administration/css/all.css")}}'>
+    <link rel="stylesheet" href='{{asset("/vendor/provision/media-manager/assets/css/all.css")}}'>
 
     @stack('top_css')
 </head>
@@ -418,6 +419,7 @@
 @stack('js_configs')
 
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
+<script src="{{asset("/vendor/provision/media-manager/assets/js/all.js")}}"></script>
 
 @stack('js_scripts')
 

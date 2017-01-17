@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use ProVision\Administration\Media;
 use App\Http\Controllers\Controller;
 
-class MediaController extends Controller
+class MediaController extends BaseAdministrationController
 {
     /**
      * Display a listing of the resource.

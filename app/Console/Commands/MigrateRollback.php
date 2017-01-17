@@ -17,7 +17,7 @@ class MigrateRollback extends Command
      *
      * @param string
      */
-    protected $name = 'admin:migrate-rollback';
+    protected $name = 'admin:migrate:rollback';
 
     /**
      * Necessary to let people know, in case the name wasn't clear enough.
@@ -35,7 +35,7 @@ class MigrateRollback extends Command
         /*
         * command fix
         */
-        $this->signature = config('provision_administration.command_prefix').':migrate-rollback';
+        $this->signature = config('provision_administration.command_prefix') . ':migrate:rollback';
 
         parent::__construct();
     }
@@ -45,7 +45,7 @@ class MigrateRollback extends Command
      */
     public function handle()
     {
-        $path = str_ireplace(base_path(), '', realpath(__DIR__.'\\..\\..\\..\\database\\migrations'));
+        $path = str_ireplace(base_path(), '', realpath(__DIR__ . '\\..\\..\\..\\database\\migrations'));
         \Artisan::call('migrate:rollback', ['--path' => $path]);
         $this->info(\Artisan::output());
     }
