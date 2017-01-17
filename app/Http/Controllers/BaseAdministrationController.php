@@ -30,7 +30,8 @@ class BaseAdministrationController extends Controller
          */
         $modules = \ProVision\Administration\Administration::getModules();
         if ($modules) {
-            foreach ($modules as $module) {
+            foreach ($modules as $moduleArray) {
+                $module = new $moduleArray['administrationClass'];
                 if (method_exists($module, 'menu')) {
                     $module->menu($module);
                 }

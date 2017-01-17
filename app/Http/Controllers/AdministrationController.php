@@ -42,7 +42,8 @@ class AdministrationController extends BaseAdministrationController
          */
         $modules = \ProVision\Administration\Administration::getModules();
         if ($modules) {
-            foreach ($modules as $module) {
+            foreach ($modules as $moduleArray) {
+                $module = new $moduleArray['administrationClass'];
                 if (method_exists($module, 'dashboard')) {
                     $module->dashboard($module);
                 }

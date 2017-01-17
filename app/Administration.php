@@ -207,22 +207,22 @@ class Administration extends Facade
     }
 
     /**
+     * Get route administration name.
+     * @param $name
+     * @return string
+     */
+    public static function routeName($name)
+    {
+        return self::AS_MODULE_PREFIX . $name;
+    }
+
+    /**
      * Име на администраторският route.
      * @param $name
      * @return string
      * @deprecated
      */
     public static function routeAdministrationName($name)
-    {
-        return self::AS_MODULE_PREFIX . $name;
-    }
-
-    /**
-     * Get route administration name.
-     * @param $name
-     * @return string
-     */
-    public static function routeName($name)
     {
         return self::AS_MODULE_PREFIX . $name;
     }
@@ -272,9 +272,9 @@ class Administration extends Facade
          * Кои са заредените модули?
          */
         if (!is_array($module)) {
-            self::$modules[$module] = $moduleAdminInit;
+            self::$modules[$module] = ['administrationClass' => $administrationClass];
         } else {
-            self::$modules[$module['slug']] = $moduleAdminInit;
+            self::$modules[$module['slug']] = array_merge($module, ['administrationClass' => $administrationClass]);
         }
     }
 
