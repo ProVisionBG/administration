@@ -8,19 +8,20 @@ $elementID = 'adminDeleteButton-' . str_random(20);
 
 <script>
     $('#{{$elementID}}').on('click', function (e) {
-        console.log('click');
         e.preventDefault();
 
+        var $this = $(this);
+
         $.confirm({
-            title: '',
-            content: '{{trans('administration::index.confirm_title')}}',
+            title: '{{trans('administration::index.confirm_delete_title')}}',
+            content: '{{trans('administration::index.confirm_delete_description')}}',
             buttons: {
                 Yes: {
-                    text: '{{trans('administration::index.delete')}}',
+                    text: '{{trans('administration::index.yes')}}',
                     //btnClass: 'btn-warning',
                     action: function () {
                         $.ajax({
-                            url: $(e.relatedTarget).data('href'),
+                            url: $this.data('href'),
                             type: 'DELETE',
                             success: function (result) {
                                 $('#dataTableBuilder').DataTable().draw();
@@ -33,8 +34,8 @@ $elementID = 'adminDeleteButton-' . str_random(20);
                         });
                     }
                 },
-                Close: {
-                    text: '{{trans('administration::index.cancel')}}'
+                No: {
+                    text: '{{trans('administration::index.no')}}'
                 }
             }
         });
