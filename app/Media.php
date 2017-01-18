@@ -7,9 +7,11 @@
 
 namespace ProVision\Administration;
 
+use ProVision\Administration\Traits\MediaTrait;
+
 class Media extends AdminModel
 {
-    use \Rutorika\Sortable\SortableTrait;
+    use \Rutorika\Sortable\SortableTrait,MediaTrait;
 
     protected static $sortableGroupField = [
         'module',
@@ -112,6 +114,6 @@ class Media extends AdminModel
      */
     public function quickResize()
     {
-        parent::resize(realpath(public_path($this->path.'/'.$this->file)));
+        $this->resize(realpath(public_path($this->path.'/'.$this->file)));
     }
 }
