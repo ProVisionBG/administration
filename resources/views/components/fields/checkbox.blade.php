@@ -11,6 +11,24 @@
         $options['attr']['class'] = '';
     }
     $options['attr']['id'] = str_random(20);
+
+    /*
+     * Автоматично чекване
+     */
+
+    if (!isset($options['checked']) || is_array($options['checked'])) {
+        //for translates
+        if (!empty($options['translate'])) {
+            if ($options['value'] === '') {
+                $options['checked'] = (empty($options['default_checked']) ? false : $options['default_checked']);
+            } elseif ($options['value'] == true) {
+                $options['checked'] = true;
+            } elseif ($options['value'] == false) {
+                $options['checked'] = false;
+            }
+        }
+    }
+
     echo Form::checkbox($name, $options['value'], (boolean)$options['checked'], $options['attr']);
     ?>
 
