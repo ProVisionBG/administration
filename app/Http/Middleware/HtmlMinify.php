@@ -206,9 +206,9 @@ class HtmlMinify
             '/\>[^\S ]+/s', // strip whitespaces after tags, except space
             '/[^\S ]+\</s', // strip whitespaces before tags, except space
             '/(\s)+/s', // shorten multiple whitespace sequences
-            '!/\*.*?\*/!s', // Remove htmlcomment
-            '/\n\s*\n/'
-        ); // Remove htmlcomment
+            '!/\*.*?\*/!s', // Remove html comment
+            '/\n\s*\n/' // Remove html comment
+        );
 
         $replace = array(
             '>',

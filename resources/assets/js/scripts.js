@@ -20,7 +20,8 @@ $(function () {
      jQuery confirm default settings
      */
     jconfirm.defaults = {
-        theme: 'supervan'
+        theme: 'supervan',
+        columnClass: 'col-md-8 col-md-offset-2 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1',
     }
 
 });

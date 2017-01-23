@@ -8,12 +8,13 @@
 namespace ProVision\Administration\Http\Controllers;
 
 use Form;
-use Request;
 use Guzzle\Http\Message\Response;
-use ProVision\Administration\Role;
 use Kris\LaravelFormBuilder\FormBuilder;
-use ProVision\Administration\Forms\RolesForm;
 use ProVision\Administration\Facades\Administration;
+use ProVision\Administration\Forms\RolesForm;
+use ProVision\Administration\Forms\SettingsForm;
+use ProVision\Administration\Role;
+use Request;
 
 class SettingsController extends BaseAdministrationController
 {
@@ -28,14 +29,24 @@ class SettingsController extends BaseAdministrationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FormBuilder $formBuilder)
     {
+        Administration::setTitle(trans('administration::settings.title'));
+
         \Breadcrumbs::register('admin_final', function ($breadcrumbs) {
             $breadcrumbs->parent('admin_home');
             $breadcrumbs->push(trans('administration::settings.title'), route('provision.administration.settings.index'));
         });
 
-        return view('administration::index');
+        $form = $formBuilder->create(SettingsForm::class, [
+                'method' => 'POST',
+                'url' => route('provision.administration.settings.store'),
+            ]
+        );
+
+
+        return view('administration::empty-form', compact('form'));
+
     }
 
     /**
@@ -150,7 +161,7 @@ class SettingsController extends BaseAdministrationController
             /*
              * add permissions
              */
-            if (! empty(Request::has('permissions'))) {
+            if (!empty(Request::has('permissions'))) {
                 $role->perms()->sync(Request::input('permissions'));
             }
 

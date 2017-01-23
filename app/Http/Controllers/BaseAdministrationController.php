@@ -36,6 +36,10 @@ class BaseAdministrationController extends Controller
                     $module = new $moduleArray['administrationClass'];
                     if (method_exists($module, 'menu')) {
                         $module->menu($moduleArray);
+                        //set order
+                        if (!empty($moduleArray['order'])) {
+                            \AdministrationMenu::setLastOrder($moduleArray['order']);
+                        }
                     }
                 }
             }

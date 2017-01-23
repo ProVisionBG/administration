@@ -217,7 +217,7 @@
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                @include('administration::partials.navigation', ['items' => \Menu::get('ProVisionAdministrationMenu')->sortBy('order', 'asc')->roots()])
+                @include('administration::partials.navigation', ['items' => \AdministrationMenu::get()])
             </ul>
         </section>
         <!-- /.sidebar -->

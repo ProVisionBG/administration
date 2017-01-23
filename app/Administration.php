@@ -8,11 +8,9 @@
 namespace ProVision\Administration;
 
 use File;
-use Illuminate\Support\Facades\Facade;
 use LaravelLocalization;
-use Lavary\Menu\Menu;
 
-class Administration extends Facade
+class Administration
 {
     const AS_MODULE_PREFIX = 'provision.administration.module.'; //administration module route prefix
 
@@ -129,20 +127,6 @@ class Administration extends Facade
         }
 
         return $module['order'];
-    }
-
-    /**
-     * Get administration menu instance.
-     * @return Menu
-     */
-    public static function getMenuInstance()
-    {
-        $menu = \Menu::get('ProVisionAdministrationMenu');
-        if (empty($menu)) {
-            $menu = \Menu::make('ProVisionAdministrationMenu', []);
-        }
-
-        return $menu;
     }
 
     /**
@@ -272,7 +256,7 @@ class Administration extends Facade
          * Кои са заредените модули?
          */
         if (!is_array($module)) {
-            self::$modules[$module] = ['administrationClass' => $administrationClass];
+            self::$modules[$module] = ['name' => $module, 'administrationClass' => $administrationClass];
         } else {
             self::$modules[$module['slug']] = array_merge($module, ['administrationClass' => $administrationClass]);
         }
