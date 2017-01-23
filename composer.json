@@ -24,7 +24,7 @@
     "php": "^5.6.4 || ^7.0",
     "laravel/framework": "5.3.*",
     "provision/minifier": ">=0.2",
-    "provision/media-manager": ">=0.0.1",
+    "provision/media-manager": "dev-master",
     "mcamara/laravel-localization": "^1.1",
     "zizaco/entrust": "5.2.x-dev",
     "caffeinated/modules": "^4.0",
