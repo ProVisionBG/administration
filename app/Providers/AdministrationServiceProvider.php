@@ -314,17 +314,6 @@ class AdministrationServiceProvider extends ServiceProvider
         /*
         * Register the service provider for the dependency.
         */
-        $this->app->register(\ProVision\Minifier\Providers\MinifierProvider::class);
-        $this->app->register(\ProVision\MediaManager\Providers\ModuleServiceProvider::class);
-
-        if (config('provision_administration.packages.log-viewer')) {
-            // https://github.com/ARCANEDEV/LogViewer
-            $this->app->register(\Arcanedev\LogViewer\LogViewerServiceProvider::class);
-        }
-
-        /*
-         * other packages
-         */
         $this->app->register(\Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class);
         $this->app->register(\Zizaco\Entrust\EntrustServiceProvider::class);
         $this->app->register(\Caffeinated\Modules\ModulesServiceProvider::class);
@@ -342,6 +331,13 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
         $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
 
+        $this->app->register(\ProVision\Minifier\Providers\MinifierProvider::class);
+        $this->app->register(\ProVision\MediaManager\Providers\ModuleServiceProvider::class);
+
+        if (config('provision_administration.packages.log-viewer')) {
+            // https://github.com/ARCANEDEV/LogViewer
+            $this->app->register(\Arcanedev\LogViewer\LogViewerServiceProvider::class);
+        }
 
         /*
          * Create aliases for the dependency.
