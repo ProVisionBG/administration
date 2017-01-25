@@ -315,6 +315,8 @@ class AdministrationServiceProvider extends ServiceProvider
         * Register the service provider for the dependency.
         */
         $this->app->register(\ProVision\Minifier\Providers\MinifierProvider::class);
+        $this->app->register(\ProVision\MediaManager\Providers\ModuleServiceProvider::class);
+
         if (config('provision_administration.packages.log-viewer')) {
             // https://github.com/ARCANEDEV/LogViewer
             $this->app->register(\Arcanedev\LogViewer\LogViewerServiceProvider::class);
