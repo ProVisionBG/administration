@@ -13,6 +13,6 @@ class Administration extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'administration';
+        return 'Administration';
     }
 }
