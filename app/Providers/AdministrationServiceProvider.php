@@ -327,11 +327,12 @@ class AdministrationServiceProvider extends ServiceProvider
         //$this->app->register(\Krucas\Notification\NotificationServiceProvider::class);
         //$this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
-        $this->app->register(\DaveJamesMiller\Breadcrumbs\ServiceProvider::class);
+
         //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
         $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
 
+        $this->app->register(\ProVision\Breadcrumbs\ServiceProvider::class);
         $this->app->register(\ProVision\Minifier\Providers\MinifierProvider::class);
         $this->app->register(\ProVision\MediaManager\Providers\ModuleServiceProvider::class);
 
@@ -348,6 +349,8 @@ class AdministrationServiceProvider extends ServiceProvider
         $loader->alias('Administration', \ProVision\Administration\Facades\Administration::class);
         $loader->alias('AdministrationMenu', \ProVision\Administration\Facades\AdministrationMenu::class);
         $loader->alias('Dashboard', \ProVision\Administration\Dashboard::class);
+        $loader->alias('Breadcrumbs', \ProVision\Breadcrumbs\Facade::class);
+
         //library
         $loader->alias('LaravelLocalization', \Mcamara\LaravelLocalization\Facades\LaravelLocalization::class);
         $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
@@ -355,11 +358,10 @@ class AdministrationServiceProvider extends ServiceProvider
         $loader->alias('Menu', \Lavary\Menu\Facade::class);
         $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables::class);
         $loader->alias('FormBuilder', \Kris\LaravelFormBuilder\Facades\FormBuilder::class);
-        $loader->alias('MetaTag', \Torann\LaravelMetaTags\Facades\MetaTag::class);
+        //$loader->alias('MetaTag', \Torann\LaravelMetaTags\Facades\MetaTag::class);
         //$loader->alias('Notification', \Krucas\Notification\Facades\Notification::class);
         //$loader->alias('Socialite', \Laravel\Socialite\Facades\Socialite::class);
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
-        $loader->alias('Breadcrumbs', \DaveJamesMiller\Breadcrumbs\Facade::class);
         $loader->alias('Form', \Collective\Html\FormFacade::class);
         $loader->alias('Html', \Collective\Html\HtmlFacade::class);
         $loader->alias('Debugbar', \Barryvdh\Debugbar\Facade::class);
@@ -391,7 +393,7 @@ class AdministrationServiceProvider extends ServiceProvider
             //\ProVision\Administration\Console\Commands\MigrateRollback::class
         ]);
 
-        $this->app['Administration'] = $this->app->singleton(function ($app) {
+        $this->app->singleton('Administration',function ($app) {
             return new Administration;
         });
 
