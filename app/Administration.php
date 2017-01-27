@@ -284,8 +284,8 @@ class Administration
     {
         $default = [
             'web',
-            'localeSessionRedirect',
-            'localizationRedirect',
+            \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+            \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         ];
 
         return array_merge($default, $middleware);

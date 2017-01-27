@@ -7,11 +7,7 @@
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [
-        'web',
-        'localeSessionRedirect',
-        'localizationRedirect',
-    ],
+    'middleware' => Administration::routeMiddleware(),
 ], function () {
     Route::group([
         'namespace' => 'ProVision\Administration\Http\Controllers',
