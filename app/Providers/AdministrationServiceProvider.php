@@ -391,13 +391,10 @@ class AdministrationServiceProvider extends ServiceProvider
             //\ProVision\Administration\Console\Commands\MigrateRollback::class
         ]);
 
-        $this->app['administration'] = $this->app->share(function ($app) {
+        $this->app['Administration'] = $this->app->singleton(function ($app) {
             return new Administration;
         });
 
-//        $this->app['AdministrationMenu'] = $this->app->share(function ($app) {
-//            return new AdministrationMenu();
-//        });
         $this->app->bind('AdministrationMenu', function () {
             return new \ProVision\Administration\AdministrationMenu;
         });
