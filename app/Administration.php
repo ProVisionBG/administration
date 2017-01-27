@@ -9,6 +9,8 @@ namespace ProVision\Administration;
 
 use File;
 use LaravelLocalization;
+use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
+use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
 
 class Administration
 {
@@ -284,8 +286,8 @@ class Administration
     {
         $default = [
             'web',
-            \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
-            \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+            'localeSessionRedirect',
+            'localizationRedirect',
         ];
 
         return array_merge($default, $middleware);

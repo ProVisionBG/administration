@@ -369,14 +369,14 @@ class AdministrationServiceProvider extends ServiceProvider
         /*
          * middleware
          */
-        $this->app['router']->middleware('localize', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class);
-        $this->app['router']->middleware('localizationRedirect', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class);
-        $this->app['router']->middleware('localeSessionRedirect', \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class);
+        $this->addAliasMiddleware('localize', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class);
+        $this->addAliasMiddleware('localizationRedirect', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class);
+        $this->addAliasMiddleware('localeSessionRedirect', \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class);
 
-        //$this->app['router']->middleware('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
-        $this->app['router']->middleware('role', \ProVision\Administration\Http\Middleware\EntrustRole::class);
-        $this->app['router']->middleware('permission', \ProVision\Administration\Http\Middleware\EntrustPermission::class);
-        $this->app['router']->middleware('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
+        //$this->addAliasMiddleware('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
+        $this->addAliasMiddleware('role', \ProVision\Administration\Http\Middleware\EntrustRole::class);
+        $this->addAliasMiddleware('permission', \ProVision\Administration\Http\Middleware\EntrustPermission::class);
+        $this->addAliasMiddleware('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
 
         //automatic check permissions to modules
         $this->app['router']->pushMiddlewareToGroup('web', \ProVision\Administration\Http\Middleware\EntrustAuto::class);
@@ -393,7 +393,7 @@ class AdministrationServiceProvider extends ServiceProvider
             //\ProVision\Administration\Console\Commands\MigrateRollback::class
         ]);
 
-        $this->app->singleton('Administration',function ($app) {
+        $this->app->singleton('Administration', function ($app) {
             return new Administration;
         });
 
@@ -408,5 +408,19 @@ class AdministrationServiceProvider extends ServiceProvider
             //collapse navigation
             $object->disableFor('administration-navigation-collapsed');
         });
+    }
+
+    /**
+     * Backward compatibility with 5.3 ->middleware ->aliasMiddleware
+     * @param $name
+     * @param $class
+     */
+    protected function addAliasMiddleware($name, $class)
+    {
+        if (version_compare(app()::VERSION, '5.4', '<')) {
+            $this->app['router']->middleware($name, $class);
+        } else {
+            $this->app['router']->aliasMiddleware($name, $class);
+        }
     }
 }
