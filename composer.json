@@ -27,7 +27,7 @@
     "provision/media-manager": "dev-master",
     "provision/laravel-meta-tags": "dev-master",
     "provision/breadcrumbs": "^3.0",
-    "mcamara/laravel-localization": "^1.1",
+    "mcamara/laravel-localization": "^1.2",
     "zizaco/entrust": ">=1.8.0-alpha1",
     "caffeinated/modules": "^4.0",
     "lavary/laravel-menu": "^1.6",
