@@ -19,22 +19,6 @@ Route::group([
             'uses' => 'AdministrationController@index',
         ]);
 
-//        Route::get('login', [
-//            'as' => 'login',
-//            'middleware' => ['role:guest'],
-//            'uses' => 'AdministrationController@getLogin'
-//        ]);
-//
-//        Route::post('login', [
-//            'as' => 'login_post',
-//            'middleware' => ['role:guest'],
-//            'uses' => 'Auth\AuthController@login'
-//        ]);
-
-//        \Auth::routes([
-//            'prefix' => LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix'),
-//        ]);
-
         // Authentication Routes...
         Route::get('login', [
             'as' => 'login',

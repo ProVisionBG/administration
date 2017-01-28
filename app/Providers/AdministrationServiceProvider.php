@@ -322,12 +322,10 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
         $this->app->register(\Kris\LaravelFormBuilder\FormBuilderServiceProvider::class);
         $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
-        $this->app->register(\Torann\LaravelMetaTags\MetaTagsServiceProvider::class);
         $this->app->register(\Dimsav\Translatable\TranslatableServiceProvider::class);
         //$this->app->register(\Krucas\Notification\NotificationServiceProvider::class);
         //$this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
-
         //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
         $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
@@ -335,6 +333,7 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app->register(\ProVision\Breadcrumbs\ServiceProvider::class);
         $this->app->register(\ProVision\Minifier\Providers\MinifierProvider::class);
         $this->app->register(\ProVision\MediaManager\Providers\ModuleServiceProvider::class);
+        $this->app->register(\ProVision\MetaTags\MetaTagsServiceProvider::class);
 
         if (config('provision_administration.packages.log-viewer')) {
             // https://github.com/ARCANEDEV/LogViewer
