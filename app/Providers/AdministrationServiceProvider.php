@@ -349,6 +349,7 @@ class AdministrationServiceProvider extends ServiceProvider
         $loader->alias('AdministrationMenu', \ProVision\Administration\Facades\AdministrationMenu::class);
         $loader->alias('Dashboard', \ProVision\Administration\Dashboard::class);
         $loader->alias('Breadcrumbs', \ProVision\Breadcrumbs\Facade::class);
+        $loader->alias('MetaTag', \ProVision\MetaTags\Facades\MetaTag::class);
 
         //library
         $loader->alias('LaravelLocalization', \Mcamara\LaravelLocalization\Facades\LaravelLocalization::class);
