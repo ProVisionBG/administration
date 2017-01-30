@@ -357,7 +357,6 @@ class AdministrationServiceProvider extends ServiceProvider
         $loader->alias('Menu', \Lavary\Menu\Facade::class);
         $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables::class);
         $loader->alias('FormBuilder', \Kris\LaravelFormBuilder\Facades\FormBuilder::class);
-        //$loader->alias('MetaTag', \Torann\LaravelMetaTags\Facades\MetaTag::class);
         //$loader->alias('Notification', \Krucas\Notification\Facades\Notification::class);
         //$loader->alias('Socialite', \Laravel\Socialite\Facades\Socialite::class);
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
