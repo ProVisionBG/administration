@@ -8,7 +8,7 @@
     <?= Form::label($name, $options['label'], $options['label_attr']) ?>
 
     @if(!empty($options['model']) && \Administration::isLoadedModule('visual-builder'))
-        <a href="{{\Administration::route('visual_builder.index',['id'=> $options['model']->id ,'field'=>$name, 'model'=>get_class($options['model'])])}} "
+        <a href="{{\Administration::route('visual-builder.index',['id'=> $options['model']->id ,'field'=>$name, 'model'=>get_class($options['model'])])}} "
            class="btn btn-xs btn-primary pull-right">Edit with
             VisualBuilder</a>
     @endif

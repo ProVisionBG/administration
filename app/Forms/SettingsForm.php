@@ -11,20 +11,12 @@ class SettingsForm extends AdminForm
 {
     public function buildForm()
     {
-        /*
-         * base settings
-         */
-//        $this->add('base_settings_' . str_random(5), 'static', [
-//            'tag' => 'h4',
-//            'value' => 'Основни настройки',
-//            'label' => false
-//        ]);
-
         $this->addSeoFields(true, [
             'meta_title',
             'meta_description',
             'meta_keywords'
         ]);
+
         $this->add('html_minify', 'checkbox', [
             'label' => 'HTML Minify',
             'help_block' => [
@@ -32,9 +24,22 @@ class SettingsForm extends AdminForm
             ]
         ]);
 
+        $this->add('ssl_enable', 'checkbox', [
+            'label' => 'Redirect to SSL (https://)',
+            'help_block' => [
+                'text' => 'Only in production!'
+            ]
+        ]);
+
+        $this->add('non_www_enable', 'checkbox', [
+            'label' => 'Redirecto to non-WWW',
+            'help_block' => [
+                'text' => 'Only in production!'
+            ]
+        ]);
+
         /*
          * load settings of modules
-         */
         $modules = \ProVision\Administration\Administration::getModules();
         if ($modules) {
             foreach ($modules as $moduleArray) {
@@ -49,6 +54,7 @@ class SettingsForm extends AdminForm
                 }
             }
         }
+           */
 
         $this->add('footer', 'admin_footer');
         $this->add('send', 'submit', [

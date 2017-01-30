@@ -51,7 +51,7 @@ class AdministrationMenu
         /*
          * MODULES
          */
-        $this->menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true)->data('order', 1000);
+        $this->menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true)->data('order', 100);
 
         /*
          * SYSTEM
@@ -64,11 +64,12 @@ class AdministrationMenu
     /**
      * @param $title
      * @param array $options
+     * @return $this
      */
     public function addSystem($title, $options = [], $callback = false)
     {
         $this->repairOptions($options);
-        $this->last = $this->menu->add($title, $options)->data('order', 1000001);
+        $this->last = $this->menu->add($title, $options)->data('order', 10001);
         $this->setData($this->last, $options);
 
         if (is_callable($callback)) {
@@ -138,7 +139,7 @@ class AdministrationMenu
     public function addModule($title, $options = [], $callback = false)
     {
         $this->repairOptions($options);
-        $this->last = $this->menu->add($title, $options)->data('order', 1001);
+        $this->last = $this->menu->add($title, $options)->data('order', 101);
         $this->setData($this->last, $options);
 
         if (is_callable($callback)) {

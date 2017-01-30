@@ -14,6 +14,8 @@ use Form;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
+use ProVision\Administration\Http\Middleware\HttpsProtocol;
+use ProVision\Administration\Http\Middleware\NonWww;
 
 class AdministrationServiceProvider extends ServiceProvider
 {
@@ -334,6 +336,7 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app->register(\ProVision\Minifier\Providers\MinifierProvider::class);
         $this->app->register(\ProVision\MediaManager\Providers\ModuleServiceProvider::class);
         $this->app->register(\ProVision\MetaTags\MetaTagsServiceProvider::class);
+        $this->app->register(\ProVision\VisualBuilder\Providers\ModuleServiceProvider::class);
 
         if (config('provision_administration.packages.log-viewer')) {
             // https://github.com/ARCANEDEV/LogViewer
@@ -348,8 +351,10 @@ class AdministrationServiceProvider extends ServiceProvider
         $loader->alias('Administration', \ProVision\Administration\Facades\Administration::class);
         $loader->alias('AdministrationMenu', \ProVision\Administration\Facades\AdministrationMenu::class);
         $loader->alias('Dashboard', \ProVision\Administration\Dashboard::class);
+        $loader->alias('Settings', \ProVision\Administration\Facades\Settings::class);
         $loader->alias('Breadcrumbs', \ProVision\Breadcrumbs\Facade::class);
         $loader->alias('MetaTag', \ProVision\MetaTags\Facades\MetaTag::class);
+
 
         //library
         $loader->alias('LaravelLocalization', \Mcamara\LaravelLocalization\Facades\LaravelLocalization::class);
@@ -379,8 +384,15 @@ class AdministrationServiceProvider extends ServiceProvider
 
         //automatic check permissions to modules
         $this->app['router']->pushMiddlewareToGroup('web', \ProVision\Administration\Http\Middleware\EntrustAuto::class);
+        //check Maintenance Mode
         $this->app['router']->pushMiddlewareToGroup('web', \ProVision\Administration\Http\Middleware\CheckForMaintenanceMode::class);
         $this->app['router']->pushMiddlewareToGroup('api', \ProVision\Administration\Http\Middleware\CheckForMaintenanceMode::class);
+        //SSL redirect
+        $this->app['router']->pushMiddlewareToGroup('web', HttpsProtocol::class);
+        $this->app['router']->pushMiddlewareToGroup('api', HttpsProtocol::class);
+        //non-WWW redirect
+        $this->app['router']->pushMiddlewareToGroup('web', NonWww::class);
+
 
         /*
          * Commands
@@ -399,6 +411,11 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app->bind('AdministrationMenu', function () {
             return new \ProVision\Administration\AdministrationMenu;
         });
+
+        $this->app->bind('Settings', function () {
+            return new \ProVision\Administration\Settings;
+        });
+
 
         /*
          * disable cookies encryption for administration cookies

@@ -20,8 +20,6 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('module')->index();
-            $table->string('sub_module')->nullable()->default(null)->index();
             $table->string('key')->index();
             $table->longText('value')->nullable()->default(null);
             $table->timestamps();

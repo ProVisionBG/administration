@@ -29,6 +29,7 @@
         }
     }
 
+    echo Form::hidden($name, 0); //сетва стойност за неизбрано поле
     echo Form::checkbox($name, $options['value'], (boolean)$options['checked'], $options['attr']);
     ?>
 

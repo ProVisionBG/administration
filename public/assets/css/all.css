@@ -843,3 +843,7 @@ tr.dt-rowReorder-moving {
 div.empty-listing a.admin-link-button {
     margin: 0 3px;
 }
+
+.bootstrap-switch .bootstrap-switch-label {
+    white-space: nowrap;
+}

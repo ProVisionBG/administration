@@ -13,6 +13,11 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Response;
 use ProVision\Administration\Administration;
 
+/**
+ * Class HtmlMinify
+ * @package ProVision\Administration\Http\Middleware
+ * @deprecated
+ */
 class HtmlMinify
 {
     /**
