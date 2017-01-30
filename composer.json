@@ -39,7 +39,7 @@
     "kalnoy/nestedset": "^4.1",
     "barryvdh/laravel-translation-manager": "^0.2.2",
     "venturecraft/revisionable": "1.*",
-    "laravelcollective/html": "^5.3",
+    "laravelcollective/html": "^5.3 || ^5.4",
     "kris/laravel-form-builder": "^1.7",
     "dimsav/laravel-translatable": "6.*",
     "rutorika/sortable": "^3.2",
