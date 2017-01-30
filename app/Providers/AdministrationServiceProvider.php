@@ -416,7 +416,9 @@ class AdministrationServiceProvider extends ServiceProvider
      */
     protected function addAliasMiddleware($name, $class)
     {
-        if (version_compare(app()::VERSION, '5.4', '<')) {
+        $app = app();
+
+        if (version_compare($app::VERSION, '5.4', '<')) {
             $this->app['router']->middleware($name, $class);
         } else {
             $this->app['router']->aliasMiddleware($name, $class);
