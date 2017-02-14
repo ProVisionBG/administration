@@ -12,6 +12,10 @@ use ProVision\Administration\Models\Settings as SettingsModel;
 class Settings
 {
 
+    /**
+     * Settings container
+     * @var array
+     */
     protected $settings;
 
     /**
@@ -57,7 +61,6 @@ class Settings
      */
     public function get($key, $default = false)
     {
-
         foreach ($this->load() as $item) {
             if ($item->key == $key) {
                 return $item->value;
