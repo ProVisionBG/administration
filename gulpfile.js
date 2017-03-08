@@ -60,6 +60,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/tinymce/jquery.tinymce.min.js',
 
         'resources/assets/bower_components/toastr/toastr.js',
+        'resources/assets/bower_components/moment/moment.js',
 
         'resources/assets/bower_components/datatables/media/js/jquery.dataTables.min.js',
         'resources/assets/bower_components/datatables/media/js/dataTables.bootstrap.min.js',
