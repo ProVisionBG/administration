@@ -117,6 +117,7 @@ class AdministrationMenu
     }
 
     /**
+     * @param $item
      * @param $options
      */
     private function setData($item, $options)
@@ -153,6 +154,7 @@ class AdministrationMenu
     /**
      * @param $title
      * @param array $options
+     * @param bool $callback
      * @return $this
      */
     public function addItem($title, $options = [], $callback = false)
@@ -162,10 +164,10 @@ class AdministrationMenu
         $this->setData($lastItem, $options);
 
         if (is_callable($callback)) {
-            // Registering the items
+            $lastCopy = $this->last;
             $this->last = $lastItem;
             call_user_func($callback, $this);
-
+            $this->last = $lastCopy;
         }
 
         return $this;
