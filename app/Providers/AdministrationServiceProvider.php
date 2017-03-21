@@ -95,7 +95,8 @@ class AdministrationServiceProvider extends ServiceProvider
         /*
          * translations
          */
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'administration');
+        //$this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'administration');
+        $this->loadTranslationsFrom(resource_path('lang/vendor/provision/administration'), 'administration');
         $this->publishes([
             __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/provision/administration'),
         ], 'lang');
