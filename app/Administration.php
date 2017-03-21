@@ -9,8 +9,6 @@ namespace ProVision\Administration;
 
 use File;
 use LaravelLocalization;
-use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
-use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
 
 class Administration
 {
@@ -248,7 +246,7 @@ class Administration
             \Route::group([
                 'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
                 'as' => self::AS_MODULE_PREFIX,
-                'middleware' => \ProVision\Administration\Administration::routeMiddleware(),
+                'middleware' => array_merge(\ProVision\Administration\Administration::routeMiddleware(), ['permission:administration-access']),
             ], function () use ($moduleAdminInit, $module) {
                 $moduleAdminInit->routes($module);
             });
