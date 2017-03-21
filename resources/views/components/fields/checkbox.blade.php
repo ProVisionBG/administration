@@ -15,7 +15,6 @@
     /*
      * Автоматично чекване
      */
-
     if (!isset($options['checked']) || is_array($options['checked'])) {
         //for translates
         if (!empty($options['translate'])) {
@@ -27,6 +26,13 @@
                 $options['checked'] = false;
             }
         }
+    }
+
+    /**
+     * Името на полето да е от тип name[value] а не name[]
+     */
+    if (substr($name, -2, 2) == '[]') {
+        $name = substr($name, 0, -2) . '[' . $options['value'] . ']';
     }
 
     echo Form::hidden($name, 0); //сетва стойност за неизбрано поле
