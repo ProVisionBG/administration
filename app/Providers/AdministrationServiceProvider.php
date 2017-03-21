@@ -261,10 +261,6 @@ class AdministrationServiceProvider extends ServiceProvider
                 ]);
             }
         });
-
-        \AdministrationMenu::addSystem(trans('administration::index.translates'), [
-            'icon' => 'globe'
-        ]);
     }
 
     private function modulesBoot()
@@ -337,6 +333,7 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app->register(\ProVision\MediaManager\Providers\ModuleServiceProvider::class);
         $this->app->register(\ProVision\MetaTags\MetaTagsServiceProvider::class);
         $this->app->register(\ProVision\VisualBuilder\Providers\ModuleServiceProvider::class);
+        $this->app->register(\ProVision\Translation\ServiceProvider::class);
 
         if (config('provision_administration.packages.log-viewer')) {
             // https://github.com/ARCANEDEV/LogViewer
