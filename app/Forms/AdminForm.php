@@ -33,13 +33,20 @@ class AdminForm extends Form
         }
 
         foreach ($inputs as $input => $config) {
-            $this->add($input, 'text', array_merge([
+
+            $default = [
                 'label' => trans('administration::index.' . $input),
                 'validation_rules' => [
                     'required' => $required,
                 ],
                 'translate' => true,
-            ], $config));
+            ];
+
+            if (is_array($config)) {
+                $default = array_merge($default, $config);
+            }
+
+            $this->add($input, 'text', $default);
         }
     }
 }
