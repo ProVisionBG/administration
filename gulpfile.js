@@ -75,7 +75,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/select2/dist/js/select2.full.min.js',
         'resources/assets/bower_components/ladda-bootstrap/dist/spin.min.js',
         'resources/assets/bower_components/ladda-bootstrap/dist/ladda.js',
-
+        'resources/assets/bower_components/jquery-locationpicker-plugin/dist/locationpicker.jquery.js',
 
         //file uploads
         'resources/assets/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js',
