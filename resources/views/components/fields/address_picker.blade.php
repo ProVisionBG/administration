@@ -38,7 +38,8 @@
 @endif
 
 @push('js_configs')
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyAi9wlc35c8Cwki3_zjeHqvuVYd-kQ1EHc'></script>
+<script type="text/javascript"
+        src='http://maps.google.com/maps/api/js?sensor=false&libraries=places&key={{config('provision_administration.google_map_api_key')}}'></script>
 @endpush
 
 @push('bottom_js')

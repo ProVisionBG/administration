@@ -7,7 +7,7 @@
 
 return [
 
-    'version' => '0.0.1',
+    'version' => '0.4.0',
     //@todo: да го махна от тук!
 
     /*
@@ -24,11 +24,6 @@ return [
      * префикс за командите с artisan
      */
     'command_prefix' => 'admin',
-
-    /*
-     * Settings controller
-     */
-    'settings_controller' => '\ProVision\Administration\Http\Controllers\SettingsController',
 
     /*
      * Image sizes
@@ -55,4 +50,9 @@ return [
     'packages' => [
         'log-viewer' => true, //LogViewer: https://github.com/ARCANEDEV/LogViewer
     ],
+
+    /*
+     * Google map api key
+     */
+    'google_map_api_key' => ''
 ];
