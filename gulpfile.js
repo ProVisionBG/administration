@@ -48,7 +48,7 @@ elixir(function (mix) {
 
 
     mix.combine([
-        'resources/assets/bower_components/jquery/dist/jquery.min.js',
+        'resources/assets/bower_components/jquery/jquery.min.js',
         'resources/assets/bower_components/jquery-ui/jquery-ui.min.js',
         'resources/assets/bower_components/jquery.cookie/jquery.cookie.js',
         'resources/assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',

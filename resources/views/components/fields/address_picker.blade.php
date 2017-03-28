@@ -37,7 +37,7 @@
     </div>
 @endif
 
-@push('js_scripts')
+@push('js_configs')
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyAi9wlc35c8Cwki3_zjeHqvuVYd-kQ1EHc'></script>
 @endpush
 
