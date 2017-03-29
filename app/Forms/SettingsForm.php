@@ -11,6 +11,7 @@ class SettingsForm extends AdminForm
 {
     public function buildForm()
     {
+        $this->removeSeoInput('slug');
         $this->addSeoFields();
 
         $this->add('html_minify', 'checkbox', [
@@ -31,6 +32,13 @@ class SettingsForm extends AdminForm
             'label' => 'Redirecto to non-WWW',
             'help_block' => [
                 'text' => 'Only in production!'
+            ]
+        ]);
+
+        $this->add('google_map_api_key', 'text', [
+            'label' => 'Google maps API Key',
+            'help_block' => [
+                'text' => '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" title="Google Maps JavaScript API Documentation">Google Maps JavaScript API Documentation</a>'
             ]
         ]);
 
