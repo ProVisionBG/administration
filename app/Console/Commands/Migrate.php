@@ -48,11 +48,11 @@ class Migrate extends Command
     {
         $path = str_ireplace(base_path(), '', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations'));
         $this->info('Path to migrate (provision/administration): ' . $path);
-        \Artisan::call('migrate', ['--path' => $path]);
+        \Artisan::call('migrate', ['--path' => $path, '--force' => true]);
         $this->info(\Artisan::output());
 
         $this->info('Migrate: VentureCraft/revisionable');
-        \Artisan::call('migrate', ['--path' => 'vendor/venturecraft/revisionable/src/migrations']);
+        \Artisan::call('migrate', ['--path' => 'vendor/venturecraft/revisionable/src/migrations', '--force' => true]);
         $this->info(\Artisan::output());
 
         /*
@@ -64,7 +64,7 @@ class Migrate extends Command
                 $modulePath = str_ireplace('administration', $key, $path);
                 $this->info('Migrate: provision/' . $key);
                 $this->info('Path: ' . $path);
-                \Artisan::call('migrate', ['--path' => $modulePath]);
+                \Artisan::call('migrate', ['--path' => $modulePath, '--force' => true]);
                 $this->info(\Artisan::output());
             }
         }
