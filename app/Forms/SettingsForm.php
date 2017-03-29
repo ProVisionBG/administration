@@ -11,11 +11,7 @@ class SettingsForm extends AdminForm
 {
     public function buildForm()
     {
-        $this->addSeoFields(true, [
-            'meta_title',
-            'meta_description',
-            'meta_keywords'
-        ]);
+        $this->addSeoFields();
 
         $this->add('html_minify', 'checkbox', [
             'label' => 'HTML Minify',
