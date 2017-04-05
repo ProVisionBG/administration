@@ -7,8 +7,8 @@
 
 namespace ProVision\Administration;
 
-use Dimsav\Translatable\Translatable;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StaticBlock extends AdminModel
@@ -20,7 +20,7 @@ class StaticBlock extends AdminModel
     public $translatedAttributes = ['text'];
     public $rules = [
         'key' => 'required|max:25',
-        'active' => 'boolean',
+        'active' => 'boolean'
     ];
     public $table = 'static_blocks';
     public $module = 'administration';
@@ -30,6 +30,7 @@ class StaticBlock extends AdminModel
         'key',
         'text',
         'active',
+        'note'
     ];
     protected $with = ['translations'];
 

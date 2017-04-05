@@ -7,15 +7,15 @@
 
 namespace ProVision\Administration\Http\Controllers\StaticBlocks;
 
-use Form;
-use Request;
 use Datatables;
+use Form;
 use Guzzle\Http\Message\Response;
 use Kris\LaravelFormBuilder\FormBuilder;
-use ProVision\Administration\StaticBlock;
-use ProVision\Administration\Forms\StaticBlockForm;
 use ProVision\Administration\Facades\Administration;
+use ProVision\Administration\Forms\StaticBlockForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
+use ProVision\Administration\StaticBlock;
+use Request;
 
 class StaticBlocksController extends BaseAdministrationController
 {
@@ -38,7 +38,7 @@ class StaticBlocksController extends BaseAdministrationController
             $datatables = Datatables::of($staticBlocks)
                 ->addColumn('action', function ($staticBlock) {
                     $actions = '';
-                    if (! empty($staticBlock->deleted_at)) {
+                    if (!empty($staticBlock->deleted_at)) {
                         //restore button
                     } else {
                         $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.static-blocks.destroy', $staticBlock->id));
@@ -46,15 +46,18 @@ class StaticBlocksController extends BaseAdministrationController
 
                     $actions .= Form::adminMediaButton($staticBlock);
 
-                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.static-blocks.edit', $staticBlock->id)).$actions;
+                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.static-blocks.edit', $staticBlock->id)) . $actions;
+                })
+                ->addColumn('visible', function ($staticBlock) {
+                    return Form::adminSwitchButton('active', $staticBlock);
                 })
                 ->filter(function ($query) {
                     if (Request::has('key')) {
-                        $query->where('key', 'like', '%'.Request::get('key').'%');
+                        $query->where('key', 'like', '%' . Request::get('key') . '%');
                     }
 
                     if (Request::has('text')) {
-                        $query->where('text', 'like', '%'.Request::get('text').'%');
+                        $query->where('text', 'like', '%' . Request::get('text') . '%');
                     }
 
                     if (Request::has('delete') && Request::input('delete') == 'true') {
@@ -79,6 +82,15 @@ class StaticBlocksController extends BaseAdministrationController
                 'data' => 'key',
                 'name' => 'key',
                 'title' => trans('administration::static_blocks.key'),
+            ])->addColumn([
+                'data' => 'note',
+                'name' => 'note',
+                'title' => trans('administration::static_blocks.note'),
+            ])
+            ->addColumn([
+                'data' => 'visible',
+                'name' => 'visible',
+                'title' => trans('administration::static_blocks.visible'),
             ]);
 
         return view('administration::empty-listing', compact('table'));
