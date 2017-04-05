@@ -104,7 +104,7 @@ class Administration
      */
     public static function getStaticBlock($key)
     {
-        $block = StaticBlock::where('key', $key)->first();
+        $block = StaticBlock::where('key', $key)->where('active', 1)->first();
         if ($block) {
             return $block->text;
         }
