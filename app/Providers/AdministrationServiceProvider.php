@@ -14,6 +14,7 @@ use Form;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
+use ProVision\Administration\Exceptions\Handler;
 use ProVision\Administration\Http\Middleware\HttpsProtocol;
 use ProVision\Administration\Http\Middleware\NonWww;
 
@@ -311,6 +312,11 @@ class AdministrationServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/laravel-form-builder.php', 'laravel-form-builder'
         );
 
+        /**
+         * Exception handler
+         */
+        $this->app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, Handler::class);
+
         /*
         * Register the service provider for the dependency.
         */
@@ -390,7 +396,6 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app['router']->pushMiddlewareToGroup('api', HttpsProtocol::class);
         //non-WWW redirect
         $this->app['router']->pushMiddlewareToGroup('web', NonWww::class);
-
 
         /*
          * Commands
