@@ -7,10 +7,15 @@
 
 namespace ProVision\Administration;
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use ProVision\Administration\Models\Settings as SettingsModel;
+use ProVision\MediaManager\Traits\MediaManagerTrait;
 
 class Settings
 {
+
+    use MediaManagerTrait;
 
     /**
      * Settings container
@@ -35,6 +40,33 @@ class Settings
                 'key' => $key
             ]);
             $setting->key = $key;
+
+            if (is_object($value)) {
+                $class = get_class($value);
+
+                /*
+                 * is file?
+                 */
+                if ($class == UploadedFile::class) {
+
+                    $filePath = public_path('uploads/settings/' . $setting->key . '/');
+
+                    /*
+                     * remove old file
+                     */
+                    if (!empty($setting->value) && File::exists($filePath . $setting->value)) {
+                        //remove base file
+                        File::deleteDirectory($filePath, true);
+                    }
+
+
+                    $value->move($filePath, $value->getClientOriginalName());
+                    $this->resizeFile($filePath . $value->getClientOriginalName());
+
+                    $value = $value->getClientOriginalName();
+                }
+            }
+
             $setting->value = $value;
 
             $setting->save();
@@ -62,13 +94,11 @@ class Settings
      */
     public function get($key, $default = false)
     {
-        foreach ($this->load() as $item) {
-            if ($item->key == $key) {
-                return $item->value;
-            }
+        try {
+            return $this->load()->get($key)->value;
+        } catch (\Exception $exception) {
+            return $default;
         }
-
-        return $default;
     }
 
     /**
@@ -79,10 +109,32 @@ class Settings
     protected function load($force = false)
     {
         if (empty($this->settings) || $force) {
-            $this->settings = SettingsModel::all();
+            $this->settings = SettingsModel::all()->keyBy('key');
         }
 
         return $this->settings;
+    }
+
+    /**
+     * @param $key
+     * @param bool $size
+     * @param bool $default
+     * @return bool
+     */
+    public function getFile($key, $size = false, $default = false)
+    {
+        try {
+            $setting = $this->load()->get($key);
+
+            if ($size) {
+                return '/uploads/settings/' . $setting->key . '/' . $size . '_' . $setting->value;
+            } else {
+                return '/uploads/settings/' . $setting->key . '/' . $setting->value;
+            }
+
+        } catch (\Exception $exception) {
+            return $default;
+        }
     }
 
     /**
