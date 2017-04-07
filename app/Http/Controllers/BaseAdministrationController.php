@@ -26,7 +26,7 @@ class BaseAdministrationController extends Controller
         }
 
         /*
-         * Boot modules menus with session access!
+         * Boot modules!
          * @todo: да се помисли дали е добре да е тук?!
          */
         $this->middleware(function ($request, $next) {
@@ -34,12 +34,14 @@ class BaseAdministrationController extends Controller
             if ($modules) {
                 foreach ($modules as $moduleArray) {
                     $module = new $moduleArray['administrationClass'];
-                    if (method_exists($module, 'menu')) {
-                        $module->menu($moduleArray);
-                        //set order
-                        if (!empty($moduleArray['order'])) {
-                            \AdministrationMenu::setLastOrder($moduleArray['order']);
-                        }
+
+                    /**
+                     * Boot menu
+                     */
+                    $module->menu($moduleArray);
+                    //set order
+                    if (!empty($moduleArray['order'])) {
+                        \AdministrationMenu::setLastOrder($moduleArray['order']);
                     }
                 }
             }

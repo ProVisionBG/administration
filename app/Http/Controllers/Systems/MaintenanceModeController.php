@@ -57,7 +57,7 @@ class MaintenanceModeController extends BaseAdministrationController
 
             return \Redirect::route('provision.administration.systems.maintenance-mode')
                 ->withInput()
-                ->withErrors(['Сайта е спрян!']);
+                ->withSuccess(['Сайта е спрян!']);
         } else {
             if (File::exists(storage_path('/framework/down-provision-administration'))) {
                 File::delete(storage_path('/framework/down-provision-administration'));
@@ -65,7 +65,7 @@ class MaintenanceModeController extends BaseAdministrationController
 
             return \Redirect::route('provision.administration.systems.maintenance-mode')
                 ->withInput()
-                ->withErrors(['Сайта е пуснат!']);
+                ->withSuccess(['Сайта е пуснат!']);
         }
 
         //dd($request);

@@ -44,21 +44,31 @@ class SettingsForm extends AdminForm
 
         /*
          * load settings of modules
+         */
         $modules = \ProVision\Administration\Administration::getModules();
         if ($modules) {
             foreach ($modules as $moduleArray) {
                 $module = new $moduleArray['administrationClass'];
-                if (method_exists($module, 'settings')) {
-                    $this->add('module_static_' . str_random(5), 'static', [
-                        'tag' => 'h4',
-                        'value' => 'Module ' . $moduleArray['name'],
-                        'label' => false
+
+                /*
+                 * Колко полета има до момента добавени?
+                 */
+                $currentFieldsCount = count($this->getFields());
+
+                //run module settings
+                $module->settings($moduleArray, $this);
+
+                /**
+                 * Ако има новодобавени полета показваме хедъра
+                 */
+                if (count($this->getFields()) > $currentFieldsCount) {
+                    $this->addAfter(array_keys($this->getFields())[$currentFieldsCount - 1], 'module_static_' . str_slug($moduleArray['name']), 'new_box', [
+                        'title' => 'Module ' . $moduleArray['name']
                     ]);
-                    $module->settings($moduleArray, $this);
                 }
             }
         }
-           */
+
 
         $this->add('footer', 'admin_footer');
         $this->add('send', 'submit', [

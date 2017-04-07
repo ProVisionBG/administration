@@ -25,6 +25,7 @@ class SettingsController extends BaseAdministrationController
     /**
      * Display a listing of the resource.
      *
+     * @param FormBuilder $formBuilder
      * @return \Illuminate\Http\Response
      */
     public function index(FormBuilder $formBuilder)
@@ -73,7 +74,7 @@ class SettingsController extends BaseAdministrationController
             \Settings::save($k, $v);
         }
 
-        return \Redirect::route('provision.administration.settings.index');
+        return \Redirect::route('provision.administration.settings.index')->withSuccess([trans('administration::index.save_success')]);
     }
 
     /**

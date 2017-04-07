@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 use ProVision\Administration\Exceptions\Handler;
+use ProVision\Administration\Forms\Fields\NewBox;
 use ProVision\Administration\Http\Middleware\HttpsProtocol;
 use ProVision\Administration\Http\Middleware\NonWww;
 
@@ -166,6 +167,7 @@ class AdministrationServiceProvider extends ServiceProvider
         Config::set('laravel-form-builder.custom_fields.address_picker', \ProVision\Administration\Forms\Fields\AddressPicker::class);
         Config::set('laravel-form-builder.custom_fields.date_picker', \ProVision\Administration\Forms\Fields\DatePicker::class);
         Config::set('laravel-form-builder.custom_fields.datetime_picker', \ProVision\Administration\Forms\Fields\DatetimePicker::class);
+        Config::set('laravel-form-builder.custom_fields.new_box', NewBox::class);
 
         /*
          * Administration listing short buttons
@@ -235,12 +237,9 @@ class AdministrationServiceProvider extends ServiceProvider
 
         //system settings
         \AdministrationMenu::addSystem(trans('administration::settings.title'), [
-            'icon' => 'sliders'
-        ], function ($menu) {
-            $menu->addItem(trans('administration::settings.base_settings'), [
-                'route' => 'provision.administration.settings.index'
-            ]);
-        });
+            'icon' => 'sliders',
+            'route' => 'provision.administration.settings.index'
+        ]);
 
         \AdministrationMenu::addSystem(trans('administration::systems.title'), [
             'icon' => 'cogs'

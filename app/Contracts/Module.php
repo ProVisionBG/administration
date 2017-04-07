@@ -41,6 +41,6 @@ interface Module
      * @param Form $form
      * @return mixed
      */
-    //public function settings($module, Form $form);
+    public function settings($module, Form $form);
 
 }

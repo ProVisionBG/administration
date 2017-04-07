@@ -15,7 +15,7 @@ class Administration
     const AS_MODULE_PREFIX = 'provision.administration.module.'; //administration module route prefix
 
     /**
-     * inited modules container.
+     * Inited modules container.
      * @var array
      */
     private static $modules = [];
@@ -242,15 +242,13 @@ class Administration
         $moduleAdminInit = new $administrationClass();
 
         //init routes
-        if (method_exists($moduleAdminInit, 'routes')) {
-            \Route::group([
-                'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
-                'as' => self::AS_MODULE_PREFIX,
-                'middleware' => array_merge(\ProVision\Administration\Administration::routeMiddleware(), ['permission:administration-access']),
-            ], function () use ($moduleAdminInit, $module) {
-                $moduleAdminInit->routes($module);
-            });
-        }
+        \Route::group([
+            'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
+            'as' => self::AS_MODULE_PREFIX,
+            'middleware' => array_merge(\ProVision\Administration\Administration::routeMiddleware(), ['permission:administration-access']),
+        ], function () use ($moduleAdminInit, $module) {
+            $moduleAdminInit->routes($module);
+        });
 
         /*
          * Кои са заредените модули?

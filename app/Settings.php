@@ -36,6 +36,7 @@ class Settings
             ]);
             $setting->key = $key;
             $setting->value = $value;
+
             $setting->save();
         }
 
