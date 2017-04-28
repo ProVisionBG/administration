@@ -429,7 +429,7 @@
 @stack('js_configs')
 
 <script type="text/javascript"
-        src='//maps.google.com/maps/api/js?v=3&sensor=false&libraries=places&key={{config('provision_administration.google_map_api_key')}}'></script>
+        src='//maps.google.com/maps/api/js?v=3&sensor=false&libraries=places&key={{\ProVision\Administration\Facades\Settings::get('google_map_api_key')}}'></script>
 
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
 <script src="{{asset("/vendor/provision/media-manager/assets/js/all.js")}}"></script>
