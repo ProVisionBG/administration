@@ -49,10 +49,5 @@ return [
      */
     'packages' => [
         'log-viewer' => true, //LogViewer: https://github.com/ARCANEDEV/LogViewer
-    ],
-
-    /*
-     * Google map api key
-     */
-    'google_map_api_key' => ''
+    ]
 ];
