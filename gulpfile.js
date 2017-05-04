@@ -14,7 +14,7 @@ elixir.config.css.autoprefix = {
 elixir.extend("publish", function () {
     gulp.task("publish_assets", function () {
         gulp.src("").pipe(shell([
-            "C:\\xampp\\php\\php.exe C:\\Users\\Venko\\PhpstormProjects\\provision-cms-5.3\\artisan vendor:publish --tag=public --tag=views --force"
+            "C:/laragon/bin/php/php-7.0.12-Win32-VC14-x86/php.exe C:\\Users\\Venko\\PhpstormProjects\\provision-cms-5.3\\artisan vendor:publish --tag=public --tag=views --force"
         ]));
     });
 });
