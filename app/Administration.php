@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * ProVision Administration, http://ProVision.bg
  * Author: Venelin Iliev, http://veneliniliev.com
  */
@@ -9,6 +9,7 @@ namespace ProVision\Administration;
 
 use File;
 use LaravelLocalization;
+use ProVision\Administration\Library\CustomBladeCompiler;
 
 class Administration
 {
@@ -106,7 +107,7 @@ class Administration
     {
         $block = StaticBlock::where('key', $key)->where('active', 1)->first();
         if ($block) {
-            return $block->text;
+            return CustomBladeCompiler::render($block->text);
         }
 
         \Debugbar::error('static block not found: ' . $key);
