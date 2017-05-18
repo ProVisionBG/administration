@@ -26,10 +26,21 @@ class RolesForm extends AdminForm
             ],
         ]);
 
+        $this->add('select_all', 'static', [
+            'label_show' => false,
+            'tag' => 'div',
+            'attr' => ['class' => 'row'],
+            'value' => '
+    <div class="col-sm-12">
+        <button id="select-all-permissions" class="btn-xs btn-block" type="button">' . trans('administration::administrators.select_all') . '</button>
+    </div>'
+        ]);
+
         $this->add('permissions', 'choice', [
-            'choices' => Permission::pluck('display_name', 'id')->toArray(),
-            'selected' => (! empty($this->model) ? @$this->model->perms->pluck('id', 'name')->toArray() : null),
+            'choices' => Permission::orderBy('display_name', 'asc')->pluck('display_name', 'id')->toArray(),
+            'selected' => (!empty($this->model) ? @$this->model->perms->pluck('id', 'name')->toArray() : null),
             'expanded' => true,
+            'wrapper' => ['id' => "permissions-list"],
             'multiple' => true,
             'wrapper_children' => 'col-lg-3 col-md-4 col-sm-6 col-xs-12',
             'label' => trans('administration::administrators.permissions'),

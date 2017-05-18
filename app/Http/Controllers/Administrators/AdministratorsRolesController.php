@@ -7,14 +7,14 @@
 
 namespace ProVision\Administration\Http\Controllers\Administrators;
 
-use Form;
-use Request;
 use Datatables;
-use ProVision\Administration\Role;
+use Form;
 use Kris\LaravelFormBuilder\FormBuilder;
-use ProVision\Administration\Forms\RolesForm;
 use ProVision\Administration\Facades\Administration;
+use ProVision\Administration\Forms\RolesForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
+use ProVision\Administration\Role;
+use Request;
 
 class AdministratorsRolesController extends BaseAdministrationController
 {
@@ -37,7 +37,7 @@ class AdministratorsRolesController extends BaseAdministrationController
             $datatables = Datatables::of($roles)
                 ->addColumn('action', function ($role) {
                     $actions = '';
-                    if (! empty($role->deleted_at)) {
+                    if (!empty($role->deleted_at)) {
                         //restore button
                     } else {
                         if ($role->id != \Auth::guard(config('provision_administration.guard'))->user()->id) {
@@ -45,7 +45,7 @@ class AdministratorsRolesController extends BaseAdministrationController
                         }
                     }
 
-                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators-roles.edit', $role->id)).$actions;
+                    return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators-roles.edit', $role->id)) . $actions;
                 })
                 ->filter(function ($query) {
                     //                    if (Request::has('name')) {
@@ -134,8 +134,17 @@ class AdministratorsRolesController extends BaseAdministrationController
             /*
             * add permissions
             */
-            if (! empty(Request::has('permissions'))) {
-                $role->perms()->sync(Request::input('permissions'));
+            if (!empty(Request::has('permissions'))) {
+                $rolesData = Request::input('permissions');
+                foreach ($rolesData as $roleRow => $value) {
+                    if (empty($value)) {
+                        unset($rolesData[$roleRow]);
+                    }
+                }
+
+                if (count($rolesData) > 0) {
+                    $role->perms()->sync($rolesData);
+                }
             }
 
             return \Redirect::route('provision.administration.administrators-roles.index');
@@ -160,6 +169,7 @@ class AdministratorsRolesController extends BaseAdministrationController
     /**
      * Show the form for editing the specified resource.
      *
+     * @param FormBuilder $formBuilder
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -183,7 +193,19 @@ class AdministratorsRolesController extends BaseAdministrationController
             $breadcrumbs->push(trans('administration::administrators.edit_role', ['name' => $role->name]), route('provision.administration.administrators-roles.index'));
         });
 
-        return view('administration::empty-form', compact('form'));
+        $js_scripts = '
+        <script>
+        $(function(){
+            $("#select-all-permissions").click(function(){
+                $.each($(\'#permissions-list input\'), function() {   
+                    $("#"+$(this).attr("id")).bootstrapSwitch(\'state\', true, true);
+                });
+            });           
+        });
+        </script>
+        ';
+
+        return view('administration::empty-form', compact('form', 'js_scripts'));
     }
 
     /**
@@ -199,6 +221,7 @@ class AdministratorsRolesController extends BaseAdministrationController
 
         $requestData = Request::all();
 
+
         if ($role->validate($requestData)) {
             $role->fill($requestData);
             $role->save();
@@ -206,8 +229,18 @@ class AdministratorsRolesController extends BaseAdministrationController
             /*
              * add permissions
              */
-            if (! empty(Request::has('permissions'))) {
-                $role->perms()->sync(Request::input('permissions'));
+            if (!empty(Request::has('permissions'))) {
+
+                $rolesData = Request::input('permissions');
+                foreach ($rolesData as $roleRow => $value) {
+                    if (empty($value)) {
+                        unset($rolesData[$roleRow]);
+                    }
+                }
+
+                if (count($rolesData) > 0) {
+                    $role->perms()->sync($rolesData);
+                }
             }
 
             return \Redirect::route('provision.administration.administrators-roles.index');
