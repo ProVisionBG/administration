@@ -36,7 +36,6 @@
     "yajra/laravel-datatables-oracle": "^6.10",
     "cviebrock/eloquent-sluggable": "^4.0",
     "edvinaskrucas/notification": "5.*",
-    "laravel/socialite": "^2.0",
     "intervention/image": "^2.3",
     "kalnoy/nestedset": "^4.1",
     "barryvdh/laravel-translation-manager": "^0.2.2",
