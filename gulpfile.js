@@ -100,6 +100,7 @@ elixir(function (mix) {
         .copy('resources/assets/bower_components/tinymce/themes', 'public/assets/js/themes/')
         .copy('resources/assets/bower_components/tinymce/skins', 'public/assets/js/skins/')
         .copy('resources/assets/bower_components/tinymce/plugins', 'public/assets/js/plugins/')
+        .copy('resources/assets/bower_components/bootstrap-colorpicker/dist/img', 'public/img/bootstrap-colorpicker/')
         .publish();
 });
 
