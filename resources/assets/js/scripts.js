@@ -61,4 +61,9 @@ $(function () {
         changeInput();
     });
 
+    /**
+     * Color pickers
+     */
+    $(".color-picker").colorpicker();
+
 });

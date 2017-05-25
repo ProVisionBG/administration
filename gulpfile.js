@@ -14,7 +14,7 @@ elixir.config.css.autoprefix = {
 elixir.extend("publish", function () {
     gulp.task("publish_assets", function () {
         gulp.src("").pipe(shell([
-            "C:/laragon/bin/php/php-7.0.12-Win32-VC14-x86/php.exe C:\\Users\\Venko\\PhpstormProjects\\provision-cms-5.3\\artisan vendor:publish --tag=public --tag=views --force"
+            "php.exe C:\\Users\\Venko\\PhpstormProjects\\provision-cms-5.3\\artisan vendor:publish --tag=public --tag=views --force"
         ]));
     });
 });
@@ -36,6 +36,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/select2/dist/css/select2.min.css',
         'resources/assets/bower_components/toastr/toastr.css',
         'resources/assets/bower_components/ladda-bootstrap/dist/ladda-themeless.min.css',
+        'resources/assets/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css',
 
         'resources/assets/bower_components/AdminLTE/dist/css/AdminLTE.min.css',
         'resources/assets/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css',
@@ -48,13 +49,14 @@ elixir(function (mix) {
 
 
     mix.combine([
-        'resources/assets/bower_components/jquery/jquery.min.js',
+        'resources/assets/bower_components/jquery/dist/jquery.min.js',
         'resources/assets/bower_components/jquery-ui/jquery-ui.min.js',
         'resources/assets/bower_components/jquery.cookie/jquery.cookie.js',
         'resources/assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
         'resources/assets/bower_components/bootstrap/dist/js/bootstrap.min.js',
         'resources/assets/bower_components/iCheck/icheck.js',
         'resources/assets/bower_components/fastclick/lib/fastclick.js',
+        'resources/assets/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
 
         'resources/assets/bower_components/tinymce/tinymce.min.js',
         'resources/assets/bower_components/tinymce/jquery.tinymce.min.js',
