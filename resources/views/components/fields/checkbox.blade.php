@@ -28,6 +28,10 @@
         }
     }
 
+    if (empty($options['value'])) {
+        $options['value'] = true;
+    }
+
     /**
      * Името на полето да е от тип name[value] а не name[]
      */
