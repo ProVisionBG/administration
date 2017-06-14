@@ -413,12 +413,13 @@
                 // registry. In the next release this part hopefully won't be
                 // necessary, as we are looking to handle it internally.
                 var id = 'blobid' + (new Date()).getTime();
-                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                var blobInfo = blobCache.create(id, file);
+                var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(',')[1];
+                var blobInfo = blobCache.create(id, file, base64);
                 blobCache.add(blobInfo);
 
                 // call the callback and populate the Title field with the file name
-                cb(blobInfo.blobUri(), {title: file.name});
+                cb(blobInfo.blobUri(), { title: file.name });
             };
 
             input.click();
