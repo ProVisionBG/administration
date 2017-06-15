@@ -124,25 +124,7 @@ class AdministrationServiceProvider extends ServiceProvider
 
     private function publicBoot()
     {
-        /*
-          * LogViewer settings
-          */
-        if (config('provision_administration.packages.log-viewer')) {
 
-            //check app settings
-            if (config('app.log') != 'daily') {
-                die('config/app.php => log != daily');
-            }
-
-            //set middleware
-            Config::set('log-viewer.route.attributes.middleware', [
-                'web',
-                'permission:administrators.index',
-            ]);
-
-            //set url
-            Config::set('log-viewer.route.attributes.prefix', Administration::getLanguage() . '/' . Config::get('provision_administration.url_prefix') . '/log-viewer');
-        }
     }
 
     private function adminBoot()
@@ -426,6 +408,26 @@ class AdministrationServiceProvider extends ServiceProvider
             //collapse navigation
             $object->disableFor('administration-navigation-collapsed');
         });
+
+        /*
+         * LogViewer settings
+         */
+        if (config('provision_administration.packages.log-viewer')) {
+
+            //check app settings
+            if (config('app.log') != 'daily') {
+                die('config/app.php => log != daily');
+            }
+
+            //set middleware
+            Config::set('log-viewer.route.attributes.middleware', [
+                'web',
+                'permission:administrators.index',
+            ]);
+
+            //set url
+            Config::set('log-viewer.route.attributes.prefix', Administration::getLanguage() . '/' . Config::get('provision_administration.url_prefix') . '/log-viewer');
+        }
     }
 
     /**
