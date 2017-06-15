@@ -57,7 +57,6 @@
 
 @push('js_scripts')
 
-
 <script>
     $(function () {
         var datatableConfig = {
@@ -95,7 +94,7 @@
                 snapX: 10,
                 update: false
             },
-            "columns": {!! json_encode($table->columns([])->collection) !!}
+            "columns": {!! json_encode($table->collection) !!}
         };
 
         var administrationTable = $('#dataTableBuilder').DataTable(datatableConfig);
