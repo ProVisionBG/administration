@@ -306,6 +306,7 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app->register(\Zizaco\Entrust\EntrustServiceProvider::class);
         $this->app->register(\Caffeinated\Modules\ModulesServiceProvider::class);
         $this->app->register(\Lavary\Menu\ServiceProvider::class);
+        $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
         $this->app->register(\Yajra\Datatables\HtmlServiceProvider::class);
         $this->app->register(\Kris\LaravelFormBuilder\FormBuilderServiceProvider::class);
         $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
