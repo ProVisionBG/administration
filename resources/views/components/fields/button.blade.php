@@ -19,9 +19,15 @@ $elementID = 'submitButton-' . str_random(20);
 
         @if(!empty($options['confirmation']))
 
-            @if(empty($options['confirmation']['title']) || empty($options['confirmation']['content']))
+            @if(empty($options['confirmation']['title'])))
+            <?php
+            throw new Exception('Submit button confirmation title is empty!');
+            ?>
+            @endif
+
+            @if(!isset($options['confirmation']['content']))
                 <?php
-                throw new Exception('Submit button confirmation title/content is empty!');
+                $options['confirmation']['content'] = '';
                 ?>
             @endif
 
