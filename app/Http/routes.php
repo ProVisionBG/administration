@@ -4,6 +4,16 @@
  * ProVision Administration, http://ProVision.bg
  * Author: Venelin Iliev, http://veneliniliev.com
  */
+/**
+ * System status for remote checking
+ */
+Route::get('/system-status', function () {
+    return response()->json([
+        'data' => [
+            'error_logs' => \Arcanedev\LogViewer\Facades\LogViewer::tree()
+        ]
+    ]);
+});
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
