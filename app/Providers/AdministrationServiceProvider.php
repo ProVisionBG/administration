@@ -15,18 +15,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 use ProVision\Administration\Exceptions\Handler;
+use ProVision\Administration\Forms\Fields\NewBox;
 use ProVision\Administration\Http\Middleware\HttpsProtocol;
 use ProVision\Administration\Http\Middleware\NonWww;
 
-class AdministrationServiceProvider extends ServiceProvider
-{
+class AdministrationServiceProvider extends ServiceProvider {
     /**
      * Bootstrap the application services.
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         if (config('app.debug') === true) {
             /*
              * Enable query logging
@@ -120,8 +119,7 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->modulesBoot();
     }
 
-    private function publicBoot()
-    {
+    private function publicBoot() {
         /*
           * LogViewer settings
           */
@@ -143,8 +141,7 @@ class AdministrationServiceProvider extends ServiceProvider
         }
     }
 
-    private function adminBoot()
-    {
+    private function adminBoot() {
 
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
         if (!empty(\LaravelLocalization::setLocale())) {
@@ -166,6 +163,7 @@ class AdministrationServiceProvider extends ServiceProvider
         Config::set('laravel-form-builder.custom_fields.address_picker', \ProVision\Administration\Forms\Fields\AddressPicker::class);
         Config::set('laravel-form-builder.custom_fields.date_picker', \ProVision\Administration\Forms\Fields\DatePicker::class);
         Config::set('laravel-form-builder.custom_fields.datetime_picker', \ProVision\Administration\Forms\Fields\DatetimePicker::class);
+        Config::set('laravel-form-builder.custom_fields.new_box', NewBox::class);
 
         /*
          * Administration listing short buttons
@@ -265,8 +263,7 @@ class AdministrationServiceProvider extends ServiceProvider
         });
     }
 
-    private function modulesBoot()
-    {
+    private function modulesBoot() {
 
         /*
          * load user installed modules
@@ -289,8 +286,7 @@ class AdministrationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
 
         //reset session cookie
         Config::set(['session.cookie' => 'provision_session']);
@@ -430,11 +426,11 @@ class AdministrationServiceProvider extends ServiceProvider
 
     /**
      * Backward compatibility with 5.3 ->middleware ->aliasMiddleware
+     *
      * @param $name
      * @param $class
      */
-    protected function addAliasMiddleware($name, $class)
-    {
+    protected function addAliasMiddleware($name, $class) {
         $app = app();
 
         if (version_compare($app::VERSION, '5.4', '<')) {
