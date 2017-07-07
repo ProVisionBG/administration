@@ -4,6 +4,10 @@
     <?php endif; ?>
     <?php endif; ?>
 
+    @if(@$options['stop_switch']===true)
+        {!! Form::customLabel($name, $options['label'], $options['label_attr']) !!}
+    @endif
+
     <?php if ($showField): ?>
 
     <?php
@@ -39,17 +43,19 @@
     echo Form::checkbox($name, $options['value'], (boolean)$options['checked'], $options['attr']);
     ?>
 
-    @push('js_scripts')
-    <script>
-        $("#<?= $options['attr']['id'];?>").bootstrapSwitch({
-            size: 'small',
-            labelText: '{{$options['label']}}',
-            onText: '{{trans('administration::index.yes')}}',
-            offText: '{{trans('administration::index.no')}}',
-            offColor: 'danger'
-        });
-    </script>
-    @endpush
+    @if(@$options['stop_switch']!==true)
+        @push('js_scripts')
+        <script>
+            $("#<?= $options['attr']['id'];?>").bootstrapSwitch({
+                size: 'small',
+                labelText: '{{$options['label']}}',
+                onText: '{{trans('administration::index.yes')}}',
+                offText: '{{trans('administration::index.no')}}',
+                offColor: 'danger'
+            });
+        </script>
+        @endpush
+    @endif
 
     @include('administration::components.fields.help_block')
     <?php endif; ?>
