@@ -42,6 +42,13 @@ class SettingsForm extends AdminForm
             ]
         ]);
 
+        $this->add('live_translate', 'checkbox', [
+            'label' => 'Live translate',
+            //            'help_block' => [
+            //                'text' => 'Only in production!'
+            //            ]
+        ]);
+
         /*
          * load settings of modules
          */
