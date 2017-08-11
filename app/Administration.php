@@ -8,6 +8,7 @@
 namespace ProVision\Administration;
 
 use File;
+use Illuminate\Support\Facades\Auth;
 use LaravelLocalization;
 use ProVision\Administration\Library\CustomBladeCompiler;
 
@@ -91,6 +92,15 @@ class Administration
      */
     public static function getGuard() {
         return config('provision_administration.guard');
+    }
+
+    /**
+     * Get auth.
+     *
+     * @return string
+     */
+    public static function getAuth() {
+        return Auth::guard(config('provision_administration.guard'));
     }
 
 
