@@ -85,6 +85,16 @@ class Administration
     }
 
     /**
+     * Get auth guard.
+     *
+     * @return string
+     */
+    public static function getGuard() {
+        return config('provision_administration.guard');
+    }
+
+
+    /**
      * Get current language code.
      * @return string
      */
