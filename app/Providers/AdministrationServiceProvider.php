@@ -19,15 +19,13 @@ use ProVision\Administration\Forms\Fields\NewBox;
 use ProVision\Administration\Http\Middleware\HttpsProtocol;
 use ProVision\Administration\Http\Middleware\NonWww;
 
-class AdministrationServiceProvider extends ServiceProvider
-{
+class AdministrationServiceProvider extends ServiceProvider {
     /**
      * Bootstrap the application services.
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         if (config('app.debug') === true) {
             /*
              * Enable query logging
@@ -122,13 +120,11 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->modulesBoot();
     }
 
-    private function publicBoot()
-    {
+    private function publicBoot() {
 
     }
 
-    private function adminBoot()
-    {
+    private function adminBoot() {
 
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
         if (!empty(\LaravelLocalization::setLocale())) {
@@ -247,8 +243,7 @@ class AdministrationServiceProvider extends ServiceProvider
         });
     }
 
-    private function modulesBoot()
-    {
+    private function modulesBoot() {
 
         /*
          * load user installed modules
@@ -271,8 +266,7 @@ class AdministrationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
 
         //reset session cookie
         Config::set(['session.cookie' => 'provision_session']);
@@ -297,7 +291,9 @@ class AdministrationServiceProvider extends ServiceProvider
         /**
          * Exception handler
          */
-        $this->app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, Handler::class);
+        if (!config('provision_administration.disable_administration_exception_handler', false)) {
+            $this->app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, Handler::class);
+        }
 
         /*
         * Register the service provider for the dependency.
@@ -433,11 +429,11 @@ class AdministrationServiceProvider extends ServiceProvider
 
     /**
      * Backward compatibility with 5.3 ->middleware ->aliasMiddleware
+     *
      * @param $name
      * @param $class
      */
-    protected function addAliasMiddleware($name, $class)
-    {
+    protected function addAliasMiddleware($name, $class) {
         $app = app();
 
         if (version_compare($app::VERSION, '5.4', '<')) {

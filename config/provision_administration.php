@@ -48,6 +48,12 @@ return [
      * Additional packages
      */
     'packages' => [
-        'log-viewer' => true, //LogViewer: https://github.com/ARCANEDEV/LogViewer
-    ]
+        'log-viewer' => true,
+        //LogViewer: https://github.com/ARCANEDEV/LogViewer
+    ],
+
+    /**
+     * Disable administration exception handler
+     */
+    'disable_administration_exception_handler' => false,
 ];
