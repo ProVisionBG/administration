@@ -75,6 +75,7 @@ class AdministrationServiceProvider extends ServiceProvider {
             ],
         ]);
 
+
         /*
          * Routes
          */
