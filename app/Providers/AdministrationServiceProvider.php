@@ -14,6 +14,7 @@ use Form;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
+use Illuminate\Support\Facades\App;
 
 class AdministrationServiceProvider extends ServiceProvider {
     /**
@@ -120,7 +121,7 @@ class AdministrationServiceProvider extends ServiceProvider {
         if (config('provision_administration.packages.log-viewer')) {
 
             //check app settings
-            if (config('app.log') != 'daily') {
+            if (!App::runningInConsole() && config('app.log') != 'daily') {
                 die('config/app.php => log != daily');
             }
 
@@ -397,7 +398,7 @@ class AdministrationServiceProvider extends ServiceProvider {
             //\ProVision\Administration\Console\Commands\MigrateRollback::class
         ]);
 
-        $this->app['administration'] = $this->app->share(function ($app) {
+        $this->app->singleton('administration', function ($app) {
             return new Administration;
         });
 
