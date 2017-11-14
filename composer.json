@@ -27,7 +27,7 @@
     "provision/media-manager": "v5.5.x-dev",
     "provision/meta-tags": "dev-master",
     "provision/visual-builder": "dev-master",
-    "provision/translation": "dev-master",
+    "provision/translation": "v5.5.x-dev",
     "mcamara/laravel-localization": "^1.3",
     "zizaco/entrust": "5.2.x-dev",
     "caffeinated/modules": "^4.2",
