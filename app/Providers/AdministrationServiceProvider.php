@@ -9,13 +9,17 @@ namespace ProVision\Administration\Providers;
 
 use App\Http\Middleware\EncryptCookies;
 use Caffeinated\Modules\Facades\Module;
-use Config;
 use Form;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Schema;
+use ProVision\Administration\Exceptions\Handler;
+use ProVision\Administration\Forms\Fields\NewBox;
+use ProVision\Administration\Http\Middleware\HttpsProtocol;
+use ProVision\Administration\Http\Middleware\NonWww;
 
 class AdministrationServiceProvider extends ServiceProvider {
     /**
@@ -98,7 +102,8 @@ class AdministrationServiceProvider extends ServiceProvider {
         /*
          * translations
          */
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'administration');
+        //$this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'administration');
+        $this->loadTranslationsFrom(resource_path('lang/vendor/provision/administration'), 'administration');
         $this->publishes([
             __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/provision/administration'),
         ], 'lang');
@@ -165,6 +170,7 @@ class AdministrationServiceProvider extends ServiceProvider {
         Config::set('laravel-form-builder.custom_fields.address_picker', \ProVision\Administration\Forms\Fields\AddressPicker::class);
         Config::set('laravel-form-builder.custom_fields.date_picker', \ProVision\Administration\Forms\Fields\DatePicker::class);
         Config::set('laravel-form-builder.custom_fields.datetime_picker', \ProVision\Administration\Forms\Fields\DatetimePicker::class);
+        Config::set('laravel-form-builder.custom_fields.new_box', NewBox::class);
 
         /*
          * Administration listing short buttons
@@ -198,138 +204,66 @@ class AdministrationServiceProvider extends ServiceProvider {
         ]);
 
         /*
-      * Administration menu init
-      */
-        \Menu::make('ProVisionAdministrationMenu', function ($menu) {
-            /*
-             * MAIN
-             */
-            $menu->add(trans('administration::index.main_navigation'), ['nickname' => 'navigation'])
-                ->data('header', true)
-                ->data('order', 1);
-
-            //home
-            $menu->add(trans('administration::index.home'), [
-                'route' => 'provision.administration.index',
-                'nickname' => 'home',
-            ])
-                ->data('icon', 'home')
-                ->data('order', 2);
-
-            /*
-             * MODULES
-             */
-            $menu->add(trans('administration::index.modules'), ['nickname' => 'modules'])->data('header', true)->data('order', 1000);
-
-            /*
-             * SYSTEM
-             */
-            $menu->add(trans('administration::index.system-settings'), ['nickname' => 'system-settings'])
-                ->data('header', true)
-                ->data('order', 10000);
-
-            /*
-             * System -> Administrators
-             */
-            $administratorsMenu = $menu->add(trans('administration::administrators.administrators'), [
-                'nickname' => 'administrators.menu.item',
-            ])
-                ->data('order', 10001)
-                ->data('icon', 'users');
-            $administratorsMenu->add(trans('administration::administrators.create_administrator'), [
-                'nickname' => 'administrators.create',
+        * Administration menu init
+        */
+        //administrators
+        \AdministrationMenu::addSystem(trans('administration::administrators.administrators'), [
+            'icon' => 'user-circle-o'
+        ], function ($menu) {
+            $menu->addItem(trans('administration::administrators.create_administrator'), [
                 'route' => 'provision.administration.administrators.create',
             ])
-                ->data('icon', 'plus')
-                ->data('order', 1);
-            $administratorsMenu->add(trans('administration::index.view_all'), [
-                'nickname' => 'administrators',
-                'route' => 'provision.administration.administrators.index',
-            ])
-                ->data('icon', 'list')
-                ->data('order', 2);
+                ->addItem(trans('administration::index.view_all'), [
+                    'route' => 'provision.administration.administrators.index',
+                ])
+                //groups
+                ->addItem(trans('administration::administrators.groups'), [], function ($groupsMenu) {
+                    $groupsMenu->addItem(trans('administration::index.view_all'), [
+                        'route' => 'provision.administration.administrators-roles.index',
+                    ])->addItem(trans('administration::index.add'), [
+                        'route' => 'provision.administration.administrators-roles.create'
+                    ]);
+                });
+        });
 
-            /*
-             * System -> Administrators -> Roles
-             */
-            $rolesMenu = $administratorsMenu->add(trans('administration::administrators.groups'), [
-                'nickname' => 'administrators.groups',
-                'route' => 'provision.administration.administrators-roles.index',
+        //static blocks
+        \AdministrationMenu::addSystem(trans('administration::static_blocks.name'), [
+            'icon' => 'th-large'
+        ], function ($menu) {
+            $menu->addItem(trans('administration::index.add'), [
+                'route' => 'provision.administration.static-blocks.create'
             ])
-                ->data('icon', 'users')
-                ->data('order', 2);
-            $rolesMenu->add(trans('administration::index.add'), [
-                'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.administrators-roles.create',
-            ])
-                ->data('icon', 'plus')
-                ->data('order', 1);
-            $rolesMenu->add(trans('administration::index.view_all'), [
-                'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.administrators-roles.index',
-            ])
-                ->data('icon', 'list')
-                ->data('order', 2);
+                ->addItem(trans('administration::index.view_all'), [
+                    'route' => 'provision.administration.static-blocks.index',
+                ]);
+        });
 
-            /*
-             * System -> Static blocks
-             */
-            $staticMenu = $menu->add(trans('administration::static_blocks.name'), [
-                'nickname' => 'administrators.static_blocks',
-                'route' => 'provision.administration.static-blocks.index',
-            ])->data('icon', 'th-large')
-                ->data('order', 10002);
-            $staticMenu->add(trans('administration::index.add'), [
-                'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.static-blocks.create',
-            ])->data('icon', 'plus')
-                ->data('order', 1);
-            $staticMenu->add(trans('administration::index.view_all'), [
-                'nickname' => 'administrators.group_add',
-                'route' => 'provision.administration.static-blocks.index',
-            ])->data('icon', 'list')
-                ->data('order', 2);
+        //system settings
+        \AdministrationMenu::addSystem(trans('administration::settings.title'), [
+            'icon' => 'sliders',
+            'route' => 'provision.administration.settings.index'
+        ]);
 
-            /*
-             * System -> Settings
-             */
-            $menu->add(trans('administration::settings.title'), [
-                'nickname' => 'settings',
-                'route' => 'provision.administration.settings.index',
-            ])->data('order', 10002)
-                ->data('icon', 'sliders');
-
-            /*
-             * System -> System
-             */
-            $systemMenu = $menu->add(trans('administration::systems.title'), ['nickname' => 'system'])->data('order', 10003)->data('icon', 'cogs');
-            $systemMenu->add(trans('administration::systems.roles-repair'), [
-                'nickname' => 'system-roles-repair',
+        \AdministrationMenu::addSystem(trans('administration::systems.title'), [
+            'icon' => 'cogs'
+        ], function ($menu) {
+            $menu->addItem(trans('administration::systems.roles-repair'), [
                 'route' => 'provision.administration.systems.roles-repair',
-            ])->data('icon', 'user-secret');
-
-            $systemMenu->add(trans('administration::systems.maintenance-mode'), [
-                'nickname' => 'system-maintenance-mode',
-                'route' => 'provision.administration.systems.maintenance-mode',
-            ])->data('icon', 'hand-paper-o');
+                'icon' => 'user-secret'
+            ])
+                ->addItem(trans('administration::systems.maintenance-mode'), [
+                    'route' => 'provision.administration.systems.maintenance-mode',
+                    'icon' => 'hand-paper-o'
+                ]);
 
             // System -> System -> Log Viewer
             if (config('provision_administration.packages.log-viewer', false)) {
-                $systemMenu->add(trans('administration::systems.log-viewer'), [
-                    'nickname' => 'system-log-viewer',
+                $menu->addItem(trans('administration::systems.log-viewer'), [
                     'url' => config('log-viewer.route.attributes.prefix'),
-                ])->data('icon', 'bug')
-                    ->link->attr([
-                        'target' => '_blank',
-                    ]);
+                    'icon' => 'bug',
+                    'target' => '_blank'
+                ]);
             }
-
-            /*
-             * System -> Translates
-             */
-            $menu->add(trans('administration::index.translates'), ['nickname' => 'translates'])
-                ->data('order', 10004)
-                ->data('icon', 'globe');
         });
     }
 
@@ -378,22 +312,35 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../config/laravel-form-builder.php', 'laravel-form-builder'
         );
 
-        /*
-        * middleware
-        */
-        $this->app['router']->middleware('localize', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class);
-        $this->app['router']->middleware('localizationRedirect', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class);
-        $this->app['router']->middleware('localeSessionRedirect', \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class);
+        /**
+         * Exception handler
+         */
+        if (!config('provision_administration.disable_administration_exception_handler', false)) {
+            $this->app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, Handler::class);
+        }
 
-        //$this->app['router']->middleware('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
-        $this->app['router']->middleware('role', \ProVision\Administration\Http\Middleware\EntrustRole::class);
-        $this->app['router']->middleware('permission', \ProVision\Administration\Http\Middleware\EntrustPermission::class);
-        $this->app['router']->middleware('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
+        /*
+         * middleware
+         */
+        $this->addAliasMiddleware('localize', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class);
+        $this->addAliasMiddleware('localizationRedirect', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class);
+        $this->addAliasMiddleware('localeSessionRedirect', \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class);
+
+        //$this->addAliasMiddleware('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
+        $this->addAliasMiddleware('role', \ProVision\Administration\Http\Middleware\EntrustRole::class);
+        $this->addAliasMiddleware('permission', \ProVision\Administration\Http\Middleware\EntrustPermission::class);
+        $this->addAliasMiddleware('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
 
         //automatic check permissions to modules
         $this->app['router']->pushMiddlewareToGroup('web', \ProVision\Administration\Http\Middleware\EntrustAuto::class);
+        //check Maintenance Mode
         $this->app['router']->pushMiddlewareToGroup('web', \ProVision\Administration\Http\Middleware\CheckForMaintenanceMode::class);
         $this->app['router']->pushMiddlewareToGroup('api', \ProVision\Administration\Http\Middleware\CheckForMaintenanceMode::class);
+        //SSL redirect
+        $this->app['router']->pushMiddlewareToGroup('web', HttpsProtocol::class);
+        $this->app['router']->pushMiddlewareToGroup('api', HttpsProtocol::class);
+        //non-WWW redirect
+        $this->app['router']->pushMiddlewareToGroup('web', NonWww::class);
 
         /*
          * Commands
@@ -401,13 +348,21 @@ class AdministrationServiceProvider extends ServiceProvider {
         $this->commands([
             \ProVision\Administration\Console\Commands\CreateAdministrator::class,
             \ProVision\Administration\Console\Commands\Migrate::class,
-            \ProVision\Administration\Console\Commands\MediaResize::class,
             //\ProVision\Administration\Console\Commands\MigrateRollback::class
         ]);
 
-        $this->app->singleton('administration', function ($app) {
+        $this->app->singleton('Administration', function ($app) {
             return new Administration;
         });
+
+        $this->app->bind('AdministrationMenu', function () {
+            return new \ProVision\Administration\AdministrationMenu;
+        });
+
+        $this->app->bind('Settings', function () {
+            return new \ProVision\Administration\Settings;
+        });
+
 
         /*
          * disable cookies encryption for administration cookies
@@ -416,5 +371,41 @@ class AdministrationServiceProvider extends ServiceProvider {
             //collapse navigation
             $object->disableFor('administration-navigation-collapsed');
         });
+
+        /*
+         * LogViewer settings
+         */
+        if (config('provision_administration.packages.log-viewer')) {
+
+            //check app settings
+            if (config('app.log') != 'daily') {
+                die('config/app.php => log != daily');
+            }
+
+            //set middleware
+            Config::set('log-viewer.route.attributes.middleware', [
+                'web',
+                'permission:administrators.index',
+            ]);
+
+            //set url
+            Config::set('log-viewer.route.attributes.prefix', Administration::getLanguage() . '/' . Config::get('provision_administration.url_prefix') . '/log-viewer');
+        }
+    }
+
+    /**
+     * Backward compatibility with 5.3 ->middleware ->aliasMiddleware
+     *
+     * @param $name
+     * @param $class
+     */
+    protected function addAliasMiddleware($name, $class) {
+        $app = app();
+
+        if (version_compare($app::VERSION, '5.4', '<')) {
+            $this->app['router']->middleware($name, $class);
+        } else {
+            $this->app['router']->aliasMiddleware($name, $class);
+        }
     }
 }

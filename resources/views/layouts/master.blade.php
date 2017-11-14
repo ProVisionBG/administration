@@ -217,7 +217,7 @@
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                @include('administration::partials.navigation', ['items' => \Menu::get('ProVisionAdministrationMenu')->sortBy('order', 'asc')->roots()])
+                @include('administration::partials.navigation', ['items' => \AdministrationMenu::get()])
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -246,6 +246,16 @@
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if (Session::has('success'))
+                <div class="alert alert-success">
+                    <ul>
+                        @foreach (Session::get('success') as $success)
+                            <li>{{ $success }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -396,19 +406,24 @@
             // just in case, and visually hide it. And do not forget do remove it
             // once you do not need it anymore.
 
-            input.onchange = function () {
+            input.onchange = function() {
                 var file = this.files[0];
 
-                // Note: Now we need to register the blob in TinyMCEs image blob
-                // registry. In the next release this part hopefully won't be
-                // necessary, as we are looking to handle it internally.
-                var id = 'blobid' + (new Date()).getTime();
-                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                var blobInfo = blobCache.create(id, file);
-                blobCache.add(blobInfo);
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    // Note: Now we need to register the blob in TinyMCEs image blob
+                    // registry. In the next release this part hopefully won't be
+                    // necessary, as we are looking to handle it internally.
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
 
-                // call the callback and populate the Title field with the file name
-                cb(blobInfo.blobUri(), {title: file.name});
+                    // call the callback and populate the Title field with the file name
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
             };
 
             input.click();
@@ -417,6 +432,9 @@
 </script>
 
 @stack('js_configs')
+
+<script type="text/javascript"
+        src='//maps.google.com/maps/api/js?v=3&sensor=false&libraries=places&key={{\ProVision\Administration\Facades\Settings::get('google_map_api_key')}}'></script>
 
 <script src="{{asset("/vendor/provision/administration/js/all.js")}}"></script>
 <script src="{{asset("/vendor/provision/media-manager/assets/js/all.js")}}"></script>

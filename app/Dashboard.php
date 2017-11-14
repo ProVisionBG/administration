@@ -7,10 +7,9 @@
 
 namespace ProVision\Administration;
 
-use Illuminate\Support\Facades\Facade;
 use ProVision\Administration\Dashboard\DashboardBox;
 
-class Dashboard extends Facade
+class Dashboard
 {
     private static $dashboards = [];
 
@@ -25,7 +24,7 @@ class Dashboard extends Facade
         }
 
         if (isset(static::$dashboards[$index])) {
-            die('Box index duplicate: '.$index);
+            die('Box index duplicate: ' . $index);
         }
 
         static::$dashboards[$index] = $object;

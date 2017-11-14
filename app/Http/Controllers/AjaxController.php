@@ -31,10 +31,10 @@ class AjaxController extends BaseAdministrationController
 
                 if ($item['oldPosition'] > $item['newPosition']) {
                     //$debug[] = 'up:' . ($item['oldPosition'] - $item['newPosition']);
-                    $object->up($item['oldPosition'] - $item['newPosition']);
+                    $object->down($item['oldPosition'] - $item['newPosition']);
                 } else {
                     // $debug[] = 'down:' . ($item['newPosition'] - $item['oldPosition']);
-                    $object->down($item['newPosition'] - $item['oldPosition']);
+                    $object->up($item['newPosition'] - $item['oldPosition']);
                 }
 
                 $object->fixTree();

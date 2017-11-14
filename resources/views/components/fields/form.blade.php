@@ -14,7 +14,7 @@ if (!empty($formOptions['id'])) {
     $formOptions['id'] = $formID;
 }
 ?>
-
+{{Form::open($formOptions)}}
 <div class="box box-<?= $boxType; ?>">
 
     @if (!empty($form->getData('title')))
@@ -23,7 +23,7 @@ if (!empty($formOptions['id'])) {
         </div>
     @endif
 
-    {{Form::open($formOptions)}}
+
     <div class="box-body">
         <div class="row">
         <?php } ?>
@@ -85,9 +85,10 @@ if (!empty($formOptions['id'])) {
 
         @if ($showEnd)
     </div>
-    <?= Form::close() ?>
+
 </div>
 </div>
+<?= Form::close() ?>
 
 @push('bottom_js')
 <script>

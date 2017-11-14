@@ -29,20 +29,24 @@
                 <div class="box-header with-border">
                     <i class="fa fa-history"></i>
 
-                    <h3 class="box-title">Revisions</h3>
+                    <h3 class="box-title">@lang('administration::revisions.title')</h3>
                 </div>
                 <div class="box-body">
                     <ul>
                         @foreach($revData->sortBy('created_at')->reverse() as $history)
                             <li>
                                 @if($history->key == 'created_at' && !$history->old_value)
-                                    <b>{{ @$history->userResponsible()->name }}</b> created this resource
-                                    at {{str_limit($history->newValue(),50) }}
+                                    <strong>{{ @$history->userResponsible()->name }}</strong> @lang('administration::revisions.created')
+                                    @lang('administration::revisions.at') {{str_limit($history->newValue(),50) }}
                                 @else
-                                    <b>{{ @$history->userResponsible()->name }}</b> changed
-                                    <b>{{trans($form->getModel()->module.'::admin.'.$history->fieldName())  }}</b>
-                                    from <b>{{ str_limit($history->oldValue(),50) }}</b> to
-                                    <b>{{str_limit($history->newValue(),50) }}</b>
+                                    <strong>{{ @$history->userResponsible()->name }}</strong> @lang('administration::revisions.changed')
+                                    <strong>{{trans($form->getModel()->module.'::admin.'.$history->fieldName())  }}</strong>
+                                    @lang('administration::revisions.from') '<strong
+                                            title="{{$history->oldValue()}}">{{ str_limit($history->oldValue(),50) }}</strong>
+                                    ' @lang('administration::revisions.to')
+                                    '<strong
+                                            title="{{$history->newValue()}}">{{str_limit($history->newValue(),50) }}</strong>
+                                    '
                                 @endif
 
                                 <small class="label bg-yellow">{{$history->created_at}}</small>

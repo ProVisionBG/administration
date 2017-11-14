@@ -32,9 +32,11 @@
     "zizaco/entrust": "5.2.x-dev",
     "caffeinated/modules": "^4.2",
     "lavary/laravel-menu": "^1.7",
-    "yajra/laravel-datatables-oracle": "^6.10",
     "cviebrock/eloquent-sluggable": "^4.3",
     "provision/laravel-meta-tags": "^3.0",
+    "provision/breadcrumbs": "dev-master",
+    "yajra/laravel-datatables-oracle": "^7.6",
+    "yajra/laravel-datatables-html": "^1.0",
     "edvinaskrucas/notification": "5.*",
     "laravel/socialite": "^2.0",
     "intervention/image": "^2.3",
@@ -77,6 +79,8 @@
       ],
       "aliases": {
         "Administration": "ProVision\\Administration\\Facades\\Administration",
+        "AdministrationMenu": "ProVision\\Administration\\Facades\\AdministrationMenu",
+        "Settings": "ProVision\\Administration\\Facades\\Settings",
         "Dashboard": "ProVision\\Administration\\Dashboard"
       }
     }

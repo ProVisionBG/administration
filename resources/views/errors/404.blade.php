@@ -15,6 +15,8 @@
                     </p>
                 @endif
 
+                <a href="{{url('/')}}"> << Go back</a>
+
             </div>
         </div>
     </section>

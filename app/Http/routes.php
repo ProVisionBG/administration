@@ -4,14 +4,20 @@
  * ProVision Administration, http://ProVision.bg
  * Author: Venelin Iliev, http://veneliniliev.com
  */
+/**
+ * System status for remote checking
+ */
+Route::get('/system-status', function () {
+    return response()->json([
+        'data' => [
+            'error_logs' => \Arcanedev\LogViewer\Facades\LogViewer::tree()
+        ]
+    ]);
+});
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [
-        'web',
-        'localeSessionRedirect',
-        'localizationRedirect',
-    ],
+    'middleware' => Administration::routeMiddleware(),
 ], function () {
     Route::group([
         'namespace' => 'ProVision\Administration\Http\Controllers',
@@ -22,22 +28,6 @@ Route::group([
             'as' => 'index',
             'uses' => 'AdministrationController@index',
         ]);
-
-//        Route::get('login', [
-//            'as' => 'login',
-//            'middleware' => ['role:guest'],
-//            'uses' => 'AdministrationController@getLogin'
-//        ]);
-//
-//        Route::post('login', [
-//            'as' => 'login_post',
-//            'middleware' => ['role:guest'],
-//            'uses' => 'Auth\AuthController@login'
-//        ]);
-
-//        \Auth::routes([
-//            'prefix' => LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix'),
-//        ]);
 
         // Authentication Routes...
         Route::get('login', [
@@ -139,20 +129,20 @@ Route::group([
             /*
              * Settings
              */
-            Route::resource('settings', \Config::get('provision_administration.settings_controller'), [
+            Route::resource('settings', 'SettingsController', [
                 'namespace' => '',
                 'as' => 'settings',
                 'names' => [
                     'index' => 'settings.index',
                     // 'edit' => 'administrators-roles.edit',
                     // 'create' => 'administrators-roles.create',
-                    // 'store' => 'administrators-roles.store',
-                    'update' => 'settings.update',
+                    'store' => 'settings.store',
+                    //'update' => 'settings.update',
                     // 'destroy' => 'administrators-roles.destroy'
                 ],
                 'only' => [
                     'index',
-                    'update',
+                    'store',
                 ],
             ]);
 

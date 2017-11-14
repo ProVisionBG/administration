@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * ProVision Administration, http://ProVision.bg
  * Author: Venelin Iliev, http://veneliniliev.com
  */
@@ -8,16 +8,16 @@
 namespace ProVision\Administration;
 
 use File;
-use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Auth;
 use LaravelLocalization;
-use Lavary\Menu\Menu;
+use ProVision\Administration\Library\CustomBladeCompiler;
 
-class Administration extends Facade
+class Administration
 {
     const AS_MODULE_PREFIX = 'provision.administration.module.'; //administration module route prefix
 
     /**
-     * inited modules container.
+     * Inited modules container.
      * @var array
      */
     private static $modules = [];
@@ -86,6 +86,25 @@ class Administration extends Facade
     }
 
     /**
+     * Get auth guard.
+     *
+     * @return string
+     */
+    public static function getGuard() {
+        return config('provision_administration.guard');
+    }
+
+    /**
+     * Get auth.
+     *
+     * @return string
+     */
+    public static function getAuth() {
+        return Auth::guard(config('provision_administration.guard'));
+    }
+
+
+    /**
      * Get current language code.
      * @return string
      */
@@ -106,9 +125,9 @@ class Administration extends Facade
      */
     public static function getStaticBlock($key)
     {
-        $block = StaticBlock::where('key', $key)->first();
+        $block = StaticBlock::where('key', $key)->where('active', 1)->first();
         if ($block) {
-            return $block->text;
+            return CustomBladeCompiler::render($block->text);
         }
 
         \Debugbar::error('static block not found: ' . $key);
@@ -129,20 +148,6 @@ class Administration extends Facade
         }
 
         return $module['order'];
-    }
-
-    /**
-     * Get administration menu instance.
-     * @return Menu
-     */
-    public static function getMenuInstance()
-    {
-        $menu = \Menu::get('ProVisionAdministrationMenu');
-        if (empty($menu)) {
-            $menu = \Menu::make('ProVisionAdministrationMenu', []);
-        }
-
-        return $menu;
     }
 
     /**
@@ -258,21 +263,19 @@ class Administration extends Facade
         $moduleAdminInit = new $administrationClass();
 
         //init routes
-        if (method_exists($moduleAdminInit, 'routes')) {
-            \Route::group([
-                'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
-                'as' => self::AS_MODULE_PREFIX,
-                'middleware' => \ProVision\Administration\Administration::routeMiddleware(),
-            ], function () use ($moduleAdminInit, $module) {
-                $moduleAdminInit->routes($module);
-            });
-        }
+        \Route::group([
+            'prefix' => \ProVision\Administration\Administration::routeAdministrationPrefix(),
+            'as' => self::AS_MODULE_PREFIX,
+            'middleware' => array_merge(\ProVision\Administration\Administration::routeMiddleware(), ['permission:administration-access']),
+        ], function () use ($moduleAdminInit, $module) {
+            $moduleAdminInit->routes($module);
+        });
 
         /*
          * Кои са заредените модули?
          */
         if (!is_array($module)) {
-            self::$modules[$module] = ['administrationClass' => $administrationClass];
+            self::$modules[$module] = ['name' => $module, 'administrationClass' => $administrationClass];
         } else {
             self::$modules[$module['slug']] = array_merge($module, ['administrationClass' => $administrationClass]);
         }

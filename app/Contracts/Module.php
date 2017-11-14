@@ -7,6 +7,8 @@
 
 namespace ProVision\Administration\Contracts;
 
+use Kris\LaravelFormBuilder\Form;
+
 interface Module
 {
     /**
@@ -32,4 +34,13 @@ interface Module
      * @return mixed
      */
     public function menu($module);
+
+    /**
+     * Add settings in administration panel
+     * @param $module
+     * @param Form $form
+     * @return mixed
+     */
+    public function settings($module, Form $form);
+
 }

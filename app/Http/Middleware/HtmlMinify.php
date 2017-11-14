@@ -13,6 +13,11 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Response;
 use ProVision\Administration\Administration;
 
+/**
+ * Class HtmlMinify
+ * @package ProVision\Administration\Http\Middleware
+ * @deprecated
+ */
 class HtmlMinify
 {
     /**
@@ -206,9 +211,9 @@ class HtmlMinify
             '/\>[^\S ]+/s', // strip whitespaces after tags, except space
             '/[^\S ]+\</s', // strip whitespaces before tags, except space
             '/(\s)+/s', // shorten multiple whitespace sequences
-            '!/\*.*?\*/!s', // Remove htmlcomment
-            '/\n\s*\n/'
-        ); // Remove htmlcomment
+            '!/\*.*?\*/!s', // Remove html comment
+            '/\n\s*\n/' // Remove html comment
+        );
 
         $replace = array(
             '>',

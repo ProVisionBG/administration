@@ -31,7 +31,7 @@ class CreateStaticBlocksTable extends Migration
         Schema::create('static_blocks_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('static_block_id')->unsigned();
-            $table->text('text')->nullable()->default(null);
+            $table->longText('text')->nullable()->default(null);
             $table->string('locale')->index();
 
             $table->unique([

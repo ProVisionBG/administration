@@ -29,6 +29,10 @@ class StaticBlockForm extends AdminForm
             'translate' => true,
         ]);
 
+        $this->add('note', 'textarea', [
+            'label' => trans('administration::static_blocks.note'),
+        ]);
+
         $this->add('active', 'checkbox', [
             'label' => trans('administration::static_blocks.visible'),
         ]);

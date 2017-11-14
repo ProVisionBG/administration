@@ -1,7 +1,4 @@
-
-
 # ProVision Administration as laravel package
 
-Read our [Wiki](https://github.com/ProVisionBG/administration/wiki)
+Read our [Documentation](https://veneliniliev.com/docs/provision-administration/)
 
-[![StyleCI](https://styleci.io/repos/62281927/shield?branch=master)](https://styleci.io/repos/62281927)

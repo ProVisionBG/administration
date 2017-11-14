@@ -14,7 +14,7 @@ elixir.config.css.autoprefix = {
 elixir.extend("publish", function () {
     gulp.task("publish_assets", function () {
         gulp.src("").pipe(shell([
-            "C:\\xampp\\php\\php.exe C:\\Users\\Venko\\PhpstormProjects\\provision-cms-5.3\\artisan vendor:publish --tag=public --tag=views --force"
+            "php.exe F:\\PhpstormProjects\\provision-cms-5.4\\artisan vendor:publish --tag=public --tag=views --force"
         ]));
     });
 });
@@ -36,6 +36,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/select2/dist/css/select2.min.css',
         'resources/assets/bower_components/toastr/toastr.css',
         'resources/assets/bower_components/ladda-bootstrap/dist/ladda-themeless.min.css',
+        'resources/assets/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css',
 
         'resources/assets/bower_components/AdminLTE/dist/css/AdminLTE.min.css',
         'resources/assets/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css',
@@ -55,11 +56,13 @@ elixir(function (mix) {
         'resources/assets/bower_components/bootstrap/dist/js/bootstrap.min.js',
         'resources/assets/bower_components/iCheck/icheck.js',
         'resources/assets/bower_components/fastclick/lib/fastclick.js',
+        'resources/assets/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
 
         'resources/assets/bower_components/tinymce/tinymce.min.js',
         'resources/assets/bower_components/tinymce/jquery.tinymce.min.js',
 
         'resources/assets/bower_components/toastr/toastr.js',
+        'resources/assets/bower_components/moment/moment.js',
 
         'resources/assets/bower_components/datatables/media/js/jquery.dataTables.min.js',
         'resources/assets/bower_components/datatables/media/js/dataTables.bootstrap.min.js',
@@ -74,7 +77,7 @@ elixir(function (mix) {
         'resources/assets/bower_components/select2/dist/js/select2.full.min.js',
         'resources/assets/bower_components/ladda-bootstrap/dist/spin.min.js',
         'resources/assets/bower_components/ladda-bootstrap/dist/ladda.js',
-
+        'resources/assets/bower_components/jquery-locationpicker-plugin/dist/locationpicker.jquery.js',
 
         //file uploads
         'resources/assets/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js',
@@ -97,6 +100,7 @@ elixir(function (mix) {
         .copy('resources/assets/bower_components/tinymce/themes', 'public/assets/js/themes/')
         .copy('resources/assets/bower_components/tinymce/skins', 'public/assets/js/skins/')
         .copy('resources/assets/bower_components/tinymce/plugins', 'public/assets/js/plugins/')
+        .copy('resources/assets/bower_components/bootstrap-colorpicker/dist/img', 'public/img')
         .publish();
 });
 
