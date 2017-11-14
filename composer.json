@@ -48,7 +48,8 @@
     "rutorika/sortable": "^4.1",
     "barryvdh/laravel-debugbar": "^3.1",
     "arcanedev/log-viewer": "^4.4",
-    "caouecs/laravel-lang": "~3.0"
+    "caouecs/laravel-lang": "~3.0",
+    "artesaos/seotools": "^0.10.0",
   },
   "require-dev": {
   },
