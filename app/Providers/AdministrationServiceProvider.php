@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Schema;
 
 class AdministrationServiceProvider extends ServiceProvider {
     /**
@@ -23,6 +24,12 @@ class AdministrationServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+
+        /*
+         * MySQL fix for utf8mb4 collation
+         */
+        Schema::defaultStringLength(191);
+
         if (config('app.debug') === true) {
             /*
              * Enable query logging
