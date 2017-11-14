@@ -15,15 +15,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 
-class AdministrationServiceProvider extends ServiceProvider
-{
+class AdministrationServiceProvider extends ServiceProvider {
     /**
      * Bootstrap the application services.
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         if (config('app.debug') === true) {
             /*
              * Enable query logging
@@ -115,8 +113,7 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->modulesBoot();
     }
 
-    private function publicBoot()
-    {
+    private function publicBoot() {
         /*
           * LogViewer settings
           */
@@ -138,8 +135,7 @@ class AdministrationServiceProvider extends ServiceProvider
         }
     }
 
-    private function adminBoot()
-    {
+    private function adminBoot() {
 
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
         if (!empty(\LaravelLocalization::setLocale())) {
@@ -329,8 +325,7 @@ class AdministrationServiceProvider extends ServiceProvider
         });
     }
 
-    private function modulesBoot()
-    {
+    private function modulesBoot() {
 
         /*
          * load user installed modules
@@ -353,8 +348,7 @@ class AdministrationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
 
         //reset session cookie
         Config::set(['session.cookie' => 'provision_session']);
@@ -377,56 +371,8 @@ class AdministrationServiceProvider extends ServiceProvider
         );
 
         /*
-        * Register the service provider for the dependency.
+        * middleware
         */
-        $this->app->register(\Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class);
-        $this->app->register(\Zizaco\Entrust\EntrustServiceProvider::class);
-        $this->app->register(\Caffeinated\Modules\ModulesServiceProvider::class);
-        $this->app->register(\Lavary\Menu\ServiceProvider::class);
-        $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
-        $this->app->register(\Kris\LaravelFormBuilder\FormBuilderServiceProvider::class);
-        $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
-        $this->app->register(\Torann\LaravelMetaTags\MetaTagsServiceProvider::class);
-        $this->app->register(\Dimsav\Translatable\TranslatableServiceProvider::class);
-        //$this->app->register(\Krucas\Notification\NotificationServiceProvider::class);
-        //$this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
-        $this->app->register(\Intervention\Image\ImageServiceProvider::class);
-        $this->app->register(\DaveJamesMiller\Breadcrumbs\ServiceProvider::class);
-        //$this->app->register(\Barryvdh\TranslationManager\ManagerServiceProvider::class);
-        $this->app->register(\Collective\Html\HtmlServiceProvider::class);
-        $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
-
-        if (config('provision_administration.packages.log-viewer')) {
-            // https://github.com/ARCANEDEV/LogViewer
-            $this->app->register(\Arcanedev\LogViewer\LogViewerServiceProvider::class);
-        }
-
-        /*
-         * Create aliases for the dependency.
-         */
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        //system
-        $loader->alias('Administration', \ProVision\Administration\Facades\Administration::class);
-        $loader->alias('Dashboard', \ProVision\Administration\Dashboard::class);
-        //library
-        $loader->alias('LaravelLocalization', \Mcamara\LaravelLocalization\Facades\LaravelLocalization::class);
-        $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
-        $loader->alias('Module', \Caffeinated\Modules\Facades\Module::class);
-        $loader->alias('Menu', \Lavary\Menu\Facade::class);
-        $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables::class);
-        $loader->alias('FormBuilder', \Kris\LaravelFormBuilder\Facades\FormBuilder::class);
-        $loader->alias('MetaTag', \Torann\LaravelMetaTags\Facades\MetaTag::class);
-        //$loader->alias('Notification', \Krucas\Notification\Facades\Notification::class);
-        //$loader->alias('Socialite', \Laravel\Socialite\Facades\Socialite::class);
-        $loader->alias('Image', \Intervention\Image\Facades\Image::class);
-        $loader->alias('Breadcrumbs', \DaveJamesMiller\Breadcrumbs\Facade::class);
-        $loader->alias('Form', \Collective\Html\FormFacade::class);
-        $loader->alias('Html', \Collective\Html\HtmlFacade::class);
-        $loader->alias('Debugbar', \Barryvdh\Debugbar\Facade::class);
-
-        /*
-         * middleware
-         */
         $this->app['router']->middleware('localize', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class);
         $this->app['router']->middleware('localizationRedirect', \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class);
         $this->app['router']->middleware('localeSessionRedirect', \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class);

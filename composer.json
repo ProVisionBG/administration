@@ -64,6 +64,17 @@
       "ProVision\\Administration\\Tests\\": "tests"
     }
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ProVision\\Administration\\Providers\\AdministrationServiceProvider"
+      ],
+      "aliases": {
+        "Administration": "ProVision\\Administration\\Facades\\Administration",
+        "Dashboard": "ProVision\\Administration\\Dashboard"
+      }
+    }
+  },
   "scripts": {
     "post-install-cmd": [
       "php artisan vendor:publish --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\"",
