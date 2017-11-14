@@ -24,7 +24,7 @@
     "php": "^5.6.4 || ^7.0",
     "laravel/framework": "5.5.*",
     "provision/minifier": "dev-master",
-    "provision/media-manager": "dev-v5.5",
+    "provision/media-manager": "v5.5.x-dev",
     "provision/meta-tags": "dev-master",
     "provision/visual-builder": "dev-master",
     "provision/translation": "dev-master",
