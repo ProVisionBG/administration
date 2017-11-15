@@ -236,7 +236,6 @@
                 </h1>
 
                 @if(Breadcrumbs::exists('admin_final'))
-                    {{Breadcrumbs::setView('administration::partials.breadcrumbs')}}
                     {!! Breadcrumbs::render('admin_final') !!}
                 @endif
             </section>

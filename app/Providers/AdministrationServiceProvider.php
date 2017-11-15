@@ -170,6 +170,15 @@ class AdministrationServiceProvider extends ServiceProvider {
 
     private function adminBoot() {
 
+        if (!\ProVision\Administration\Facades\Administration::routeInAdministration()) {
+            return;
+        }
+
+        /*
+         * set breadcrumbs view
+         */
+        Config::set('breadcrumbs.view', 'administration::partials.breadcrumbs');
+
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
         if (!empty(\LaravelLocalization::setLocale())) {
             if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {

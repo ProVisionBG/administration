@@ -1,7 +1,8 @@
-@if ($breadcrumbs)
+@if (count($breadcrumbs))
     <ol class="breadcrumb hidden-xs hidden-sm">
         @foreach ($breadcrumbs as $breadcrumb)
-            @if (!$breadcrumb->last)
+
+            @if ($breadcrumb->url && !$loop->last)
                 <li>
                     <a href="{{ $breadcrumb->url }}">
                         @if(!empty($breadcrumb->icon))
@@ -18,6 +19,7 @@
                     {{ $breadcrumb->title }}
                 </li>
             @endif
+
         @endforeach
     </ol>
 
