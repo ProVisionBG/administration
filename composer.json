@@ -42,7 +42,6 @@
     "intervention/image": "^2.3",
     "kalnoy/nestedset": "^4.1",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
-    "barryvdh/laravel-translation-manager": "^0.4.1",
     "venturecraft/revisionable": "1.*",
     "laravelcollective/html": "^5.3",
     "kris/laravel-form-builder": "^1.7",
