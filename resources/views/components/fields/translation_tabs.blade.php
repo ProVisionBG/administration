@@ -5,8 +5,8 @@ if ($translationOpened === false) {
     <div class="nav-tabs-custom nav-tabs-languages">
         <ul class="nav nav-tabs">
             <?php
-            foreach (Administration::getTranslatableLocales() as $key => $lang) {
-                echo '<li class="' . (Administration::getLanguage() == $key ? 'active' : '') . '">
+            foreach (Administration::getTranslatableLocales() as $lang) {
+                echo '<li>
                     <a href="#' . $lang . $translationTabSuffix . '" data-toggle="tab" aria-expanded="false"><span class="lang-sm" lang="' . $lang . '"></span> ' . $lang . '</a>
                   </li>';
             }
@@ -17,8 +17,8 @@ if ($translationOpened === false) {
         ?>
         <div class="tab-content">
             <?php
-            foreach (Administration::getTranslatableLocales() as $key => $lang) {
-                echo '<div class="tab-pane ' . (Administration::getLanguage() == $key ? 'active' : '') . '" id="' . $lang . $translationTabSuffix . '">
+            foreach (Administration::getTranslatableLocales() as $lang) {
+                echo '<div class="tab-pane" id="' . $lang . $translationTabSuffix . '">
             <div class="row">';
                 foreach ($translationContainer as $field) {
 
@@ -31,7 +31,7 @@ if ($translationOpened === false) {
                     $field->setOptions([
                         'label_attr' => [
                             'class' => $field->getOptions()['label_attr']['class'] .= ' lang-sm',
-                            'lang' => $key
+                            'lang' => $lang
                         ]
                     ]);
 
@@ -40,7 +40,7 @@ if ($translationOpened === false) {
                      */
                     $fieldName = $field->getOptions()['original_name'];
                     $field->setOptions([
-                        'value' => ($form->getModel() && $form->getModel()->translate($key) ? $form->getModel()->translate($key)->$fieldName : '')
+                        'value' => ($form->getModel() && $form->getModel()->translate($lang) ? $form->getModel()->translate($lang)->$fieldName : '')
                     ]);
 
                     echo $field->render();
