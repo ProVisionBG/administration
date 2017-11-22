@@ -7,40 +7,46 @@
 
 namespace ProVision\Administration;
 
+use Dimsav\Translatable\Exception\LocalesNotDefinedException;
 use File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use LaravelLocalization;
 use ProVision\Administration\Library\CustomBladeCompiler;
 
-class Administration
-{
+class Administration {
+
     const AS_MODULE_PREFIX = 'provision.administration.module.'; //administration module route prefix
 
     /**
      * Inited modules container.
+     *
      * @var array
      */
     private static $modules = [];
 
     /**
      * Current module name.
+     *
      * @var string
      */
     private static $currentModuleTitle = 'Enter module name here!';
 
     /**
      * Current module sub name.
+     *
      * @var string
      */
     private static $currentModuleSubTitle = '';
 
     /**
      * Set current module name for administration titles.
+     *
      * @param $name
+     *
      * @return string
      */
-    public static function setTitle($name)
-    {
+    public static function setTitle($name) {
         self::$currentModuleTitle = $name;
 
         return $name;
@@ -48,20 +54,21 @@ class Administration
 
     /**
      * Get current module name.
+     *
      * @return string
      */
-    public static function getTitle()
-    {
+    public static function getTitle() {
         return self::$currentModuleTitle;
     }
 
     /**
      * Set current module sub name for administration titles.
+     *
      * @param $name
+     *
      * @return string
      */
-    public static function setSubTitle($name)
-    {
+    public static function setSubTitle($name) {
         self::$currentModuleSubTitle = $name;
 
         return $name;
@@ -69,19 +76,19 @@ class Administration
 
     /**
      * Get current module sub name.
+     *
      * @return string
      */
-    public static function getSubTitle()
-    {
+    public static function getSubTitle() {
         return self::$currentModuleSubTitle;
     }
 
     /**
      * Get all language codes.
+     *
      * @return array
      */
-    public static function getLanguages()
-    {
+    public static function getLanguages() {
         return LaravelLocalization::getSupportedLocales();
     }
 
@@ -106,10 +113,10 @@ class Administration
 
     /**
      * Get current language code.
+     *
      * @return string
      */
-    public static function getLanguage()
-    {
+    public static function getLanguage() {
         $locale = LaravelLocalization::setLocale();
         if (!empty($locale)) {
             return $locale;
@@ -120,11 +127,12 @@ class Administration
 
     /**
      * Get static block for blade templates.
+     *
      * @param $key
+     *
      * @return mixed
      */
-    public static function getStaticBlock($key)
-    {
+    public static function getStaticBlock($key) {
         $block = StaticBlock::where('key', $key)->where('active', 1)->first();
         if ($block) {
             return CustomBladeCompiler::render($block->text);
@@ -137,11 +145,12 @@ class Administration
 
     /**
      * Get module order index.
+     *
      * @param $module
+     *
      * @return mixed
      */
-    public static function getModuleOrderIndex($module)
-    {
+    public static function getModuleOrderIndex($module) {
         $module = \Module::where('slug', $module);
         if (!$module) {
             return false;
@@ -152,19 +161,19 @@ class Administration
 
     /**
      * Is in maintenance mode.
+     *
      * @return bool
      */
-    public static function isInMaintenanceMode()
-    {
+    public static function isInMaintenanceMode() {
         return File::exists(storage_path('/framework/down-provision-administration'));
     }
 
     /**
      * Check request URL is in administration.
+     *
      * @return bool
      */
-    public static function routeInAdministration()
-    {
+    public static function routeInAdministration() {
         //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
         if (!empty(\LaravelLocalization::setLocale())) {
             if (!\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix') . '*')) {
@@ -181,64 +190,67 @@ class Administration
 
     /**
      * Web site prefix in route.
+     *
      * @return string
      * @deprecated
      */
-    public static function routePrefix()
-    {
+    public static function routePrefix() {
         return \LaravelLocalization::setLocale();
     }
 
     /**
      * Administration AS in route.
+     *
      * @return string
      * @deprecated
      */
-    public static function routeAdministrationAs()
-    {
+    public static function routeAdministrationAs() {
         return \Administration::getLanguage() . '.';
     }
 
     /**
      * Адреси за администраторските route.
-     * @param $name
+     *
+     * @param       $name
      * @param array $parameters
-     * @param bool $absolute
+     * @param bool  $absolute
+     *
      * @return string
      */
-    public static function route($name, $parameters = [], $absolute = true)
-    {
+    public static function route($name, $parameters = [], $absolute = true) {
         return route(self::routeName($name), $parameters, $absolute);
     }
 
     /**
      * Get route administration name.
+     *
      * @param $name
+     *
      * @return string
      */
-    public static function routeName($name)
-    {
+    public static function routeName($name) {
         return self::AS_MODULE_PREFIX . $name;
     }
 
     /**
      * Име на администраторският route.
+     *
      * @param $name
+     *
      * @return string
      * @deprecated
      */
-    public static function routeAdministrationName($name)
-    {
+    public static function routeAdministrationName($name) {
         return self::AS_MODULE_PREFIX . $name;
     }
 
     /**
      * Check request is in administration dashboard.
+     *
      * @return bool
      * @deprecated
      */
-    public static function isDashboard()
-    {
+    public static function isDashboard() {
         if (!empty(\LaravelLocalization::setLocale())) {
             if (\Request::is(\LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix'))) {
                 return true;
@@ -258,8 +270,7 @@ class Administration
      * @param $module
      * @param $administrationClass
      */
-    public static function bootModule($module, $administrationClass)
-    {
+    public static function bootModule($module, $administrationClass) {
         $moduleAdminInit = new $administrationClass();
 
         //init routes
@@ -275,7 +286,10 @@ class Administration
          * Кои са заредените модули?
          */
         if (!is_array($module)) {
-            self::$modules[$module] = ['name' => $module, 'administrationClass' => $administrationClass];
+            self::$modules[$module] = [
+                'name' => $module,
+                'administrationClass' => $administrationClass
+            ];
         } else {
             self::$modules[$module['slug']] = array_merge($module, ['administrationClass' => $administrationClass]);
         }
@@ -283,10 +297,10 @@ class Administration
 
     /**
      * Administration prefix in route.
+     *
      * @return mixed|string
      */
-    public static function routeAdministrationPrefix()
-    {
+    public static function routeAdministrationPrefix() {
         if (!empty(\LaravelLocalization::setLocale())) {
             return \LaravelLocalization::setLocale() . '/' . config('provision_administration.url_prefix');
         } else {
@@ -296,11 +310,12 @@ class Administration
 
     /**
      * Default middleware for route.
+     *
      * @param array $middleware
+     *
      * @return array
      */
-    public static function routeMiddleware($middleware = [])
-    {
+    public static function routeMiddleware($middleware = []) {
         $default = [
             'web',
             'localeSessionRedirect',
@@ -312,21 +327,51 @@ class Administration
 
     /**
      * Get all inited modules
+     *
      * @return array
      */
-    public static function getModules()
-    {
+    public static function getModules() {
         return self::$modules;
     }
 
     /**
      * Check modules is loaded
+     *
      * @param $name
+     *
      * @return bool
      */
-    public static function isLoadedModule($name)
-    {
+    public static function isLoadedModule($name) {
         return isset(self::$modules[$name]);
+    }
+
+    /**
+     * Връща всички locales за translatable
+     *
+     * @return array
+     * @throws LocalesNotDefinedException
+     */
+    public function getTranslatableLocales(): array {
+        $localesConfig = Config::get('translatable.locales');
+
+        if (empty($localesConfig)) {
+            throw new LocalesNotDefinedException('Please make sure you have run "php artisan config:publish dimsav/laravel-translatable" ' .
+                ' and that the locales configuration is defined.');
+        }
+
+        $locales = [];
+        foreach ($localesConfig as $key => $locale) {
+            if (is_array($locale)) {
+                //$locales[] = $key;
+                foreach ($locale as $countryLocale) {
+                    $locales[] = $key . config('translatable.locale_separator') . $countryLocale;
+                }
+            } else {
+                $locales[] = $locale;
+            }
+        }
+
+        return $locales;
     }
 
 
