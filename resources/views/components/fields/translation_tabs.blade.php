@@ -7,7 +7,7 @@ if ($translationOpened === false) {
             <?php
             foreach (Administration::getTranslatableLocales() as $key => $lang) {
                 echo '<li class="' . (Administration::getLanguage() == $key ? 'active' : '') . '">
-                    <a href="#' . $key . $translationTabSuffix . '" data-toggle="tab" aria-expanded="false"><span class="lang-sm" lang="' . $lang . '"></span> ' . $lang . '</a>
+                    <a href="#' . $lang . $translationTabSuffix . '" data-toggle="tab" aria-expanded="false"><span class="lang-sm" lang="' . $lang . '"></span> ' . $lang . '</a>
                   </li>';
             }
             ?>
