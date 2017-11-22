@@ -11,6 +11,11 @@ if ($translationOpened === false) {
                   </li>';
             }
             ?>
+            @push('bottom_js')
+                <script>
+                    $('.nav-tabs-languages a:first').tab('show');
+                </script>
+            @endpush
         </ul>
         <?php
         } else{
