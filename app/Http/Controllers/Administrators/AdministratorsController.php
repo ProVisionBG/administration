@@ -7,7 +7,6 @@
 
 namespace ProVision\Administration\Http\Controllers\Administrators;
 
-use Datatables;
 use Form;
 use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\AdminUser;
@@ -16,6 +15,7 @@ use ProVision\Administration\Forms\AdministratorFilterForm;
 use ProVision\Administration\Forms\AdministratorForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class AdministratorsController extends BaseAdministrationController
 {

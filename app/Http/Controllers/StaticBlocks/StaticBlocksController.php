@@ -7,7 +7,6 @@
 
 namespace ProVision\Administration\Http\Controllers\StaticBlocks;
 
-use Datatables;
 use Form;
 use Guzzle\Http\Message\Response;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -16,11 +15,10 @@ use ProVision\Administration\Forms\StaticBlockForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use ProVision\Administration\StaticBlock;
 use Request;
+use Yajra\DataTables\Facades\DataTables;
 
-class StaticBlocksController extends BaseAdministrationController
-{
-    public function __construct()
-    {
+class StaticBlocksController extends BaseAdministrationController {
+    public function __construct() {
         parent::__construct();
         Administration::setTitle(trans('administration::static_blocks.name'));
     }
@@ -30,8 +28,7 @@ class StaticBlocksController extends BaseAdministrationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         if (Request::ajax()) {
             $staticBlocks = StaticBlock::query();
 
@@ -101,8 +98,7 @@ class StaticBlocksController extends BaseAdministrationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FormBuilder $formBuilder)
-    {
+    public function create(FormBuilder $formBuilder) {
         $form = $formBuilder->create(StaticBlockForm::class, [
                 'method' => 'POST',
                 'url' => route('provision.administration.static-blocks.store'),
@@ -124,10 +120,10 @@ class StaticBlocksController extends BaseAdministrationController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(\Illuminate\Http\Request $request)
-    {
+    public function store(\Illuminate\Http\Request $request) {
         $staticBlock = new StaticBlock();
 
         $requestData = Request::all();
@@ -148,10 +144,10 @@ class StaticBlocksController extends BaseAdministrationController
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -159,10 +155,10 @@ class StaticBlocksController extends BaseAdministrationController
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormBuilder $formBuilder, $id)
-    {
+    public function edit(FormBuilder $formBuilder, $id) {
         $staticBlock = StaticBlock::where('id', $id)->withTrashed()->first();
 
         $form = $formBuilder->create(StaticBlockForm::class, [
@@ -188,11 +184,11 @@ class StaticBlocksController extends BaseAdministrationController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $staticBlock = StaticBlock::findOrFail($id);
 
         $requestData = Request::all();
@@ -213,10 +209,10 @@ class StaticBlocksController extends BaseAdministrationController
      * Remove the specified resource from storage.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $object = StaticBlock::where('id', $id);
         if (empty($object->deleted_at)) {
             $object->delete();

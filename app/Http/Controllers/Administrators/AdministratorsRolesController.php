@@ -7,7 +7,6 @@
 
 namespace ProVision\Administration\Http\Controllers\Administrators;
 
-use Datatables;
 use Form;
 use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\Facades\Administration;
@@ -15,11 +14,10 @@ use ProVision\Administration\Forms\RolesForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use ProVision\Administration\Role;
 use Request;
+use Yajra\DataTables\Facades\DataTables;
 
-class AdministratorsRolesController extends BaseAdministrationController
-{
-    public function __construct()
-    {
+class AdministratorsRolesController extends BaseAdministrationController {
+    public function __construct() {
         parent::__construct();
         Administration::setTitle(trans('administration::administrators.administrators-roles'));
     }
@@ -29,8 +27,7 @@ class AdministratorsRolesController extends BaseAdministrationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         if (Request::ajax()) {
             $roles = Role::all();
 
@@ -92,8 +89,7 @@ class AdministratorsRolesController extends BaseAdministrationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FormBuilder $formBuilder)
-    {
+    public function create(FormBuilder $formBuilder) {
         $form = $formBuilder->create(RolesForm::class, [
                 'method' => 'POST',
                 'url' => route('provision.administration.administrators-roles.store'),
@@ -119,10 +115,10 @@ class AdministratorsRolesController extends BaseAdministrationController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(\Illuminate\Http\Request $request)
-    {
+    public function store(\Illuminate\Http\Request $request) {
         $role = new Role();
 
         $requestData = Request::all();
@@ -159,10 +155,10 @@ class AdministratorsRolesController extends BaseAdministrationController
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -170,11 +166,11 @@ class AdministratorsRolesController extends BaseAdministrationController
      * Show the form for editing the specified resource.
      *
      * @param FormBuilder $formBuilder
-     * @param  int $id
+     * @param  int        $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormBuilder $formBuilder, $id)
-    {
+    public function edit(FormBuilder $formBuilder, $id) {
         $role = Role::where('id', $id)->first();
 
         $form = $formBuilder->create(RolesForm::class, [
@@ -212,11 +208,11 @@ class AdministratorsRolesController extends BaseAdministrationController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $role = Role::findOrFail($id);
 
         $requestData = Request::all();
@@ -255,10 +251,10 @@ class AdministratorsRolesController extends BaseAdministrationController
      * Remove the specified resource from storage.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $object = Role::where('id', $id);
         if (empty($object->deleted_at)) {
             $object->forceDelete();
