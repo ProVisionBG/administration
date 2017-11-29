@@ -9,11 +9,11 @@ namespace ProVision\Administration\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 
-class AdminForm extends Form
-{
+class AdminForm extends Form {
 
     /**
      * Базови SEO Inputs
+     *
      * @var array
      */
     private $seoInputs = [
@@ -33,8 +33,7 @@ class AdminForm extends Form
         'meta_keywords' => [],
     ];
 
-    public function addSeoFields($required = false, $inputs = [])
-    {
+    public function addSeoFields($required = false, $inputs = [], $translate = true) {
         if (empty($inputs) || !is_array($inputs)) {
             $inputs = $this->seoInputs;
         }
@@ -46,7 +45,7 @@ class AdminForm extends Form
                 'validation_rules' => [
                     'required' => $required,
                 ],
-                'translate' => true,
+                'translate' => $translate,
             ];
 
             if (is_array($config)) {
@@ -59,10 +58,10 @@ class AdminForm extends Form
 
     /**
      * Маха SEO Input поле
+     *
      * @param $key
      */
-    public function removeSeoInput($key)
-    {
+    public function removeSeoInput($key) {
         if (isset($this->seoInputs[$key])) {
             unset($this->seoInputs[$key]);
         }
@@ -70,11 +69,11 @@ class AdminForm extends Form
 
     /**
      * Добавя SEO Input поле
+     *
      * @param $key
      * @param $config
      */
-    public function addSeoInput($key, $config)
-    {
+    public function addSeoInput($key, $config) {
         $this->seoInputs[$key] = $config;
     }
 }
