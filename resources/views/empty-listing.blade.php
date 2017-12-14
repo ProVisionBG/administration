@@ -57,82 +57,80 @@
 
 @push('js_scripts')
 
-<script>
-    $(function () {
-        var datatableConfig = {
-            "aaSorting": [[0, "desc"]], // @todo: да може да се сменя от контролера дефоутлният ордер
-            //"stateSave": true,
-            "lengthChange": true,
-            "responsive": true,
-            "processing": true,
-            "ordering": true,
-            "info": true,
-            "searching": false,
-            "ajax": {
-                url: '{{\Request::url()}}',
-                data: function (d) {
+    <script>
+        $(function () {
+            var datatableConfig = {
+                "aaSorting": [[0, "desc"]], // @todo: да може да се сменя от контролера дефоутлният ордер
+                //"stateSave": true,
+                "lengthChange": true,
+                "responsive": true,
+                "processing": true,
+                "ordering": true,
+                "info": true,
+                "searching": false,
+                "ajax": {
+                    url: '{{\Request::url()}}',
+                    data: function (d) {
 
-                   {{-- Взема всички GET параметри и ги пуска в AJAX параметрите --}}
-                   $.each({!!  json_encode(Request::all()) !!}, function (key, val) {
-                        d[key] = val;
-                    });
+                        {{-- Взема всички GET параметри и ги пуска в AJAX параметрите --}}
+                        $.each({!!  json_encode(Request::all()) !!}, function (key, val) {
+                            d[key] = val;
+                        });
 
-                    //console.log(d);
-                    $('#box-filter form input, #box-filter form select').each(function () {
-                        if ($(this).is(':checkbox')) {
-                            d[$(this).attr('name')] = $(this).prop("checked");
-                        } else {
-                            d[$(this).attr('name')] = $(this).val();
-                        }
-                    });
-                }
-            },
-            "autoWidth": false, //има проблем при firefox - таблицата минава в responsive при true стойност!
-            "serverSide": true,
-            rowReorder: {
-                selector: 'button.btn-row-reorder',
-                snapX: 10,
-                update: false
-            },
-            "columns": {!! json_encode($table->collection) !!}
-        };
+                        //console.log(d);
+                        $('#box-filter form input, #box-filter form select').each(function () {
+                            if ($(this).is(':checkbox')) {
+                                d[$(this).attr('name')] = $(this).prop("checked");
+                            } else {
+                                d[$(this).attr('name')] = $(this).val();
+                            }
+                        });
+                    }
+                },
+                "autoWidth": false, //има проблем при firefox - таблицата минава в responsive при true стойност!
+                "serverSide": true,
+                rowReorder: {
+                    selector: 'button.btn-row-reorder',
+                    snapX: 10,
+                    update: false
+                },
+                "columns": {!! json_encode($table->collection) !!}
+            };
 
-        var administrationTable = $('#dataTableBuilder').DataTable(datatableConfig);
+            var administrationTable = $('#dataTableBuilder').DataTable(datatableConfig);
 
-        /*
-         order save
-         */
-        administrationTable.on('row-reorder', function (e, diff, edit) {
-            var data = [];
-            //console.log(edit.triggerRow.data());
-            $.each(diff, function (index, item) {
-                buttonData = $(item.node).find('button.btn-row-reorder').data();
-                if (buttonData.id == edit.triggerRow.data().id) {
+            /*
+             order save
+             */
+            administrationTable.on('row-reorder', function (e, diff, edit) {
+                var data = [];
+                //console.log(edit.triggerRow.data());
+                $.each(diff, function (index, item) {
+                    buttonData = $(item.node).find('button.btn-row-reorder').data();
                     data[index] = buttonData;
                     data[index].oldPosition = item.oldPosition;
                     data[index].newPosition = item.newPosition;
-                }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: '{{route('provision.administration.ajax.save-order')}}',
+                    data: {
+                        'data': data
+                    },
+                    success: function (response) {
+                        //няма нужда да ги зарежда отново...
+                        //administrationTable.ajax.reload();
+                    },
+                    dataType: 'json'
+                });
             });
 
-            $.ajax({
-                type: "POST",
-                url: '{{route('provision.administration.ajax.save-order')}}',
-                data: {
-                    'data': data
-                },
-                success: function (response) {
-                    //няма нужда да ги зарежда отново...
-                    //administrationTable.ajax.reload();
-                },
-                dataType: 'json'
+            $('#box-filter form').on('submit', function (e) {
+                e.preventDefault();
+                administrationTable.draw();
             });
         });
-
-        $('#box-filter form').on('submit', function (e) {
-            e.preventDefault();
-            administrationTable.draw();
-        });
-    });
-</script>
+    </script>
 
 @endpush
