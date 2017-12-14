@@ -7,55 +7,91 @@
 
 namespace ProVision\Administration\Http\Controllers;
 
+use Illuminate\Http\Request;
 use ProVision\Administration\Http\Requests\AjaxQuickSwichRequest;
 
-class AjaxController extends BaseAdministrationController
-{
+class AjaxController extends BaseAdministrationController {
     /**
      * Автоматично запазване на сортиране в списък.
+     *
      * @todo: да се направи и за модели които не ползват NodeTrait
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function saveOrder()
-    {
-        if (!empty(\Request::input('data'))) {
-            //$debug = [];
-            foreach (\Request::input('data') as $index => $item) {
-                if (empty($item)) {
-                    continue;
-                }
+    public function saveOrder(Request $request) {
+        if (!empty($request->data)) {
 
-                $object = $item['model']::find($item['id']);
-                if (empty($object)) {
-                    continue;
-                }
+            $data = collect($request->data);
+            $model = $data->first()['model'];
 
-                if ($item['oldPosition'] > $item['newPosition']) {
-                    //$debug[] = 'up:' . ($item['oldPosition'] - $item['newPosition']);
-                    $object->down($item['oldPosition'] - $item['newPosition']);
-                } else {
-                    // $debug[] = 'down:' . ($item['newPosition'] - $item['oldPosition']);
-                    $object->up($item['newPosition'] - $item['oldPosition']);
-                }
+            //зарежда всички обекти за промяна
+            $changedObjects = $model::whereIn('id', $data->pluck('id'))->get();
 
-                $object->fixTree();
-
-                break;
+            if (!$changedObjects) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Не са намерени обекти за сортиране'
+                    //'debug' => $debug
+                ], 422);
             }
+
+            $debug = [];
+            foreach ($data as $item) {
+                $objectToChange = $model::where('id', $item['id'])->first();
+                if (!$objectToChange) {
+                    $debug[] = '$objectToChange  not found';
+                    continue;
+                }
+
+                $objectFromChange = $changedObjects->where('id', $data->where('oldPosition', $item['newPosition'])->first()['id'])->first();
+                if (!$objectFromChange) {
+                    $debug[] = '$objectFromChange not found';
+                    continue;
+                }
+
+                $debug[] = [
+                    'old' => [
+                        'id' => $objectToChange->id,
+                        'parent_id' => $objectToChange->parent_id,
+                        '_lft' => $objectToChange->_lft,
+                        '_rgt' => $objectToChange->_rgt,
+                    ],
+                    'new' => [
+                        'id' => $objectFromChange->id,
+                        'parent_id' => $objectFromChange->parent_id,
+                        '_lft' => $objectFromChange->_lft,
+                        '_rgt' => $objectFromChange->_rgt,
+                    ]
+                ];
+
+                /*
+                 * Save changes
+                 */
+                $objectToChange->parent_id = $objectFromChange->parent_id;
+                $objectToChange->_lft = $objectFromChange->_lft;
+                $objectToChange->_rgt = $objectFromChange->_rgt;
+                $objectToChange->save();
+            }
+
+            $model::fixTree();
 
             return response()->json([
                 'status' => true,
-                //'debug' => $debug
+                'debug' => $debug
             ]);
         }
     }
 
     /**
      * Автоматично запазване на switch state - за листинг таблица.
+     *
      * @param AjaxQuickSwichRequest $request
+     *
      * @return mixed
      */
-    public function saveQuickSwitch(AjaxQuickSwichRequest $request)
-    {
+    public function saveQuickSwitch(AjaxQuickSwichRequest $request) {
         if ($request->state == 'true' || $request->state == '1' || $request->state == 1) {
             $request->state = 1;
         } else {
