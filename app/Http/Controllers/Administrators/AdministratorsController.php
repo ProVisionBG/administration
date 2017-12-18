@@ -26,10 +26,13 @@ class AdministratorsController extends BaseAdministrationController {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function index() {
-        if (Request::ajax()) {
+    public function index(Request $request) {
+        if ($request->ajax()) {
             $users = AdminUser::select([
                 'id',
                 'name',
@@ -51,20 +54,20 @@ class AdministratorsController extends BaseAdministrationController {
 
                     return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators.edit', $user->id)) . $actions;
                 })
-                ->filter(function ($query) {
-                    if (Request::filled('name')) {
-                        $query->where('name', 'like', '%' . Request::get('name') . '%');
+                ->filter(function ($query) use ($request) {
+                    if ($request->filled('name')) {
+                        $query->where('name', 'like', '%' . $request->get('name') . '%');
                     }
 
-                    if (Request::filled('email')) {
-                        $query->where('email', 'like', '%' . Request::get('email') . '%');
+                    if ($request->filled('email')) {
+                        $query->where('email', 'like', '%' . $request->get('email') . '%');
                     }
 
-                    if (Request::filled('deleted') && Request::input('deleted') == 'true') {
+                    if ($request->filled('deleted') && $request->input('deleted') == 'true') {
                         $query->onlyTrashed();
                     }
 
-                    if (!Request::filled('all-users') || Request::input('all-users') != 'true') {
+                    if (!$request->filled('all-users') || $request->input('all-users') != 'true') {
                         $query->has('roles');
                     }
                 });
@@ -132,7 +135,6 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
-     * @todo: да се направи request с валидация!
      */
     public function store(Request $request) {
         $adminUser = new AdminUser();
@@ -216,9 +218,9 @@ class AdministratorsController extends BaseAdministrationController {
     public function update(Request $request, $id) {
         $adminUser = AdminUser::findOrFail($id);
 
-        $requestData = Request::all();
+        $requestData = $request->all();
 
-        if (!Request::filled('password')) {
+        if (!$request->filled('password')) {
             unset($adminUser->rules['password']);
             unset($requestData['password']);
         }
@@ -230,8 +232,8 @@ class AdministratorsController extends BaseAdministrationController {
              * add roles
              */
             $roles = [];
-            if (Request::filled('roles')) {
-                foreach (Request::input('roles') as $role) {
+            if ($request->filled('roles')) {
+                foreach ($request->input('roles') as $role) {
                     foreach ($role as $key => $value) {
                         if ($value <= 0) {
                             continue;
