@@ -17,10 +17,8 @@ use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class AdministratorsController extends BaseAdministrationController
-{
-    public function __construct()
-    {
+class AdministratorsController extends BaseAdministrationController {
+    public function __construct() {
         parent::__construct();
         Administration::setTitle(trans('administration::administrators.administrators'));
     }
@@ -30,8 +28,7 @@ class AdministratorsController extends BaseAdministrationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         if (Request::ajax()) {
             $users = AdminUser::select([
                 'id',
@@ -111,8 +108,7 @@ class AdministratorsController extends BaseAdministrationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FormBuilder $formBuilder)
-    {
+    public function create(FormBuilder $formBuilder) {
         $form = $formBuilder->create(AdministratorForm::class, [
                 'method' => 'POST',
                 'url' => route('provision.administration.administrators.store'),
@@ -134,10 +130,10 @@ class AdministratorsController extends BaseAdministrationController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $adminUser = new AdminUser();
 
         $requestData = Request::all();
@@ -171,10 +167,10 @@ class AdministratorsController extends BaseAdministrationController
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -182,10 +178,10 @@ class AdministratorsController extends BaseAdministrationController
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormBuilder $formBuilder, $id)
-    {
+    public function edit(FormBuilder $formBuilder, $id) {
         $user = AdminUser::withTrashed()->where('id', $id)->first();
 
         $form = $formBuilder->create(AdministratorForm::class, [
@@ -211,11 +207,11 @@ class AdministratorsController extends BaseAdministrationController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $adminUser = AdminUser::findOrFail($id);
 
         $requestData = Request::all();
@@ -231,15 +227,18 @@ class AdministratorsController extends BaseAdministrationController
             /*
              * add roles
              */
-            $adminUser->roles()->detach();
-            if (!empty(Request::filled('roles'))) {
+            $roles = [];
+            if (Request::filled('roles')) {
                 foreach (Request::input('roles') as $role) {
-                    if ($role <= 0) {
-                        continue;
+                    foreach ($role as $key => $value) {
+                        if ($value <= 0) {
+                            continue;
+                        }
+                        $roles[$key] = $value;
                     }
-                    $adminUser->roles()->attach($role);
                 }
             }
+            $adminUser->roles()->sync($roles);
 
             $adminUser->fill($requestData);
             $adminUser->save();
@@ -256,10 +255,10 @@ class AdministratorsController extends BaseAdministrationController
      * Remove the specified resource from storage.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $object = AdminUser::withTrashed()->find($id);
 
         if (!$object->trashed()) {
