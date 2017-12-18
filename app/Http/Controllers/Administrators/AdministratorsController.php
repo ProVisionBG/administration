@@ -8,13 +8,13 @@
 namespace ProVision\Administration\Http\Controllers\Administrators;
 
 use Form;
+use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\AdminUser;
 use ProVision\Administration\Facades\Administration;
 use ProVision\Administration\Forms\AdministratorFilterForm;
 use ProVision\Administration\Forms\AdministratorForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
-use Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdministratorsController extends BaseAdministrationController {
@@ -132,28 +132,30 @@ class AdministratorsController extends BaseAdministrationController {
      * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
+     * @todo: да се направи request с валидация!
      */
     public function store(Request $request) {
         $adminUser = new AdminUser();
 
-        $requestData = Request::all();
-
-        if ($adminUser->validate($requestData)) {
-            $adminUser->fill($requestData);
+        if ($adminUser->validate($request->all())) {
+            $adminUser->fill($request->all());
             $adminUser->save();
 
             /*
             * add roles
             */
-            $adminUser->roles()->detach();
-            if (!empty(Request::filled('roles'))) {
-                foreach (Request::input('roles') as $role) {
-                    if ($role <= 0) {
-                        continue;
+            $roles = [];
+            if ($request->filled('roles')) {
+                foreach ($request->input('roles') as $role) {
+                    foreach ($role as $key => $value) {
+                        if ($value <= 0) {
+                            continue;
+                        }
+                        $roles[$key] = $value;
                     }
-                    $adminUser->roles()->attach($role);
                 }
             }
+            $adminUser->roles()->sync($roles);
 
             return \Redirect::route('provision.administration.administrators.index');
         } else {
