@@ -45,15 +45,15 @@ class AdministratorsRolesController extends BaseAdministrationController {
                     return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators-roles.edit', $role->id)) . $actions;
                 })
                 ->filter(function ($query) {
-                    //                    if (Request::has('name')) {
+                    //                    if (Request::filled('name')) {
 //                        $query->where('name', 'like', "%" . Request::get('name') . "%");
 //                    }
 //
-//                    if (Request::has('email')) {
+//                    if (Request::filled('email')) {
 //                        $query->where('email', 'like', "%" . Request::get('email') . "%");
 //                    }
 //
-//                    if (Request::has('delete') && Request::input('delete') == 'true') {
+//                    if (Request::filled('delete') && Request::input('delete') == 'true') {
 //                        $query->whereNotNull('deleted_at');
 //                    }
                 });
@@ -130,7 +130,7 @@ class AdministratorsRolesController extends BaseAdministrationController {
             /*
             * add permissions
             */
-            if (!empty(Request::has('permissions'))) {
+            if (Request::filled('permissions')) {
                 $rolesData = Request::input('permissions');
                 foreach ($rolesData as $roleRow => $value) {
                     if (empty($value)) {
@@ -225,7 +225,7 @@ class AdministratorsRolesController extends BaseAdministrationController {
             /*
              * add permissions
              */
-            if (!empty(Request::has('permissions'))) {
+            if (!empty(Request::filled('permissions'))) {
 
                 $rolesData = Request::input('permissions');
                 foreach ($rolesData as $roleRow => $value) {

@@ -55,19 +55,19 @@ class AdministratorsController extends BaseAdministrationController
                     return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.administrators.edit', $user->id)) . $actions;
                 })
                 ->filter(function ($query) {
-                    if (Request::has('name')) {
+                    if (Request::filled('name')) {
                         $query->where('name', 'like', '%' . Request::get('name') . '%');
                     }
 
-                    if (Request::has('email')) {
+                    if (Request::filled('email')) {
                         $query->where('email', 'like', '%' . Request::get('email') . '%');
                     }
 
-                    if (Request::has('deleted') && Request::input('deleted') == 'true') {
+                    if (Request::filled('deleted') && Request::input('deleted') == 'true') {
                         $query->onlyTrashed();
                     }
 
-                    if (!Request::has('all-users') || Request::input('all-users') != 'true') {
+                    if (!Request::filled('all-users') || Request::input('all-users') != 'true') {
                         $query->has('roles');
                     }
                 });
@@ -150,7 +150,7 @@ class AdministratorsController extends BaseAdministrationController
             * add roles
             */
             $adminUser->roles()->detach();
-            if (!empty(Request::has('roles'))) {
+            if (!empty(Request::filled('roles'))) {
                 foreach (Request::input('roles') as $role) {
                     if ($role <= 0) {
                         continue;
@@ -220,7 +220,7 @@ class AdministratorsController extends BaseAdministrationController
 
         $requestData = Request::all();
 
-        if (!Request::has('password')) {
+        if (!Request::filled('password')) {
             unset($adminUser->rules['password']);
             unset($requestData['password']);
         }
@@ -232,7 +232,7 @@ class AdministratorsController extends BaseAdministrationController
              * add roles
              */
             $adminUser->roles()->detach();
-            if (!empty(Request::has('roles'))) {
+            if (!empty(Request::filled('roles'))) {
                 foreach (Request::input('roles') as $role) {
                     if ($role <= 0) {
                         continue;
