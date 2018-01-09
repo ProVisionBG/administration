@@ -10,11 +10,13 @@
     <?php endif; ?>
 
     <?php if ($showField): ?>
-        <?php foreach ((array) $options['children'] as $child): ?>
-            <?php $child->setName($name.'[]'); ?>
-            <?php echo ! empty($options['wrapper_children']) ? '<div class="wrapper_children '.$options['wrapper_children'].'">' : ''; ?>
+        <?php foreach ((array)$options['children'] as $child): ?>
+            <?php if ($options['translate']) {
+                $child->setName($name . '[]');
+            } ?>
+            <?php echo !empty($options['wrapper_children']) ? '<div class="wrapper_children ' . $options['wrapper_children'] . '">' : ''; ?>
             <?= $child->render(['selected' => $options['selected']], true, true, false) ?>
-            <?php echo ! empty($options['wrapper_children']) && $options['wrapper_children'] !== false ? '</div>' : ''; ?>
+            <?php echo !empty($options['wrapper_children']) && $options['wrapper_children'] !== false ? '</div>' : ''; ?>
         <?php endforeach; ?>
 
         <?php include 'help_block.php' ?>
