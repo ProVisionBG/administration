@@ -65,7 +65,7 @@ class AdministrationController extends BaseAdministrationController
                 $box->setBoxBackgroundClass('bg-green');
             }
             $box->setIconClass('fa-bug');
-            $box->setLink('View all errors', '/' . config('log-viewer.route.attributes.prefix'), ['target' => '_blank']);
+            $box->setLink('View all errors', route('log-viewer::dashboard'), ['target' => '_blank']);
             \Dashboard::add($box);
         }
 
