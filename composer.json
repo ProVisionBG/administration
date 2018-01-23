@@ -34,7 +34,7 @@
     "lavary/laravel-menu": "^1.7",
     "cviebrock/eloquent-sluggable": "^4.3",
     "provision/laravel-meta-tags": "^3.0",
-    "provision/breadcrumbs": "dev-master",
+    "davejamesmiller/laravel-breadcrumbs": "^4.2",
     "yajra/laravel-datatables-oracle": "~8.0",
     "yajra/laravel-datatables-html": "^3.0",
     "edvinaskrucas/notification": "5.*",
