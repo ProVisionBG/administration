@@ -9,8 +9,7 @@ namespace ProVision\Administration\Models;
 
 use ProVision\Administration\AdminModel;
 
-class Settings extends AdminModel
-{
+class Settings extends AdminModel {
     public $module = 'settings';
 
     protected $fillable = [
@@ -18,14 +17,13 @@ class Settings extends AdminModel
         'value'
     ];
 
-    public function translate($locale)
-    {
+    public function translate($locale) {
         $eloquent = new Settings();
-        foreach ($this->getAttributes() as $k => $attribute) {
-            $localeKey = $k;
-            if (substr($localeKey, 0, 2) . '.' == $locale . '.') {
-                $localeKey = substr($localeKey, 3);
-                $eloquent->$localeKey = $attribute;
+        foreach ($this->getAttributes() as $localeKey => $attribute) {
+            $e = explode('.', $localeKey);
+            if ($e[0] == $locale) {
+                $eKey = $e[1];
+                $eloquent->$eKey = $attribute;
             }
 
         }

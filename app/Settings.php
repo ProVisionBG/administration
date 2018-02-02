@@ -9,28 +9,30 @@ namespace ProVision\Administration;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
+use ProVision\Administration\Facades\Administration;
 use ProVision\Administration\Models\Settings as SettingsModel;
 use ProVision\MediaManager\Traits\MediaManagerTrait;
 
-class Settings
-{
+class Settings {
 
     use MediaManagerTrait;
 
     /**
      * Settings container
+     *
      * @var array
      */
     protected $settings;
 
     /**
      * Запазване на насторйка
+     *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return bool
      */
-    public function save($key, $value)
-    {
+    public function save($key, $value) {
         if (is_array($value)) {
             foreach ($value as $k => $v) {
                 $this->save($key . '.' . $k, $v);
@@ -77,23 +79,27 @@ class Settings
 
     /**
      * Взимане на ключ с превод
-     * @param $key
-     * @param bool $default
+     *
+     * @param       $key
+     * @param mixed $default
+     *
+     * @param mixed $locale
+     *
      * @return mixed
      */
-    public function getLocale($key, $default = false)
-    {
-        return $this->get(\Administration::getLanguage() . '.' . $key, $default);
+    public function getLocale($key, $default = false, $locale = false) {
+        return $this->get(($locale ? $locale : Administration::getLanguage()) . '.' . $key, $default);
     }
 
     /**
      * Вземане на настройка
-     * @param $key
+     *
+     * @param      $key
      * @param bool $default
+     *
      * @return mixed
      */
-    public function get($key, $default = false)
-    {
+    public function get($key, $default = false) {
         try {
             return $this->load()->get($key)->value;
         } catch (\Exception $exception) {
@@ -103,11 +109,12 @@ class Settings
 
     /**
      * Зареждане на данните
+     *
      * @param bool $force
+     *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    protected function load($force = false)
-    {
+    protected function load($force = false) {
         if (empty($this->settings) || $force) {
             $this->settings = SettingsModel::all()->keyBy('key');
         }
@@ -116,13 +123,13 @@ class Settings
     }
 
     /**
-     * @param $key
+     * @param      $key
      * @param bool $size
      * @param bool $default
+     *
      * @return bool
      */
-    public function getFile($key, $size = false, $default = false)
-    {
+    public function getFile($key, $size = false, $default = false) {
         try {
             $setting = $this->load()->get($key);
 
@@ -139,19 +146,19 @@ class Settings
 
     /**
      * Взема всички настройки
+     *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function all()
-    {
+    public function all() {
         return $this->load();
     }
 
     /**
      * @return SettingsModel
      */
-    public function getFormModel()
-    {
+    public function getFormModel(): SettingsModel {
         $eloquent = new SettingsModel();
+
         foreach ($this->load() as $item) {
             $eloquent->setAttribute($item->key, $item->value);
         }
