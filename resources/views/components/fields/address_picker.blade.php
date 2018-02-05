@@ -42,8 +42,8 @@
     jQuery(document).ready(function () {
         jQuery('#{!!$uniqId!!}-map').locationpicker({
             location: {
-                latitude: {!!$options['default_value']['lat']!!} ,
-                longitude: {!!$options['default_value']['lng']!!}
+                latitude: '{!!$options['default_value']['lat']!!}',
+                longitude: '{!!$options['default_value']['lng']!!}'
             },
             radius: 0,
             @if(empty($noEdit))
