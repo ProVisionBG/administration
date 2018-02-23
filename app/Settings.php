@@ -8,9 +8,9 @@
 namespace ProVision\Administration;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File;
 use ProVision\Administration\Facades\Administration;
 use ProVision\Administration\Models\Settings as SettingsModel;
+use ProVision\MediaManager\Models\MediaManager;
 use ProVision\MediaManager\Traits\MediaManagerTrait;
 
 class Settings {
@@ -51,19 +51,20 @@ class Settings {
                  */
                 if ($class == UploadedFile::class) {
 
-                    $filePath = public_path('uploads/settings/' . $setting->key . '/');
+                    $filePath = '/public/uploads/settings/' . $setting->key . '/';
+                    $m = new MediaManager();
+                    $storage = $m->getStorageDisk();
 
                     /*
                      * remove old file
                      */
-                    if (!empty($setting->value) && File::exists($filePath . $setting->value)) {
+                    if (!empty($setting->value) && $files = $storage->allFiles($filePath)) {
                         //remove base file
-                        File::deleteDirectory($filePath, true);
+                        $storage->delete($files);
                     }
 
-
-                    $value->move($filePath, $value->getClientOriginalName());
-                    $this->resizeFile($filePath . $value->getClientOriginalName());
+                    $path = $storage->putFileAs($filePath, $value, $value->getClientOriginalName());
+                    $this->resizeFile($storage->path($path));
 
                     $value = $value->getClientOriginalName();
                 }
