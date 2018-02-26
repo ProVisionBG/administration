@@ -134,10 +134,14 @@ class Settings {
         try {
             $setting = $this->load()->get($key);
 
+            $filePath = '/public/uploads/settings/' . $setting->key . '/';
+            $m = new MediaManager();
+            $storage = $m->getStorageDisk();
+
             if ($size) {
-                return '/uploads/settings/' . $setting->key . '/' . $size . '_' . $setting->value;
+                return $storage->path($filePath . $size . '_' . $setting->value);
             } else {
-                return '/uploads/settings/' . $setting->key . '/' . $setting->value;
+                return $storage->path($filePath . $setting->value);
             }
 
         } catch (\Exception $exception) {
