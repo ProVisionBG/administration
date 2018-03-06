@@ -148,13 +148,11 @@ class AdministratorsController extends BaseAdministrationController {
             */
             $roles = [];
             if ($request->filled('roles')) {
-                foreach ($request->input('roles') as $role) {
-                    foreach ($role as $key => $value) {
-                        if ($value <= 0) {
-                            continue;
-                        }
-                        $roles[$key] = $value;
+                foreach ($request->input('roles') as $key => $value) {
+                    if ($value <= 0) {
+                        continue;
                     }
+                    $roles[$key] = $value;
                 }
             }
             $adminUser->roles()->sync($roles);
@@ -233,13 +231,11 @@ class AdministratorsController extends BaseAdministrationController {
              */
             $roles = [];
             if ($request->filled('roles')) {
-                foreach ($request->input('roles') as $role) {
-                    foreach ($role as $key => $value) {
-                        if ($value <= 0) {
-                            continue;
-                        }
-                        $roles[$key] = $value;
+                foreach ($request->input('roles') as $key => $value) {
+                    if ($value <= 0) {
+                        continue;
                     }
+                    $roles[$key] = $value;
                 }
             }
             $adminUser->roles()->sync($roles);
