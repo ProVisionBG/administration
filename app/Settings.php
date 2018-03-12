@@ -139,9 +139,9 @@ class Settings {
             $storage = $m->getStorageDisk();
 
             if ($size) {
-                return $storage->path($filePath . $size . '_' . $setting->value);
+                return $storage->url($filePath . $size . '_' . $setting->value);
             } else {
-                return $storage->path($filePath . $setting->value);
+                return $storage->url($filePath . $setting->value);
             }
 
         } catch (\Exception $exception) {
