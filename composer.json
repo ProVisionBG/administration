@@ -52,6 +52,7 @@
     "artesaos/seotools": "^0.11.1"
   },
   "require-dev": {
+    "barryvdh/laravel-ide-helper": "^2.4"
   },
   "autoload": {
     "classmap": [
@@ -85,12 +86,8 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "php artisan vendor:publish --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\"",
-      "php artisan admin:migrate"
     ],
     "post-update-cmd": [
-      "php artisan vendor:publish --tag=views --tag=public --tag=lang --tag=migrations --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\"",
-      "php artisan admin:migrate"
     ],
     "test": "phpunit"
   }
