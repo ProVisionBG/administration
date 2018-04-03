@@ -10,12 +10,13 @@ namespace ProVision\Administration;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use ProVision\MediaManager\Traits\MediaManagerTrait;
 
-class StaticBlock extends AdminModel
-{
+class StaticBlock extends AdminModel {
     use Sluggable;
     use Translatable;
     use SoftDeletes;
+    use MediaManagerTrait;
 
     public $translatedAttributes = ['text'];
     public $rules = [
@@ -38,8 +39,7 @@ class StaticBlock extends AdminModel
         'active' => 'boolean',
     ];
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -48,8 +48,7 @@ class StaticBlock extends AdminModel
      *
      * @return array
      */
-    public function sluggable()
-    {
+    public function sluggable() {
         return [
             'key' => [
                 'source' => 'key',

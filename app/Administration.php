@@ -131,11 +131,35 @@ class Administration {
      * @param $key
      *
      * @return mixed
+     * @throws \Exception
+     * @throws \Symfony\Component\Debug\Exception\FatalThrowableError
      */
     public static function getStaticBlock($key) {
         $block = StaticBlock::where('key', $key)->where('active', 1)->first();
         if ($block) {
             return CustomBladeCompiler::render($block->text);
+        }
+
+        \Debugbar::error('static block not found: ' . $key);
+
+        return false;
+    }
+
+    /**
+     * Get static block object by key.
+     *
+     * @param $key
+     *
+     * @return mixed
+     */
+    public static function getStaticBlockObject($key) {
+        $block = StaticBlock::where('key', $key)
+            ->where('active', 1)
+            ->with(['media'])
+            ->first();
+
+        if ($block) {
+            return $block;
         }
 
         \Debugbar::error('static block not found: ' . $key);
