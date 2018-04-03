@@ -39,10 +39,6 @@ class StaticBlock extends AdminModel {
         'active' => 'boolean',
     ];
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     /**
      * Return the sluggable configuration array for this model.
      *

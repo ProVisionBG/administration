@@ -9,12 +9,12 @@ namespace ProVision\Administration\Http\Controllers\StaticBlocks;
 
 use Form;
 use Guzzle\Http\Message\Response;
+use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 use ProVision\Administration\Facades\Administration;
 use ProVision\Administration\Forms\StaticBlockForm;
 use ProVision\Administration\Http\Controllers\BaseAdministrationController;
 use ProVision\Administration\StaticBlock;
-use Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class StaticBlocksController extends BaseAdministrationController {
@@ -27,9 +27,10 @@ class StaticBlocksController extends BaseAdministrationController {
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function index() {
-        if (Request::ajax()) {
+    public function index(Request $request) {
+        if ($request->ajax()) {
             $staticBlocks = StaticBlock::query();
 
             $datatables = Datatables::of($staticBlocks)
@@ -41,23 +42,23 @@ class StaticBlocksController extends BaseAdministrationController {
                         $actions .= Form::adminDeleteButton(trans('administration::index.delete'), route('provision.administration.static-blocks.destroy', $staticBlock->id));
                     }
 
-                    $actions .= Form::adminMediaButton($staticBlock);
+                    $actions .= Form::mediaManager($staticBlock);
 
                     return Form::adminEditButton(trans('administration::index.edit'), route('provision.administration.static-blocks.edit', $staticBlock->id)) . $actions;
                 })
                 ->addColumn('visible', function ($staticBlock) {
                     return Form::adminSwitchButton('active', $staticBlock);
                 })
-                ->filter(function ($query) {
-                    if (Request::has('key')) {
-                        $query->where('key', 'like', '%' . Request::get('key') . '%');
+                ->filter(function ($query) use ($request) {
+                    if ($request->has('key')) {
+                        $query->where('key', 'like', '%' . $request->get('key') . '%');
                     }
 
-                    if (Request::has('text')) {
-                        $query->where('text', 'like', '%' . Request::get('text') . '%');
+                    if ($request->has('text')) {
+                        $query->where('text', 'like', '%' . $request->get('text') . '%');
                     }
 
-                    if (Request::has('delete') && Request::input('delete') == 'true') {
+                    if ($request->has('delete') && $request->input('delete') == 'true') {
                         $query->whereNotNull('deleted_at');
                     }
                 });
