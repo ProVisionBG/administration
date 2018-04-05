@@ -26,6 +26,8 @@ class StaticBlocksController extends BaseAdministrationController {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
@@ -120,14 +122,14 @@ class StaticBlocksController extends BaseAdministrationController {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(\Illuminate\Http\Request $request) {
+    public function store(Request $request) {
         $staticBlock = new StaticBlock();
 
-        $requestData = Request::all();
+        $requestData = $request->all();
 
         if ($staticBlock->validate($requestData)) {
             $staticBlock->fill($requestData);
@@ -184,15 +186,15 @@ class StaticBlocksController extends BaseAdministrationController {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  Request $request
+     * @param  int     $id
      *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
         $staticBlock = StaticBlock::findOrFail($id);
 
-        $requestData = Request::all();
+        $requestData = $request->all();
 
         if ($staticBlock->validate($requestData)) {
             $staticBlock->fill($requestData);
