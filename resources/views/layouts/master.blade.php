@@ -307,11 +307,6 @@
     var formModels = []; //editor form->model container
 
     /*
-     media settings
-     */
-    var mediaRouteIndex = '{{route('provision.administration.media.index')}}';
-
-    /*
      init tinymce
      */
     window.tinymceConfig = {
