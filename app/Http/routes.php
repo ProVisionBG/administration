@@ -188,21 +188,6 @@ Route::group([
             });
 
             /*
-             * Ajax utilities
-             */
-            Route::resource('media', 'MediaController', [
-                'names' => [
-                    'index' => 'media.index',
-                    'edit' => 'media.edit',
-                    'show' => 'media.show',
-                    'create' => 'media.create',
-                    'store' => 'media.store',
-                    'update' => 'media.update',
-                    'destroy' => 'media.destroy',
-                ],
-            ]);
-
-            /*
              * TinyMCE proxy
              */
             Route::get('tinymce/proxy', [
