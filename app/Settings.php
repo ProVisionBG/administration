@@ -8,7 +8,7 @@
 namespace ProVision\Administration;
 
 use Illuminate\Http\UploadedFile;
-use ProVision\Administration\Facades\Administration;
+use ProVision\Administration\Facades\Administration as AdministrationFacade;
 use ProVision\Administration\Models\Settings as SettingsModel;
 use ProVision\MediaManager\Models\MediaManager;
 use ProVision\MediaManager\Traits\MediaManagerTrait;
@@ -89,7 +89,7 @@ class Settings {
      * @return mixed
      */
     public function getLocale($key, $default = false, $locale = false) {
-        return $this->get(($locale ? $locale : Administration::getLanguage()) . '.' . $key, $default);
+        return $this->get(($locale ? $locale : AdministrationFacade::getLanguage()) . '.' . $key, $default);
     }
 
     /**
