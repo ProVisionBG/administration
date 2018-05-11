@@ -48,6 +48,7 @@ class AdministrationServiceProvider extends ServiceProvider {
             __DIR__ . '/../../config/provision_administration.php' => config_path('provision_administration.php'),
             __DIR__ . '/../../config/laravellocalization.php' => config_path('laravellocalization.php'),
             __DIR__ . '/../../config/entrust.php' => config_path('entrust.php'),
+            __DIR__ . '/../../config/imagecache.php' => config_path('imagecache.php'),
             __DIR__ . '/../../config/log-viewer.php' => config_path('log-viewer.php'),
             __DIR__ . '/../../config/laravel-form-builder.php' => config_path('laravel-form-builder.php'),
             __DIR__ . '/../../config/laravel-menu/settings.php' => config_path('laravel-menu/settings.php'),
