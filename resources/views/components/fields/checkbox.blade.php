@@ -19,21 +19,18 @@
     /*
      * Автоматично чекване
      */
-    if (!isset($options['checked']) || is_array($options['checked'])) {
-        //for translates
-        if (!empty($options['translate'])) {
-            if ($options['value'] === '') {
-                $options['checked'] = (empty($options['default_checked']) ? false : $options['default_checked']);
-            } elseif ($options['value'] == true) {
-                $options['checked'] = true;
-            } elseif ($options['value'] == false) {
-                $options['checked'] = false;
-            }
+    if (!empty($options['translate'])) {
+        if ($options['value'] === '') {
+            $options['checked'] = (empty($options['default_checked']) ? true : $options['default_checked']);
+        } elseif ($options['value'] == true) {
+            $options['checked'] = true;
+        } elseif ($options['value'] == false) {
+            $options['checked'] = false;
         }
     }
 
     if (empty($options['value'])) {
-        $options['value'] = true;
+        $options['value'] = (empty($options['default_checked']) ? true : $options['default_checked']);
     }
 
     /**
@@ -49,15 +46,15 @@
 
     @if(@$options['stop_switch']!==true)
         @push('js_scripts')
-        <script>
-            $("#<?= $options['attr']['id'];?>").bootstrapSwitch({
-                size: 'small',
-                labelText: '{{$options['label']}}',
-                onText: '{{trans('administration::index.yes')}}',
-                offText: '{{trans('administration::index.no')}}',
-                offColor: 'danger'
-            });
-        </script>
+            <script>
+                $("#<?= $options['attr']['id'];?>").bootstrapSwitch({
+                    size: 'small',
+                    labelText: '{{$options['label']}}',
+                    onText: '{{trans('administration::index.yes')}}',
+                    offText: '{{trans('administration::index.no')}}',
+                    offColor: 'danger'
+                });
+            </script>
         @endpush
     @endif
 
