@@ -7,13 +7,13 @@
 /**
  * System status for remote checking
  */
-Route::get('/system-status', function () {
-    return response()->json([
-        'data' => [
-            'error_logs' => \Arcanedev\LogViewer\Facades\LogViewer::tree()
-        ]
-    ]);
-});
+//Route::get('/system-status', function () {
+//    return response()->json([
+//        'data' => [
+//            'error_logs' => \Arcanedev\LogViewer\Facades\LogViewer::tree()
+//        ]
+//    ]);
+//});
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -72,15 +72,6 @@ Route::group([
                 'permission:administration-access',
             ],
         ], function () {
-            Route::get('logout', [
-                'as' => 'logout',
-                function () {
-                    Auth::guard(config('provision_administration.guard'))->logout();
-
-                    return Redirect::route('provision.administration.login');
-                },
-            ]);
-
             /*
              * Administrators
              */
