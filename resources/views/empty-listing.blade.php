@@ -63,6 +63,7 @@
                 "aaSorting": [[0, "desc"]], // @todo: да може да се сменя от контролера дефоутлният ордер
                 //"stateSave": true,
                 "lengthChange": true,
+                "lengthMenu": [10, 25, 50, 100, 200, 500, 1000],
                 "responsive": true,
                 "processing": true,
                 "ordering": true,
