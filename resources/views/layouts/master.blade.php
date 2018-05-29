@@ -12,6 +12,16 @@
     <link rel="stylesheet" href='{{asset("/vendor/provision/administration/css/all.css")}}'>
     <link rel="stylesheet" href='{{asset("/vendor/provision/media-manager/assets/css/all.css")}}'>
 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {{-- @todo: Да се махне от тук. С него тръгва tinymce на IE! Да се провери защо. --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.13/tinymce.min.js"></script>
+
     @stack('top_css')
 </head>
 <body class="hold-transition skin-blue sidebar-mini @if(\Request::cookie('administration-navigation-collapsed')=='true') sidebar-collapse @endif">
@@ -29,11 +39,8 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
-            <a id="slidebar-toggle-button" href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <a id="slidebar-toggle-button" href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
             </a>
 
             <div class="navbar-custom-menu">
@@ -204,19 +211,19 @@
             <div class="clearfix"></div>
 
             <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
-                        class="fa fa-search"></i></button>
-          </span>
-                </div>
-            </form>
-            <!-- /.search form -->
+        {{--<form action="#" method="get" class="sidebar-form">--}}
+        {{--<div class="input-group">--}}
+        {{--<input type="text" name="q" class="form-control" placeholder="Search...">--}}
+        {{--<span class="input-group-btn">--}}
+        {{--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i--}}
+        {{--class="fa fa-search"></i></button>--}}
+        {{--</span>--}}
+        {{--</div>--}}
+        {{--</form>--}}
+        <!-- /.search form -->
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
+            <ul class="sidebar-menu" data-widget="tree">
                 @include('administration::partials.navigation', ['items' => \AdministrationMenu::get()])
             </ul>
         </section>
@@ -400,7 +407,7 @@
             // just in case, and visually hide it. And do not forget do remove it
             // once you do not need it anymore.
 
-            input.onchange = function() {
+            input.onchange = function () {
                 var file = this.files[0];
 
                 var reader = new FileReader();
@@ -410,13 +417,13 @@
                     // registry. In the next release this part hopefully won't be
                     // necessary, as we are looking to handle it internally.
                     var id = 'blobid' + (new Date()).getTime();
-                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
                     var base64 = reader.result.split(',')[1];
                     var blobInfo = blobCache.create(id, file, base64);
                     blobCache.add(blobInfo);
 
                     // call the callback and populate the Title field with the file name
-                    cb(blobInfo.blobUri(), { title: file.name });
+                    cb(blobInfo.blobUri(), {title: file.name});
                 };
             };
 
