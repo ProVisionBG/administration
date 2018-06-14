@@ -136,6 +136,28 @@ class Administration
     }
 
     /**
+     * Get static block object by key.
+     *
+     * @param $key
+     *
+     * @return mixed
+     */
+    public static function getStaticBlockObject($key) {
+        $block = StaticBlock::where('key', $key)
+            ->where('active', 1)
+            ->with(['media'])
+            ->first();
+
+        if ($block) {
+            return $block;
+        }
+
+        \Debugbar::error('static block not found: ' . $key);
+
+        return false;
+    }
+
+    /**
      * Get module order index.
      * @param $module
      * @return mixed
