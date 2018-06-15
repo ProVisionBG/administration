@@ -10,12 +10,14 @@ namespace ProVision\Administration;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use ProVision\MediaManager\Traits\MediaManagerTrait;
 
 class StaticBlock extends AdminModel
 {
     use Sluggable;
     use Translatable;
     use SoftDeletes;
+    use MediaManagerTrait
 
     public $translatedAttributes = ['text'];
     public $rules = [
