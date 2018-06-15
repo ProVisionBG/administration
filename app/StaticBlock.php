@@ -17,7 +17,7 @@ class StaticBlock extends AdminModel
     use Sluggable;
     use Translatable;
     use SoftDeletes;
-    use MediaManagerTrait
+    use MediaManagerTrait;
 
     public $translatedAttributes = ['text'];
     public $rules = [
