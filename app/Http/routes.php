@@ -40,7 +40,7 @@ Route::group([
             'uses' => 'Auth\LoginController@login',
         ]);
 
-        Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+        Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
         // Registration Routes...
         //Route::get('register', 'Auth\RegisterController@showRegistrationForm');
