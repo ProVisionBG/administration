@@ -7,10 +7,8 @@
 
 namespace ProVision\Administration\Forms;
 
-class SettingsForm extends AdminForm
-{
-    public function buildForm()
-    {
+class SettingsForm extends AdminForm {
+    public function buildForm() {
         $this->removeSeoInput('slug');
         $this->addSeoFields();
 
@@ -47,6 +45,25 @@ class SettingsForm extends AdminForm
             //            'help_block' => [
             //                'text' => 'Only in production!'
             //            ]
+        ]);
+
+        $this->add('social_links_box', 'new_box', [
+            'title' => 'Social links',
+        ]);
+
+        $this->add('facebook_link', 'text', [
+            'label' => 'Facebook Page URL',
+            'translate'=>true
+        ]);
+
+        $this->add('google_plus_link', 'text', [
+            'label' => 'Google+ URL',
+            'translate'=>true
+        ]);
+
+        $this->add('twitter_link', 'text', [
+            'label' => 'Twitter URL',
+            'translate'=>true
         ]);
 
         /*
