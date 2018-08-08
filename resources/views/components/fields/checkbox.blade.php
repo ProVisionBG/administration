@@ -33,6 +33,13 @@
         $options['value'] = (empty($options['default_checked']) ? true : $options['default_checked']);
     }
 
+    /*
+     * Чекбокс от choice с translate=>true
+     */
+    if (is_array($options['value'])) {
+        $options['value'] = str_ireplace($options['original_name'] . '_', '', $options['label_attr']['for']);
+    }
+
     /**
      * Името на полето да е от тип name[value] а не name[]
      */
