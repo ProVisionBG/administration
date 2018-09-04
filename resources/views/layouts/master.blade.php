@@ -6,6 +6,8 @@
     <title> @if(!empty(\Administration::getTitle())){{\Administration::getTitle()}}
         | @endif{{ Lang::get('administration::index.admin_title') }}</title>
 
+    <meta name="robots" content="noindex, nofollow">
+
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

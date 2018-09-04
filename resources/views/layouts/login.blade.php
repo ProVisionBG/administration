@@ -6,6 +6,7 @@
     <title>{{ trans('administration::index.admin_title') }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="robots" content="noindex, nofollow">
 
     <link rel="stylesheet" href='{{asset("/vendor/provision/administration/css/all.css")}}'>
 
