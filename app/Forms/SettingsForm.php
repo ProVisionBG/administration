@@ -53,17 +53,22 @@ class SettingsForm extends AdminForm {
 
         $this->add('facebook_link', 'text', [
             'label' => 'Facebook Page URL',
-            'translate'=>true
+            'translate' => true
         ]);
 
         $this->add('google_plus_link', 'text', [
             'label' => 'Google+ URL',
-            'translate'=>true
+            'translate' => true
         ]);
 
         $this->add('twitter_link', 'text', [
             'label' => 'Twitter URL',
-            'translate'=>true
+            'translate' => true
+        ]);
+
+        $this->add('instagram_link', 'text', [
+            'label' => 'Instagram URL',
+            'translate' => true
         ]);
 
         /*
