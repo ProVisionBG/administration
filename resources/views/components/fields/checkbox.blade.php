@@ -19,7 +19,6 @@
     /*
      * Автоматично чекване
      */
-    dump($options);
     if (!empty($options['translate'])) {
         if ($options['value'] === '') {
             $options['checked'] = (!isset($options['default_checked']) ? true : $options['default_checked']);
