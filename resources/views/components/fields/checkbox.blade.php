@@ -19,9 +19,10 @@
     /*
      * Автоматично чекване
      */
+    dump($options);
     if (!empty($options['translate'])) {
         if ($options['value'] === '') {
-            $options['checked'] = (empty($options['default_checked']) ? true : $options['default_checked']);
+            $options['checked'] = (!isset($options['default_checked']) ? true : $options['default_checked']);
         } elseif ($options['value'] == true) {
             $options['checked'] = true;
         } elseif ($options['value'] == false) {
@@ -30,7 +31,7 @@
     }
 
     if (empty($options['value'])) {
-        $options['value'] = (empty($options['default_checked']) ? true : $options['default_checked']);
+        $options['value'] = (!isset($options['default_checked']) ? true : $options['default_checked']);
     }
 
     /*
