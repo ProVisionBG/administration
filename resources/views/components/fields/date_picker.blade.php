@@ -8,7 +8,9 @@
         <?= Form::label($name, $options['label'], $options['label_attr']) ?>
     <?php endif; ?>
 
-    <?php if ($showField): ?>
+    <?php if ($showField):
+    $options['attr']['id'] = str_random(20);
+    ?>
 
     <div class="input-group">
         <div class="input-group-addon">
