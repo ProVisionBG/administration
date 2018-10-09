@@ -19,7 +19,7 @@
     /*
      * Автоматично чекване
      */
-    if (!empty($options['translate'])) {
+    if (isset($options['translate'])) {
         if ($options['value'] === '') {
             $options['checked'] = (!isset($options['default_checked']) ? true : $options['default_checked']);
         } elseif ($options['value'] == true) {
@@ -29,9 +29,7 @@
         }
     }
 
-    if (empty($options['value'])) {
-        $options['value'] = (!isset($options['default_checked']) ? true : $options['default_checked']);
-    }
+    $options['value'] = (isset($options['default_value']) ? $options['default_value'] : $options['value']);
 
     /*
      * Чекбокс от choice с translate=>true
