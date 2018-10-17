@@ -71,6 +71,11 @@ class SettingsForm extends AdminForm {
             'translate' => true
         ]);
 
+        $this->add('linkedin_link', 'text', [
+            'label' => 'LinkedIn URL',
+            'translate' => true
+        ]);
+
         /*
          * load settings of modules
          */
