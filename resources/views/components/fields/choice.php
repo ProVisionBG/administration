@@ -13,7 +13,9 @@
         <?php foreach ((array)$options['children'] as $child): ?>
             <?php if ($options['translate']) {
                 $child->setName($name . '[]');
-            } ?>
+            }
+            $child->setOption('translate', $options['translate']);
+            ?>
             <?php echo !empty($options['wrapper_children']) ? '<div class="wrapper_children ' . $options['wrapper_children'] . '">' : ''; ?>
             <?= $child->render(['selected' => $options['selected']], true, true, false) ?>
             <?php echo !empty($options['wrapper_children']) && $options['wrapper_children'] !== false ? '</div>' : ''; ?>

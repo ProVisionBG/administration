@@ -44,6 +44,11 @@ if ($translationOpened === false) {
                      * set translation value
                      */
                     $fieldName = $field->getOptions()['original_name'];
+                    if ($field instanceof \Kris\LaravelFormBuilder\Fields\ChoiceType) {
+                        $field->setOptions([
+                            'selected' => ($form->getModel() && $form->getModel()->translate($lang) ? $form->getModel()->translate($lang)->$fieldName : $field->getOption('selected'))
+                        ]);
+                    }
                     $field->setOptions([
                         'value' => ($form->getModel() && $form->getModel()->translate($lang) ? $form->getModel()->translate($lang)->$fieldName : '')
                     ]);

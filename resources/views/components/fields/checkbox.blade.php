@@ -36,6 +36,18 @@
      */
     if (is_array($options['value'])) {
         $options['value'] = str_ireplace($options['original_name'] . '_', '', $options['label_attr']['for']);
+
+        /*
+         * Автоматичен избор за choice с translate
+         */
+        if (is_array($options['selected']) && isset($options['selected'][$options['value']])) {
+            if ($options['value'] == $options['selected'][$options['value']]) {
+                $options['checked'] = true;
+            } else {
+                $options['checked'] = false;
+            }
+        }
+
     }
 
     /**
