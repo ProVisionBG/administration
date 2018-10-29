@@ -29,11 +29,8 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
-            <a id="slidebar-toggle-button" href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <a id="slidebar-toggle-button" href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
             </a>
 
             <div class="navbar-custom-menu">
@@ -216,7 +213,7 @@
             <!-- /.search form -->
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
+            <ul class="sidebar-menu" data-widget="tree">
                 @include('administration::partials.navigation', ['items' => \AdministrationMenu::get()])
             </ul>
         </section>
