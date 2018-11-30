@@ -13,13 +13,13 @@
                     @if(isset($noEdit) and $noEdit === true)
                         {!! $options['default_value']['default'] !!}
                     @else
-                        {!! Form::hidden($name.'[lat]',$options['default_value']['lat']) !!}
-                        {!! Form::hidden($name.'[lng]', $options['default_value']['lng']) !!}
-                        {!! Form::hidden($name.'[street]', $options['default_value']['street']) !!}
-                        {!! Form::hidden($name.'[city]', $options['default_value']['city']) !!}
-                        {!! Form::hidden($name.'[state]',$options['default_value']['state']) !!}
-                        {!! Form::hidden($name.'[country]',$options['default_value']['country']) !!}
-                        {!! Form::input($type, $name.'[default]', $options['default_value']['default'], $options['attr']) !!}
+                        {!! Form::hidden($name.'[lat]',@$options['default_value']['lat']) !!}
+                        {!! Form::hidden($name.'[lng]', @$options['default_value']['lng']) !!}
+                        {!! Form::hidden($name.'[street]', @$options['default_value']['street']) !!}
+                        {!! Form::hidden($name.'[city]', @$options['default_value']['city']) !!}
+                        {!! Form::hidden($name.'[state]',@$options['default_value']['state']) !!}
+                        {!! Form::hidden($name.'[country]',@$options['default_value']['country']) !!}
+                        {!! Form::input($type, $name.'[default]', @$options['default_value']['default'], $options['attr']) !!}
                     @endif
                 </div>
             @endif
@@ -42,8 +42,8 @@
     jQuery(document).ready(function () {
         jQuery('#{!!$uniqId!!}-map').locationpicker({
             location: {
-                latitude: '{!!$options['default_value']['lat']!!}',
-                longitude: '{!!$options['default_value']['lng']!!}'
+                latitude: '{!!@$options['default_value']['lat']!!}',
+                longitude: '{!!@$options['default_value']['lng']!!}'
             },
             radius: 0,
             @if(empty($noEdit))

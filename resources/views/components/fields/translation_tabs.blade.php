@@ -48,6 +48,20 @@ if ($translationOpened === false) {
                         $field->setOptions([
                             'selected' => ($form->getModel() && $form->getModel()->translate($lang) ? $form->getModel()->translate($lang)->$fieldName : $field->getOption('selected'))
                         ]);
+                    } elseif ($field instanceof \ProVision\Administration\Forms\Fields\AddressPicker) {
+                        $valuesArray = [];
+                        if ($form->getModel() && $form->getModel()->translate($lang)) {
+                            /*
+                             * @todo: да се помисли как да се вземе по добре lng/long
+                             */
+                            $valuesArray = [
+                                'lat' => $form->getModel()->translate($lang)->lat,
+                                'lng' => (empty($form->getModel()->translate($lang)->lng) ? $form->getModel()->translate($lang)->long : $form->getModel()->translate($lang)->lng)
+                            ];
+                        }
+                        $field->setOptions([
+                            'default_value' => (!empty($valuesArray) ? $valuesArray : null)
+                        ]);
                     }
                     $field->setOptions([
                         'value' => ($form->getModel() && $form->getModel()->translate($lang) ? $form->getModel()->translate($lang)->$fieldName : '')
