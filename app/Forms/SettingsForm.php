@@ -76,6 +76,11 @@ class SettingsForm extends AdminForm {
             'translate' => true
         ]);
 
+        $this->add('youtube_link', 'text', [
+            'label' => 'YouTube URL',
+            'translate' => true
+        ]);
+
         /*
          * load settings of modules
          */
