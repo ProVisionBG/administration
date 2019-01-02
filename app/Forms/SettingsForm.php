@@ -81,6 +81,11 @@ class SettingsForm extends AdminForm {
             'translate' => true
         ]);
 
+        $this->add('vbox7_link', 'text', [
+            'label' => 'VBox7 URL',
+            'translate' => true
+        ]);
+
         /*
          * load settings of modules
          */
