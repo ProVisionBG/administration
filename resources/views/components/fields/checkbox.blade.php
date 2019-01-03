@@ -34,7 +34,7 @@
     /*
      * Чекбокс от choice с translate=>true
      */
-    if (is_array($options['value'])) {
+    if (is_array($options['value']) || empty($options['value'])) {
         $options['value'] = str_ireplace($options['original_name'] . '_', '', $options['label_attr']['for']);
 
         /*
