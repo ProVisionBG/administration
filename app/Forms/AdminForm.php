@@ -16,7 +16,7 @@ class AdminForm extends Form {
      *
      * @var array
      */
-    private $seoInputs = [
+    protected $seoInputs = [
         'slug' => [],
         'meta_title' => [
             'attr' => [
