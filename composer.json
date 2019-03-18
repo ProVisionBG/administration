@@ -42,7 +42,7 @@
     "barryvdh/laravel-translation-manager": "^0.2.2",
     "venturecraft/revisionable": "1.*",
     "laravelcollective/html": "^5.3 || ^5.4",
-    "kris/laravel-form-builder": "^1.7",
+    "kris/laravel-form-builder": "1.16.0",
     "dimsav/laravel-translatable": "6.*",
     "rutorika/sortable": "^3.2",
     "barryvdh/laravel-debugbar": "^2.3",
