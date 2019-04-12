@@ -39,7 +39,7 @@ class RolesRepairController extends BaseAdministrationController
                 continue;
             }
 
-            if (preg_match('/(provision\.administration\.([\-a-z1-9]+\.[a-z\-1-9\.]+))/simx', $route->getName(), $regs)) {
+            if (preg_match('/(provision\.administration\.([\-a-z1-9_]+\.[a-z\-1-9\._]+))/simx', $route->getName(), $regs)) {
                 //dd($regs);
                 $permission = $regs[2];
                 $this->checkPermissions(['name' => 'Administration'], $permission, $permission);
