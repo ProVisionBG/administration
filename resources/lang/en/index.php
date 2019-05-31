@@ -34,7 +34,7 @@ return [
     'save' => 'Save',
     'actions' => 'Actions',
     'add' => 'Add',
-    'dashboard' => 'Dashaboard',
+    'dashboard' => 'Dashboard',
     'logout' => 'Log out',
     'settings' => 'Settings',
     'all' => 'All',
