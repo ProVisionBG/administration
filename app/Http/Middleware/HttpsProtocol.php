@@ -21,7 +21,7 @@ class HttpsProtocol
         }
 
         if (!$request->secure() && \App::environment('production')) {
-            return redirect()->secure($request->getRequestUri());
+            return redirect()->secure($request->getRequestUri(), 301);
         }
 
         return $next($request);
