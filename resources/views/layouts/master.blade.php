@@ -251,6 +251,16 @@
                 </div>
             @endif
 
+            @if (Session::has('success'))
+                <div class="alert alert-success">
+                    <ul>
+                        @foreach (Session::get('success') as $success)
+                            <li>{{ $success }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @yield('content')
         </div>
     </div><!-- /.content-wrapper -->
