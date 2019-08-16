@@ -252,13 +252,21 @@
             @endif
 
             @if (Session::has('success'))
-                <div class="alert alert-success">
-                    <ul>
-                        @foreach (Session::get('success') as $success)
-                            <li>{{ $success }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+                @if (is_array(Session::get('success')))
+                    <div class="alert alert-success">
+                        <ul>
+                            @foreach (Session::get('success') as $success)
+                                <li>{{ $success }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @elseif (is_string(Session::get('success')))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{{Session::get('success')}}</li>
+                        </ul>
+                    </div>
+                @endif
             @endif
 
             @yield('content')
