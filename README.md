@@ -25,6 +25,8 @@ composer require provision/administration
 
 ``` bash
 composer test
+composer phpmd
+composer phpcs
 ```
 
 ### Changelog

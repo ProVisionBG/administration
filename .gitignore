@@ -1,4 +1,6 @@
 composer.lock
 vendor
+node_modules
 coverage
 .idea
+package-lock.json
