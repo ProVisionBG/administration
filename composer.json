@@ -1,81 +1,54 @@
 {
-  "version": "0.3.1",
-  "name": "provision/administration",
-  "description": "ProVision Administration - laravel package",
-  "keywords": [
-    "administration",
-    "modular",
-    "laravel"
-  ],
-  "license": "Apache License 2.0",
-  "authors": [
-    {
-      "name": "Venelin Iliev",
-      "homepage": "http://veneliniliev.com"
+    "name": "provision/administration",
+    "description": "Laravel administration",
+    "keywords": [
+        "provision",
+        "administration"
+    ],
+    "homepage": "https://github.com/provisionbg/administration",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Venelin Iliev",
+            "email": "venelin@provision.bg",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "laravel/framework": "^6.0.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "4.*",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ProVision\\Administration\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ProVision\\Administration\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ProVision\\Administration\\AdministrationServiceProvider"
+            ],
+            "aliases": {
+                "Administration": "ProVision\\Administration\\AdministrationFacade"
+            }
+        }
     }
-  ],
-  "support": {
-    "issues": "https://github.com/ProVisionBG/administration/issues",
-    "source": "https://github.com/ProVisionBG/administration"
-  },
-  "homepage": "http://provision.bg",
-  "type": "library",
-  "require": {
-    "php": "^5.6.4 || ^7.0",
-    "laravel/framework": "5.3.*",
-    "mcamara/laravel-localization": "^1.1",
-    "zizaco/entrust": "5.2.x-dev",
-    "caffeinated/modules": "^4.0",
-    "lavary/laravel-menu": "^1.6",
-    "yajra/laravel-datatables-oracle": "^6.10",
-    "cviebrock/eloquent-sluggable": "^4.0",
-    "provision/laravel-meta-tags": "^3.0",
-    "edvinaskrucas/notification": "5.*",
-    "laravel/socialite": "^2.0",
-    "intervention/image": "^2.3",
-    "kalnoy/nestedset": "^4.1",
-    "davejamesmiller/laravel-breadcrumbs": "^3.0",
-    "barryvdh/laravel-translation-manager": "^0.2.2",
-    "venturecraft/revisionable": "1.*",
-    "laravelcollective/html": "^5.3",
-    "kris/laravel-form-builder": "^1.7",
-    "dimsav/laravel-translatable": "6.*",
-    "rutorika/sortable": "^3.2",
-    "barryvdh/laravel-debugbar": "^2.3",
-    "arcanedev/log-viewer": "^4.1",
-    "caouecs/laravel-lang": "~3.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^5.7",
-    "laracasts/testdummy": "~2.0",
-    "orchestra/testbench": "~3.3"
-  },
-  "autoload": {
-    "classmap": [
-      "database"
-    ],
-    "psr-4": {
-      "ProVision\\Administration\\": "app/"
-    }
-  },
-  "autoload-dev": {
-    "classmap": [
-      "database"
-    ],
-    "psr-4": {
-      "ProVision\\Administration\\": "app/",
-      "ProVision\\Administration\\Tests\\": "tests"
-    }
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "php artisan vendor:publish --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\"",
-      "php artisan admin:migrate"
-    ],
-    "post-update-cmd": [
-      "php artisan vendor:publish --tag=views --tag=public --tag=lang --tag=migrations --force --provider=\"ProVision\\Administration\\Providers\\AdministrationServiceProvider\"",
-      "php artisan admin:migrate"
-    ],
-    "test": "phpunit"
-  }
 }
