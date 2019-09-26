@@ -6,8 +6,13 @@
 
 namespace ProVision\Administration\Providers;
 
+use Illuminate\Routing\Router;
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
+use ProVision\Administration\Console\Commands\AdministratorCreateCommand;
+use ProVision\Administration\Middleware\Authenticate;
+use ProVision\Administration\Middleware\RedirectIfAuthenticated;
 
 class AdministrationServiceProvider extends ServiceProvider
 {
@@ -33,7 +38,7 @@ class AdministrationServiceProvider extends ServiceProvider
 
             // Publishing assets.
             $this->publishes([
-                __DIR__ . '/../../resources/assets' => public_path('vendor/provision/administration'),
+                __DIR__ . '/../../public' => public_path('vendor/provision/administration'),
             ], 'assets');
 
             // Publishing the translation files.
@@ -42,8 +47,19 @@ class AdministrationServiceProvider extends ServiceProvider
             ], 'lang');
 
             // Registering package commands.
-            // $this->commands([]);
+            $this->commands([
+                AdministratorCreateCommand::class
+            ]);
         }
+
+
+        /*
+         * Attach middleware
+         */
+        /** @var Router $router */
+        $router = $this->app['router'];
+        $router->aliasMiddleware('admin_auth', Authenticate::class);
+        $router->aliasMiddleware('admin_guest', RedirectIfAuthenticated::class);
     }
 
     /**
@@ -54,10 +70,50 @@ class AdministrationServiceProvider extends ServiceProvider
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'administration');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/auth.php', 'auth');
 
         // Register the main class to use with the facade
         $this->app->singleton('administration', function () {
             return new Administration;
         });
+    }
+
+    /**
+     * Merge the given configuration with the existing configuration.
+     *
+     * @param mixed $path
+     * @param mixed $key
+     * @return void
+     */
+    protected function mergeConfigFrom($path, $key): void
+    {
+        if (!$this->app->configurationIsCached()) {
+            $this->app['config']->set($key, $this->mergeConfig(require $path, $this->app['config']->get($key, [])));
+        }
+    }
+
+    /**
+     * Merges the configs together and takes multi-dimensional arrays into account.
+     *
+     * @param array $original
+     * @param array $merging
+     * @return array
+     */
+    protected function mergeConfig(array $original, array $merging)
+    {
+        $array = array_merge($original, $merging);
+        foreach ($original as $key => $value) {
+            if (!is_array($value)) {
+                continue;
+            }
+            if (!Arr::exists($merging, $key)) {
+                continue;
+            }
+            if (is_numeric($key)) {
+                continue;
+            }
+            $array[$key] = $this->mergeConfig($value, $merging[$key]);
+        }
+        return $array;
     }
 }

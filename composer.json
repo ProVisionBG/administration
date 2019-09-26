@@ -20,7 +20,9 @@
   ],
   "require": {
     "php": "^7.2",
+    "barryvdh/laravel-debugbar": "^3.2",
     "laravel/framework": "^6.0.0",
+    "laravelcollective/html": "^6.0",
     "nwidart/laravel-modules": "^6.0.0"
   },
   "require-dev": {

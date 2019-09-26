@@ -8,6 +8,10 @@ namespace ProVision\Administration;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * Class AdministrationFacade
+ * @package ProVision\Administration
+ */
 class AdministrationFacade extends Facade
 {
     /**

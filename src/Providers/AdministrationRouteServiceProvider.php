@@ -56,6 +56,7 @@ class AdministrationRouteServiceProvider extends ServiceProvider
         Route::prefix(config('administration.url_prefix') . '/api')
             ->middleware('api')
             ->namespace($this->namespace)
+            ->name(config('administration.route_name_prefix') . '.')
             ->group(__DIR__ . '../../../routes/api.php');
     }
 
@@ -71,6 +72,7 @@ class AdministrationRouteServiceProvider extends ServiceProvider
         Route::prefix(config('administration.url_prefix'))
             ->middleware('web')
             ->namespace($this->namespace)
+            ->name(config('administration.route_name_prefix') . '.')
             ->group(__DIR__ . '../../../routes/web.php');
     }
 }
