@@ -28,7 +28,11 @@ Route::name('auth.')->group(function () {
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 });
 
-Route::middleware('admin_auth:' . config('administration.guard_name'))->group(function () {
+Route::middleware([
+    'admin_auth:' . config('administration.guard_name'),
+    'admin_permission'
+])->group(function () {
     Route::get('/', 'DashboardController@dashboard')->name('dashboard');
+
 });
 

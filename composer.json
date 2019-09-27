@@ -23,6 +23,7 @@
     "barryvdh/laravel-debugbar": "^3.2",
     "laravel/framework": "^6.0.0",
     "laravelcollective/html": "^6.0",
+    "mcamara/laravel-localization": "^1.4",
     "nwidart/laravel-modules": "^6.0.0",
     "spatie/laravel-permission": "^3.0"
   },

@@ -8,6 +8,7 @@ namespace ProVision\Administration;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /**
  * Class Administration
@@ -16,10 +17,31 @@ use Illuminate\Support\Facades\Auth;
 class Administration
 {
     /**
+     * Check request URL is in administration.
+     *
+     * @return bool
+     */
+    public function routeInAdministration(): bool
+    {
+        //ако се ползва laravellocalization => 'hideDefaultLocaleInURL' => false,
+        if (!empty(LaravelLocalization::setLocale())) {
+            if (!\Request::is(LaravelLocalization::setLocale() . '/' . config('administration.url_prefix') . '*')) {
+                return false;
+            }
+        } else {
+            if (!\Request::is(config('administration.url_prefix') . '*')) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Get route in administration namespace
      *
      * @param string $name
-     * @param array  $parameters
+     * @param array $parameters
      * @return string
      */
     public function route(string $name, array $parameters = []): string

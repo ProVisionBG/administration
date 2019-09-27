@@ -33,4 +33,9 @@ return [
      * Default name of administrator role
      */
     'administrators_role_name' => 'Administrators',
+
+    /*
+     * Disable administration exception handler
+     */
+    'disable_administration_exception_handler' => false,
 ];
