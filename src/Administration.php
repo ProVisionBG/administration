@@ -18,9 +18,8 @@ class Administration
     /**
      * Get route in administration namespace
      *
-     * @param string  $name
-     * @param array   $parameters
-     * @param boolean $absolute
+     * @param string $name
+     * @param array  $parameters
      * @return string
      */
     public function route(string $name, array $parameters = []): string
@@ -40,7 +39,17 @@ class Administration
     }
 
     /**
-     * Get the guard to be used during authentication.
+     * Get the auth.
+     *
+     * @return StatefulGuard
+     */
+    public function auth(): StatefulGuard
+    {
+        return $this->guard();
+    }
+
+    /**
+     * Get the guard.
      *
      * @return StatefulGuard
      */

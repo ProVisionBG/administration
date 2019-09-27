@@ -11,6 +11,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use ProVision\Administration\Administration;
 use ProVision\Administration\Console\Commands\AdministratorCreateCommand;
+use ProVision\Administration\Console\Commands\InstallCommand;
+use ProVision\Administration\Console\Commands\PermissionsCommand;
+use ProVision\Administration\Console\Commands\SetupCommand;
 use ProVision\Administration\Middleware\Authenticate;
 use ProVision\Administration\Middleware\RedirectIfAuthenticated;
 
@@ -48,7 +51,9 @@ class AdministrationServiceProvider extends ServiceProvider
 
             // Registering package commands.
             $this->commands([
-                AdministratorCreateCommand::class
+                AdministratorCreateCommand::class,
+                SetupCommand::class,
+                PermissionsCommand::class
             ]);
         }
 

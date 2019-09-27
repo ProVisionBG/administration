@@ -66,11 +66,14 @@ class AdministratorCreateCommand extends Command
             /*
              * Create admin user
              */
-            Administrator::create([
+            /** @var Administrator $adminUser */
+            $adminUser = Administrator::create([
                 'name' => 'Administrator',
                 'email' => $email,
                 'password' => Hash::make($password),
             ]);
+
+            $adminUser->assignRole(config('administration.administrators_role_name'));
 
             $this->showSuccess($email);
             return;
@@ -82,35 +85,14 @@ class AdministratorCreateCommand extends Command
             $adminUser->name = $name;
             $adminUser->save();
 
+            $adminUser->assignRole(config('administration.administrators_role_name'));
+
             $this->showSuccess($email);
             return;
         }
 
 
         $this->error('User is not updated!');
-
-//        /*
-//         * create default role and assing to user
-//         */
-//        $adminRole = Role::where('name', 'admin')->first();
-//        if (empty($adminRole)) {
-//            $adminRole = new Role();
-//            $adminRole->name = 'admin';
-//            $adminRole->display_name = 'Administrator';
-//            $adminRole->description = 'The BIG BOSS';
-//            $adminRole->save();
-//            $this->info('Create admin role...');
-//        }
-//        if (!$adminUser->hasRole('admin')) {
-//            $this->info('Assign admin role...');
-//            $adminUser->attachRole($adminRole);
-//        }
-//
-//        /*
-//         * repair permissions
-//         */
-//        $permissionRepair = new RolesRepairController();
-//        $permissionRepair->index();
     }
 
     /**

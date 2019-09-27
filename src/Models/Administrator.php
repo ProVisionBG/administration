@@ -6,8 +6,10 @@
 
 namespace ProVision\Administration\Models;
 
+use Illuminate\Config\Repository;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class Administrator
@@ -17,12 +19,17 @@ use Illuminate\Notifications\Notifiable;
  */
 class Administrator extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * @var Repository|mixed|string
+     */
+    protected $guard_name = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -44,4 +51,18 @@ class Administrator extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Administrator constructor.
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        /*
+         * Set guard name for laravel-permission
+         */
+        $this->guard_name = config('administration.guard_name');
+    }
 }

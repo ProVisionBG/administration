@@ -17,6 +17,6 @@ class DashboardController extends Controller
      */
     public function dashboard()
     {
-        return 'ok';
+        return view('administration::base.dashboard');
     }
 }

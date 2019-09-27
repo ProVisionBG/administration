@@ -25,6 +25,12 @@ return [
 
     /*
      * Command prefix
+     * @example php artisan admin:create
      */
-    'command_prefix' => 'admin'
+    'command_prefix' => 'admin',
+
+    /*
+     * Default name of administrator role
+     */
+    'administrators_role_name' => 'Administrators',
 ];

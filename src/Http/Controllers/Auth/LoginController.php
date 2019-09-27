@@ -8,7 +8,9 @@ namespace ProVision\Administration\Http\Controllers\Auth;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\MessageBag;
 use ProVision\Administration\AdministrationFacade;
 use ProVision\Administration\AdministrationFacade as Administration;
 use ProVision\Administration\Http\Controllers\Controller;
@@ -37,8 +39,6 @@ class LoginController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -54,6 +54,31 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('administration::auth.login');
+    }
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param Request $request
+     * @return boolean
+     */
+    protected function attemptLogin(Request $request)
+    {
+        $attempt = $this->guard()->attempt(
+            $this->credentials($request),
+            $request->filled('remember')
+        );
+
+        if (!$attempt) {
+            return $attempt;
+        }
+
+        if (!Administration::auth()->user()->can(Administration::routeName('dashboard'))) {
+            Administration::auth()->logout();
+            return false;
+        }
+
+        return true;
     }
 
     /**
