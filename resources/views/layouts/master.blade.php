@@ -357,9 +357,9 @@
         image_caption: true,
         image_dimensions: false,
         image_class_list: [
-            {title: 'Responsive', value: 'img-responsive'},
-            {title: 'Left', value: 'pull-left img-responsive'},
-            {title: 'Right', value: 'pull-right img-responsive'}
+            {title: 'Image responsive', value: 'img-responsive img-fluid'},
+            {title: 'Left', value: 'pull-left img-responsive img-fluid'},
+            {title: 'Right', value: 'pull-right img-responsive img-fluid'}
         ],
         setup: function (editor) {
             editor.on('init', function (args) {

@@ -49,7 +49,7 @@ CKEDITOR.plugins.add('media', {
             // '</div>',
 
             template: '<figure class="media-box">' +
-            '<img class="img-responsive" />' +
+            '<img class="img-responsive img-fluid" />' +
             '<figcaption>img caption</figcaption>' +
             '</figure>',
 
