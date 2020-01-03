@@ -1,66 +1,66 @@
 {
-  "name": "provision/administration",
-  "description": "Laravel administration",
-  "keywords": [
-    "provision",
-    "administration"
-  ],
-  "support": {
-    "issues": "https://github.com/ProVisionBG/administration/issues",
-    "source": "https://github.com/ProVisionBG/administration"
-  },
-  "homepage": "https://github.com/provisionbg/administration",
-  "license": "MIT",
-  "type": "library",
-  "authors": [
-    {
-      "name": "Venelin Iliev",
-      "email": "venelin@provision.bg"
+    "name": "provision/administration",
+    "description": "Laravel administration",
+    "keywords": [
+        "provision",
+        "administration"
+    ],
+    "support": {
+        "issues": "https://github.com/ProVisionBG/administration/issues",
+        "source": "https://github.com/ProVisionBG/administration"
+    },
+    "homepage": "https://github.com/provisionbg/administration",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Venelin Iliev",
+            "email": "venelin@provision.bg"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "barryvdh/laravel-debugbar": "^3.2",
+        "laravel/framework": "^6.0.0",
+        "laravelcollective/html": "^6.0",
+        "mcamara/laravel-localization": "^1.4",
+        "nwidart/laravel-modules": "^6.0.0",
+        "spatie/laravel-permission": "^3.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0.0",
+        "phpmd/phpmd": "^2.7",
+        "phpunit/phpunit": "^8.0",
+        "squizlabs/php_codesniffer": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "ProVision\\Administration\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ProVision\\Administration\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "phpmd": "vendor\\bin\\phpmd src/ text phpmd.xml",
+        "phpcs": "vendor\\bin\\phpcs"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ProVision\\Administration\\Providers\\AdministrationServiceProvider",
+                "ProVision\\Administration\\Providers\\AdministrationRouteServiceProvider"
+            ],
+            "aliases": {
+                "Administration": "ProVision\\Administration\\AdministrationFacade"
+            }
+        }
     }
-  ],
-  "require": {
-    "php": "^7.2",
-    "barryvdh/laravel-debugbar": "^3.2",
-    "laravel/framework": "^6.0.0",
-    "laravelcollective/html": "^6.0",
-    "mcamara/laravel-localization": "^1.4",
-    "nwidart/laravel-modules": "^6.0.0",
-    "spatie/laravel-permission": "^3.0"
-  },
-  "require-dev": {
-    "orchestra/testbench": "^4.0.0",
-    "phpmd/phpmd": "^2.7",
-    "phpunit/phpunit": "^8.0",
-    "squizlabs/php_codesniffer": "^3.4"
-  },
-  "autoload": {
-    "psr-4": {
-      "ProVision\\Administration\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "ProVision\\Administration\\Tests\\": "tests"
-    }
-  },
-  "scripts": {
-    "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-    "phpmd": "vendor\\bin\\phpmd src/ text phpmd.xml",
-    "phpcs": "vendor\\bin\\phpcs"
-  },
-  "config": {
-    "sort-packages": true
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "ProVision\\Administration\\Providers\\AdministrationServiceProvider",
-        "ProVision\\Administration\\Providers\\AdministrationRouteServiceProvider"
-      ],
-      "aliases": {
-        "Administration": "ProVision\\Administration\\AdministrationFacade"
-      }
-    }
-  }
 }

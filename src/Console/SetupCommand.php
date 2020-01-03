@@ -55,7 +55,7 @@ class SetupCommand extends Command
     public function handle()
     {
 
-        $bar = $this->output->createProgressBar(5);
+        $bar = $this->output->createProgressBar(6);
         $bar->start();
 
         $bar->advance();
@@ -63,6 +63,9 @@ class SetupCommand extends Command
 
         $bar->advance();
         $this->publishAssets();
+
+        $bar->advance();
+        $this->modulesSetup();
 
         $bar->advance();
         $this->migrate();
@@ -105,6 +108,18 @@ class SetupCommand extends Command
     }
 
     /**
+     * Publish assets
+     *
+     * @return void
+     */
+    private function modulesSetup(): void
+    {
+        $this->info('Module setup start...');
+        $this->call('module:setup');
+        $this->info('Module setup end...');
+    }
+
+    /**
      * Run migrations
      *
      * @return void
@@ -114,6 +129,16 @@ class SetupCommand extends Command
         if ($this->confirm('Do you want run `migrate`?', true)) {
             $this->call('migrate');
         }
+    }
+
+    /**
+     * Repair permissions
+     *
+     * @return void
+     */
+    private function permissions(): void
+    {
+        $this->call(config('administration.command_prefix') . ':permissions');
     }
 
     /**
@@ -132,15 +157,5 @@ class SetupCommand extends Command
         if ($this->confirm('Do you want create administrator account?', true)) {
             $this->call(config('administration.command_prefix') . ':create');
         }
-    }
-
-    /**
-     * Repair permissions
-     *
-     * @return void
-     */
-    private function permissions(): void
-    {
-        $this->call(config('administration.command_prefix') . ':permissions');
     }
 }
