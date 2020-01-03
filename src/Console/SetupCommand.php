@@ -98,7 +98,7 @@ class SetupCommand extends Command
     {
         $this->call('vendor:publish', [
             '--provider' => AdministrationServiceProvider::class,
-            '--tag' => 'assets',
+            '--tag' => 'administration-assets',
             '--force' => true
         ]);
         $this->info('Assets published...');
