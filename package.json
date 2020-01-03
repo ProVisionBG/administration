@@ -18,9 +18,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "admin-lte": "^2.4.18",
-        "bootstrap": "^3.4",
-        "icheck": "^1.0.2",
+        "admin-lte": "^3.0.0",
+        "bootstrap": "^4.3.1",
+        "@fortawesome/fontawesome-free": "^5.11.2",
+        "icheck-bootstrap": "^3.0.1",
         "jquery": "^3.4.1"
     }
 }

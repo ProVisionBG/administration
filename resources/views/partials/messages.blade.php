@@ -1,8 +1,8 @@
 {{-- Errors --}}
 @if($errors->any())
     @foreach ($errors->all() as $error)
-        <div class="callout callout-danger">
-            {{--<h4>I am a danger callout!</h4>--}}
+        <div class="alert alert-danger">
+            {{--<h5><i class="icon fas fa-ban"></i> Error</h5>--}}
             <p>{{$error}}</p>
         </div>
     @endforeach

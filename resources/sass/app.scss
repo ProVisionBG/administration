@@ -3,9 +3,8 @@
  * Venelin Iliev <http://veneliniliev.com>
  */
 @import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~font-awesome/scss/font-awesome";
-@import "~ionicons/dist/scss/ionicons";
-@import "~admin-lte/dist/css/AdminLTE.min.css";
-@import "~admin-lte/dist/css/skins/_all-skins.min.css";
-@import "~icheck/skins/square/blue.css";
-@import "error-pages";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "~admin-lte/dist/css/adminlte.min.css";
+@import "~icheck-bootstrap/icheck-bootstrap.min.css";
+
+@import "pages/errors";
