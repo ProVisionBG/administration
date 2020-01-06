@@ -17,7 +17,7 @@ class Handler extends \App\Exceptions\Handler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request $request
+     * @param  Request   $request
      * @param Exception $exception
      * @return Response
      */
@@ -29,5 +29,4 @@ class Handler extends \App\Exceptions\Handler
 
         return parent::render($request, $exception);
     }
-
 }

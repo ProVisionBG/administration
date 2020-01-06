@@ -11,8 +11,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\MessageBag;
-use ProVision\Administration\AdministrationFacade;
-use ProVision\Administration\AdministrationFacade as Administration;
+use ProVision\Administration\Facades\AdministrationFacade;
 use ProVision\Administration\Http\Controllers\Controller;
 
 class LoginController extends Controller
@@ -73,8 +72,8 @@ class LoginController extends Controller
             return $attempt;
         }
 
-        if (!Administration::auth()->user()->can(Administration::routeName('dashboard'))) {
-            Administration::auth()->logout();
+        if (!AdministrationFacade::auth()->user()->can(AdministrationFacade::routeName('dashboard'))) {
+            AdministrationFacade::auth()->logout();
             return false;
         }
 
@@ -88,6 +87,6 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return Administration::guard();
+        return AdministrationFacade::guard();
     }
 }

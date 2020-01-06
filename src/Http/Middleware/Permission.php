@@ -7,13 +7,19 @@
 namespace ProVision\Administration\Http\Middleware;
 
 use Closure;
+use Debugbar;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
-use ProVision\Administration\AdministrationFacade as Administration;
+use ProVision\Administration\Facades\AdministrationFacade as Administration;
 use Route;
 
 class Permission
 {
+
+    /**
+     * @var StatefulGuard
+     */
     protected $auth;
 
     /**
@@ -31,7 +37,6 @@ class Permission
      *
      * @param Request $request
      * @param Closure $next
-     * @param  $permissions
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -56,15 +61,15 @@ class Permission
             /*
              * Несъществува такъв пермишън...
              */
-            \Debugbar::info('Permission not found: ' . $permission);
+            Debugbar::info('Permission not found: ' . $permission);
 
             return $next($request);
         }
 
-        \Debugbar::info('Auto check permission: ' . $permission);
+        Debugbar::info('Auto check permission: ' . $permission);
 
         if ($this->auth->guest() || !$this->auth->user()->can($permission)) {
-            \Debugbar::error('Permission error: ' . $permission);
+            Debugbar::error('Permission error: ' . $permission);
             return response()->view('administration::errors.403', ['permission' => $permission], 403);
         }
 

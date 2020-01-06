@@ -10,13 +10,19 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
+use Lavary\Menu\Builder;
+use Nwidart\Modules\Facades\Module;
 use ProVision\Administration\Administration;
 use ProVision\Administration\Console\Commands\AdministratorCreateCommand;
 use ProVision\Administration\Console\Commands\InstallCommand;
 use ProVision\Administration\Console\Commands\PermissionsCommand;
 use ProVision\Administration\Console\Commands\SetupCommand;
+use ProVision\Administration\Contracts\AdministrationModule;
 use ProVision\Administration\Exceptions\Handler;
+use ProVision\Administration\Facades\AdministrationFacade;
+use ProVision\Administration\Facades\MenuFacade;
 use ProVision\Administration\Http\Middleware\Permission;
+use ProVision\Administration\Menu;
 use ProVision\Administration\Middleware\Authenticate;
 use ProVision\Administration\Middleware\RedirectIfAuthenticated;
 
@@ -60,7 +66,6 @@ class AdministrationServiceProvider extends ServiceProvider
             ]);
         }
 
-
         /*
          * Attach middleware
          */
@@ -86,6 +91,9 @@ class AdministrationServiceProvider extends ServiceProvider
         $this->app->singleton('administration', function () {
             return new Administration;
         });
+        $this->app->singleton('administration-menu', function () {
+            return new Menu;
+        });
 
         /*
          * Exception handler
@@ -93,6 +101,11 @@ class AdministrationServiceProvider extends ServiceProvider
         if (!config('administration.disable_administration_exception_handler', false)) {
             $this->app->singleton(ExceptionHandler::class, Handler::class);
         }
+
+        /*
+         * Register other providers provider
+         */
+        $this->app->register(AdministrationRouteServiceProvider::class);
     }
 
     /**

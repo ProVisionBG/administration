@@ -8,7 +8,7 @@ namespace ProVision\Administration\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
-use ProVision\Administration\AdministrationFacade;
+use ProVision\Administration\Facades\AdministrationFacade;
 
 class Authenticate extends Middleware
 {

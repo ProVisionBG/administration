@@ -23,6 +23,7 @@
         "barryvdh/laravel-debugbar": "^3.2",
         "laravel/framework": "^6.0.0",
         "laravelcollective/html": "^6.0",
+        "lavary/laravel-menu": "^1.7",
         "mcamara/laravel-localization": "^1.4",
         "nwidart/laravel-modules": "^6.0.0",
         "spatie/laravel-permission": "^3.0"
@@ -55,8 +56,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ProVision\\Administration\\Providers\\AdministrationServiceProvider",
-                "ProVision\\Administration\\Providers\\AdministrationRouteServiceProvider"
+                "ProVision\\Administration\\Providers\\AdministrationServiceProvider"
             ],
             "aliases": {
                 "Administration": "ProVision\\Administration\\AdministrationFacade"

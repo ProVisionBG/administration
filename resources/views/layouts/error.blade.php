@@ -1,15 +1,14 @@
 @include('administration::partials.head')
 <body class="hold-transition login-page error-layout">
 
+<div class="d-flex flex-column w-100 h-100">
 
-<div class="wrapper">
+    <div class="d-flex flex-column h-100 justify-content-center">
+        @yield('content')
+    </div>
 
-    @yield('content')
-
+    @include('administration::partials.footer')
 </div>
-
-@include('administration::partials.footer')
-
 
 </body>
 </html>

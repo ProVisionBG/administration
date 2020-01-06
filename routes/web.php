@@ -33,6 +33,5 @@ Route::middleware([
     'admin_permission'
 ])->group(function () {
     Route::get('/', 'DashboardController@dashboard')->name('dashboard');
-
 });
 

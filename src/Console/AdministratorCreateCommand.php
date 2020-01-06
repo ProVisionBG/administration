@@ -13,7 +13,7 @@ namespace ProVision\Administration\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-use ProVision\Administration\AdministrationFacade as Administration;
+use ProVision\Administration\Facades\AdministrationFacade as Administration;
 use ProVision\Administration\Models\Administrator;
 
 class AdministratorCreateCommand extends Command

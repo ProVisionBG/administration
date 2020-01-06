@@ -19,7 +19,7 @@ class Administration
     /**
      * Check request URL is in administration.
      *
-     * @return bool
+     * @return boolean
      */
     public function routeInAdministration(): bool
     {
@@ -41,7 +41,7 @@ class Administration
      * Get route in administration namespace
      *
      * @param string $name
-     * @param array $parameters
+     * @param array  $parameters
      * @return string
      */
     public function route(string $name, array $parameters = []): string

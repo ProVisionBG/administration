@@ -11,7 +11,7 @@
 
                 <p>
                     Required permission: <b>{{$permission}}</b>
-                    Meanwhile, you may <a href="{{Administration::route('dashboard')}}">return to home</a>.
+                    Meanwhile, you may <a href="{{\ProVision\Administration\Facades\AdministrationFacade::route('dashboard')}}">return to home</a>.
                 </p>
 
             </div>

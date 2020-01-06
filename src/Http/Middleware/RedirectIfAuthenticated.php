@@ -9,7 +9,7 @@ namespace ProVision\Administration\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use ProVision\Administration\AdministrationFacade;
+use ProVision\Administration\Facades\AdministrationFacade;
 
 class RedirectIfAuthenticated
 {

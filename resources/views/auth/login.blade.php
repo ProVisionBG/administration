@@ -14,7 +14,7 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">@lang('administration::auth.login_title')</p>
 
-            {{Form::open(['route' => Administration::routeName('auth.login.post')])}}
+            {{Form::open(['route' => \ProVision\Administration\Facades\AdministrationFacade::routeName('auth.login.post')])}}
             <div class="input-group mb-3">
                 <input type="email" name="email" class="form-control" placeholder="@lang('administration::auth.email')">
                 <div class="input-group-append">
@@ -61,7 +61,7 @@
             {{--            </div>--}}
 
             <p class="mb-1">
-                <a href="{{Administration::route('auth.password.request')}}">@lang('administration::auth.forgot_password_link')</a>
+                <a href="{{\ProVision\Administration\Facades\AdministrationFacade::route('auth.password.request')}}">@lang('administration::auth.forgot_password_link')</a>
             </p>
         </div>
         <!-- /.login-card-body -->

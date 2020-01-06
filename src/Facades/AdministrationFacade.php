@@ -4,13 +4,19 @@
  * Venelin Iliev <http://veneliniliev.com>
  */
 
-namespace ProVision\Administration;
+namespace ProVision\Administration\Facades;
 
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class AdministrationFacade
  * @package ProVision\Administration
+ * @method static boolean routeInAdministration()
+ * @method static StatefulGuard auth()
+ * @method static string routeName(string $string)
+ * @method static string route(string $name, array $parameters = [])
+ * @method static StatefulGuard guard()
  */
 class AdministrationFacade extends Facade
 {
