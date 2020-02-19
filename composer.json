@@ -47,7 +47,7 @@
     "dimsav/laravel-translatable": "8.*",
     "rutorika/sortable": "^4.1",
     "barryvdh/laravel-debugbar": "^3.1",
-    "arcanedev/log-viewer": "^4.4",
+    "arcanedev/log-viewer": "^5.2.0",
     "caouecs/laravel-lang": "~3.0",
     "artesaos/seotools": "^0.11.1",
     "intervention/imagecache": "^2.3"
