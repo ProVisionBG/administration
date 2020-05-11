@@ -40,9 +40,11 @@
         <div class="box-body no-padding">
 
             <?php
-            $table->addAction([
-                'title' => trans('administration::index.actions')
-            ]);
+            if(!$table->getColumns()->where('name','actions')->first()) {
+                $table->addAction([
+                    'title' => trans('administration::index.actions')
+                ]);
+            }
             $table->setTableAttributes([
                 'class' => 'table table-hover'
             ]);
