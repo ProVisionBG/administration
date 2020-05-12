@@ -72,6 +72,6 @@ class AjaxController extends BaseAdministrationController
         $object->setAttribute($request->field, $request->state);
         $object->save();
 
-        return response()->json(['updated_rows' => intval($affectedRows)]);
+        return response()->json(['updated_rows' => 1]);
     }
 }
