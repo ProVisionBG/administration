@@ -101,10 +101,13 @@ class AjaxController extends BaseAdministrationController {
         $object = new $request->class;
         $object = $object->where('id', $request->id)->first();
 
-        $affectedRows = $object->update([
-            $request->field => $request->state,
-        ]);
+        if (empty($object)) {
+            return response()->json(['model not found'], 404);
+        }
 
-        return response()->json(['updated_rows' => intval($affectedRows)]);
+        $object->setAttribute($request->field, $request->state);
+        $object->save();
+
+        return response()->json(['updated_rows' => 1]);
     }
 }
