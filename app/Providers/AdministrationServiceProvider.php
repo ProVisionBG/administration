@@ -126,9 +126,9 @@ class AdministrationServiceProvider extends ServiceProvider {
         if (config('provision_administration.packages.log-viewer')) {
 
             //check app settings
-            if (config('app.log') != 'daily') {
-                die('config/app.php => log != daily');
-            }
+//            if (config('app.log') != 'daily') {
+//                die('config/app.php => log != daily');
+//            }
 
             //set middleware
             Config::set('log-viewer.route.attributes.middleware', [
