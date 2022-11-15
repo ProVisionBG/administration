@@ -2,6 +2,10 @@
 
 @section('content')
 
+    @if(!empty($before))
+        {!! $before !!}
+    @endif
+
     @if(!empty($filterForm))
         <div class="box box-default @if($filterForm->getFormOption('collapsed')===true) collapsed-box @endif"
              id="box-filter">
@@ -54,6 +58,10 @@
 
         </div>
     </div>
+
+    @if(!empty($after))
+        {!! $after !!}
+    @endif
 
 @stop
 
@@ -139,3 +147,15 @@
 </script>
 
 @endpush
+
+@if(!empty($js_scripts))
+    @push('js_scripts')
+        {!! $js_scripts !!}
+    @endpush
+@endif
+
+@if(!empty($css))
+    @push('top_css')
+        {!! $css !!}
+    @endpush
+@endif
